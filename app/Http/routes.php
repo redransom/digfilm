@@ -19,3 +19,8 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+Route::get('dashboard', ['as' => 'dashboard', 'uses'=>'UsersController@dashboard']);
+Route::resource('users', 'UsersController');
+Route::resource('movies', 'MoviesController');
+Route::resource('contributors', 'ContributorsController');
