@@ -15,7 +15,13 @@
                             
                             <ul class="widget widget-menu unstyled">
                                 <li><a href="{{URL('users')}}"><i class="menu-icon icon-bold"></i> Users </a></li>
-                                <li><a href="{{URL('movies')}}"><i class="menu-icon icon-book"></i>Movies </a></li>
+                                <li><a class="collapsed" data-toggle="collapse" href="#togglePages"><i class="menu-icon icon-cog">
+                                </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right"></i>Movies </a>
+                                    <ul id="togglePages" class="collapse unstyled">
+                                        <li><a href="{{URL('movies')}}"><i class="icon-inbox"></i>List</a></li>
+                                        <li><a href="{{URL('movies/create')}}"><i class="icon-inbox"></i>Add New</a></li>
+                                    </ul>
+                                </li>
                                 <li><a href="form.html"><i class="menu-icon icon-paste"></i>Forms </a></li>
                                 <li><a href="table.html"><i class="menu-icon icon-table"></i>Tables </a></li>
                                 <li><a href="charts.html"><i class="menu-icon icon-bar-chart"></i>Charts </a></li>
@@ -23,8 +29,7 @@
                             <!--/.widget-nav-->
                             <ul class="widget widget-menu unstyled">
                                 <li><a class="collapsed" data-toggle="collapse" href="#togglePages"><i class="menu-icon icon-cog">
-                                </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right">
-                                </i>More Pages </a>
+                                </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right"></i>More Pages </a>
                                     <ul id="togglePages" class="collapse unstyled">
                                         <li><a href="other-login.html"><i class="icon-inbox"></i>Login </a></li>
                                         <li><a href="other-user-profile.html"><i class="icon-inbox"></i>Profile </a></li>

@@ -11,6 +11,11 @@
         <link type="text/css" href="{{ asset('/admin/images/icons/css/font-awesome.css') }}" rel="stylesheet">
         <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600'
             rel='stylesheet'>
+
+        @if(isset($show_stars))
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="{{ asset('/admin/css/star-rating.min.css') }}" media="all" rel="stylesheet" type="text/css" />
+        @endif
     </head>
     <body>
     <!-- NAVBAR GOES HERE -->
@@ -44,6 +49,10 @@
         <script src="{{ asset('/admin/scripts/flot/jquery.flot.resize.js') }}" type="text/javascript"></script>
         <script src="{{ asset('/admin/scripts/datatables/jquery.dataTables.js') }}" type="text/javascript"></script>
         <script src="{{ asset('/admin/scripts/common.js') }}" type="text/javascript"></script>
+        @if(isset($show_stars))
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="{{ asset('/admin/scripts/star-rating.min.js') }}" type="text/javascript"></script>
+        @endif
       
     </body>
 </html> 

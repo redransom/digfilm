@@ -15,6 +15,9 @@ class AddGenreToMovieTable extends Migration {
 		Schema::table('movies', function(Blueprint $table)
 		{
 			//
+			$table->string('genre', 100)->default('');
+			$table->tinyInteger('rating')->default(1);
+			$table->tinyInteger('budget')->default(1);
 		});
 	}
 

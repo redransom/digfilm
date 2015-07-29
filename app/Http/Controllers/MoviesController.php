@@ -9,6 +9,7 @@ use App\Models\Role;
 use Session;
 use Input;
 use Redirect;
+use App\Http\Requests\CreateDomainRequest;
 
 use Illuminate\Http\Request;
 
@@ -43,6 +44,14 @@ class MoviesController extends Controller {
 	public function create()
 	{
 		//
+		$authUser = Auth::user();
+		if (!isset($authUser))
+			return redirect('/auth/login');
+		return View("movies.add")
+			->with('authUser', $authUser)
+			->with('page_name', 'add_movie')
+			->with('instructions', 'Add New Movie to Database')
+			->with('title', 'Add Movie');
 	}
 
 	/**
@@ -50,9 +59,13 @@ class MoviesController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(\App\Http\Requests\CreateMovieRequest $request)
 	{
 		//
+		$input = Input::all();
+		$movie = Movie::create( $input );
+
+		return Redirect::route('movies.show')->with('message', 'Movie created.');
 	}
 
 	/**
