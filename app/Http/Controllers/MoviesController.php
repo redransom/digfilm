@@ -5,12 +5,15 @@ use App\Http\Controllers\Controller;
 use Auth;
 use App\Models\User;
 use App\Models\Movie;
+use App\Models\Contributor;
+use App\Models\ContributorType;
 use App\Models\Role;
 use Session;
 use Input;
 use Redirect;
-use App\Http\Requests\CreateDomainRequest;
-
+use App\Http\Requests\CreateMovieRequest;
+use App\Http\Requests\UpdateMovieRequest;
+use App\Http\Requests\AddContributorToMovieRequest;
 use Illuminate\Http\Request;
 
 class MoviesController extends Controller {
@@ -65,7 +68,7 @@ class MoviesController extends Controller {
 		$input = Input::all();
 		$movie = Movie::create( $input );
 
-		return Redirect::route('movies.show')->with('message', 'Movie created.');
+		return Redirect::route('movies.index')->with('message', 'Movie created.');
 	}
 
 	/**
@@ -77,6 +80,19 @@ class MoviesController extends Controller {
 	public function show($id)
 	{
 		//
+		$authUser = Auth::user();
+		if (!isset($authUser))
+			return redirect('/auth/login');
+
+		$movie = Movie::find($id);
+		$title = "Movie ".$movie->name." details";
+
+		return View("movies.show")
+			->with('authUser', $authUser)
+			->with('movie', $movie)
+			->with('page_name', 'movie-show')
+			->with('title', $title);
+
 	}
 
 	/**
@@ -88,6 +104,18 @@ class MoviesController extends Controller {
 	public function edit($id)
 	{
 		//
+		$authUser = Auth::user();
+		if (!isset($authUser))
+			return redirect('/auth/login');
+
+		$movie = Movie::find($id);
+		$title = "Edit Movie";
+
+		return View("movies.edit")
+			->with('authUser', $authUser)
+			->with('movie', $movie)
+			->with('page_name', 'movie-edit')
+			->with('title', $title);
 	}
 
 	/**
@@ -96,9 +124,21 @@ class MoviesController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update($id, UpdateMovieRequest $request)
 	{
-		//
+		//get movie
+		$movie = Movie::find($id);
+		$input = $request->all();
+
+		$movie->name = $input['name'];
+		$movie->summary = $input['summary'];
+		$movie->genre = $input['summary'];
+		$movie->rating = $input['rating'];
+		$movie->budget = $input['budget'];
+		$movie->save();
+
+		return Redirect::route('movies.index');
+
 	}
 
 	/**
@@ -112,4 +152,45 @@ class MoviesController extends Controller {
 		//
 	}
 
+	/**
+	 * Disable movie from use
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function disable($id)
+	{
+		//
+	}
+
+	public function addContributor($id) {
+		$authUser = Auth::user();
+		if (!isset($authUser))
+			return redirect('/auth/login');
+
+		$movie = Movie::find($id);
+		$title = "Add Contributor to ".$movie->name." movie";
+		$contributors = Contributor::all();
+
+		$new_contributors = array();
+		foreach ($contributors as $contributor)
+			$new_contributors[$contributor->id] = $contributor->first_name." ".$contributor->surname;
+
+		$contributor_types = ContributorType::lists('name', 'id');
+
+		return View("movies.contributor")
+			->with('authUser', $authUser)
+			->with('movie', $movie)
+			->with('contributors', $new_contributors)
+			->with('types', $contributor_types)
+			->with('page_name', 'movie-contributor')
+			->with('title', $title);
+	}
+
+	public function postContributor($id, AddContributorToMovieRequest $request) {
+		$input = Input::all();
+		$movie = MovieContributor::create( $input );
+
+		return Redirect::route('movies.show', array($id))->with('message', 'Movie created.');
+	}
 }

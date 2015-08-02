@@ -22,12 +22,13 @@
                                         <?php $movieCnt = 1; ?>
                                         @foreach($movies as $movie)
                                         <tr class="<?php echo (($movieCnt++ % 2) == 0) ? "odd" : "even"; ?> rating{{$movie->rating}}">
-                                            <td>{{$movie->name}}</td>
+                                            <td><a href="{{URL('movies', array('id'=>$movie->id))}}">{{$movie->name}}</a></td>
                                             <td>{{$movie->summary}}</td>
                                             <td>{{$movie->genre}}</td>
                                             <td class="center">{{$movie->rating}}</td>
                                             <td class="center">{{$movie->budget}}</td>
-                                            <td><a class="btn btn-mini btn-primary" href="{{URL('movies', array($movie->id))}}">Edit</a></td>
+                                            <td><a class="btn btn-mini btn-primary" href="{{URL('movies/'.$movie->id.'/edit')}}">Edit</a>
+                                            <a class="btn btn-mini btn-danger" href="{{URL('movies/'.$movie->id.'/disable')}}">Disable</a></td>
                                         </tr>
                                         @endforeach
                                     </tbody>

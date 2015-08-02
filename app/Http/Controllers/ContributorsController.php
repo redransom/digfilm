@@ -2,6 +2,17 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Auth;
+use App\Models\User;
+use App\Models\Movie;
+use App\Models\Contributor;
+use App\Models\ContributorType;
+use App\Models\Role;
+use Session;
+use Input;
+use Redirect;
+use App\Http\Requests\CreateContributorRequest;
+use App\Http\Requests\UpdateContributorRequest;
 
 use Illuminate\Http\Request;
 
@@ -14,7 +25,18 @@ class ContributorsController extends Controller {
 	 */
 	public function index()
 	{
-		//
+		$authUser = Auth::user();
+		if (!isset($authUser))
+			return redirect('/auth/login');
+
+		$contributors = Contributor::all();
+
+		return View("contributors.all")
+			->with('contributors', $contributors)
+			->with('authUser', $authUser)
+			->with('page_name', 'contributors')
+			->with('instructions', 'All Contributors registered in the site.')
+			->with('title', 'Contributors');
 	}
 
 	/**
@@ -24,7 +46,18 @@ class ContributorsController extends Controller {
 	 */
 	public function create()
 	{
-		//
+		$authUser = Auth::user();
+		if (!isset($authUser))
+			return redirect('/auth/login');
+
+		$types = ContributorType::lists('name', 'id');
+
+		return View("contributors.add")
+			->with('authUser', $authUser)
+			->with('contributor_types', $types)
+			->with('page_name', 'add_contributor')
+			->with('instructions', 'Add New Contributor to Database')
+			->with('title', 'Add Contributor');
 	}
 
 	/**
@@ -32,9 +65,14 @@ class ContributorsController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(CreateContributorRequest $request)
 	{
-		//
+		//		
+		$input = Input::all();
+		$contributor = Contributor::create( $input );
+
+		return Redirect::route('contributors.index')->with('message', 'Contributor created.');
+
 	}
 
 	/**
@@ -56,7 +94,18 @@ class ContributorsController extends Controller {
 	 */
 	public function edit($id)
 	{
-		//
+		$authUser = Auth::user();
+		if (!isset($authUser))
+			return redirect('/auth/login');
+
+		$contributor = Contributor::find($id);
+		$title = "Edit Contributor";
+
+		return View("contributors.edit")
+			->with('authUser', $authUser)
+			->with('contributor', $contributor)
+			->with('page_name', 'contributor-edit')
+			->with('title', $title);
 	}
 
 	/**
@@ -65,9 +114,17 @@ class ContributorsController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update(UpdateContributorRequest $request)
 	{
 		//
+		$contributor = Contributor::find($id);
+		$input = $request->all();
+
+		$contributor->first_name = $input['first_name'];
+		$contributor->surname = $input['surname'];
+		$movie->save();
+
+		return Redirect::route('contributors.index');
 	}
 
 	/**

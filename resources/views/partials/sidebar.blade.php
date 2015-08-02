@@ -14,14 +14,30 @@
                             
                             
                             <ul class="widget widget-menu unstyled">
-                                <li><a href="{{URL('users')}}"><i class="menu-icon icon-bold"></i> Users </a></li>
-                                <li><a class="collapsed" data-toggle="collapse" href="#togglePages"><i class="menu-icon icon-cog">
-                                </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right"></i>Movies </a>
-                                    <ul id="togglePages" class="collapse unstyled">
-                                        <li><a href="{{URL('movies')}}"><i class="icon-inbox"></i>List</a></li>
-                                        <li><a href="{{URL('movies/create')}}"><i class="icon-inbox"></i>Add New</a></li>
+                                <li><a class="collapsed" data-toggle="collapse" href="#toggleUsers"><i class="menu-icon icon-user">
+                                </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right"></i>Users </a>
+                                    <ul id="toggleUsers" class="collapse unstyled">
+                                        <li><a href="{{URL('users')}}"><i class="icon-user"></i>List</a></li>
+                                        <li><a href="{{URL('users/create')}}"><i class="icon-user"></i>Add New</a></li>
                                     </ul>
                                 </li>
+
+                                <li><a class="collapsed" data-toggle="collapse" href="#toggleMovies"><i class="menu-icon icon-film">
+                                </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right"></i>Movies </a>
+                                    <ul id="toggleMovies" class="collapse unstyled">
+                                        <li><a href="{{URL('movies')}}"><i class="icon-film"></i>List</a></li>
+                                        <li><a href="{{URL('movies/create')}}"><i class="icon-film"></i>Add New</a></li>
+                                    </ul>
+                                </li>
+
+                                <li><a class="collapsed" data-toggle="collapse" href="#toggleContributors"><i class="menu-icon icon-star">
+                                </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right"></i>Contributors </a>
+                                    <ul id="toggleContributors" class="collapse unstyled">
+                                        <li><a href="{{URL('contributors')}}"><i class="icon-star"></i>List</a></li>
+                                        <li><a href="{{URL('contributors/create')}}"><i class="icon-star"></i>Add New</a></li>
+                                    </ul>
+                                </li>
+
                                 <li><a href="form.html"><i class="menu-icon icon-paste"></i>Forms </a></li>
                                 <li><a href="table.html"><i class="menu-icon icon-table"></i>Tables </a></li>
                                 <li><a href="charts.html"><i class="menu-icon icon-bar-chart"></i>Charts </a></li>
