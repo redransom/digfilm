@@ -3,6 +3,7 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
+use DB;
 use App\Models\User;
 use App\Models\League;
 use App\Models\Role;
@@ -49,11 +50,20 @@ class LeaguesController extends Controller {
         if (!isset($authUser))
             return redirect('/auth/login');
 /*
-        $role = Role::where('name', 'Player')->first();
+        
         $users_role = RoleUser::where('role_id', $role->id);*/
         $users = User::with(['role' => function($q){
             $q->where('name', 'Player');
         }])->lists('name', 'id');
+
+/*        $users = User::whereHas(['role' => function($q){
+            $q->where('name', 'admin');
+        }])->lists('name', 'id');
+*/
+        $role = Role::where('name', 'Player')->first();
+        $user_ids = DB::table('role_user')->where('role_id', $role->id)->lists('user_id');
+
+        $users = User::whereIn('id', $user_ids)->lists('name', 'id');
         //$users = User::where('role_id', $role->id)->orderBy('name')->get();
 
         return View("leagues.add")

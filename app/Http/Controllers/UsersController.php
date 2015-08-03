@@ -2,8 +2,8 @@
 
 //use DB;
 use App\Http\Requests;
-/*use App\Http\Requests\CreateUserRequest;
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\CreateUserRequest;
+/*use App\Http\Requests\UpdateUserRequest;
 */use App\Http\Controllers\Controller;
 use Auth;
 use App\Models\User;
@@ -118,22 +118,20 @@ class UsersController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function create_customer()
+	public function create()
 	{
 		$authUser = Auth::user();
 		if (!isset($authUser))
 			return redirect('/auth/login');
 
-		$apps = Apps::lists('name', 'id');
-
-		$title = "Add Member";
+		$title = "Add User";
+		$roles = Role::lists('name', 'id');
 		$instructions = $title ." Details";
 
-		return View("users.create")
-			->with('user_type', 'C')
+		return View("users.add")
 			->with('authUser', $authUser)
-			->with('page_name', 'customer')
-			->with('apps', $apps)
+			->with('page_name', 'user_add')
+			->with('roles', $roles)
 			->with('instructions', $instructions)
 			->with('title', $title);
 	}
@@ -143,7 +141,7 @@ class UsersController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function create_admin()
+	/*public function create_admin()
 	{
 		$authUser = Auth::user();
 		if (!isset($authUser))
@@ -162,16 +160,16 @@ class UsersController extends Controller {
 			->with('instructions', $instructions)
 			->with('roles', $roles)
 			->with('title', $title);
-	}
+	}*/
 
-	private function getRoleKey($user_type) {
+	/*private function getRoleKey($user_type) {
 		if ($user_type == 'A')
 			return 'Admin';
 		elseif ($user_type == 'C')
 			return 'Customer';
 		else
 			return 'Supplier';
-	}
+	}*/
 
 	/**
 	 * Store a newly created resource in storage.
@@ -184,14 +182,11 @@ class UsersController extends Controller {
 		$user_type = Input::get('user_type');
 
 		$input = $request->all();
-		if ($input['email'] == $input['email_compare']) {
-			//email matches move on
-			unset($input['email_compare']);
 
 			if (isset($input['role_id'])) {
-				$role = Role::where('name', $this->getRoleKey($input['role_id']))->first();	
+				$role = \App\Models\Role::where('id', $input['role_id'])->first();	
 			} else
-				$role = Role::where('name', $this->getRoleKey($input['user_type']))->first();
+				$role = \App\Models\Role::where('name', 'Customer')->first();
 
 			$user = new User();
 			$user->name = $input['name'];
@@ -212,7 +207,7 @@ class UsersController extends Controller {
 			$user->attachRole($role);
 
 			//need to create the user profile
-			$profile = new UserProfile();
+			/*$profile = new UserProfile();
 			$profile->users_id = $user->id;
 
 			if ($request->file('thumbnail') != "") {
@@ -239,8 +234,8 @@ class UsersController extends Controller {
 			$profile->post_code = $input['post_code'];
 			$profile->country = $input['country'];
 			$profile->save();
-
-			if ($role->name == "Customer") {
+*/
+			/*if ($role->name == "Customer") {
 				//
 				if (isset($input['website']) && $input['website'] != "") {
 					$domain = new Domain();
@@ -256,20 +251,20 @@ class UsersController extends Controller {
 
 					}
 				}
-			}
+			}*/
 
-			Flash::message('New user has been created!');
-			return redirect()->route("dashboard");
+			//Flash::message('New user has been created!');
+			return redirect()->route("users");
 			//Redirect::route('dashboard')->with('message', 'Admin user '. $input['forenames'].' created.');
-		} else {
-			Flash::message('Emails dont match - please make sure they do!');
+		//} else {
+			//Flash::message('Emails dont match - please make sure they do!');
 
 			//if ($user_type == "Customer")
-			return Redirect::back()->withInput();
+			//return Redirect::back()->withInput();
 				/*return redirect()->route("create_customer")->withInputs();
 			else
 				return redirect()->route("create_admin")->withInputs();*/
-		}
+		//}
 	}
 
 	/**
