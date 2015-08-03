@@ -27,3 +27,4 @@ Route::get('dashboard', ['as' => 'dashboard', 'uses'=>'UsersController@dashboard
 Route::resource('users', 'UsersController');
 Route::resource('movies', 'MoviesController');
 Route::resource('contributors', 'ContributorsController');
+Route::resource('leagues', 'LeaguesController');
