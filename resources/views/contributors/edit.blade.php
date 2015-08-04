@@ -19,7 +19,7 @@
                 @endif
 
                 <br />
-                {!! Form::open(array('route' => 'contributors.update', 'class'=>'form-horizontal row-fluid')) !!}
+                {!! Form::open(array('route' => 'contributors.update', 'class'=>'form-horizontal row-fluid', 'files'=>true)) !!}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="control-group">
                         <label class="control-label" for="MovieName">Firstname(s)</label>
@@ -33,6 +33,13 @@
                         <label class="control-label" for="MovieSummary">Surname</label>
                         <div class="controls">
                             {!! Form::text('surname', $contributor->surname, ['class'=>'span8', 'placeholder'=>'Surname here...']) !!}
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="MovieSummary">Photo</label>
+                        <div class="controls">
+                            {!! Form::file('thumbnail', $contributor->thumbnail, ['class'=>'span8', 'placeholder'=>'Image of contributor']) !!}
                         </div>
                     </div>
 

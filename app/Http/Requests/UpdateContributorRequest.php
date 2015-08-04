@@ -23,7 +23,8 @@ class UpdateContributorRequest extends Request {
 	{
 		return [
             'first_name' => ['required'],
-            'surname' => ['required']
+            'surname' => ['required'],
+            'thumbnail' => ['required']
         ];
 	}
 

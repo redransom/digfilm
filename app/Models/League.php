@@ -16,4 +16,8 @@ class League extends Model {
     public function Owner() {
         return $this->belongsTo("\App\Models\User", "users_id");
     }
+
+    public function Players() {
+        return $this->belongsToMany("\App\Models\User", "league_users", "league_id", "user_id");
+    }
 }

@@ -89,7 +89,7 @@ class LeaguesController extends Controller {
     }
 
     /**
-     * Display the specified resource.
+     * Display the league details.
      *
      * @param  int  $id
      * @return Response
@@ -101,13 +101,13 @@ class LeaguesController extends Controller {
         if (!isset($authUser))
             return redirect('/auth/login');
 
-        $movie = Movie::find($id);
-        $title = "Movie ".$movie->name." details";
+        $league = League::find($id);
+        $title = "League ".$league->name." details";
 
-        return View("movies.show")
+        return View("leagues.show")
             ->with('authUser', $authUser)
-            ->with('movie', $movie)
-            ->with('page_name', 'movie-show')
+            ->with('league', $league)
+            ->with('page_name', 'league-show')
             ->with('title', $title);
 
     }
@@ -125,13 +125,13 @@ class LeaguesController extends Controller {
         if (!isset($authUser))
             return redirect('/auth/login');
 
-        $movie = Movie::find($id);
-        $title = "Edit Movie";
+        $league = League::find($id);
+        $title = "Edit League";
 
-        return View("movies.edit")
+        return View("leagues.edit")
             ->with('authUser', $authUser)
-            ->with('movie', $movie)
-            ->with('page_name', 'movie-edit')
+            ->with('league', $league)
+            ->with('page_name', 'league-edit')
             ->with('title', $title);
     }
 

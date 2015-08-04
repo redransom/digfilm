@@ -122,7 +122,15 @@ class ContributorsController extends Controller {
 
 		$contributor->first_name = $input['first_name'];
 		$contributor->surname = $input['surname'];
-		$movie->save();
+
+		if ($request->file('thumbnail') != "") {
+			$imageName = $user->id.str_replace(' ', '_', strtolower($input['name'])) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
+			$request->file('thumbnail')->move(base_path() . '/public/images/contributors/', $imageName);
+
+			$contributor->thumbnail = "/images/contributors/".$imageName;
+		}
+
+		$contributor->save();
 
 		return Redirect::route('contributors.index');
 	}

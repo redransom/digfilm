@@ -19,14 +19,16 @@
                             <div class="module-body">
                             @if(isset($contributors) && !empty($contributors))
 
-                            @for($contr_row = 0; $contr_row<(count($contributors)/2); $contr_row++)
+                            <?php $contributor_count = 0; ?>
+                            @foreach($contributors as $contributor)
+
+                                @if($contributor_count == 0 || ($contributor_count % 2) == 0)
                                 <div class="row-fluid">
-                                @for($contr_no = $contr_row; $contr_no < ($contr_row+2); $contr_no++)
-                                <?php $contributor = $contributors[$contr_no]; ?>
+                                @endif
                                     <div class="span6">
                                         <div class="media user">
                                             <a class="media-avatar pull-left" href="{{URL('contributors', array('id'=>$contributor->id))}}">
-                                                <img src="images/user.png">
+                                                <img src="admin/images/user.png">
                                             </a>
                                             <div class="media-body">
                                                 <h3 class="media-title">
@@ -38,12 +40,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <?php if (count($contributors) == 1) break; ?>
-                                @endfor
+                                @if(($contributor_count++ % 2) == 1)
                                 </div>
                                 <!--/.row-fluid-->
                                 <br />
-                            @endfor
+                                @endif
+                            @endforeach
                             @endif
                                 <div class="pagination pagination-centered">
                                     <ul>
