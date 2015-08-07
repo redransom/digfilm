@@ -19,7 +19,9 @@
                 @endif
 
                 <br />
-                {!! Form::open(array('route' => 'contributors.update', 'class'=>'form-horizontal row-fluid', 'files'=>true)) !!}
+
+                {!! Form::open(array('route' => array('contributors.update', $contributor->id), 'class'=>'form-horizontal row-fluid', 'files'=>true, 'method'=>'PUT')) !!}
+
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="control-group">
                         <label class="control-label" for="MovieName">Firstname(s)</label>

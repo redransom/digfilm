@@ -114,7 +114,7 @@ class ContributorsController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update(UpdateContributorRequest $request)
+	public function update($id, UpdateContributorRequest $request)
 	{
 		//
 		$contributor = Contributor::find($id);
@@ -124,7 +124,7 @@ class ContributorsController extends Controller {
 		$contributor->surname = $input['surname'];
 
 		if ($request->file('thumbnail') != "") {
-			$imageName = $user->id.str_replace(' ', '_', strtolower($input['name'])) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
+			$imageName = $contributor->id.str_replace(' ', '_', strtolower($input['first_name'])) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
 			$request->file('thumbnail')->move(base_path() . '/public/images/contributors/', $imageName);
 
 			$contributor->thumbnail = "/images/contributors/".$imageName;

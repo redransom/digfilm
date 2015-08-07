@@ -20,15 +20,12 @@
                             <div class="module-head">
                                 <h3>Contributors</h3>
                             </div>
+
                             <dl class="dl-horizontal">
-                                <dt>Summary</dt>
-                                <dd>{{$movie->summary}}</dd>
-                                <dt>Genre</dt>
-                                <dd>{{$movie->genre}}</dd>
-                                <dt>Rating</dt>
-                                <dd>{{$movie->rating}}</dd>
-                                <dt>Budget</dt>
-                                <dd>${{$movie->budget}} million</dd>
+                                @foreach($movie->contributors as $contributor)
+                                <dt>{{$contributor->first_name}} {{$contributor->surname}}</dt>
+                                <dd>Actor</dd>
+                                @endforeach
                             </dl>
                             <p>NOTE: I'd like to be able to have this as a free text field that adds a line with the contributor type.
                             <br/> I'll have a look into it but for getting this out quickly I'll make it a standard entry page for now.</p>

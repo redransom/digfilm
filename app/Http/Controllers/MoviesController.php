@@ -6,6 +6,7 @@ use Auth;
 use App\Models\User;
 use App\Models\Movie;
 use App\Models\Contributor;
+use App\Models\MovieContributor;
 use App\Models\ContributorType;
 use App\Models\Role;
 use Session;

@@ -5,5 +5,6 @@ use Illuminate\Database\Eloquent\Model;
 class MovieContributor extends Model {
 
     //
-    protected $fillable = array('movie_id', 'contributor_id', 'star');
+    protected $table = 'movies_contributors';
+    protected $fillable = array('movies_id', 'contributors_id', 'star', 'contributor_types_id');
 }

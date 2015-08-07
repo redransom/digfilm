@@ -19,19 +19,20 @@
                 @endif
 
                 <br />
-                {!! Form::open(array('route' => 'add-contributor', 'class'=>'form-horizontal row-fluid')) !!}
+                {!! Form::open(array('route' => array('add-contributor', $movie->id), 'class'=>'form-horizontal row-fluid')) !!}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="movies_id" value="{{ $movie->id }}">
                     <div class="control-group">
                         <label class="control-label" for="MovieName">Contributor</label>
                         <div class="controls">
-                            {!! Form::select('contributor_id', $contributors, null, ['class'=>'span8']) !!}
+                            {!! Form::select('contributors_id', $contributors, null, ['class'=>'span8']) !!}
                         </div>
                     </div>
 
                     <div class="control-group">
                         <label class="control-label" for="MovieSummary">as?</label>
                         <div class="controls">
-                            {!! Form::select('contributor_type_id', $types, null, ['class'=>'span8']) !!}
+                            {!! Form::select('contributor_types_id', $types, null, ['class'=>'span8']) !!}
                         </div>
                     </div>
 

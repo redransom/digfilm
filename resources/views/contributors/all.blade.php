@@ -28,7 +28,11 @@
                                     <div class="span6">
                                         <div class="media user">
                                             <a class="media-avatar pull-left" href="{{URL('contributors', array('id'=>$contributor->id))}}">
+                                                @if(is_null($contributor->thumbnail))
                                                 <img src="admin/images/user.png">
+                                                @else
+                                                <img src="{{ asset($contributor->thumbnail) }}">
+                                                @endif
                                             </a>
                                             <div class="media-body">
                                                 <h3 class="media-title">

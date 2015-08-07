@@ -21,7 +21,7 @@ Route::controllers([
 ]);
 
 Route::get('movie-add-contributor/{id}', ['as'=>'movie-add-contributor', 'uses'=>'MoviesController@addContributor']);
-Route::post('add-contributor', ['as'=>'add-contributor', 'uses'=>'MoviesController@postContributor']);
+Route::post('add-contributor/{id}', ['as'=>'add-contributor', 'uses'=>'MoviesController@postContributor']);
 
 Route::get('dashboard', ['as' => 'dashboard', 'uses'=>'UsersController@dashboard']);
 Route::resource('users', 'UsersController');
