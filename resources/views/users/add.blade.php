@@ -2,8 +2,16 @@
 
 @section('content')
 <div class="content">
+    <div style="padding: 20px 10px;">
+        @if(isset($page_name) && !isset($object))
+            {!! Breadcrumbs::render($page_name) !!}
+        @elseif(isset($page_name) && isset($object))
+            {!! Breadcrumbs::render($page_name, $object) !!}
+        @endif
+    </div>
 
     <div class="module">
+        
         <div class="module-head">
             <h3>Add User</h3>
         </div>

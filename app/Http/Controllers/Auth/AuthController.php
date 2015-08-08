@@ -4,6 +4,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Role;
 
 class AuthController extends Controller {
 
@@ -17,11 +20,12 @@ class AuthController extends Controller {
 	| a simple trait to add these behaviors. Why don't you explore it?
 	|
 	*/
-	protected $redirectPath = '/dashboard';
+	protected $redirectPath = '/admin-dashboard';
+	protected $loginPath = '/dashboard';
 	use AuthenticatesAndRegistersUsers;
 
 	/**
-	 * Create a new authentication controller instance.
+	 * Override the trait function to handle players and admin
 	 *
 	 * @param  \Illuminate\Contracts\Auth\Guard  $auth
 	 * @param  \Illuminate\Contracts\Auth\Registrar  $registrar
@@ -33,6 +37,38 @@ class AuthController extends Controller {
 		$this->registrar = $registrar;
 
 		$this->middleware('guest', ['except' => 'getLogout']);
+	}
+
+	public function postLogin(Request $request)
+	{
+		$this->validate($request, [
+			'email' => 'required|email', 'password' => 'required',
+		]);
+
+		$credentials = $request->only('email', 'password');
+
+		if ($this->auth->attempt($credentials, $request->has('remember')))
+		{
+			$authUser = $this->auth->user();
+
+			$role_users = \App\Models\RoleUser::where('user_id', $authUser->id)->get();
+
+			foreach ($role_users as $ru) {
+				$role = Role::where('id', $ru->role_id)->first();
+				$roles[] = $role->name;
+			}
+
+			if (in_array("Admin", $roles))
+				return redirect()->intended('admin-dashboard');
+			else
+				return redirect()->intended('dashboard');
+		}
+
+		return redirect($this->loginPath())
+					->withInput($request->only('email', 'remember'))
+					->withErrors([
+						'email' => $this->getFailedLoginMessage(),
+					]);
 	}
 
 }

@@ -11,32 +11,12 @@ use App\Models\Role;
 use Session;
 use Input;
 use Redirect;
-//use Flash;
+use Flash;
 
 use Illuminate\Http\Request;
 
 class UsersController extends Controller {
 
-/*	protected $admin_rules = [
-		'forename' => ['required', 'min:3'],
-		'surname' => ['required'],
-		'email' => ['required', 'unique:users']
-	];
-
-	protected $customer_rules = [
-		'forename' => ['required', 'min:3'],
-		'surname' => ['required'],
-		'email' => ['required', 'unique:users'],
-		'name' => ['required', 'unique:users'],
-		'password' => ['required']
-	];
-
-	protected $supplier_rules = [
-		'forename' => ['required', 'min:3'],
-		'surname' => ['required'],
-		'email' => ['required', 'unique:users']
-	];
-*/
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -130,7 +110,7 @@ class UsersController extends Controller {
 
 		return View("users.add")
 			->with('authUser', $authUser)
-			->with('page_name', 'user_add')
+			->with('page_name', 'user-add')
 			->with('roles', $roles)
 			->with('instructions', $instructions)
 			->with('title', $title);
@@ -253,7 +233,7 @@ class UsersController extends Controller {
 				}
 			}*/
 
-			//Flash::message('New user has been created!');
+			Flash::message('New user has been created!');
 			return redirect()->route("users");
 			//Redirect::route('dashboard')->with('message', 'Admin user '. $input['forenames'].' created.');
 		//} else {
@@ -430,7 +410,7 @@ class UsersController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function setroles() {
+	/*public function setroles() {
 		//get users and 
 		$adminUser = User::where('name', 'Kinsley')->get();
 
@@ -450,8 +430,8 @@ class UsersController extends Controller {
 		$adminUser->attachRole($admin);
 		
 	}
-
-
+*/
+/*
 	public function selectsite() {
 		$authUser = Auth::user();
 
@@ -481,32 +461,29 @@ class UsersController extends Controller {
 		} else {
 			return redirect('home')->with('message', 'This domain does not belong to you.');
 		}
-	}
+	}*/
 
-	public function dashboard() {
+	public function adminDashboard() {
 		$authUser = Auth::user();
 		if (!isset($authUser))
 			return redirect('/auth/login');
 
-/*		if ($authUser->hasRole("Customer")) {
-			$current_domain = Session::get('current_domain');
-			$sites = Session::get('available_domains');
-
-			if (is_null($current_domain))
-				return Redirect::route('home');
-
-			$title = $current_domain->name;
-			$instructions = $current_domain->description;
-
-		} else {
-			$sites = array();
-			$title = "Admin";
-			$current_domain = null;
-			$instructions = "Select from the menu";
-		}
-*/		
-		return View("users.dashboard")
+		return View("users.admin")
+			->with('use_graph', true)
 			->with('authUser', $authUser)
+			->with('page_name', 'add-user')
+			->with('title', 'Welcome to the DigFilm adminstration system Dashboard');
+	}
+
+	public function usersDashboard() {
+		$authUser = Auth::user();
+		if (!isset($authUser))
+			return redirect('/auth/login');
+
+		return View("users.dashboard")
+			->with('use_graph', true)
+			->with('authUser', $authUser)
+			->with('page_name', 'add-user')
 			->with('title', 'Welcome to the DigFilm adminstration system Dashboard');
 	}
 

@@ -145,7 +145,9 @@ return [
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
     	'Zizaco\Entrust\EntrustServiceProvider',
-    	'Collective\Html\HtmlServiceProvider'
+    	'Collective\Html\HtmlServiceProvider',
+		'DaveJamesMiller\Breadcrumbs\ServiceProvider',
+		'Laracasts\Flash\FlashServiceProvider'
 	],
 
 	/*
@@ -196,6 +198,8 @@ return [
     	'Entrust' => 'Zizaco\Entrust\EntrustFacade',
     	'Form' => 'Collective\Html\FormFacade',
       	'Html' => 'Collective\Html\HtmlFacade',
+		'Breadcrumbs' => 'DaveJamesMiller\Breadcrumbs\Facade',
+		'Flash' => 'Laracasts\Flash\Flash'
 	],
 
 ];

@@ -27,10 +27,13 @@
                             <div class="module-body">
                             @if(isset($users) && !empty($users))
 
-                            @for($user_row = 0; $user_row<(count($users)/2); $user_row++)
+                            <?php $user_count = 0; ?>
+                            @foreach($users as $user)
+
+                                @if($user_count == 0 || ($user_count % 2) == 0)
                                 <div class="row-fluid">
-                                @for($user_no = $user_row; $user_no < ($user_row+2); $user_no++)
-                                <?php $user = $users[$user_no]; ?>
+                                @endif
+
                                     <div class="span6">
                                         <div class="media user">
                                             <a class="media-avatar pull-left" href="{{URL('users', array('id'=>$user->id))}}">
@@ -53,11 +56,12 @@
                                             </div>
                                         </div>
                                     </div>    
-                                @endfor
+                               @if(($user_count++ % 2) == 1)
                                 </div>
                                 <!--/.row-fluid-->
                                 <br />
-                            @endfor
+                                @endif
+                            @endforeach
                             @endif
                                 <div class="pagination pagination-centered">
                                     <ul>
