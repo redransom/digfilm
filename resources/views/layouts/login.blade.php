@@ -12,7 +12,7 @@
             rel='stylesheet'>
 </head>
 <body>
-    @include('partials.navbar')
+    @include('partials.admin-navbar')
 
     @yield('content')
 

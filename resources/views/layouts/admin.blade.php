@@ -19,13 +19,13 @@
     </head>
     <body>
     <!-- NAVBAR GOES HERE -->
-    @include('partials.navbar')
+    @include('partials.admin-navbar')
         <div class="wrapper">
             <div class="container">
                 <div class="row">
                     <div class="span3">
                         <!-- SIDE BAR GOES HERE -->
-                        @include('partials.sidebar')
+                        @include('partials.admin-sidebar')
                     </div>
                     <!--/.span3-->
                     <div class="span9">
