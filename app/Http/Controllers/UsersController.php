@@ -234,7 +234,7 @@ class UsersController extends Controller {
 			}*/
 
 			Flash::message('New user has been created!');
-			return redirect()->route("users");
+			return redirect()->route("users.index");
 			//Redirect::route('dashboard')->with('message', 'Admin user '. $input['forenames'].' created.');
 		//} else {
 			//Flash::message('Emails dont match - please make sure they do!');
@@ -285,9 +285,10 @@ class UsersController extends Controller {
 		$title = "Edit Member";
 		$instructions = $title ." Details";
 
-		$role = Role::where('id', $this->getRole($authUser))->first();
+/*		$role = Role::where('id', $this->getRole($authUser))->first();
 		$roles = Role::where('role_order', '>=', $role->role_order)->orderBy('role_order', 'asc')->lists('display_name', 'id');
-				
+*/		
+		$roles = Role::lists('name', 'id');
 		return View("users.edit")
 			->with('authUser', $authUser)
 			->with('user', $user)

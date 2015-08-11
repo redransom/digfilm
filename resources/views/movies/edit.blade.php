@@ -19,7 +19,7 @@
                 @endif
 
                 <br />
-                {!! Form::open(array('route' => 'movies.update', 'class'=>'form-horizontal row-fluid')) !!}
+                {!! Form::open(array('route' => array('movies.update', $movie->id), 'class'=>'form-horizontal row-fluid', 'method'=>'PUT')) !!}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="control-group">
                         <label class="control-label" for="MovieName">Name</label>

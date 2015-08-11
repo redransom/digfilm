@@ -46,13 +46,17 @@
                                                 <p>
                                                     <small class="muted">{{$user->role->first()->display_name}}</small></p>
                                                 <div class="media-option btn-group shaded-icon">
+                                                    <a class="btn btn-mini btn-primary" href="{{URL('users/'.$user->id.'/edit')}}">Edit</a>
+                                                </div>
+
+                                                <!--div class="media-option btn-group shaded-icon">
                                                     <button class="btn btn-small">
                                                         <i class="icon-envelope"></i>
                                                     </button>
                                                     <button class="btn btn-small">
                                                         <i class="icon-share-alt"></i>
                                                     </button>
-                                                </div>
+                                                </div-->
                                             </div>
                                         </div>
                                     </div>    

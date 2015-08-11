@@ -50,28 +50,32 @@ class LeaguesController extends Controller {
         if (!isset($authUser))
             return redirect('/auth/login');
 /*
-        
-        $users_role = RoleUser::where('role_id', $role->id);*/
         $users = User::with(['role' => function($q){
             $q->where('name', 'Player');
         }])->lists('name', 'id');
 
-/*        $users = User::whereHas(['role' => function($q){
-            $q->where('name', 'admin');
-        }])->lists('name', 'id');
-*/
         $role = Role::where('name', 'Player')->first();
         $user_ids = DB::table('role_user')->where('role_id', $role->id)->lists('user_id');
 
         $users = User::whereIn('id', $user_ids)->lists('name', 'id');
-        //$users = User::where('role_id', $role->id)->orderBy('name')->get();
-
+*/
         return View("leagues.add")
             ->with('authUser', $authUser)
-            ->with('users', $users)
+            ->with('users', $this->get_players())
             ->with('page_name', 'add_league')
             ->with('instructions', 'Add New League')
             ->with('title', 'Add League');
+    }
+
+    private function get_players() {
+        $users = User::with(['role' => function($q){
+            $q->where('name', 'Player');
+        }])->lists('name', 'id');
+
+        $role = Role::where('name', 'Player')->first();
+        $user_ids = DB::table('role_user')->where('role_id', $role->id)->lists('user_id');
+
+        return User::whereIn('id', $user_ids)->lists('name', 'id');
     }
 
     /**
@@ -130,6 +134,7 @@ class LeaguesController extends Controller {
 
         return View("leagues.edit")
             ->with('authUser', $authUser)
+            ->with('users', $this->get_players())
             ->with('league', $league)
             ->with('page_name', 'league-edit')
             ->with('title', $title);
