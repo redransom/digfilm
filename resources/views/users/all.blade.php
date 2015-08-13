@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
+
                         <div class="module">
                             <div class="module-head">
                                 <h3>
@@ -21,7 +22,7 @@
                                     <button type="button" class="btn">
                                         Admin</button>
                                     <button type="button" class="btn">
-                                        Customer</button>
+                                        Player</button>
                                 </div>
                             </div>
                             <div class="module-body">
@@ -37,7 +38,11 @@
                                     <div class="span6">
                                         <div class="media user">
                                             <a class="media-avatar pull-left" href="{{URL('users', array('id'=>$user->id))}}">
-                                                <img src="images/user.png">
+                                            @if(!is_null($user->thumbail))
+                                            <img src="{{asset($user->thumbnail)}}">
+                                            @else
+                                            <img src="/admin/images/user.png">
+                                            @endif
                                             </a>
                                             <div class="media-body">
                                                 <h3 class="media-title">
@@ -49,6 +54,9 @@
                                                     <a class="btn btn-mini btn-primary" href="{{URL('users/'.$user->id.'/edit')}}">Edit</a>
                                                 </div>
 
+                                                <div class="media-option btn-group shaded-icon">
+                                                    <a class="btn btn-mini btn-warning" href="{{URL('users/'.$user->id.'/disable')}}">Disable</a>
+                                                </div>
                                                 <!--div class="media-option btn-group shaded-icon">
                                                     <button class="btn btn-small">
                                                         <i class="icon-envelope"></i>
@@ -66,15 +74,23 @@
                                 <br />
                                 @endif
                             @endforeach
+
+                                @if(($user_count % 2) == 1)
+                                </div>
+                                <!--/.row-fluid-->
+                                <br />
+                                @endif
                             @endif
                                 <div class="pagination pagination-centered">
-                                    <ul>
+
+                                <?php echo $users->render(); ?>
+                                    <!--ul>
                                         <li><a href="#"><i class="icon-double-angle-left"></i></a></li>
                                         <li><a href="#">1</a></li>
                                         <li><a href="#">2</a></li>
                                         <li><a href="#">3</a></li>
                                         <li><a href="#"><i class="icon-double-angle-right"></i></a></li>
-                                    </ul>
+                                    </ul-->
                                 </div>
                             </div>
                         </div>

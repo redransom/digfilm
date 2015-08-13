@@ -29,7 +29,17 @@
                     </div>
                     <!--/.span3-->
                     <div class="span9">
-                    @yield('content')
+                        <div class="content">
+                            <div>
+                                @if(isset($page_name) && !isset($object))
+                                    {!! Breadcrumbs::render($page_name) !!}
+                                @elseif(isset($page_name) && isset($object))
+                                    {!! Breadcrumbs::render($page_name, $object) !!}
+                                @endif
+                            </div>
+
+                            @yield('content')
+                        </div>
                     </div>
                     <!--/.span9-->
                 </div>
@@ -39,7 +49,7 @@
         <!--/.wrapper-->
         <div class="footer">
             <div class="container">
-                <b class="copyright">&copy; 2015 RedRansom Software </b>All rights reserved.
+                <b class="copyright">&copy; <?php echo date("Y"); ?> RedRansom Software </b>All rights reserved.
             </div>
         </div>
         <script src="{{ asset('/admin/scripts/jquery-1.9.1.min.js') }}" type="text/javascript"></script>

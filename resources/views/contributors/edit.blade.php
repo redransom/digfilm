@@ -1,8 +1,6 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="content">
-
     <div class="module">
         <div class="module-head">
             <h3>Edit Contributor</h3>
@@ -24,7 +22,7 @@
 
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="control-group">
-                        <label class="control-label" for="MovieName">Firstname(s)</label>
+                        <label class="control-label" for="ContributorFirstname">Firstname(s)</label>
                         <div class="controls">
                             {!! Form::text('first_name', $contributor->first_name, ['class'=>'span8', 'placeholder'=>'First name(s) here...']) !!}
                             <span class="help-inline">Minimum 3 Characters.</span>
@@ -32,16 +30,16 @@
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label" for="MovieSummary">Surname</label>
+                        <label class="control-label" for="ContributorSurname">Surname</label>
                         <div class="controls">
                             {!! Form::text('surname', $contributor->surname, ['class'=>'span8', 'placeholder'=>'Surname here...']) !!}
                         </div>
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label" for="MovieSummary">Photo</label>
+                        <label class="control-label" for="ContributorThumbnail">Photo</label>
                         <div class="controls">
-                            {!! Form::file('thumbnail', $contributor->thumbnail, ['class'=>'span8', 'placeholder'=>'Image of contributor']) !!}
+                            {!! Form::file('thumbnail', null, ['class'=>'span8', 'placeholder'=>'Image of contributor']) !!}
                         </div>
                     </div>
 
@@ -53,8 +51,4 @@
                 </form>
         </div>
     </div>
-
-    
-    
-</div>
 @endsection

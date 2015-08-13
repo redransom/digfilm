@@ -29,7 +29,7 @@ class ContributorsController extends Controller {
 		if (!isset($authUser))
 			return redirect('/auth/login');
 
-		$contributors = Contributor::all();
+		$contributors = Contributor::paginate(4);
 
 		return View("contributors.all")
 			->with('contributors', $contributors)
@@ -54,8 +54,8 @@ class ContributorsController extends Controller {
 
 		return View("contributors.add")
 			->with('authUser', $authUser)
-			->with('contributor_types', $types)
-			->with('page_name', 'add_contributor')
+			//->with('contributor_types', $types)
+			->with('page_name', 'contributor-add')
 			->with('instructions', 'Add New Contributor to Database')
 			->with('title', 'Add Contributor');
 	}
@@ -71,19 +71,40 @@ class ContributorsController extends Controller {
 		$input = Input::all();
 		$contributor = Contributor::create( $input );
 
+		if ($request->file('thumbnail') != "") {
+			$imageName = $contributor->id.str_replace(' ', '_', strtolower($input['first_name'])) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
+			$request->file('thumbnail')->move(base_path() . '/public/images/contributors/', $imageName);
+
+			$contributor->thumbnail = "/images/contributors/".$imageName;
+		}
+
+
 		return Redirect::route('contributors.index')->with('message', 'Contributor created.');
 
 	}
 
 	/**
 	 * Display the specified resource.
-	 *
+	 *	
 	 * @param  int  $id
 	 * @return Response
 	 */
 	public function show($id)
 	{
 		//
+		$authUser = Auth::user();
+		if (!isset($authUser))
+			return redirect('/auth/login');
+
+		$contributor = Contributor::find($id);
+		$title = "Contributor ".$contributor->name;
+
+		return View("contributors.show")
+			->with('authUser', $authUser)
+			->with('contributor', $contributor)
+			->with('object', $contributor)
+			->with('page_name', 'contributor-show')
+			->with('title', $title);
 	}
 
 	/**
@@ -104,6 +125,7 @@ class ContributorsController extends Controller {
 		return View("contributors.edit")
 			->with('authUser', $authUser)
 			->with('contributor', $contributor)
+			->with('object', $contributor)
 			->with('page_name', 'contributor-edit')
 			->with('title', $title);
 	}

@@ -1,8 +1,6 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="content">
-
     <div class="module">
         <div class="module-head">
             <h3>Add Contributor to Movie {{$movie->name}}</h3>
@@ -51,8 +49,4 @@
                 </form>
         </div>
     </div>
-
-    
-    
-</div>
 @endsection

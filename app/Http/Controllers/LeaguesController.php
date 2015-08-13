@@ -6,13 +6,14 @@ use Auth;
 use DB;
 use App\Models\User;
 use App\Models\League;
+use App\Models\LeagueUser;
 use App\Models\Role;
 use Session;
 use Input;
 use Redirect;
-use App\Http\Requests\CreateMovieRequest;
-use App\Http\Requests\UpdateMovieRequest;
-use App\Http\Requests\AddContributorToMovieRequest;
+use App\Http\Requests\CreateLeagueRequest;
+use App\Http\Requests\UpdateLeagueRequest;
+use App\Http\Requests\AddPlayerToLeagueRequest;
 use Illuminate\Http\Request;
 
 class LeaguesController extends Controller {
@@ -107,10 +108,13 @@ class LeaguesController extends Controller {
 
         $league = League::find($id);
         $title = "League ".$league->name." details";
+        $players = $league->Players;
 
         return View("leagues.show")
             ->with('authUser', $authUser)
             ->with('league', $league)
+            ->with('players', $players)
+            ->with('object', $league)
             ->with('page_name', 'league-show')
             ->with('title', $title);
 
@@ -136,6 +140,7 @@ class LeaguesController extends Controller {
             ->with('authUser', $authUser)
             ->with('users', $this->get_players())
             ->with('league', $league)
+            ->with('object', $league)
             ->with('page_name', 'league-edit')
             ->with('title', $title);
     }
@@ -146,21 +151,17 @@ class LeaguesController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function update($id, UpdateMovieRequest $request)
+    public function update($id, UpdateLeagueRequest $request)
     {
         //get movie
-        $movie = Movie::find($id);
+        $league = League::find($id);
         $input = $request->all();
 
-        $movie->name = $input['name'];
-        $movie->summary = $input['summary'];
-        $movie->genre = $input['summary'];
-        $movie->rating = $input['rating'];
-        $movie->budget = $input['budget'];
-        $movie->save();
+        $league->name = $input['name'];
+        $league->users_id = $input['users_id'];
+        $league->save();
 
-        return Redirect::route('movies.index');
-
+        return Redirect::route('leagues.index');
     }
 
     /**
@@ -185,34 +186,36 @@ class LeaguesController extends Controller {
         //
     }
 
-    public function addContributor($id) {
+    /**
+     * Add player to league
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function addPlayer($id) {
         $authUser = Auth::user();
         if (!isset($authUser))
             return redirect('/auth/login');
 
-        $movie = Movie::find($id);
-        $title = "Add Contributor to ".$movie->name." movie";
-        $contributors = Contributor::all();
+        $league = League::find($id);
+        $title = "Add League to ".$league->name." movie";
+        $players = $this->get_players();
 
-        $new_contributors = array();
-        foreach ($contributors as $contributor)
-            $new_contributors[$contributor->id] = $contributor->first_name." ".$contributor->surname;
-
-        $contributor_types = ContributorType::lists('name', 'id');
-
-        return View("movies.contributor")
+        return View("leagues.player")
             ->with('authUser', $authUser)
-            ->with('movie', $movie)
-            ->with('contributors', $new_contributors)
-            ->with('types', $contributor_types)
-            ->with('page_name', 'movie-contributor')
+            ->with('league', $league)
+            ->with('object', $league)
+            ->with('players', $players)
+            ->with('page_name', 'league-player')
             ->with('title', $title);
     }
 
-    public function postContributor($id, AddContributorToMovieRequest $request) {
+    public function postPlayer($id, AddPlayerToLeagueRequest $request) {
         $input = Input::all();
-        $movie = MovieContributor::create( $input );
+        $movie = LeagueUser::create( $input );
 
-        return Redirect::route('movies.show', array($id))->with('message', 'Movie created.');
+        return Redirect::route('leagues.show', array($id))->with('message', 'Player added.');
     }
+
+
 }

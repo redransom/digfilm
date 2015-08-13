@@ -53,7 +53,7 @@ class MoviesController extends Controller {
 			return redirect('/auth/login');
 		return View("movies.add")
 			->with('authUser', $authUser)
-			->with('page_name', 'add_movie')
+			->with('page_name', 'movie-add')
 			->with('instructions', 'Add New Movie to Database')
 			->with('title', 'Add Movie');
 	}
@@ -91,6 +91,7 @@ class MoviesController extends Controller {
 		return View("movies.show")
 			->with('authUser', $authUser)
 			->with('movie', $movie)
+			->with('object', $movie)
 			->with('page_name', 'movie-show')
 			->with('title', $title);
 
@@ -115,6 +116,7 @@ class MoviesController extends Controller {
 		return View("movies.edit")
 			->with('authUser', $authUser)
 			->with('movie', $movie)
+			->with('object', $movie)
 			->with('page_name', 'movie-edit')
 			->with('title', $title);
 	}
@@ -182,6 +184,7 @@ class MoviesController extends Controller {
 		return View("movies.contributor")
 			->with('authUser', $authUser)
 			->with('movie', $movie)
+			->with('object', $movie)
 			->with('contributors', $new_contributors)
 			->with('types', $contributor_types)
 			->with('page_name', 'movie-contributor')

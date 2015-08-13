@@ -4,7 +4,7 @@
                     <div class="content">
                         <div class="module">
                             <div class="module-head">
-                                <h3>Movie {{$movie->name}} details</h3>
+                                <h3>{{$movie->name}}</h3>
                             </div>
                             <dl class="dl-horizontal">
                                 <dt>Summary</dt>
@@ -24,7 +24,7 @@
                             <dl class="dl-horizontal">
                                 @foreach($movie->contributors as $contributor)
                                 <dt>{{$contributor->first_name}} {{$contributor->surname}}</dt>
-                                <dd>Actor</dd>
+                                <dd>Actor - TODO: This needs to be read in from the pivot table</dd>
                                 @endforeach
                             </dl>
                             <p>NOTE: I'd like to be able to have this as a free text field that adds a line with the contributor type.

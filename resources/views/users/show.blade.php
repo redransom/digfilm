@@ -1,21 +1,22 @@
 @extends('layouts.admin')
 
 @section('content')
-                    <div class="content">
                         <div class="module">
                             <div class="module-body">
                                 <div class="profile-head media">
                                     <a href="#" class="media-avatar pull-left">
-                                        <img src="images/user.png">
+                                        @if(!is_null($user->thumbail))
+                                        <img src="{{asset($user->thumbnail)}}">
+                                        @else
+                                        <img src="/admin/images/user.png">
+                                        @endif
                                     </a>
                                     <div class="media-body">
                                         <h4>
-                                            John Donga <small>Offline</small>
+                                            {{$user->forenames}} {{$user->surname}}<small>{{$user->name}}</small>
                                         </h4>
                                         <p class="profile-brief">
-                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                            Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                            unknown printer took a galley of type.
+                                            TEXT - Do we want to have users be able to provide a profile description?
                                         </p>
                                         <div class="profile-details muted">
                                             <a href="#" class="btn"><i class="icon-plus shaded"></i>Send Friend Request </a>
@@ -26,6 +27,7 @@
                                 <ul class="profile-tab nav nav-tabs">
                                     <li class="active"><a href="#activity" data-toggle="tab">Feed</a></li>
                                     <li><a href="#friends" data-toggle="tab">Friends</a></li>
+                                    <li><a href="#leagues" data-toggle="tab">Leagues</a></li>
                                 </ul>
                                 <div class="profile-tab-content tab-content">
                                     <div class="tab-pane fade active in" id="activity">
@@ -251,98 +253,38 @@
                                             </div>
                                             <!--/.row-fluid-->
                                             <br />
-                                            <div class="row-fluid">
-                                                <div class="span6">
-                                                    <div class="media user">
-                                                        <a class="media-avatar pull-left" href="#">
-                                                            <img src="images/user.png">
-                                                        </a>
-                                                        <div class="media-body">
-                                                            <h3 class="media-title">
-                                                                John Donga</h3>
-                                                            <p>
-                                                                <small class="muted">Pakistan</small></p>
-                                                            <div class="media-option btn-group shaded-icon">
-                                                                <button class="btn btn-small">
-                                                                    <i class="icon-envelope"></i>
-                                                                </button>
-                                                                <button class="btn btn-small">
-                                                                    <i class="icon-share-alt"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="span6">
-                                                    <div class="media user">
-                                                        <a class="media-avatar pull-left" href="#">
-                                                            <img src="images/user.png">
-                                                        </a>
-                                                        <div class="media-body">
-                                                            <h3 class="media-title">
-                                                                Donga John</h3>
-                                                            <p>
-                                                                <small class="muted">Pakistan</small></p>
-                                                            <div class="media-option btn-group shaded-icon">
-                                                                <button class="btn btn-small">
-                                                                    <i class="icon-envelope"></i>
-                                                                </button>
-                                                                <button class="btn btn-small">
-                                                                    <i class="icon-share-alt"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                            <div class="pagination pagination-centered">
+                                                <ul>
+                                                    <li><a href="#"><i class="icon-double-angle-left"></i></a></li>
+                                                    <li><a href="#">1</a></li>
+                                                    <li><a href="#">2</a></li>
+                                                    <li><a href="#">3</a></li>
+                                                    <li><a href="#">4</a></li>
+                                                    <li><a href="#"><i class="icon-double-angle-right"></i></a></li>
+                                                </ul>
                                             </div>
-                                            <!--/.row-fluid-->
-                                            <br />
-                                            <div class="row-fluid">
-                                                <div class="span6">
-                                                    <div class="media user">
-                                                        <a class="media-avatar pull-left" href="#">
-                                                            <img src="images/user.png">
-                                                        </a>
-                                                        <div class="media-body">
-                                                            <h3 class="media-title">
-                                                                John Donga</h3>
-                                                            <p>
-                                                                <small class="muted">Pakistan</small></p>
-                                                            <div class="media-option btn-group shaded-icon">
-                                                                <button class="btn btn-small">
-                                                                    <i class="icon-envelope"></i>
-                                                                </button>
-                                                                <button class="btn btn-small">
-                                                                    <i class="icon-share-alt"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="span6">
-                                                    <div class="media user">
-                                                        <a class="media-avatar pull-left" href="#">
-                                                            <img src="images/user.png">
-                                                        </a>
-                                                        <div class="media-body">
-                                                            <h3 class="media-title">
-                                                                Donga John</h3>
-                                                            <p>
-                                                                <small class="muted">Pakistan</small></p>
-                                                            <div class="media-option btn-group shaded-icon">
-                                                                <button class="btn btn-small">
-                                                                    <i class="icon-envelope"></i>
-                                                                </button>
-                                                                <button class="btn btn-small">
-                                                                    <i class="icon-share-alt"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="leagues">
+                                        <div class="module-option clearfix">
+                                            <form>
+                                            <div class="input-append pull-left">
+                                                <input type="text" class="span3" placeholder="Filter by name...">
+                                                <button type="submit" class="btn">
+                                                    <i class="icon-search"></i>
+                                                </button>
                                             </div>
-                                            <!--/.row-fluid-->
-                                            <br />
+                                            </form>
+                                            <div class="btn-group pull-right" data-toggle="buttons-radio">
+                                                <button type="button" class="btn">
+                                                    All</button>
+                                                <button type="button" class="btn">
+                                                    Male</button>
+                                                <button type="button" class="btn">
+                                                    Female</button>
+                                            </div>
+                                        </div>
+                                        <div class="module-body">
                                             <div class="row-fluid">
                                                 <div class="span6">
                                                     <div class="media user">
@@ -351,7 +293,8 @@
                                                         </a>
                                                         <div class="media-body">
                                                             <h3 class="media-title">
-                                                                John Donga</h3>
+                                                                John Donga
+                                                            </h3>
                                                             <p>
                                                                 <small class="muted">Pakistan</small></p>
                                                             <div class="media-option btn-group shaded-icon">
@@ -390,14 +333,9 @@
                                             <!--/.row-fluid-->
                                             <br />
                                             <div class="pagination pagination-centered">
-                                                <ul>
-                                                    <li><a href="#"><i class="icon-double-angle-left"></i></a></li>
-                                                    <li><a href="#">1</a></li>
-                                                    <li><a href="#">2</a></li>
-                                                    <li><a href="#">3</a></li>
-                                                    <li><a href="#">4</a></li>
-                                                    <li><a href="#"><i class="icon-double-angle-right"></i></a></li>
-                                                </ul>
+                                                @if(!empty($user->leagues))
+                                                <?php echo $user->leagues->render(); ?>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -406,6 +344,4 @@
                             <!--/.module-body-->
                         </div>
                         <!--/.module-->
-                    </div>
-                    <!--/.content-->
 @endsection

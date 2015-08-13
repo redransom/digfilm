@@ -28,7 +28,7 @@ class UsersController extends Controller {
 		if (!isset($authUser))
 			return redirect('/auth/login');
 
-		$users = User::all();
+		$users = User::paginate(4);
 		$roles = Role::all();
 
 		return View("users.all")
@@ -261,10 +261,12 @@ class UsersController extends Controller {
 			return redirect('/auth/login');
 
 		$user = User::find($id);
+		$leagues = $user->leagues()->paginate(10);
 
 		return View("users.show")
 			->with('authUser', $authUser)
 			->with('user', $user)
+			->with('leagues', $leagues)
 			->with('title', 'Details for '.$user->name);
 	}
 
@@ -472,7 +474,7 @@ class UsersController extends Controller {
 		return View("users.admin")
 			->with('use_graph', true)
 			->with('authUser', $authUser)
-			->with('page_name', 'add-user')
+			->with('page_name', 'dashboard')
 			->with('title', 'Welcome to the DigFilm adminstration system Dashboard');
 	}
 

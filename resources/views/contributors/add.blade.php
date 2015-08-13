@@ -22,7 +22,7 @@
                 {!! Form::open(array('route' => 'contributors.store', 'class'=>'form-horizontal row-fluid')) !!}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="control-group">
-                        <label class="control-label" for="MovieName">Firstname(s)</label>
+                        <label class="control-label" for="ContributorFirstname">Firstname(s)</label>
                         <div class="controls">
                             {!! Form::text('first_name', null, ['class'=>'span8', 'placeholder'=>'First name(s) here...']) !!}
                             <span class="help-inline">Minimum 3 Characters.</span>
@@ -30,9 +30,16 @@
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label" for="MovieSummary">Surname</label>
+                        <label class="control-label" for="ContributorSurname">Surname</label>
                         <div class="controls">
                             {!! Form::text('surname', null, ['class'=>'span8', 'placeholder'=>'Surname here...']) !!}
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="ContributorThumbnail">Photo</label>
+                        <div class="controls">
+                            {!! Form::file('thumbnail', null, ['class'=>'span8']) !!}
                         </div>
                     </div>
 

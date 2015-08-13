@@ -24,7 +24,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['name', 'email', 'password', 'forenames', 'surname'];
+	protected $fillable = ['name', 'email', 'password', 'forenames', 'surname', 'thumbnail'];
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -37,4 +37,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		return $this->belongsToMany("\App\Models\Role", "role_user");
 	}
 
+	public function leagues() {
+		return $this->hasMany("\App\Models\League", "users_id");
+	}
 }
