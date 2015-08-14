@@ -27,13 +27,12 @@
                 @endif
 
                 <br />
-                {{var_dump($user)}}
                 {!! Form::open(array('route' => array('users.update', $user->id), 'class'=>'form-horizontal row-fluid', 'method'=>'PUT')) !!}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="control-group">
                         <label class="control-label" for="UserRole">Role(s)</label>
                         <div class="controls">
-                            {!! Form::select('role_id[]', $roles, $user->select, ['class'=>'span8', 'multiple'=>'multiple']) !!}
+                            {!! Form::select('role_id[]', $roles, $user->roles[0]->id, ['class'=>'span8', 'multiple'=>'multiple']) !!}
                             <span class="help-inline">You must choose at least one role.</span>
                         </div>
                     </div>

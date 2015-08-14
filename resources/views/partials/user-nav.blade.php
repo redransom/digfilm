@@ -4,6 +4,7 @@
             <ul>
                 <li><a href="about.html">Pages</a>
                     <ul class="sub-menu">
+                    <li><a href="/">Home</a></li>
                         <li><a href="about.html">About</a></li>
                         <li><a href="#">Dropdown</a>
                             <ul>
@@ -41,12 +42,14 @@
             
             <div class="account-wrapper">
                 <ul id="user-account-nav">
-                    @if($authUser)
+                    @if(isset($authUser))
                     <li><a href="{{URL('auth/logout')}}">Logout</a></li>
+                    <li><a href="/profile">My Profile</a></li>
+
                     @else
                     <li><a href="{{URL('auth/login')}}">Login</a></li>
+                    <li><a href="/auth/register">Create an account</a></li>
                     @endif
-                    <li><a href="/">Create an account</a></li>
                 </ul><!--/ #user-account-nav-->
             </div><!--/ .account-wrapper-->
             

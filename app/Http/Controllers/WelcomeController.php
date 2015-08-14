@@ -1,4 +1,6 @@
 <?php namespace App\Http\Controllers;
+use Auth;
+use App\Models\User;
 
 class WelcomeController extends Controller {
 
@@ -30,7 +32,9 @@ class WelcomeController extends Controller {
 	 */
 	public function index()
 	{
-		return view('welcome');
+		$authUser = Auth::user();
+		return view('welcome')
+			->with('authUser', $authUser);
 	}
 
 }
