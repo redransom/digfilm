@@ -86,6 +86,12 @@ Breadcrumbs::register('leagues', function($breadcrumbs)
     $breadcrumbs->push('Leagues', route('leagues.index'));
 });
 
+Breadcrumbs::register('league-add', function($breadcrumbs)
+{
+    $breadcrumbs->parent('leagues');
+    $breadcrumbs->push('Add League');
+});
+
 Breadcrumbs::register('league-edit', function($breadcrumbs, $league)
 {
     $breadcrumbs->parent('leagues');

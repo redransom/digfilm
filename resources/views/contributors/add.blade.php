@@ -19,7 +19,7 @@
                 @endif
 
                 <br />
-                {!! Form::open(array('route' => 'contributors.store', 'class'=>'form-horizontal row-fluid')) !!}
+                {!! Form::open(array('route' => 'contributors.store', 'class'=>'form-horizontal row-fluid', 'files'=>true)) !!}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="control-group">
                         <label class="control-label" for="ContributorFirstname">Firstname(s)</label>

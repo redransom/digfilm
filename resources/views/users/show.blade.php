@@ -5,7 +5,7 @@
                             <div class="module-body">
                                 <div class="profile-head media">
                                     <a href="#" class="media-avatar pull-left">
-                                        @if(!is_null($user->thumbail))
+                                        @if(!is_null($user->thumbnail))
                                         <img src="{{asset($user->thumbnail)}}">
                                         @else
                                         <img src="/admin/images/user.png">

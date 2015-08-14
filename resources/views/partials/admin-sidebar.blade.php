@@ -1,7 +1,7 @@
 
                         <div class="sidebar">
                             <ul class="widget widget-menu unstyled">
-                                <li class="active"><a href="{{URL('dashboard')}}"><i class="menu-icon icon-dashboard"></i>Dashboard
+                                <li class="active"><a href="{{URL('admin-dashboard')}}"><i class="menu-icon icon-dashboard"></i>Dashboard
                                 </a></li>
                                 <!--li><a href="activity.html"><i class="menu-icon icon-bullhorn"></i>News Feed </a>
                                 </li>

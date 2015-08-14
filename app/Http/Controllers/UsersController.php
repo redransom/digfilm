@@ -183,6 +183,14 @@ class UsersController extends Controller {
 
 			$user->save();
 
+			if ($request->file('thumbnail') != "") {
+				$imageName = $user->id.str_replace(' ', '_', strtolower($input['forenames'])) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
+				$request->file('thumbnail')->move(base_path() . '/public/images/users/', $imageName);
+
+				$user->thumbnail = "/images/users/".$imageName;
+				$user->save();
+			}
+
 			//set role
 			$user->attachRole($role);
 
@@ -284,7 +292,7 @@ class UsersController extends Controller {
 			return redirect('/auth/login');
 
 		$user = User::find($id);
-		$title = "Edit Member";
+		$title = "Edit User";
 		$instructions = $title ." Details";
 
 /*		$role = Role::where('id', $this->getRole($authUser))->first();
@@ -294,6 +302,8 @@ class UsersController extends Controller {
 		return View("users.edit")
 			->with('authUser', $authUser)
 			->with('user', $user)
+			->with('page_name', 'user-edit')
+			->with('object', $user)
 			->with('instructions', $instructions)
 			->with('selected_role', $this->getRole($user))
 			->with('roles', $roles)
@@ -340,7 +350,16 @@ class UsersController extends Controller {
 		$user->email = $input['email'];
 		$user->forenames = $input['forenames'];
 		$user->surname = $input['surname'];
+
+		if ($request->file('thumbnail') != "") {
+			$imageName = $user->id.str_replace(' ', '_', strtolower($input['forenames'])) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
+			$request->file('thumbnail')->move(base_path() . '/public/images/users/', $imageName);
+
+			$user->thumbnail = "/images/users/".$imageName;
+		}
+
 		$user->save();
+
 
 		//check role change
 /*		if (isset($input['role_id'])) {

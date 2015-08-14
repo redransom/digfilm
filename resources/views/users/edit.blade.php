@@ -1,19 +1,10 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="content">
-    <div style="padding: 20px 10px;">
-        @if(isset($page_name) && !isset($object))
-            {!! Breadcrumbs::render($page_name) !!}
-        @elseif(isset($page_name) && isset($object))
-            {!! Breadcrumbs::render($page_name, $object) !!}
-        @endif
-    </div>
-
     <div class="module">
         
         <div class="module-head">
-            <h3>Add User</h3>
+            <h3>Edit User</h3>
         </div>
         <div class="module-body">
 
@@ -27,7 +18,7 @@
                 @endif
 
                 <br />
-                {!! Form::open(array('route' => array('users.update', $user->id), 'class'=>'form-horizontal row-fluid', 'method'=>'PUT')) !!}
+                {!! Form::open(array('route' => array('users.update', $user->id), 'class'=>'form-horizontal row-fluid', 'method'=>'PUT', 'files'=>true)) !!}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="control-group">
                         <label class="control-label" for="UserRole">Role(s)</label>
@@ -77,6 +68,13 @@
                     </div>
 
                     <div class="control-group">
+                        <label class="control-label" for="UserThumbnail">Photo</label>
+                        <div class="controls">
+                            {!! Form::file('thumbnail', null, ['class'=>'span8']) !!}
+                        </div>
+                    </div>
+
+                    <div class="control-group">
                         <div class="controls">
                             <button type="submit" class="btn btn-primary pull-right">Save User</button>
                         </div>
@@ -84,8 +82,4 @@
                 </form>
         </div>
     </div>
-
-    
-    
-</div>
 @endsection

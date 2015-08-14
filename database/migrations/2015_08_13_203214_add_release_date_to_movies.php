@@ -13,9 +13,13 @@ class AddReleaseDateToMovies extends Migration {
 	public function up()
 	{
 		//
-		$table->date('release_at')->nullable();
-		$table->boolean('enabled')->default(1);
-		$table->integer('auction_time_span')->default(40);
+		Schema::table('movies', function(Blueprint $table)
+		{
+			//
+			$table->date('release_at')->nullable();
+			$table->boolean('enabled')->default(1);
+			$table->smallInteger('availability')->default(40);
+		});
 	}
 
 	/**

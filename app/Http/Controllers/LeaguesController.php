@@ -63,7 +63,7 @@ class LeaguesController extends Controller {
         return View("leagues.add")
             ->with('authUser', $authUser)
             ->with('users', $this->get_players())
-            ->with('page_name', 'add_league')
+            ->with('page_name', 'league-add')
             ->with('instructions', 'Add New League')
             ->with('title', 'Add League');
     }

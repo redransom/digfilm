@@ -34,11 +34,10 @@
                                 @if($user_count == 0 || ($user_count % 2) == 0)
                                 <div class="row-fluid">
                                 @endif
-
                                     <div class="span6">
                                         <div class="media user">
                                             <a class="media-avatar pull-left" href="{{URL('users', array('id'=>$user->id))}}">
-                                            @if(!is_null($user->thumbail))
+                                            @if(!is_null($user->thumbnail))
                                             <img src="{{asset($user->thumbnail)}}">
                                             @else
                                             <img src="/admin/images/user.png">

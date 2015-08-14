@@ -18,7 +18,7 @@
                 @endif
 
                 <br />
-                {!! Form::open(array('route' => 'users.store', 'class'=>'form-horizontal row-fluid')) !!}
+                {!! Form::open(array('route' => 'users.store', 'class'=>'form-horizontal row-fluid', 'files'=>true)) !!}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="control-group">
                         <label class="control-label" for="MovieName">Role(s)</label>
@@ -71,6 +71,13 @@
                         <label class="control-label" for="MovieSummary">Confirm Password</label>
                         <div class="controls">
                             {!! Form::password('confirm_password', null, ['class'=>'span8']) !!}
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="UserThumbnail">Photo</label>
+                        <div class="controls">
+                            {!! Form::file('thumbnail', null, ['class'=>'span8']) !!}
                         </div>
                     </div>
 

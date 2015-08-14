@@ -76,6 +76,7 @@ class ContributorsController extends Controller {
 			$request->file('thumbnail')->move(base_path() . '/public/images/contributors/', $imageName);
 
 			$contributor->thumbnail = "/images/contributors/".$imageName;
+			$contributor->save();
 		}
 
 
