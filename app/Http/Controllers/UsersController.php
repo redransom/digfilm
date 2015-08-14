@@ -3,8 +3,8 @@
 //use DB;
 use App\Http\Requests;
 use App\Http\Requests\CreateUserRequest;
-/*use App\Http\Requests\UpdateUserRequest;
-*/use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateUserRequest;
+use App\Http\Controllers\Controller;
 use Auth;
 use App\Models\User;
 use App\Models\Role;
@@ -324,20 +324,26 @@ class UsersController extends Controller {
 		$input = $request->all();
 
 		//check the passwords are not set
-		if (isset($input['confirm_password']) && $input['confirm_password'] == "") {
+/*		if (isset($input['confirm_password']) && $input['confirm_password'] == "") {
 			unset($input['confirm_password']);
 			unset($input['password']);
 		} elseif (isset($input['confirm_password']) && ($input['confirm_password'] == $input['password'] && $input['password'] != "")) {
 			unset($input['confirm_password']);
 			$user->password = bcrypt($input['password']);
 		}
+*/
+		if (isset($input['password'])) {
+			$user->password = bcrypt($input['password']);	
+		}
 
 		$user->name = $input['name'];
 		$user->email = $input['email'];
+		$user->forenames = $input['forenames'];
+		$user->surname = $input['surname'];
 		$user->save();
 
 		//check role change
-		if (isset($input['role_id'])) {
+/*		if (isset($input['role_id'])) {
 			$role_id = $this->getRole($user);
 
 			if ($role_id != $input['role_id']) {
@@ -350,8 +356,8 @@ class UsersController extends Controller {
 			}
 
 		}
-
-		$profile = $user->profile;
+*/
+		/*$profile = $user->profile;
 
 		if ($request->file('thumbnail') != "") {
 			$imageName = $user->id.str_replace(' ', '_', strtolower($input['name'])) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
@@ -374,12 +380,12 @@ class UsersController extends Controller {
 		$profile->post_code = $input['post_code'];
 		$profile->country = $input['country'];
 		$profile->save();
-
+*/
 		Flash::message('User updated!');
 
-		if (isset($input['direction']) && $input['direction'] == "profile")
+		/*if (isset($input['direction']) && $input['direction'] == "profile")
 			return Redirect::route('profile');
-		else
+		else*/
 			return Redirect::route('users.index');
 	}
 

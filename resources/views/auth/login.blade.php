@@ -1,4 +1,4 @@
-@extends('layouts.login')
+@extends('layouts.users')
 
 @section('content')
     <div class="wrapper">
