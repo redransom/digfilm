@@ -1,7 +1,7 @@
         <!-- ***************** - Main Navigation - ***************** -->
         <nav id="navigation" class="navigation">
             
-            <ul>
+            <!--ul>
                 <li><a href="about.html">Pages</a>
                     <ul class="sub-menu">
                     <li><a href="/">Home</a></li>
@@ -14,7 +14,7 @@
                             </ul>
                         </li>
                         <li><a href="404page.html">404 Page</a></li>
-                    </ul><!--/ .sub-menu-->
+                    </ul>
                 </li>
                 <li><a href="headings.html">Features</a>
                     <ul class="sub-menu">
@@ -27,7 +27,7 @@
                         <li><a href="buttons.html">Buttons</a></li>
                         <li><a href="columns.html">Column Layout</a></li>
                         <li><a href="tabs.html">Tabs</a></li>
-                    </ul><!--/ .sub-menu-->
+                    </ul>
                 </li>
                 <li><a href="gallery.html">Gallery</a></li>
                 <li><a href="blog-style-1.html">Blog</a>
@@ -35,15 +35,25 @@
                         <li><a href="blog-style-1.html">Blog Page</a></li>
                         <li><a href="blog-style-2.html">Alternate Blog Page</a></li>
                         <li><a href="blog-single.html">Blog Single Page</a></li>
-                    </ul><!--/ .sub-menu-->
+                    </ul>
                 </li>
                 <li><a href="contacts.html">Contacts</a></li>
-            </ul>
+            </ul-->
             
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/rules">How to play</a></li>
+                <li><a href="/terms">Terms</a></li>
+                <li><a href="/privacy">Privacy</a></li>
+                <li><a href="/contact">Get in touch</a></li>
+            </ul>
+
             <div class="account-wrapper">
                 <ul id="user-account-nav">
                     @if(isset($authUser))
                     <li><a href="{{URL('auth/logout')}}">Logout</a></li>
+                    <li><a href="/dashboard">My Dashboard</a></li>
                     <li><a href="/profile">My Profile</a></li>
 
                     @else

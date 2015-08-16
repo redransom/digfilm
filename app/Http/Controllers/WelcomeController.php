@@ -37,4 +37,34 @@ class WelcomeController extends Controller {
 			->with('authUser', $authUser);
 	}
 
-}
+	public function about() {
+		$authUser = Auth::user();
+		return view('about')
+			->with('authUser', $authUser);	
+	}
+
+	public function rules() {
+		$authUser = Auth::user();
+		return view('rules')
+			->with('authUser', $authUser);	
+	}
+
+	public function terms() {
+		$authUser = Auth::user();
+		return view('terms')
+			->with('authUser', $authUser);	
+	}
+
+	public function contact() {
+		$authUser = Auth::user();
+		return view('contact')
+			->with('authUser', $authUser);	
+	}
+
+	public function privacy() {
+		$authUser = Auth::user();
+		return view('privacy')
+			->with('authUser', $authUser);	
+	}
+
+ }

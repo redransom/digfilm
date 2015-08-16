@@ -1,7 +1,7 @@
 <!-- ************** - Platform Navigation - ************** -->
         <nav id="platform-menu" class="platform-menu">
             
-            <a href="index.html" class="home">Home</a>
+            <a href="/" class="home">Home</a>
             
             <ul>
                 <li><a href="#">XBOX 360</a>
