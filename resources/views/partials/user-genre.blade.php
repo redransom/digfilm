@@ -4,7 +4,9 @@
             <a href="/" class="home">Home</a>
             
             <ul>
-                <li><a href="#">XBOX 360</a>
+                <li><a href="{{URL('/all-leagues')}}">Leagues</a></li>
+                <li><a href="{{URL('/create')}}">Create League</a></li>
+                <!--li><a href="#">XBOX 360</a>
                     <ul class="sub-menu">
                         <li><a href="reviews.html">Reviews</a></li>
                         <li><a href="previews.html">Previews</a></li>
@@ -67,7 +69,7 @@
                         <li><a href="new-releases.html">New Releases</a></li>
                         <li><a href="top-games.html">Top Games</a></li>
                     </ul>
-                </li>
+                </li-->
             </ul>
             
         </nav><!--/ .platform-menu-->

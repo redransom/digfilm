@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 use Auth;
 use App\Models\User;
+use App\Models\League;
 
 class WelcomeController extends Controller {
 
@@ -67,4 +68,23 @@ class WelcomeController extends Controller {
 			->with('authUser', $authUser);	
 	}
 
+	public function leagues() {
+		$authUser = Auth::user();
+
+		$leagues = League::get();
+
+		return view('leagues')
+			->with('authUser', $authUser);	
+	}
+
+	/**
+	 * Create a league (if signed in)
+	 *
+	 * @return void
+	 */
+	public function create() {
+		$authUser = Auth::user();
+		return view('create-league')
+			->with('authUser', $authUser);	
+	}
  }

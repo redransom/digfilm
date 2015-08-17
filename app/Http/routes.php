@@ -17,6 +17,8 @@ Route::get('/rules', 'WelcomeController@rules');
 Route::get('/terms', 'WelcomeController@terms');
 Route::get('/privacy', 'WelcomeController@privacy');
 Route::get('/contact', 'WelcomeController@contact');
+Route::get('/all-leagues', 'WelcomeController@leagues');
+Route::get('/create', 'WelcomeController@create');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
