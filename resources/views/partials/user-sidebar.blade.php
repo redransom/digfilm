@@ -33,7 +33,7 @@
                 <div class="topgames widget">
                     
                     <div class="title-caption">
-                        <h3>Top Games</h3>
+                        <h3>New Movies</h3>
                     </div><!--/ .title-captin -->
                     
                     <div class="entry-holder">
@@ -177,7 +177,7 @@
                 <div class="latest-video widget">
                     
                     <div class="title-caption-dark">
-                        <h3>Latest Videos</h3>
+                        <h3>Latest Trailers</h3>
                         <a href="#" class="more-all">See all</a>
                     </div><!--/ .title-caption-dark-->
                     

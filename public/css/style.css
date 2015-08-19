@@ -3494,7 +3494,7 @@ footer .copyright {
 #contactform {margin-top: 1em;}
 #contactform .row {margin-bottom: 1em;}
 
-#contactform input[type="text"],
+#contactform input[type="text"], input[type="password"],
 #contactform select {
     position:  relative;
     margin: 5px 0;

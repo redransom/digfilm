@@ -20,7 +20,7 @@ class AuthController extends Controller {
 	| a simple trait to add these behaviors. Why don't you explore it?
 	|
 	*/
-	protected $redirectPath = '/admin-dashboard';
+	protected $redirectPath = '/dashboard';
 	protected $loginPath = '/dashboard';
 	use AuthenticatesAndRegistersUsers;
 
@@ -71,4 +71,32 @@ class AuthController extends Controller {
 					]);
 	}
 
+	/**
+	 * Handle a registration request for the application.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function postRegister(Request $request)
+	{
+		$validator = $this->registrar->validator($request->all());
+
+		if ($validator->fails())
+		{
+			$this->throwValidationException(
+				$request, $validator
+			);
+		}
+
+		$this->auth->login($this->registrar->create($request->all()));
+
+		$user = $this->auth->user();
+		$role = \App\Models\Role::where('name', 'Player')->first();
+		$roleUser = new \App\Models\RoleUser();
+		$roleUser->user_id = $user->id;
+		$roleUser->role_id = $role->id;
+		$roleUser->save(['timestamps' => false]);		
+
+		return redirect($this->redirectPath());
+	}
 }

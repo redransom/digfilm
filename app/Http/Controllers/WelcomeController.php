@@ -87,4 +87,12 @@ class WelcomeController extends Controller {
 		return view('create-league')
 			->with('authUser', $authUser);	
 	}
+
+	public function getProfile() {
+		$authUser = Auth::user();
+
+		return view('profile')
+			->with('authUser', $authUser);	
+	}
+
  }

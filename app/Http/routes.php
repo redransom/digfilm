@@ -12,13 +12,14 @@
 */
 
 Route::get('/', 'WelcomeController@index');
-Route::get('/about', 'WelcomeController@about');
-Route::get('/rules', 'WelcomeController@rules');
-Route::get('/terms', 'WelcomeController@terms');
-Route::get('/privacy', 'WelcomeController@privacy');
-Route::get('/contact', 'WelcomeController@contact');
-Route::get('/all-leagues', 'WelcomeController@leagues');
-Route::get('/create', 'WelcomeController@create');
+Route::get('about', 'WelcomeController@about');
+Route::get('rules', 'WelcomeController@rules');
+Route::get('terms', 'WelcomeController@terms');
+Route::get('privacy', 'WelcomeController@privacy');
+Route::get('contact', 'WelcomeController@contact');
+Route::get('all-leagues', 'WelcomeController@leagues');
+Route::get('create', 'WelcomeController@create');
+Route::get('profile', 'WelcomeController@getProfile');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
