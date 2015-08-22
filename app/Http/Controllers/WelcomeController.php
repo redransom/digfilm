@@ -71,9 +71,11 @@ class WelcomeController extends Controller {
 	public function leagues() {
 		$authUser = Auth::user();
 
-		$leagues = League::get();
+		//$leagues = League::all();
+		$leagues = League::availableLeagues($authUser->id);
 
 		return view('leagues')
+			->with('leagues', $leagues)
 			->with('authUser', $authUser);	
 	}
 
@@ -92,7 +94,8 @@ class WelcomeController extends Controller {
 		$authUser = Auth::user();
 
 		return view('profile')
-			->with('authUser', $authUser);	
+			->with('authUser', $authUser)
+			->with('user', $authUser);	
 	}
 
  }

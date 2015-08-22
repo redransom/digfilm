@@ -3,7 +3,7 @@
 <!--[if lte IE 8]>              <html class="ie8 no-js" lang="en">     <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!--> <html class="not-ie no-js" lang="en">  <!--<![endif]-->
 <head>
-<title>Games Throne | Home Page</title>
+<title>DigFim | </title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="shortcut" href="/images/favicon.ico" />
 <link type="text/css" href="{{ asset('/css/style.css') }}" rel="stylesheet">
@@ -34,7 +34,7 @@
         <!-- ***************** - Logo - ******************* --> 
         <div id="logo">
             <a href="index.html"><h1>Dig</h1><span>Film</span></a>
-            <div class="slogan">Pl</div>
+            <div class="slogan">Games and Films - what's not to like?</div>
         </div><!--/ #logo-->
         <!-- ***************** - END Logo - ******************* --> 
         

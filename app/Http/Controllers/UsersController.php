@@ -42,58 +42,6 @@ class UsersController extends Controller {
 
 
 	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function search()
-	{
-		$authUser = Auth::user();
-		if (!isset($authUser))
-			return redirect('/auth/login');
-
-		//get the users by type
-		$search = Input::get('search');
-		DB::connection()->enableQueryLog();
-		if ($search != "") {
-			$search_text = '%'.$search.'%';
-
-			$users = User::whereHas('profile', function($query) use ($search_text) {
-				$query->where('forenames', 'like', $search_text)->orWhere('surname', 'like', $search_text);
-			})->Where('name', 'like', $search_text)->orWhere('email', 'like', $search_text)->get();
-		} else
-			$users = User::all();
-
-		$queries = DB::getQueryLog();
-		
-		//$suppliers = 
-		$customers = $admin = array();
-
-		foreach ($users as $user) {
-			/*if ($user->hasRole("Supplier")) {
-				$suppliers[] = $user;
-			} else*/if ($user->hasRole("Customer")) {
-				$customers[] = $user;
-			} else {
-				$admin[] = $user;
-			}
-		}
-
-		$authUser = Auth::user();
-		$sites = Domain::where('users_id', $authUser->id)->lists('name', 'id');
-
-		return View("users.all")
-			->with('users', $users)
-			->with('suppliers', $suppliers)
-			->with('customers', $customers)
-			->with('admin', $admin)
-			->with('authUser', $authUser)
-			->with('page_name', 'users')
-			->with('instructions', 'User List')
-			->with('title', 'Users');
-	}
-
-	/**
 	 * Show the form for creating a new resource.
 	 *
 	 * @return Response
@@ -116,32 +64,6 @@ class UsersController extends Controller {
 			->with('title', $title);
 	}
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	/*public function create_admin()
-	{
-		$authUser = Auth::user();
-		if (!isset($authUser))
-			return redirect('/auth/login');
-
-		$title = "Add Administrator";
-		$instructions = $title ." Details";
-
-		$role = Role::where('id', $this->getRole($authUser))->first();
-		$roles = Role::where('role_order', '>=', $role->role_order)->orderBy('role_order', 'asc')->lists('display_name', 'id');
-
-		return View("users.create")
-			->with('user_type', 'A')
-			->with('authUser', $authUser)
-			->with('page_name', 'admin')
-			->with('instructions', $instructions)
-			->with('roles', $roles)
-			->with('title', $title);
-	}*/
-
 	/*private function getRoleKey($user_type) {
 		if ($user_type == 'A')
 			return 'Admin';
@@ -163,96 +85,68 @@ class UsersController extends Controller {
 
 		$input = $request->all();
 
-			if (isset($input['role_id'])) {
-				$role = \App\Models\Role::where('id', $input['role_id'])->first();	
-			} else
-				$role = \App\Models\Role::where('name', 'Customer')->first();
+		if (isset($input['role_id'])) {
+			$role = \App\Models\Role::where('id', $input['role_id'])->first();	
+		} 
 
-			$user = new User();
-			$user->name = $input['name'];
-			$user->email = $input['email'];
-			
-			//check the passwords are not set
-			if (isset($input['confirm_password']) && $input['confirm_password'] == "") {
-				unset($input['confirm_password']);
-				unset($input['password']);
-			} elseif (isset($input['confirm_password']) && ($input['confirm_password'] == $input['password'] && $input['password'] != "")) {
-				unset($input['confirm_password']);
-				$user->password = bcrypt($input['password']);
-			}
+		$user = new User();
+		$user->name = $input['name'];
+		$user->email = $input['email'];
+		
+		//check the passwords are not set
+		if (isset($input['confirm_password']) && $input['confirm_password'] == "") {
+			unset($input['confirm_password']);
+			unset($input['password']);
+		} elseif (isset($input['confirm_password']) && ($input['confirm_password'] == $input['password'] && $input['password'] != "")) {
+			unset($input['confirm_password']);
+			$user->password = bcrypt($input['password']);
+		}
 
+		$user->save();
+
+		if ($request->file('thumbnail') != "") {
+			$imageName = $user->id.str_replace(' ', '_', strtolower($input['forenames'])) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
+			$request->file('thumbnail')->move(base_path() . '/public/images/users/', $imageName);
+
+			$user->thumbnail = "/images/users/".$imageName;
 			$user->save();
+		}
 
-			if ($request->file('thumbnail') != "") {
-				$imageName = $user->id.str_replace(' ', '_', strtolower($input['forenames'])) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
-				$request->file('thumbnail')->move(base_path() . '/public/images/users/', $imageName);
+		//set role
+		$user->attachRole($role);
 
-				$user->thumbnail = "/images/users/".$imageName;
-				$user->save();
-			}
+		//need to create the user profile
+		/*$profile = new UserProfile();
+		$profile->users_id = $user->id;
 
-			//set role
-			$user->attachRole($role);
+		if ($request->file('thumbnail') != "") {
+			$imageName = $user->id.str_replace(' ', '_', strtolower($input['name'])) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
+			$request->file('thumbnail')->move(base_path() . '/public/images/profiles/', $imageName);
 
-			//need to create the user profile
-			/*$profile = new UserProfile();
-			$profile->users_id = $user->id;
+			$profile->thumbnail = "/images/profiles/".$imageName;
+		}
 
-			if ($request->file('thumbnail') != "") {
-				$imageName = $user->id.str_replace(' ', '_', strtolower($input['name'])) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
-				$request->file('thumbnail')->move(base_path() . '/public/images/profiles/', $imageName);
+		$profile->title = $input['title'];
+		$profile->forenames = $input['forenames'];
+		$profile->surname = $input['surname'];
+		if ($role->name == "Customer")
+			$profile->member_type = $input['member_type'];
 
-				$profile->thumbnail = "/images/profiles/".$imageName;
-			}
-
-			$profile->title = $input['title'];
-			$profile->forenames = $input['forenames'];
-			$profile->surname = $input['surname'];
-			if ($role->name == "Customer")
-				$profile->member_type = $input['member_type'];
-
-			$profile->telephone = $input['telephone'];
-			$profile->company_name = $input['company_name'];
-			$profile->address_1 = $input['address_1'];
-			$profile->address_2 = $input['address_2'];
-			$profile->address_3 = $input['address_3'];
-			$profile->town = $input['town'];
-			$profile->city = $input['city'];
-			$profile->county = $input['county'];
-			$profile->post_code = $input['post_code'];
-			$profile->country = $input['country'];
-			$profile->save();
+		$profile->telephone = $input['telephone'];
+		$profile->company_name = $input['company_name'];
+		$profile->address_1 = $input['address_1'];
+		$profile->address_2 = $input['address_2'];
+		$profile->address_3 = $input['address_3'];
+		$profile->town = $input['town'];
+		$profile->city = $input['city'];
+		$profile->county = $input['county'];
+		$profile->post_code = $input['post_code'];
+		$profile->country = $input['country'];
+		$profile->save();
 */
-			/*if ($role->name == "Customer") {
-				//
-				if (isset($input['website']) && $input['website'] != "") {
-					$domain = new Domain();
-					$domain->name = $input['website'];
-					$domain->users_id = $user->id;
-					$domain->save();
-
-					if (isset($input['free_app']) && $input['free_app'] != "") {
-						$domainapp = new DomainApp();
-						$domainapp->domains_id = $domain->id;
-						$domainapp->apps_id = $input['free_app'];
-						$domainapp->save();
-
-					}
-				}
-			}*/
-
-			Flash::message('New user has been created!');
-			return redirect()->route("users.index");
-			//Redirect::route('dashboard')->with('message', 'Admin user '. $input['forenames'].' created.');
-		//} else {
-			//Flash::message('Emails dont match - please make sure they do!');
-
-			//if ($user_type == "Customer")
-			//return Redirect::back()->withInput();
-				/*return redirect()->route("create_customer")->withInputs();
-			else
-				return redirect()->route("create_admin")->withInputs();*/
-		//}
+		Flash::message('New user has been created!');
+		return redirect()->route("users.index");
+			
 	}
 
 	/**
@@ -360,22 +254,6 @@ class UsersController extends Controller {
 
 		$user->save();
 
-
-		//check role change
-/*		if (isset($input['role_id'])) {
-			$role_id = $this->getRole($user);
-
-			if ($role_id != $input['role_id']) {
-				//role has changed - clear role for user
-				DB::table('role_user')->where('user_id', $user->id)->where('role_id', $role_id)->delete();
-
-				//attach new role to user
-				$role = Role::where('id', $input['role_id'])->first();
-				$user->attachRole($role);
-			}
-
-		}
-*/
 		/*$profile = $user->profile;
 
 		if ($request->file('thumbnail') != "") {
@@ -400,12 +278,15 @@ class UsersController extends Controller {
 		$profile->country = $input['country'];
 		$profile->save();
 */
-		Flash::message('User updated!');
 
-		/*if (isset($input['direction']) && $input['direction'] == "profile")
+		if (isset($input['update_from']) && $input['update_from'] == 'P') {
+			Flash::message('Profile updated!');
 			return Redirect::route('profile');
-		else*/
+		} else {
+			Flash::message('User updated!');
 			return Redirect::route('users.index');
+		}
+
 	}
 
 	/**
@@ -459,37 +340,6 @@ class UsersController extends Controller {
 		
 	}
 */
-/*
-	public function selectsite() {
-		$authUser = Auth::user();
-
-		if ($authUser->hasRole("Admin")) {
-			//redirect to dashboard
-			return redirect('dashboard');
-		}
-
-		$sites = Domain::where('users_id', $authUser->id)->get();
-		Session::put('available_domains', $sites);
-
-		return View("users.selectsite")
-			->with('sites', $sites)
-			->with('authUser', $authUser)
-			->with('page_name', 'select')
-			->with('instructions', 'Click to select the site to manage')
-			->with('title', 'Select Your Site');
-	}
-
-	public function confirmsite($id) {
-		$authUser = Auth::user();
-
-		$domain = Domain::where('users_id', $authUser->id)->where('id', $id)->firstOrFail();
-		if (!empty($domain)) {
-			Session::put('current_domain', $domain);
-			return redirect('dashboard');
-		} else {
-			return redirect('home')->with('message', 'This domain does not belong to you.');
-		}
-	}*/
 
 	public function adminDashboard() {
 		$authUser = Auth::user();

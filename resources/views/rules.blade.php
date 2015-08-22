@@ -6,6 +6,27 @@
         <h3>Rules of the game</h3>
     </div>
 
+    <ul class="dropspot-list">
+    <li><span class="dropspot">01</span>
+    <h6>Default balance</h6>
+    <p>Every user is granted 100 virtual USD for each League they join. <br/> 
+        This balance, along with other users in the same league should be presented on the Auction Dashboard.</p></li>
+
+    <li><span class="dropspot">02</span>
+    <h6>Players per League</h6>
+    <p>The amount of players permitted per League can be greater than or equal to 4 AND less than or equal to 10.  
+        4 ≤ n ≤ 10.</p></li>
+
+    <li><span class="dropspot">03</span>
+    <h6>Films per League</h6>
+    <p>Each League Movie Roster can be greater than or equal to 40 AND less than or equal to 100.  40 ≤ n ≤ 100.</p></li>
+
+    <li><span class="dropspot">04</span>
+    <h6>Joined League per Year</h6>
+    <p>The MAXIMUM number of Leagues any player can join per year is 10.</p></li>
+
+    </ul>
+
     <dl>
         <dt>Default balance.</dt> 
         <dd>Every user is granted 100 virtual USD for each League they join.  

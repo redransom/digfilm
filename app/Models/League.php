@@ -1,6 +1,7 @@
 <?php namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\LeagueUser;
 
 class League extends Model {
 
@@ -19,5 +20,22 @@ class League extends Model {
 
     public function Players() {
         return $this->belongsToMany("\App\Models\User", "league_users", "league_id", "user_id");
+    }
+
+    /**
+     * Model function to determine if a user can register with a league
+     * Need to make sure that they are not owners of a league and also not in the league users table.
+     *
+     * @var array
+     */
+    public static function availableLeagues($user_id) {
+        $leagueUsers = LeagueUser::where('user_id', '=', $user_id)->lists('id');
+
+        $leagues = League::where('users_id', '!=', $user_id)->whereNotIn('id', $leagueUsers)->get();
+
+        /*$leagues = League::with(['league_users' => function($query) {
+            $query->where('user_id', '!=', $user_id);
+        }])->where('users_id', '!=', $user_id)->get();*/
+        return $leagues;
     }
 }

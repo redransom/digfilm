@@ -1,8 +1,11 @@
 <!-- ************** - Platform Navigation - ************** -->
         <nav id="platform-menu" class="platform-menu">
             
+            @if(isset($authUser))
+            <a href="{{URL('dashboard')}}" class="home">Home</a>
+            @else
             <a href="/" class="home">Home</a>
-            
+            @endif            
             <ul>
                 <li><a href="{{URL('/all-leagues')}}">Leagues</a></li>
                 <li><a href="{{URL('/create')}}">Create League</a></li>

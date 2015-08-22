@@ -48,13 +48,13 @@
 					</div><!--/ row-->
 
 					<div class="row">
-						<label for="name"><span class="required">*</span>Email Address:</label>
+						<label for="name"><span class="required">*</span>Password:</label>
 						<input type="password" class="form-control" name="password">
 					</div><!--/ row-->
 				</div>
 			</fieldset>
 
-			<button type="submit" class="btn btn-primary pull-right">
+			<button type="submit" class="button medium dark">
 				Login
 			</button>
             <label class="checkbox">

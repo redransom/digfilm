@@ -38,7 +38,30 @@
 
     <h2>Leagues Participating in</h2>
     <p>Here are the leageus you are in:</p>
-
+    @if($authUser->inLeagues->count() > 0)
+    <table class="feature-table dark-gray">
+        <thead>
+            <tr> 
+                <th>Name</th> 
+                <th>Players</th>
+                <th>Started?</th>
+                <th>Ends?</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($authUser->inLeagues as $league)
+            <tr>
+                <td>{{$league->name}}</td>
+                <td>{{count($league->players)}}</td>
+                <td>{{$league->created_at}}</td>
+                <td>--</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table><!--/ feature-table-->
+    @else
+    <p>You are not part of any leagues currently.</p>
+    @endif
 
 </section>    
 @endsection

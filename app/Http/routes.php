@@ -19,7 +19,9 @@ Route::get('privacy', 'WelcomeController@privacy');
 Route::get('contact', 'WelcomeController@contact');
 Route::get('all-leagues', 'WelcomeController@leagues');
 Route::get('create', 'WelcomeController@create');
-Route::get('profile', 'WelcomeController@getProfile');
+Route::get('profile', ['as'=>'profile', 'uses'=>'WelcomeController@getProfile']);
+
+Route::get('leagues/{id}/join', 'LeaguesController@join');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

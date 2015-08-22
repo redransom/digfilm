@@ -210,6 +210,12 @@ class LeaguesController extends Controller {
             ->with('title', $title);
     }
 
+    /**
+     * Save player to league table
+     *
+     * @param  int  $id
+     * @return Response
+     */
     public function postPlayer($id, AddPlayerToLeagueRequest $request) {
         $input = Input::all();
         $movie = LeagueUser::create( $input );
@@ -217,5 +223,33 @@ class LeaguesController extends Controller {
         return Redirect::route('leagues.show', array($id))->with('message', 'Player added.');
     }
 
+    /**
+     * Join  player to league - this will depend on rules eventally
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function join($id) {
+        $authUser = Auth::user();
+        if (!isset($authUser))
+            return redirect('/auth/login');
 
+        $league = League::find($id);
+
+        //join league
+        $success = false;
+        if (is_numeric($league->id)) {
+            $leagueUser = new LeagueUser;
+            $leagueUser->league_id = $league->id;
+            $leagueUser->user_id = $authUser->id;
+            $leagueUser->save();
+
+            $success = is_numeric($leagueUser->id);
+        }
+
+        return View("join")
+            ->with('authUser', $authUser)
+            ->with('join_success', $success)
+            ->with('league', $league);
+    }
 }
