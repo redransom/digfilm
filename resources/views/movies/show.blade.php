@@ -24,7 +24,7 @@
                             <dl class="dl-horizontal">
                                 @foreach($movie->contributors as $contributor)
                                 <dt>{{$contributor->first_name}} {{$contributor->surname}}</dt>
-                                <dd>Actor - TODO: This needs to be read in from the pivot table</dd>
+                                <dd>{{$types[$contributor->pivot->contributor_types_id]}}</dd>
                                 @endforeach
                             </dl>
                             <p>NOTE: I'd like to be able to have this as a free text field that adds a line with the contributor type.

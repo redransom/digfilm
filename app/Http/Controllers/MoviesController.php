@@ -88,9 +88,12 @@ class MoviesController extends Controller {
 		$movie = Movie::find($id);
 		$title = "Movie ".$movie->name." details";
 
+		$contributor_types = ContributorType::lists('name', 'id');
+
 		return View("movies.show")
 			->with('authUser', $authUser)
 			->with('movie', $movie)
+			->with('types', $contributor_types)
 			->with('object', $movie)
 			->with('page_name', 'movie-show')
 			->with('title', $title);
