@@ -54,7 +54,11 @@
                                                 </div>
 
                                                 <div class="media-option btn-group shaded-icon">
-                                                    <a class="btn btn-mini btn-warning" href="{{URL('users/'.$user->id.'/disable')}}">Disable</a>
+                                                    @if($user->enabled)
+                                                    <a class="btn btn-mini btn-danger" href="{{URL('users/'.$user->id.'/disable')}}">Disable</a>
+                                                    @else
+                                                    <a class="btn btn-mini btn-info" href="{{URL('users/'.$user->id.'/enable')}}">Enable</a>
+                                                    @endif
                                                 </div>
                                                 <!--div class="media-option btn-group shaded-icon">
                                                     <button class="btn btn-small">

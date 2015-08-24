@@ -23,8 +23,14 @@
                                             <td><a href="{{URL('leagues', array('id'=>$league->id))}}">{{$league->name}}</a></td>
                                             <td>{{count($league->players)}}</td>
                                             <td class="center"><a href="{{URL('users/'.$league->owner->id)}}">{{$league->owner->name}}</a></td>
-                                            <td><a class="btn btn-mini btn-primary" href="{{URL('leagues/'.$league->id.'/edit')}}">Edit</a>
-                                            <a class="btn btn-mini btn-danger" href="{{URL('leagues/'.$league->id.'/close')}}">Close</a></td>
+                                            <td>
+                                            <a class="btn btn-mini btn-primary" href="{{URL('leagues/'.$league->id.'/edit')}}">Edit</a>
+                                            @if($league->enabled)
+                                            <a class="btn btn-mini btn-danger" href="{{URL('leagues/'.$league->id.'/disable')}}">Disable</a>
+                                            @else
+                                            <a class="btn btn-mini btn-info" href="{{URL('leagues/'.$league->id.'/enable')}}">Enable</a>
+                                            @endif
+                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>

@@ -92,7 +92,9 @@ class UsersController extends Controller {
 		$user = new User();
 		$user->name = $input['name'];
 		$user->email = $input['email'];
-		
+		$user->forenames = $input['forenames'];
+		$user->surname = $input['surname'];
+
 		//check the passwords are not set
 		if (isset($input['confirm_password']) && $input['confirm_password'] == "") {
 			unset($input['confirm_password']);

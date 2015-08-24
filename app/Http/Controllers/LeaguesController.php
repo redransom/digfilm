@@ -15,6 +15,7 @@ use App\Http\Requests\CreateLeagueRequest;
 use App\Http\Requests\UpdateLeagueRequest;
 use App\Http\Requests\AddPlayerToLeagueRequest;
 use Illuminate\Http\Request;
+use Flash;
 
 class LeaguesController extends Controller {
 
@@ -176,7 +177,7 @@ class LeaguesController extends Controller {
     }
 
     /**
-     * Disable movie from use
+     * Disable the league
      *
      * @param  int  $id
      * @return Response
@@ -184,8 +185,48 @@ class LeaguesController extends Controller {
     public function disable($id)
     {
         //
+        $authUser = Auth::user();
+
+        //ensure permissions are available - should probably check for permissions and not role
+        if ($authUser->hasRole("Admin")) {
+            $league = League::find($id);
+            $message = "";
+            if (!empty($league)) {
+                $message = "League " .$league->name. " has been disabled.";
+                Flash::message($message);
+                $league->enabled = false;
+                $league->save();
+            }
+            return Redirect::route('leagues.index');
+        }
+        return Redirect::route('leagues.index')->with('message', 'You don\'t have the permissions to complete this task.');
     }
 
+    /**
+     * Enable the user
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function enable($id)
+    {
+        //
+        $authUser = Auth::user();
+
+        //ensure permissions are available - should probably check for permissions and not role
+        if ($authUser->hasRole("Admin")) {
+            $league = League::find($id);
+            $message = "";
+            if (!empty($league)) {
+                $message = "League " .$league->name. " has been enabled.";
+                Flash::message($message);
+                $league->enabled = true;
+                $league->save();
+            }
+            return Redirect::route('leagues.index');
+        }
+        return Redirect::route('leagues.index')->with('message', 'You don\'t have the permissions to complete this task.');
+    }
     /**
      * Add player to league
      *

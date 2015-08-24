@@ -71,8 +71,10 @@ class WelcomeController extends Controller {
 	public function leagues() {
 		$authUser = Auth::user();
 
-		//$leagues = League::all();
-		$leagues = League::availableLeagues($authUser->id);
+		if (!isset($authUser))
+			$leagues = League::all();
+		else
+			$leagues = League::availableLeagues($authUser->id);
 
 		return view('leagues')
 			->with('leagues', $leagues)
