@@ -62,6 +62,14 @@
                     </div>
 
                     <div class="control-group">
+                        <label class="control-label" for="MovieReleaseDate">Release Date</label>
+                        <div class="controls">
+                            {!! Form::date('release_at', null, ['class'=>'span8']) !!}
+                            <span class="help-inline">Date film is released</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
                         <div class="controls">
                             <button type="submit" class="btn btn-primary pull-right">Add Movie</button>
                         </div>

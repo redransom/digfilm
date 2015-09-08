@@ -28,7 +28,11 @@
                                             <td class="center">{{$movie->rating}}</td>
                                             <td class="center">{{$movie->budget}}</td>
                                             <td><a class="btn btn-mini btn-primary" href="{{URL('movies/'.$movie->id.'/edit')}}">Edit</a>
-                                            <a class="btn btn-mini btn-danger" href="{{URL('movies/'.$movie->id.'/disable')}}">Disable</a></td>
+                                            @if($movie->enabled)
+                                            <a class="btn btn-mini btn-danger" href="{{URL('movies/'.$movie->id.'/disable')}}">Disable</a>
+                                            @else
+                                            <a class="btn btn-mini btn-info" href="{{URL('movies/'.$movie->id.'/enable')}}">Enable</a>
+                                            @endif</td>
                                         </tr>
                                         @endforeach
                                     </tbody>

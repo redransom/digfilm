@@ -16,6 +16,7 @@ use App\Http\Requests\CreateMovieRequest;
 use App\Http\Requests\UpdateMovieRequest;
 use App\Http\Requests\AddContributorToMovieRequest;
 use Illuminate\Http\Request;
+use Flash;
 
 class MoviesController extends Controller {
 
@@ -141,25 +142,15 @@ class MoviesController extends Controller {
 		$movie->genre = $input['summary'];
 		$movie->rating = $input['rating'];
 		$movie->budget = $input['budget'];
+		$movie->release_at = $input['release_at'];
 		$movie->save();
 
 		return Redirect::route('movies.index');
 
 	}
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
-
-	/**
-	 * Disable movie from use
+/**
+	 * Disable the user
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -167,6 +158,50 @@ class MoviesController extends Controller {
 	public function disable($id)
 	{
 		//
+		$authUser = Auth::user();
+
+		//ensure permissions are available - should probably check for permissions and not role
+		if ($authUser->hasRole("Admin")) {
+			$movie = Movie::find($id);
+			$user_message = "";
+			if (!empty($movie)) {
+				$message = "Movie " .$movie->name. " has been disabled.";
+				Flash::message($message);
+				$movie->enabled = false;
+				$movie->save();
+			}
+			
+		} else
+        	Flash::message('You don\'t have the permissions to complete this task.');
+
+        return Redirect::route('movies.index');
+	}
+
+	/**
+	 * Enable the user
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function enable($id)
+	{
+		//
+		$authUser = Auth::user();
+
+		//ensure permissions are available - should probably check for permissions and not role
+		if ($authUser->hasRole("Admin")) {
+			$movie = Movie::find($id);
+			$message = "";
+			if (!empty($movie)) {
+				$message = "Movie " .$movie->name. " has been enabled.";
+				Flash::message($message);
+				$movie->enabled = true;
+				$movie->save();
+			}
+		}
+        	Flash::message('You don\'t have the permissions to complete this task.');
+
+        return Redirect::route('movies.index');
 	}
 
 	public function addContributor($id) {

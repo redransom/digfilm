@@ -411,7 +411,8 @@ class UsersController extends Controller {
 			}
 			return Redirect::route('users.index');
 		}
-		return Redirect::route('users.index')->with('message', 'You don\'t have the permissions to complete this task.');
+        Flash::message('You don\'t have the permissions to complete this task.');
+        return Redirect::route('users.index');
 	}
 
 	/**
@@ -437,7 +438,8 @@ class UsersController extends Controller {
 			}
 			return Redirect::route('users.index');
 		}
-		return Redirect::route('users.index')->with('message', 'You don\'t have the permissions to complete this task.');
+        Flash::message('You don\'t have the permissions to complete this task.');
+        return Redirect::route('users.index');
 	}
 
 }
