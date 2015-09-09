@@ -11,7 +11,7 @@ class League extends Model {
      *
      * @var array
      */
-    protected $fillable = ['name', 'users_id'];
+    protected $fillable = ['name', 'users_id', 'enabled'];
 
 
     public function Owner() {
