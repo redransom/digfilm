@@ -87,7 +87,10 @@ class UsersController extends Controller {
 
 		if (isset($input['role_id'])) {
 			$role = \App\Models\Role::where('id', $input['role_id'])->first();	
-		} 
+		} else {
+			//if role not selected we can get the player role
+			$role = \App\Models\Role::where('name', 'Player')->first();
+		}
 
 		$user = new User();
 		$user->name = $input['name'];
