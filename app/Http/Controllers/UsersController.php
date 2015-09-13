@@ -120,35 +120,6 @@ class UsersController extends Controller {
 		//set role
 		$user->attachRole($role);
 
-		//need to create the user profile
-		/*$profile = new UserProfile();
-		$profile->users_id = $user->id;
-
-		if ($request->file('thumbnail') != "") {
-			$imageName = $user->id.str_replace(' ', '_', strtolower($input['name'])) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
-			$request->file('thumbnail')->move(base_path() . '/public/images/profiles/', $imageName);
-
-			$profile->thumbnail = "/images/profiles/".$imageName;
-		}
-
-		$profile->title = $input['title'];
-		$profile->forenames = $input['forenames'];
-		$profile->surname = $input['surname'];
-		if ($role->name == "Customer")
-			$profile->member_type = $input['member_type'];
-
-		$profile->telephone = $input['telephone'];
-		$profile->company_name = $input['company_name'];
-		$profile->address_1 = $input['address_1'];
-		$profile->address_2 = $input['address_2'];
-		$profile->address_3 = $input['address_3'];
-		$profile->town = $input['town'];
-		$profile->city = $input['city'];
-		$profile->county = $input['county'];
-		$profile->post_code = $input['post_code'];
-		$profile->country = $input['country'];
-		$profile->save();
-*/
 		Flash::message('New user has been created!');
 		return redirect()->route("users.index");
 			
@@ -233,14 +204,6 @@ class UsersController extends Controller {
 		$input = $request->all();
 
 		//check the passwords are not set
-/*		if (isset($input['confirm_password']) && $input['confirm_password'] == "") {
-			unset($input['confirm_password']);
-			unset($input['password']);
-		} elseif (isset($input['confirm_password']) && ($input['confirm_password'] == $input['password'] && $input['password'] != "")) {
-			unset($input['confirm_password']);
-			$user->password = bcrypt($input['password']);
-		}
-*/
 		if (isset($input['password'])) {
 			$user->password = bcrypt($input['password']);	
 		}
@@ -249,6 +212,8 @@ class UsersController extends Controller {
 		$user->email = $input['email'];
 		$user->forenames = $input['forenames'];
 		$user->surname = $input['surname'];
+		if (isset($input['description']))
+			$user->description = $input['description'];
 
 		if ($request->file('thumbnail') != "") {
 			$imageName = $user->id.str_replace(' ', '_', strtolower($input['forenames'])) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
@@ -258,31 +223,6 @@ class UsersController extends Controller {
 		}
 
 		$user->save();
-
-		/*$profile = $user->profile;
-
-		if ($request->file('thumbnail') != "") {
-			$imageName = $user->id.str_replace(' ', '_', strtolower($input['name'])) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
-			$request->file('thumbnail')->move(base_path() . '/public/images/profiles/', $imageName);
-
-			$profile->thumbnail = "/images/profiles/".$imageName;
-		}
-
-		$profile->title = $input['title'];
-		$profile->forenames = $input['forenames'];
-		$profile->surname = $input['surname'];
-		$profile->telephone = $input['telephone'];
-		$profile->company_name = $input['company_name'];
-		$profile->address_1 = $input['address_1'];
-		$profile->address_2 = $input['address_2'];
-		$profile->address_3 = $input['address_3'];
-		$profile->town = $input['town'];
-		$profile->city = $input['city'];
-		$profile->county = $input['county'];
-		$profile->post_code = $input['post_code'];
-		$profile->country = $input['country'];
-		$profile->save();
-*/
 
 		if (isset($input['update_from']) && $input['update_from'] == 'P') {
 			Flash::message('Profile updated!');

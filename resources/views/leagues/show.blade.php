@@ -37,4 +37,35 @@
                         </ul>
                         </div>
                     </div>
+
+                    <div class="module">
+                        <div class="module-head">
+                            <h3>Rules</h3>
+                        </div>
+
+                        <div class="module-body">
+                        </div>
+                    </div>
+
+                    <div class="module">
+                        <div class="module-head">
+                            <h3>Available Movies</h3>
+                        </div>
+
+                        <div class="module-body">
+                            @if($league->Movies->count() > 0)
+                            <ul class="inline">
+                            @foreach($league->Movies as $movie)
+                                <li>{{$movie->pivot->id}}: {{$movie->name}} <a href="{{URL('league-remove-movie', array($movie->pivot->id))}}">x</a></li>
+                            @endforeach
+                            </ul>
+                            @else
+                            <p>There are no movies associated with this league presently.</p>
+                            @endif
+                            <p>TODO: I'd like to make this free entry population much like tags.</p>
+                            <ul class="inline">
+                                <li><a href="{{URL('league-add-movie', array('id'=>$league->id))}}">Add Movie</a></li>
+                            </ul>
+                        </div>
+                    </div>
 @endsection

@@ -23,13 +23,15 @@
                                     <li><a href="{{URL('movies/'.$movie->id.'/edit')}}">Edit Movie</a></li>
                                 </ul>
                             </div>
+                        </div>
+                        <div class="module">
                             <div class="module-head">
                                 <h3>Contributors</h3>
                             </div>
 
                             <div class="module-body">
                                 <dl class="dl-horizontal">
-                                    @foreach($movie->contributors as $contributor)
+                                    @foreach($movie->Contributors as $contributor)
                                     <dt>{{$contributor->first_name}} {{$contributor->surname}}</dt>
                                     <dd>{{$types[$contributor->pivot->contributor_types_id]}}</dd>
                                     @endforeach
@@ -40,28 +42,53 @@
                                     <li><a href="{{URL('movie-add-contributor', array('id'=>$movie->id))}}">Add Contributor</a></li>
                                 </ul>
                             </div>
-
+                        </div>
+                        <div class="module">
                             <div class="module-head">
                                 <h3>Media</h3>
                             </div>
                             <div class="module-body">
 
-                                @if($movie->media->count() > 0)
+                                @if($movie->Media->count() > 0)
+                                <ul class="inline">
+                                @foreach($movie->Media as $item)
+                                    <li>
+                                    @if($item->type == 'I')
+                                    <img src="{{$item->file_name}}" alt="{{$item->name}}" width="100px"/>
+                                    @else
+                                    <span>EMBEDDED VIDEO:<br/> 
+                                    <iframe width="200" height="150" src="{{$item->url}}" frameborder="0" allowfullscreen></iframe>
+                                    </span>
+                                    @endif
+                                    </li>
+                                @endforeach
+                                </ul>
 
 
                                 @else
                                 <p>There are no media files/links for this movie currently.</p>
                                 @endif
+                                <ul class="inline">
+                                    <li><a href="{{URL('movie-add-media', array('id'=>$movie->id))}}">Add Media</a></li>
+                                </ul>
                             </div>
-
+                        </div>
+                        
+                        <div class="module">
                             <div class="module-head">
                                 <h3>Takings History</h3>
                             </div>
                             <div class="module-body">
 
-                                @if($movie->takings->count() > 0)
-
-
+                                @if($movie->Takings->count() > 0)
+                                <table class="table table-striped" width="50%">
+                                <thead><th>Amount</th><th>Country</th><th>Date</th></thead>
+                                <tbody>
+                                @foreach($movie->Takings as $taking)
+                                    <tr><td>{{intval($taking->amount)}}M</td><td>{{$taking->country}}</td><td>{{$taking->takings_at}}</td></tr>
+                                @endforeach
+                                </tbody>
+                                </table>
                                 @else
                                 <p>No takings have been recorded for this movie currently.</p>
                                 @endif

@@ -6,7 +6,9 @@ use Auth;
 use DB;
 use App\Models\User;
 use App\Models\League;
+use App\Models\Movie;
 use App\Models\LeagueUser;
+use App\Models\LeagueMovie;
 use App\Models\Role;
 use Session;
 use Input;
@@ -14,6 +16,7 @@ use Redirect;
 use App\Http\Requests\CreateLeagueRequest;
 use App\Http\Requests\UpdateLeagueRequest;
 use App\Http\Requests\AddPlayerToLeagueRequest;
+use App\Http\Requests\AddMovieToLeagueRequest;
 use Illuminate\Http\Request;
 use Flash;
 
@@ -292,5 +295,64 @@ class LeaguesController extends Controller {
             ->with('authUser', $authUser)
             ->with('join_success', $success)
             ->with('league', $league);
+    }
+
+    public function addMovie($id) {
+        $authUser = Auth::user();
+        if (!isset($authUser))
+            return redirect('/auth/login');
+
+        $league = League::find($id);
+        $title = "Add Movie to ".$league->name." movie";
+
+        //need to restrict to movies not already added to league
+        $linkedMovies = LeagueMovie::where('leagues_id', $id)->lists('movies_id');
+        $movies = Movie::whereNotIn('id', $linkedMovies)->where('enabled', 1)->orderBy('name', 'asc')->lists('name', 'id');
+
+        return View("leagues.movie")
+            ->with('authUser', $authUser)
+            ->with('league', $league)
+            ->with('object', $league)
+            ->with('movies', $movies)
+            ->with('page_name', 'league-movie')
+            ->with('title', $title);
+    }
+
+    public function postMovie($id, AddMovieToLeagueRequest $request) {
+        $input = Input::all();
+        $leaguemovie = LeagueMovie::create( $input );
+
+        Flash::message('Movie added to league.');
+        return Redirect::route('leagues.show', array($id));
+    }
+
+    /**
+     * Reove movie from league
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function removeMovie($id)
+    {
+        //
+        $authUser = Auth::user();
+
+        //ensure permissions are available - should probably check for permissions and not role
+        if ($authUser->hasRole("Admin")) {
+            $lm = LeagueMovie::find($id);
+            if (!empty($lm)) {
+                $movie = Movie::find($lm->movies_id);
+                $league = League::find($lm->leagues_id);
+                $message = "Movie ".$movie->name." has been removed from ".$league->name;
+                Flash::message($message);
+
+                //check this is correct
+                $lm->delete();
+            }
+        } else
+            Flash::message("You don\'t have the permissions to complete this task.");
+
+        return Redirect::route('leagues.show', $league->id);
+
     }
 }

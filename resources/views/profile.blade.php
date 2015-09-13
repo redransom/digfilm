@@ -46,6 +46,14 @@
             </div>
 
             <div class="control-group">
+                <label class="control-label" for="UserSurname">Interests/Summary</label>
+                <div class="controls">
+                    {!! Form::textarea('description', $user->description, ['class'=>'span8', 'placeholder'=>'Description here...']) !!}<br/>
+                    <span class="help-inline">Please give a basic synopysis.</span>
+                </div>
+            </div>
+
+            <div class="control-group">
                 <label class="control-label" for="UserEmail">Email</label>
                 <div class="controls">
                     {!! Form::text('email', $user->email, ['class'=>'span8', 'placeholder'=>'Email here...']) !!}<br/>

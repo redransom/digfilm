@@ -22,6 +22,10 @@ class League extends Model {
         return $this->belongsToMany("\App\Models\User", "league_users", "league_id", "user_id");
     }
 
+    public function Movies() {
+        return $this->belongsToMany("\App\Models\Movie", "league_movies", "leagues_id", "movies_id")->withPivot('id');
+    }
+
     /**
      * Model function to determine if a user can register with a league
      * Need to make sure that they are not owners of a league and also not in the league users table.

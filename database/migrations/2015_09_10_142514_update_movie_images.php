@@ -19,6 +19,7 @@ class UpdateMovieImages extends Migration {
 		{
 			//
 			$table->string('description', 500)->nullable();
+			$table->string('url', 500)->nullable();
 			$table->string('type', 20)->nullable();
 		});
 	}

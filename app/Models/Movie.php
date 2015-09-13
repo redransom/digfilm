@@ -7,15 +7,21 @@ class Movie extends Model {
     //
     protected $fillable = array('name', 'summary', 'genre', 'rating', 'budget', 'enabled');
 
-    public function contributors() {
+    public function Contributors() {
         return $this->belongsToMany("\App\Models\Contributor", "movies_contributors", "movies_id", "contributors_id")->withPivot('contributor_types_id');
     }
 
-    public function takings() {
+    public function Takings() {
         return $this->hasMany("\App\Models\MovieTaking", 'movies_id', 'id');
     }
 
-    public function media() {
+    public function Media() {
         return $this->hasMany("\App\Models\MovieMedia", 'movies_id', 'id');
     }
+
+    public function Leagues() {
+        return $this->belongsToMany("\App\Models\League", "league_movies", "movies_id", "leagues_id");
+    }
+
+
 }

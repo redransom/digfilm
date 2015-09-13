@@ -9,12 +9,16 @@ use App\Models\Contributor;
 use App\Models\MovieContributor;
 use App\Models\ContributorType;
 use App\Models\Role;
+use App\Models\MovieTaking;
+use App\Models\MovieMedia;
 use Session;
 use Input;
 use Redirect;
 use App\Http\Requests\CreateMovieRequest;
 use App\Http\Requests\UpdateMovieRequest;
 use App\Http\Requests\AddContributorToMovieRequest;
+use App\Http\Requests\AddTakingsToMovieRequest;
+use App\Http\Requests\AddMediaToMovieRequest;
 use Illuminate\Http\Request;
 use Flash;
 
@@ -235,4 +239,81 @@ class MoviesController extends Controller {
 
 		return Redirect::route('movies.show', array($id))->with('message', 'Movie created.');
 	}
-}
+
+	public function addTakings($id) {
+		$authUser = Auth::user();
+		if (!isset($authUser))
+			return redirect('/auth/login');
+
+		$movie = Movie::find($id);
+		$title = "Add Takings to ".$movie->name." the movie";
+		$takings = MovieTaking::where('movies_id', $id)->orderBy('country', 'asc')->orderBy('takings_at', 'asc')->get();
+
+		$countries = ['USD'=>'US Dollars', 'GBP'=>'English Pounds'];
+
+		return View("movies.takings")
+			->with('authUser', $authUser)
+			->with('movie', $movie)
+			->with('object', $movie)
+			->with('takings', $takings)
+			->with('countries', $countries)
+			->with('page_name', 'movie-takings')
+			->with('title', $title);
+	}
+
+	public function postTakings($id, AddTakingsToMovieRequest $request) {
+		$input = Input::all();
+		$taking = MovieTaking::create( $input );
+
+		Flash::message('Movie takings added.');		
+		return Redirect::route('movies.show', array($id));
+	}
+
+	public function addMedia($id) {
+		$authUser = Auth::user();
+		if (!isset($authUser))
+			return redirect('/auth/login');
+
+		$movie = Movie::find($id);
+		$title = "Add Media to ".$movie->name." the movie";
+		$media = MovieMedia::where('movies_id', $id)->orderBy('type', 'asc')->orderBy('name', 'asc')->get();
+
+		return View("movies.media")
+			->with('authUser', $authUser)
+			->with('movie', $movie)
+			->with('object', $movie)
+			->with('media', $media)
+			->with('page_name', 'movie-media')
+			->with('title', $title);
+	}
+
+	public function postMedia($id, AddMediaToMovieRequest $request) {
+		$input = Input::all();
+		//$media = MovieMedia::create( $input );
+
+		$media = new MovieMedia();
+		$media->movies_id = $input['movies_id'];
+		$media->name = $input['name'];
+		$media->description = $input['description'];
+		$media->type = $input['type'];
+		if (isset($input['url']))
+			$media->url = $input['url'];
+
+		if ($input['type'] == 'T') {
+			unset($input['file_name']);
+		}
+		$media->save();
+
+		//check for file to be uploaded
+		if ($request->file('file_name') != "") {
+			$imageName = $media->id.str_replace(' ', '_', strtolower($input['name'])) . '.' . $request->file('file_name')->getClientOriginalExtension();
+			$request->file('file_name')->move(base_path() . '/public/images/movies/', $imageName);
+
+			$media->file_name = "/images/movies/".$imageName;
+			$media->save();
+		}
+
+
+		Flash::message('Movie media added.');		
+		return Redirect::route('movies.show', array($id));
+	}}

@@ -56,6 +56,18 @@ Breadcrumbs::register('movie-contributor', function($breadcrumbs, $movie)
     $breadcrumbs->push('Add Contributor to Movie', route('movie-add-contributor', $movie->id));
 });
 
+Breadcrumbs::register('movie-takings', function($breadcrumbs, $movie)
+{
+    $breadcrumbs->parent('movies');
+    $breadcrumbs->push('Add Takings to Movie', route('movie-add-takings', $movie->id));
+});
+
+Breadcrumbs::register('movie-media', function($breadcrumbs, $movie)
+{
+    $breadcrumbs->parent('movies');
+    $breadcrumbs->push('Add Media to Movie', route('movie-add-media', $movie->id));
+});
+
 Breadcrumbs::register('contributors', function($breadcrumbs)
 {
     $breadcrumbs->parent('admin-dashboard');
@@ -108,6 +120,12 @@ Breadcrumbs::register('league-player', function($breadcrumbs, $league)
 {
     $breadcrumbs->parent('leagues');
     $breadcrumbs->push('Add Player to League', route('league-add-player', $league->id));
+});
+
+Breadcrumbs::register('league-movie', function($breadcrumbs, $league)
+{
+    $breadcrumbs->parent('leagues');
+    $breadcrumbs->push('Add Movie to League', route('league-add-movie', $league->id));
 });
 
 /** 
