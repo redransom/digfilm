@@ -82,13 +82,63 @@ class WelcomeController extends Controller {
 	}
 
 	/**
+	 * Show league details
+	 *
+	 * @return void
+	 */
+	public function getLeague($id) {
+		$authUser = Auth::user();
+
+		$league = League::find($id);
+
+		return view('league-show')
+			->with('league', $league)
+			->with('authUser', $authUser);	
+	}
+
+	/**
 	 * Create a league (if signed in)
 	 *
 	 * @return void
 	 */
 	public function create() {
 		$authUser = Auth::user();
+
 		return view('create-league')
+			->with('authUser', $authUser);	
+	}
+
+	/**
+	 * Add movies to the new league
+	 *
+	 * @return void
+	 */
+	public function addMovies($id) {
+		$authUser = Auth::user();
+
+		$league = League::find($id);
+		$movies = \App\Models\Movie::where('enabled', 1)->where('release_at', '>', date("Y-m-d"))->get();
+
+		return view('choose-movie')
+			->with('league', $league)
+			->with('movies', $movies)
+			->with('authUser', $authUser);	
+	}
+
+	/**
+	 * Add pariticipants to league
+	 *
+	 * @return void
+	 */
+	public function addParticipants($id) {
+		$authUser = Auth::user();
+
+		$league = League::find($id);
+		$movies = \App\Models\Movie::where('enabled', 1)->where('release_at', '>', date("Y-m-d"))->get();
+
+		return view('choose-participants')
+			->with('league', $league)
+			->with('movies', $movies)
 			->with('authUser', $authUser);	
 	}
 

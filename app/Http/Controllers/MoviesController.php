@@ -74,7 +74,7 @@ class MoviesController extends Controller {
 		$input = Input::all();
 		$movie = Movie::create( $input );
 
-		return Redirect::route('movies.index')->with('message', 'Movie created.');
+		return Redirect::route('movies.show', [$movie->id]);
 	}
 
 	/**

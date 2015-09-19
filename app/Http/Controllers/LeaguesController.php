@@ -94,7 +94,16 @@ class LeaguesController extends Controller {
         $input = Input::all();
         $league = League::create( $input );
 
-        return Redirect::route('leagues.index')->with('message', 'League created.');
+        $direction = isset($input['source']) ? $input['source'] : "A";
+
+        if ($direction == "A") {
+            Flash::message('League created.');
+            return Redirect::route('leagues.index');
+        } else {
+            /* come by customer create league so go to select movies page */
+            return Redirect::route('choose-movies', [$league->id]);
+        }
+        
     }
 
     /**
@@ -325,6 +334,34 @@ class LeaguesController extends Controller {
         Flash::message('Movie added to league.');
         return Redirect::route('leagues.show', array($id));
     }
+
+    /**
+     * add selection of movies to players league
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function postMultipleMovies() {
+        $input = Input::all();
+
+        if (!empty($input['movies_id'])) {
+
+            $leagues_id = $input['leagues_id'];
+            //add movies for this league
+            foreach ($input['movies_id'] as $movie_id) {
+                $leaguemovie = new LeagueMovie();
+
+                $leaguemovie->leagues_id = $leagues_id;
+                $leaguemovie->movies_id = $movie_id;
+                $leaguemovie->save();
+
+            }
+            return Redirect::route('select-participants', array($leagues_id));
+        }
+        //issue here - put warning message?
+        return Redirect::route('dashboard');
+    }
+
 
     /**
      * Reove movie from league

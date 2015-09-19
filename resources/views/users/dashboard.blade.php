@@ -51,7 +51,7 @@
         <tbody>
             @foreach($authUser->inLeagues as $league)
             <tr>
-                <td><a class="btn btn-mini btn-danger" href="{{URL('ext-leagues/'.$league->id)}}">{{$league->name}}</a></td>
+                <td><a class="btn btn-mini btn-danger" href="{{URL('league/'.$league->id)}}">{{$league->name}}</a></td>
                 <td>{{count($league->players)}}</td>
                 <td>{{$league->created_at}}</td>
                 <td>--</td>

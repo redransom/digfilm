@@ -19,8 +19,18 @@ Route::get('privacy', 'WelcomeController@privacy');
 Route::get('contact', 'WelcomeController@contact');
 Route::get('all-leagues', 'WelcomeController@leagues');
 Route::get('create', 'WelcomeController@create');
+
+/*
+
+*/
 Route::get('profile', ['as'=>'profile', 'uses'=>'WelcomeController@getProfile']);
 
+Route::get('league/{id}', ['as'=>'league', 'uses'=>'WelcomeController@getLeague']);
+Route::post('league', ['as'=>'league', 'uses'=>'WelcomeController@getLeague']);
+
+Route::get('choose-movies/{id}', ['as'=>'choose-movies', 'uses'=>'WelcomeController@addMovies']);
+Route::post('select-movies', ['as'=>'select-movies', 'uses'=>'LeaguesController@postMultipleMovies']);
+Route::get('select-participants/{id}', ['as'=>'select-participants', 'uses'=>'WelcomeController@addParticipants']);
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
