@@ -2,6 +2,7 @@
 use Auth;
 use App\Models\User;
 use App\Models\League;
+use App\Models\LeagueUser;
 
 class WelcomeController extends Controller {
 
@@ -126,7 +127,7 @@ class WelcomeController extends Controller {
 	}
 
 	/**
-	 * Add pariticipants to league
+	 * Add participants to league
 	 *
 	 * @return void
 	 */
@@ -134,11 +135,23 @@ class WelcomeController extends Controller {
 		$authUser = Auth::user();
 
 		$league = League::find($id);
-		$movies = \App\Models\Movie::where('enabled', 1)->where('release_at', '>', date("Y-m-d"))->get();
 
+		//need to get a list of all people who are on leagues that this user is on
+		$leaguesOwned = $authUser->leagues->lists('id');
+		//get players from league the user owns
+		$userLeaguesOwns = LeagueUser::whereIn('league_id', $leaguesOwned)->lists('user_id');
+
+		//get players from leagues that user plays in
+		$leaguesPlayedIn = $authUser->inLeagues->lists('id'); //get league ids
+
+		$userLeaguesPlayedIn = LeagueUser::whereIn('league_id', $leaguesPlayedIn)->lists('user_id');
+
+		$availableUsers = $userLeaguesOwns + $userLeaguesPlayedIn;
+		$users = User::whereIn('id', $availableUsers)->where('id', '!=', $authUser->id)->get();
+		
 		return view('choose-participants')
 			->with('league', $league)
-			->with('movies', $movies)
+			->with('users', $users)
 			->with('authUser', $authUser);	
 	}
 

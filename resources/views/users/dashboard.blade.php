@@ -6,7 +6,7 @@
         <h3>Dashboard</h3>
     </div>
 
-    <h1>Hi {{$authUser->forenames}}, welcome to DigFilm today.</h1>
+    <h1>Hi {{$authUser->forenames}}, Welcome to DigFilm today.</h1>
     
     <h2>Leagues Owned</h2>
 

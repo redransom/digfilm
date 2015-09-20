@@ -31,6 +31,8 @@ Route::post('league', ['as'=>'league', 'uses'=>'WelcomeController@getLeague']);
 Route::get('choose-movies/{id}', ['as'=>'choose-movies', 'uses'=>'WelcomeController@addMovies']);
 Route::post('select-movies', ['as'=>'select-movies', 'uses'=>'LeaguesController@postMultipleMovies']);
 Route::get('select-participants/{id}', ['as'=>'select-participants', 'uses'=>'WelcomeController@addParticipants']);
+Route::post('choose-participants', ['as'=>'choose-participants', 'uses'=>'LeaguesController@postSelectParticipants']);
+
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

@@ -3,34 +3,61 @@
 @section('content')
 <section class="entry sbr clearfix">
     <div class="title-caption-large">
-        <h3>Create Your League</h3>
+        <h3>Choose who you want to play?</h3>
     </div>
 
-    @if(isset($authUser))
-    <p>Use the below form to enter the name of the league you wish to create and select the movies to be auctioned for.</p>
-    <div id="contact">
-        <div id="message"></div>
-        {!! Form::open(array('route' => 'leagues.store', 'class'=>'form-horizontal row-fluid', 'id'=>'contactform')) !!}
-            <fieldset>
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <input type="hidden" name="source" value="P">
-                <input type="hidden" name="users_id" value="{{$authUser->id}}">
-                <div class="alignleft">
-                    <div class="row">
-                        <label for="name"><span class="required">*</span>League Name:</label>
-                        {!! Form::text('name', null, ['class'=>'span8', 'placeholder'=>'Enter league name here...']) !!}
-                    </div><!--/ row-->
-                    
-                    <input type="submit" class="button green small" id="submit" value="Submit" />
-                </div><!--/ textfield-->
-            </fieldset>
-        </form>
-    </div><!--/ contact-->
-    
-    @else
-    <p>You need to be logged in if you want create a league here for your friends to play in.</p>
-    @endif
+    <p>You can select any players from your friends list or invite players to join.</p>
 
+    <div class="one-fourth">  
+        <h4>Choose Friends</h4>  
+        @if($users->count()>0)
+        <div id="contact">
+            {!! Form::open(array('route' => 'choose-participants', 'class'=>'form-horizontal row-fluid', 'id'=>'contactform')) !!}
+                <fieldset>
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="leagues_id" value="{{$league->id}}">
+                    <div class="alignleft">
+                        <ul>
+                        @foreach($users as $user)
+                            <li>{!! Form::checkbox('users_id[]', $user->id, false) !!}&nbsp;&nbsp;{{$user->forenames}} {{$user->surname}}</li>
+                        @endforeach
+                        </ul>
+                        <br/>
+                        <input type="submit" class="button green small" id="submit" value="Add Movies" />
+                    </div><!--/ textfield-->
+                </fieldset>
+            </form>
+        </div><!--/ contact-->
+        @else
+        <p>Sorry, you have no friends currently.</p>
+        @endif
+
+    </div>
+    <div class="one-fourth">
+        <h4>Invite Friends</h4>
+        <div id="contact">
+            <div id="message"></div>
+            {!! Form::open(array('route' => 'leagues.store', 'class'=>'form-horizontal row-fluid', 'id'=>'contactform')) !!}
+                <fieldset>
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="users_id" value="{{$authUser->id}}">
+                    <input type="hidden" name="leagues_id" value="{{$league->id}}">
+                    <div class="alignleft">
+                        <div class="row">
+                            <label for="name"><span class="required">*</span>Friend Name:</label>
+                            {!! Form::text('name', null, ['class'=>'span8', 'placeholder'=>'Enter friends name here...']) !!}
+                        </div><!--/ row-->
+                        
+                        <div class="row">
+                            <label for="name"><span class="required">*</span>Email:</label>
+                            {!! Form::text('email_address', null, ['class'=>'span8', 'placeholder'=>'Enter email address here...']) !!}
+                        </div><!--/ row-->
+                        <input type="submit" class="button green small" id="submit" value="Invite" />
+                    </div><!--/ textfield-->
+                </fieldset>
+            </form>
+        </div><!--/ contact-->
+    </div>    
 </section>
 
 @endsection
