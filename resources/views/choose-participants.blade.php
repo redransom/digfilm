@@ -3,7 +3,7 @@
 @section('content')
 <section class="entry sbr clearfix">
     <div class="title-caption-large">
-        <h3>Choose who you want to play?</h3>
+        <h3>Choose who you want to play!</h3>
     </div>
 
     <p>You can select any players from your friends list or invite players to join.</p>
@@ -23,7 +23,7 @@
                         @endforeach
                         </ul>
                         <br/>
-                        <input type="submit" class="button green small" id="submit" value="Add Movies" />
+                        <input type="submit" class="button green small" id="submit" value="Add Friends" />
                     </div><!--/ textfield-->
                 </fieldset>
             </form>
@@ -34,13 +34,15 @@
 
     </div>
     <div class="one-fourth">
-        <h4>Invite Friends</h4>
+        <h4>Invite Friend</h4>
+        @if(isset($message))
+        <span>{{$message}}</span>
+        @endif
         <div id="contact">
             <div id="message"></div>
-            {!! Form::open(array('route' => 'leagues.store', 'class'=>'form-horizontal row-fluid', 'id'=>'contactform')) !!}
+            {!! Form::open(array('route' => 'league-invite', 'class'=>'form-horizontal row-fluid', 'id'=>'contactform')) !!}
                 <fieldset>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <input type="hidden" name="users_id" value="{{$authUser->id}}">
                     <input type="hidden" name="leagues_id" value="{{$league->id}}">
                     <div class="alignleft">
                         <div class="row">

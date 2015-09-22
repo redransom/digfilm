@@ -12,13 +12,34 @@
 
     @if($authUser->leagues->count() > 0)
     <p>Here are the leagues you own:</p>
+
+    <!-- ************ - Tabs - ************** -->   
+    <div class="tabs1 widget">
+        
+        <ul class="tabs-nav">
+            @foreach($authUser->leagues as $league)
+            <li><a href="#tab{{$league->id}}">{{$league->name}}</a></li>
+            @endforeach
+        </ul>
+
+        <div class="tabs-container">
+            
+            @foreach($authUser->leagues as $league)
+            <div id="tab{{$league->id}}" class="tab-content">
+            Currently has the following players:<br/>
+            <br/>
+            Starts at <strong>{{date("jS M Y", strtotime($league->created_at))}}</strong>
+            </div>
+            @endforeach
+        </div>
+    </div>
     <table class="feature-table dark-gray">
         <thead>
             <tr> 
-                <th>Name</th> 
-                <th>Players</th>
-                <th>Started?</th>
-                <th>Ends?</th>
+                <th width="49%">Name</th> 
+                <th width="15%">Players</th>
+                <th width="18%">Started?</th>
+                <th width="18%">Ends?</th>
             </tr>
         </thead>
         <tbody>
@@ -26,7 +47,7 @@
             <tr>
                 <td>{{$league->name}}</td>
                 <td>{{count($league->players)}}</td>
-                <td>{{$league->created_at}}</td>
+                <td>{{date("jS M Y", strtotime($league->created_at))}}</td>
                 <td>--</td>
             </tr>
             @endforeach
@@ -42,10 +63,10 @@
     <table class="feature-table dark-gray">
         <thead>
             <tr> 
-                <th>Name</th> 
-                <th>Players</th>
-                <th>Started?</th>
-                <th>Ends?</th>
+                <th width="49%">Name</th> 
+                <th width="15%">Players</th>
+                <th width="18%">Started?</th>
+                <th width="18%">Ends?</th>
             </tr>
         </thead>
         <tbody>
@@ -53,7 +74,7 @@
             <tr>
                 <td><a class="btn btn-mini btn-danger" href="{{URL('league/'.$league->id)}}">{{$league->name}}</a></td>
                 <td>{{count($league->players)}}</td>
-                <td>{{$league->created_at}}</td>
+                <td>{{date("jS M Y", strtotime($league->created_at))}}</td>
                 <td>--</td>
             </tr>
             @endforeach

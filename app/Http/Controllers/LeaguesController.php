@@ -19,6 +19,7 @@ use App\Http\Requests\AddPlayerToLeagueRequest;
 use App\Http\Requests\AddMovieToLeagueRequest;
 use Illuminate\Http\Request;
 use Flash;
+use Mail;
 
 class LeaguesController extends Controller {
 
@@ -391,5 +392,37 @@ class LeaguesController extends Controller {
 
         return Redirect::route('leagues.show', $league->id);
 
+    }
+
+    /**
+     * Invite non-player to join league
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function postInvitePlayer() 
+    {
+        $authUser = Auth::user();
+
+        $input = Input::all();
+        $league = League::find($input['leagues_id']);
+
+        /* Take details and send it as an email invite */
+        $nonplayerName = $input['name'];
+        $nonplayerEmail = $input['email_address'];
+
+        $data = ['inviteName' => $nonplayerName,
+                'inviteEmail' => $nonplayerEmail,
+                'user' => $authUser];
+
+        Mail::send('emails.invite', $data, function($message) use ($nonplayerEmail)
+        {
+            $message->from('invite@digfilm.com', 'DigFilm Entertainment');
+            $message->to($nonplayerEmail);
+        });
+
+        $success_message = $nonplayerName." has been invited to your league!";
+        /* route back to the invite page */
+        return Redirect::route('select-participants', [$league->id])->with('message', $success_message);
     }
 }
