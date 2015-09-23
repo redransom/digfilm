@@ -10,6 +10,8 @@ use App\Models\Movie;
 use App\Models\LeagueUser;
 use App\Models\LeagueMovie;
 use App\Models\Role;
+use App\Models\RuleSet;
+use App\Models\LeagueRule;
 use Session;
 use Input;
 use Redirect;
@@ -94,6 +96,38 @@ class LeaguesController extends Controller {
         //
         $input = Input::all();
         $league = League::create( $input );
+
+        if (!isset($input['rule_set'])) {
+            //if no rule set is provided - just create a blank rule set
+            $ruleset = RuleSet::first();
+        } else {
+            $ruleset = RuleSet::find($input['rule_set']);
+        }
+
+        //TODO: Move this to the league rule model?
+        if (!empty($ruleset) && is_numeric($ruleset->id)) {
+            //copy rule details into the rule for the league
+            $leaguerule = new LeagueRule();
+            $leaguerule->min_players = $ruleset->min_players;
+            $leaguerule->max_players = $ruleset->max_players;
+            $leaguerule->min_movies = $ruleset->min_movies;
+            $leaguerule->max_movies = $ruleset->max_movies;
+            $leaguerule->auction_duration = $ruleset->auction_duration;
+            $leaguerule->ind_film_countdown = $ruleset->ind_film_countdown;
+            $leaguerule->joint_ownership = $ruleset->joint_ownership;
+            $leaguerule->min_bid = $ruleset->min_bid;
+            $leaguerule->max_bid = $ruleset->max_bid;
+            $leaguerule->randomizer = $ruleset->randomizer;
+            $leaguerule->auction_movie_release = $ruleset->auction_movie_release;
+            $leaguerule->start_time = $ruleset->start_time;
+            $leaguerule->close_time = $ruleset->close_time;
+            $leaguerule->league_type = $ruleset->league_type;
+            $leaguerule->auto_select = $ruleset->auto_select;
+
+            //add league id
+            $leaguerule->leagues_id = $league->id;
+            $leaguerule->save();
+        }
 
         $direction = isset($input['source']) ? $input['source'] : "A";
 
@@ -395,6 +429,33 @@ class LeaguesController extends Controller {
     }
 
     /**
+     * Select Known players to join league
+     * TODO: Would be better obviously if the player is invited and it appears in a messages section somewhere
+     *
+     * @return Response
+     */
+    public function postSelectParticipants()
+    {
+        $authUser = Auth::user();
+
+        $input = Input::all();
+
+        if (isset($input['leagues_id']) && isset($input['users_id']) && !empty($input['users_id'])) {
+            //we have league id so we can continue
+            $league_id = $input['leagues_id'];
+            foreach ($input['users_id'] as $user_id) {
+                $lu = new LeagueUser();
+                $lu->league_id = $league_id;
+                $lu->user_id = $user_id;
+                $lu->save();
+                unset($lu);//clear out to start afresh
+            }
+            return Redirect::route('league', [$league_id])->with('message', 'Players have been invited to the league');
+        }
+        return Redirect::route('dashboard');
+    }
+
+    /**
      * Invite non-player to join league
      *
      * @param  int  $id
@@ -415,6 +476,8 @@ class LeaguesController extends Controller {
                 'inviteEmail' => $nonplayerEmail,
                 'user' => $authUser];
 
+        //TODO: need to check if invited player is currently a player of the site who is not part of the group of friends the user currently has.
+        //send invite email to new player
         Mail::send('emails.invite', $data, function($message) use ($nonplayerEmail)
         {
             $message->from('invite@digfilm.com', 'DigFilm Entertainment');
