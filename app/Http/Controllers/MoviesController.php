@@ -35,7 +35,7 @@ class MoviesController extends Controller {
 		if (!isset($authUser))
 			return redirect('/auth/login');
 
-		$movies = Movie::all();
+		$movies = Movie::paginate(10);
 
 		return View("movies.all")
 			->with('movies', $movies)

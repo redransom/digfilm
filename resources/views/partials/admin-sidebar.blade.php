@@ -45,6 +45,14 @@
                                         <li><a href="{{URL('leagues/create')}}"><i class="icon-th"></i>Add New</a></li>
                                     </ul>
                                 </li>
+
+                                <li><a class="collapsed" data-toggle="collapse" href="#toggleRulesets"><i class="menu-icon icon-th">
+                                </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right"></i>Rule Sets </a>
+                                    <ul id="toggleRulesets" class="collapse unstyled">
+                                        <li><a href="{{URL('rulesets')}}"><i class="icon-th"></i>List</a></li>
+                                        <li><a href="{{URL('rulesets/create')}}"><i class="icon-th"></i>Add New</a></li>
+                                    </ul>
+                                </li>                                
                             </ul>
                             <!--/.widget-nav-->
                             <!--ul class="widget widget-menu unstyled">

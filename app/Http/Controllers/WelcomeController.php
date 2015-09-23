@@ -3,6 +3,7 @@ use Auth;
 use App\Models\User;
 use App\Models\League;
 use App\Models\LeagueUser;
+use App\Models\RuleSet;
 
 class WelcomeController extends Controller {
 
@@ -105,7 +106,11 @@ class WelcomeController extends Controller {
 	public function create() {
 		$authUser = Auth::user();
 
+		$rulesets = RuleSet::lists('name', 'id');
+
+
 		return view('create-league')
+			->with('sets', $rulesets)
 			->with('authUser', $authUser);	
 	}
 

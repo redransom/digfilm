@@ -21,6 +21,11 @@
                         {!! Form::text('name', null, ['class'=>'span8', 'placeholder'=>'Enter league name here...']) !!}
                     </div><!--/ row-->
                     
+                    <div class="row">
+                        <label for="name"><span class="required">*</span>Rule Set:</label>
+                        {!! Form::select('rule_set', $sets, ['class'=>'span8']) !!}
+                    </div><!--/ row-->
+                    
                     <input type="submit" class="button green small" id="submit" value="Submit" />
                 </div><!--/ textfield-->
             </fieldset>

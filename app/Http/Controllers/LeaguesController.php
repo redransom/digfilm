@@ -136,7 +136,8 @@ class LeaguesController extends Controller {
             return Redirect::route('leagues.index');
         } else {
             /* come by customer create league so go to select movies page */
-            return Redirect::route('choose-movies', [$league->id]);
+            //return Redirect::route('choose-movies', [$league->id]);
+            return Redirect::route('select-participants', [$league->id]);
         }
         
     }
@@ -488,4 +489,24 @@ class LeaguesController extends Controller {
         /* route back to the invite page */
         return Redirect::route('select-participants', [$league->id])->with('message', $success_message);
     }
+
+    /**
+     * Invite non-player to join league
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function getLeague($id) 
+    {
+        $authUser = Auth::user();
+        $league = League::find($id);
+
+        $movies = $league->movies;
+        $rule = $league->rule;
+
+        return view('leagues.manage')
+            ->with('league', $league)
+            ->with('authUser', $authUser);  
+    }
+
 }

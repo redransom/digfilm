@@ -26,6 +26,7 @@ Route::get('create', 'WelcomeController@create');
 Route::get('profile', ['as'=>'profile', 'uses'=>'WelcomeController@getProfile']);
 
 Route::get('league/{id}', ['as'=>'league', 'uses'=>'WelcomeController@getLeague']);
+Route::get('league/{id}/manage', ['as'=>'league-manage', 'uses'=>'LeaguesController@getLeague']);
 Route::post('league', ['as'=>'league', 'uses'=>'WelcomeController@getLeague']);
 
 Route::get('choose-movies/{id}', ['as'=>'choose-movies', 'uses'=>'WelcomeController@addMovies']);
@@ -72,7 +73,7 @@ Route::group(['middleware'=>'auth'], function() {
         Route::resource('movies', 'MoviesController');
         Route::resource('contributors', 'ContributorsController');
         Route::resource('leagues', 'LeaguesController');
-
+        Route::resource('rulesets', 'RuleSetsController');
 
         Route::get('leagues/{id}/join', 'LeaguesController@join');
 
