@@ -30,12 +30,18 @@
                                             @else
                                             <a class="btn btn-mini btn-info" href="{{URL('leagues/'.$league->id.'/enable')}}">Enable</a>
                                             @endif
+                                            @if(!is_null($league->rule))
+                                            <a class="btn btn-mini btn-inverse" href="{{URL('leagues/'.$league->id.'/rules')}}">Rules</a>
+                                            @endif
                                             </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
                             </div>
+                            <div class="pagination pagination-centered">
+                                    <?php echo $leagues->render(); ?>
+                                </div>
                         </div>
                     </div>
 <!--/.content-->

@@ -36,7 +36,8 @@ class LeaguesController extends Controller {
         if (!isset($authUser))
             return redirect('/auth/login');
 
-        $leagues = League::all();
+        //$leagues = League::all();
+        $leagues = League::paginate(10);
 
         return View("leagues.all")
             ->with('leagues', $leagues)
@@ -57,20 +58,14 @@ class LeaguesController extends Controller {
         $authUser = Auth::user();
         if (!isset($authUser))
             return redirect('/auth/login');
-/*
-        $users = User::with(['role' => function($q){
-            $q->where('name', 'Player');
-        }])->lists('name', 'id');
 
-        $role = Role::where('name', 'Player')->first();
-        $user_ids = DB::table('role_user')->where('role_id', $role->id)->lists('user_id');
+        $rulesets = RuleSet::lists('name', 'id');
 
-        $users = User::whereIn('id', $user_ids)->lists('name', 'id');
-*/
         return View("leagues.add")
             ->with('authUser', $authUser)
             ->with('users', $this->get_players())
             ->with('page_name', 'league-add')
+            ->with('sets', $rulesets)
             ->with('instructions', 'Add New League')
             ->with('title', 'Add League');
     }
@@ -507,6 +502,40 @@ class LeaguesController extends Controller {
         return view('leagues.manage')
             ->with('league', $league)
             ->with('authUser', $authUser);  
+    }
+
+    /**
+     * Adjust the rules for the league
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function getRules($id) 
+    {
+        $authUser = Auth::user();
+        $league = League::find($id);
+
+        return view('leagues.rules')
+            ->with('league', $league)
+            ->with('object', $league)
+            ->with('page_name', 'league-rule')
+            ->with('title', 'Edit League Rules')
+            ->with('authUser', $authUser);  
+    }
+
+    /**
+     * Save changes to the rules
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function postRules($id) 
+    {
+        $authUser = Auth::user();
+        $rule = LeagueRule::find($id);
+
+        $input = Input::all();
+        
     }
 
 }

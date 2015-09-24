@@ -128,6 +128,12 @@ Breadcrumbs::register('league-movie', function($breadcrumbs, $league)
     $breadcrumbs->push('Add Movie to League', route('league-add-movie', $league->id));
 });
 
+Breadcrumbs::register('league-rule', function($breadcrumbs, $league)
+{
+    $breadcrumbs->parent('leagues');
+    $breadcrumbs->push('Edit League Rules', route('league-rules', $league->id));
+});
+
 Breadcrumbs::register('rulesets', function($breadcrumbs)
 {
     $breadcrumbs->parent('admin-dashboard');

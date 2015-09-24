@@ -38,6 +38,14 @@
                     </div>
 
                     <div class="control-group">
+                        <label class="control-label" for="LeagueName">Rule Set</label>
+                        <div class="controls">
+                            {!! Form::select('rule_set', $sets, null, ['class'=>'span8']) !!}
+                            <span class="help-inline">Which default options to use?</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
                         <div class="controls">
                             <button type="submit" class="btn btn-primary pull-right">Add League</button>
                         </div>

@@ -16,8 +16,10 @@
             <tr<?php echo (($league_counter % 2) == 1) ? " class='odd'" : ""; ?>><td>{{$league->name}}</td><td>{{count($league->players)}}</td><td>{{$league->owner->name}}</td>
             <td>Yes</td><td>{{date("jS M")}}</td>
             <td>
-            @if(isset($authUser))
+            @if(isset($authUser) && isset($league->rule) && $league->rule->league_type =='U')
             <a class="button small dark" href="{{URL('leagues/'.$league->id.'/join')}}">Join</a>
+            @elseif(isset($authUser) && isset($league->rule) && $league->rule->league_type =='R')
+            <a title="This league is invite only">Invite Only</a>
             @else
             <a title="You need to be logged in to join a league">Join</a>
             @endif
