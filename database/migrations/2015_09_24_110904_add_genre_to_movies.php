@@ -13,14 +13,14 @@ class AddGenreToMovies extends Migration {
 	public function up()
 	{
 		
-		Schema::table('movies', function(Blueprint $table)
+		Schema::table('leagues', function(Blueprint $table)
 		{
-			// need to remove the current genre field added previously
-			$table->dropColumn('votes');
+			// need to remove the limit field as it's not necessary now
+			$table->dropColumn('limit');
 
-			//add link to new genres table
-			$table->integer('genres_id')->unsigned()->default(0);
-			$table->foreign('genres_id')->references('id')->on('genres')->onDelete('cascade');
+			//add auction dates to the leagues table
+			$table->datetime('auction_start_date')->nullable();
+			$table->datetime('auction_close_date')->nullable();
 		});
 
 	}

@@ -16,10 +16,10 @@ class UpdateLeagueRules extends Migration {
 		Schema::table('league_rules', function(Blueprint $table)
 		{
 			//
-			$table->decimal('ind_film_countdown', 3)->nullable();
+			$table->integer('ind_film_countdown')->default(10);
 			$table->string('joint_ownership', 1)->default('N');
-			$table->decimal('min_bid', 3 , 2)->nullable();
-			$table->decimal('max_bid', 3 , 2)->nullable();
+			$table->decimal('min_bid', 4 , 2)->nullable();
+			$table->decimal('max_bid', 4 , 2)->nullable();
 			$table->string('randomizer', 1)->default('N');
 			$table->string('auction_movie_release', 1)->nullable();
 			$table->time('start_time')->nullable();

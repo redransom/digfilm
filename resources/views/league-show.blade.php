@@ -6,6 +6,6 @@
         <h3>{{$league->name}} League</h3>
     </div>
 
-    
+    {{var_dump($league)}}
 </section>
 @endsection

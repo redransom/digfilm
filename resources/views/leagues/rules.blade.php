@@ -19,7 +19,7 @@
                 @endif
 
                 <br />
-                {!! Form::open(array('route' => array('league-rules', $league->rule->id), 'class'=>'form-horizontal row-fluid', 'method'=>'PUT')) !!}
+                {!! Form::open(array('route' => array('league-rules', $league->rule->id), 'class'=>'form-horizontal row-fluid', 'method'=>'POST')) !!}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                     <div class="control-group">
@@ -34,16 +34,16 @@
                     <div class="control-group">
                         <label class="control-label" for="LeagueName">No Of Players</label>
                         <div class="controls">
-                            {!! Form::select('min_players', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], $league->rule->min_players, ['class'=>'span2']) !!} to 
-                            {!! Form::select('max_players', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], $league->rule->max_players, ['class'=>'span2']) !!}
+                            {!! Form::select('min_players', [1=>1, 2=>2, 3=>3, 4=>4, 5=>5, 6=>6, 7=>7, 8=>8, 9=>9, 10=>10], $league->rule->min_players, ['class'=>'span2']) !!} to 
+                            {!! Form::select('max_players', [1=>1, 2=>2, 3=>3, 4=>4, 5=>5, 6=>6, 7=>7, 8=>8, 9=>9, 10=>10, 11=>11, 12=>12, 13=>13, 14=>14, 15=>15], $league->rule->max_players, ['class'=>'span2']) !!}
                             <span class="help-inline">Between 4 and 15 players.</span>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="LeagueName">No Of Movies</label>
                         <div class="controls">
-                            {!! Form::select('min_movies', [10, 20, 30, 40, 50, 60, 70], $league->rule->min_movies, ['class'=>'span2']) !!} to 
-                            {!! Form::select('max_movies', [10, 20, 30, 40, 50, 60, 70, 80, 90, 100], $league->rule->max_movies, ['class'=>'span2']) !!}
+                            {!! Form::select('min_movies', [10=>10, 20=>20, 30=>30, 40=>40, 50=>50, 60=>60, 70=>70], $league->rule->min_movies, ['class'=>'span2']) !!} to 
+                            {!! Form::select('max_movies', [10=>10, 20=>20, 30=>30, 40=>40, 50=>50, 60=>60, 70=>70, 80=>80, 90=>90, 100=>100], $league->rule->max_movies, ['class'=>'span2']) !!}
                             <span class="help-inline">Between 10 and 100 movies.</span>
 
                         </div>
@@ -95,7 +95,7 @@
                     <div class="control-group">
                         <label class="control-label" for="LeagueName">Auto-select</label>
                         <div class="controls">
-                            {!! Form::select('randomizer', ["Y"=>"Yes", "N" => "No"], $league->rule->randomizer, ['class'=>'span2']) !!}
+                            {!! Form::select('auto_select', ["Y"=>"Yes", "N" => "No"], $league->rule->auto_select, ['class'=>'span2']) !!}
                             <span class="help-inline">Auto select the movies for using.</span>
                         </div>
                     </div>
@@ -103,7 +103,7 @@
                     <div class="control-group">
                         <label class="control-label" for="LeagueName">Auction Movie Release</label>
                         <div class="controls">
-                            {!! Form::text('auction_movie_release', $league->rule->auction_movie_release, ['class'=>'span8', 'placeholder'=>'Enter All if any movie allowed..']) !!}
+                            {!! Form::text('auction_movie_release', $league->rule->auction_movie_release, ['class'=>'span8', 'placeholder'=>'Leave empty if any movie allowed..']) !!}
                             <span class="help-inline">All Movies or use a group of movies.</span>
                         </div>
                     </div>

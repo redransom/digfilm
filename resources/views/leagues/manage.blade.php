@@ -6,8 +6,12 @@
                             <h3>{{$league->name}}</h3>
                         </div>
                         <dl class="dl-horizontal">
-                            <dt>Days left till start of auction</dt>
+                            <dt>Auction started?</dt>
+                            @if(!is_null($league->auction))
                             <dd></dd>
+                            @else
+                            <dd>Auction hasn't started.</dd>
+                            @endif
                         </dl>
                     </div>
 

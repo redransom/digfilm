@@ -30,6 +30,10 @@ class League extends Model {
         return $this->hasOne("\App\Models\LeagueRule", "leagues_id");
     }
 
+    public function auctions() {
+        return $this->belongsToMany("\App\Models\Movie", "auctions", "leagues_id", "movies_id")->withPivot(['bid_amount', 'auction_start_time', 'auction_end_time']);
+    }
+
     /**
      * Model function to determine if a user can register with a league
      * Need to make sure that they are not owners of a league and also not in the league users table.

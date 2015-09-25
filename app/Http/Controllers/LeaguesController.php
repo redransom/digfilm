@@ -179,11 +179,13 @@ class LeaguesController extends Controller {
 
         $league = League::find($id);
         $title = "Edit League";
+        $rulesets = RuleSet::lists('name', 'id');
 
         return View("leagues.edit")
             ->with('authUser', $authUser)
             ->with('users', $this->get_players())
             ->with('league', $league)
+            ->with('sets', $rulesets)
             ->with('object', $league)
             ->with('page_name', 'league-edit')
             ->with('title', $title);
@@ -205,6 +207,40 @@ class LeaguesController extends Controller {
         $league->users_id = $input['users_id'];
         $league->save();
 
+        if (isset($input['rule_set'])) {
+            //just find out there isn't already a rule defined for this league
+            $rules = $league->rule;
+            //only look for a rule set if there isn't already rules in place
+            if (is_null($rules)) {
+                $ruleset = RuleSet::find($input['rule_set']);    
+            }
+        }
+
+        if (isset($ruleset) && is_numeric($ruleset->id)) {
+            //copy rule details into the rule for the league
+            $leaguerule = new LeagueRule();
+            $leaguerule->min_players = $ruleset->min_players;
+            $leaguerule->max_players = $ruleset->max_players;
+            $leaguerule->min_movies = $ruleset->min_movies;
+            $leaguerule->max_movies = $ruleset->max_movies;
+            $leaguerule->auction_duration = $ruleset->auction_duration;
+            $leaguerule->ind_film_countdown = $ruleset->ind_film_countdown;
+            $leaguerule->joint_ownership = $ruleset->joint_ownership;
+            $leaguerule->min_bid = $ruleset->min_bid;
+            $leaguerule->max_bid = $ruleset->max_bid;
+            $leaguerule->randomizer = $ruleset->randomizer;
+            $leaguerule->auction_movie_release = $ruleset->auction_movie_release;
+            $leaguerule->start_time = $ruleset->start_time;
+            $leaguerule->close_time = $ruleset->close_time;
+            $leaguerule->league_type = $ruleset->league_type;
+            $leaguerule->auto_select = $ruleset->auto_select;
+
+            //add league id
+            $leaguerule->leagues_id = $league->id;
+            $leaguerule->save();
+        }
+
+        Flash::message('League has been updated');
         return Redirect::route('leagues.index');
     }
 
@@ -302,9 +338,22 @@ class LeaguesController extends Controller {
      */
     public function postPlayer($id, AddPlayerToLeagueRequest $request) {
         $input = Input::all();
-        $movie = LeagueUser::create( $input );
 
-        return Redirect::route('leagues.show', array($id))->with('message', 'Player added.');
+        //test that player hasn't already been added
+        $leagueUsers = LeagueUser::where('league_id', $input['league_id'])->lists('user_id');
+
+        if (!in_array($input['user_id'], $leagueUsers)) {
+            $leagueuser = LeagueUser::create( $input );
+    
+            //add 100 dollars to the account
+            $leagueuser->balance = 100;
+            $leagueuser->save();
+            Flash::message('Player added.');
+        } else {
+            Flash::message('Player already exists in this league.');
+        }
+
+        return Redirect::route('leagues.show', array($id));
     }
 
     /**
@@ -532,10 +581,29 @@ class LeaguesController extends Controller {
     public function postRules($id) 
     {
         $authUser = Auth::user();
-        $rule = LeagueRule::find($id);
+        $leaguerule = LeagueRule::find($id);
 
         $input = Input::all();
+
+        $leaguerule->min_players = $input['min_players'];
+        $leaguerule->max_players = $input['max_players'];
+        $leaguerule->min_movies = $input['min_movies'];
+        $leaguerule->max_movies = $input['max_movies'];
+        $leaguerule->auction_duration = $input['auction_duration'];
+        $leaguerule->ind_film_countdown = $input['ind_film_countdown'];
+        $leaguerule->joint_ownership = $input['joint_ownership'];
+        $leaguerule->min_bid = $input['min_bid'];
+        $leaguerule->max_bid = $input['max_bid'];
+        $leaguerule->randomizer = $input['randomizer'];
+        $leaguerule->auction_movie_release = $input['auction_movie_release'];
+        $leaguerule->start_time = $input['start_time'];
+        $leaguerule->close_time = $input['close_time'];
+        $leaguerule->league_type = $input['league_type'];
+        $leaguerule->auto_select = $input['auto_select'];
+        $leaguerule->save();
         
+        Flash::message('League rules have been updated.');
+        return Redirect::route('league-rules', [$leaguerule->leagues_id]);
     }
 
 }

@@ -1,23 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>DigFilm - {{$title}}</title>
-        <link type="text/css" href="{{ asset('/admin/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-        <link type="text/css" href="{{ asset('/admin/bootstrap/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
-        <link type="text/css" href="{{ asset('/admin/css/theme.css') }}" rel="stylesheet">
-        <link type="text/css" href="{{ asset('/admin/images/icons/css/font-awesome.css') }}" rel="stylesheet">
-        <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600'
-            rel='stylesheet'>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigFilm - {{$title}}</title>
+    <link type="text/css" href="{{ asset('/admin/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link type="text/css" href="{{ asset('/admin/bootstrap/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
+    <link type="text/css" href="{{ asset('/admin/css/theme.css') }}" rel="stylesheet">
+    <link type="text/css" href="{{ asset('/admin/images/icons/css/font-awesome.css') }}" rel="stylesheet">
+    <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600'
+        rel='stylesheet'>
 
-        @if(isset($show_stars))
-        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
-        <link href="{{ asset('/admin/css/star-rating.min.css') }}" media="all" rel="stylesheet" type="text/css" />
-        @endif
-    </head>
-    <body>
+    @if(isset($show_stars))
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ asset('/admin/css/star-rating.min.css') }}" media="all" rel="stylesheet" type="text/css" />
+    @endif
+</head>
+<body>
     <!-- NAVBAR GOES HERE -->
     @include('partials.admin-navbar')
         <div class="wrapper">
@@ -33,7 +32,6 @@
                             @if (Session::has('flash_notification.message'))
                                 <div class="alert alert-{{ Session::get('flash_notification.level') }}">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-
                                     {{ Session::get('flash_notification.message') }}
                                 </div>
                             @endif
