@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 class Movie extends Model {
 
     //
-    protected $fillable = array('name', 'summary', 'genre', 'rating', 'budget', 'enabled', 'release_at', 'availability');
+    protected $fillable = array('name', 'summary', 'genres_id', 'rating', 'budget', 'enabled', 'release_at', 'availability');
 
     public function Contributors() {
         return $this->belongsToMany("\App\Models\Contributor", "movies_contributors", "movies_id", "contributors_id")->withPivot('contributor_types_id');
@@ -21,5 +21,9 @@ class Movie extends Model {
 
     public function Leagues() {
         return $this->belongsToMany("\App\Models\League", "league_movies", "movies_id", "leagues_id");
+    }
+
+    public function genre() {
+        return $this->belongsTo("\App\Models\Genre", 'genres_id');
     }
 }

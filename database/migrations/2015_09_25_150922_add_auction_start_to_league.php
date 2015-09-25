@@ -12,7 +12,15 @@ class AddAuctionStartToLeague extends Migration {
 	 */
 	public function up()
 	{
-		//
+		Schema::table('leagues', function(Blueprint $table)
+		{
+			// need to remove the limit field as it's not necessary now
+			//$table->dropColumn('limit');
+
+			//add auction dates to the leagues table
+			$table->datetime('auction_start_date')->nullable();
+			$table->datetime('auction_close_date')->nullable();
+		});
 	}
 
 	/**

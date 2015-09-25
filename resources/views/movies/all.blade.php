@@ -20,7 +20,7 @@
                                         @foreach($movies as $movie)
                                         <tr class="<?php echo (($movieCnt++ % 2) == 0) ? "odd" : "even"; ?> rating{{$movie->rating}}">
                                             <td><a href="{{URL('movies', array('id'=>$movie->id))}}">{{$movie->name}}</a></td>
-                                            <td>{{$movie->genre}}</td>
+                                            <td>{{$movie->genre->name}}</td>
                                             <td><a class="btn btn-mini btn-primary" href="{{URL('movies/'.$movie->id.'/edit')}}">Edit</a>
                                             <a class="btn btn-mini btn-inverse" href="{{URL('movie-add-takings/'.$movie->id)}}">Add Takings</a>
                                             <a class="btn btn-mini btn-success" href="{{URL('movie-add-media/'.$movie->id)}}">Add Media</a>

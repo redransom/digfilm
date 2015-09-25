@@ -11,6 +11,7 @@ use App\Models\ContributorType;
 use App\Models\Role;
 use App\Models\MovieTaking;
 use App\Models\MovieMedia;
+use App\Models\Genre;
 use Session;
 use Input;
 use Redirect;
@@ -56,8 +57,11 @@ class MoviesController extends Controller {
 		$authUser = Auth::user();
 		if (!isset($authUser))
 			return redirect('/auth/login');
+		$genres = Genre::orderBy('name', 'asc')->lists('name', 'id');
+
 		return View("movies.add")
 			->with('authUser', $authUser)
+			->with('genres', $genres)
 			->with('page_name', 'movie-add')
 			->with('instructions', 'Add New Movie to Database')
 			->with('title', 'Add Movie');
@@ -119,12 +123,14 @@ class MoviesController extends Controller {
 			return redirect('/auth/login');
 
 		$movie = Movie::find($id);
+		$genres = Genre::orderBy('name', 'asc')->lists('name', 'id');
 		$title = "Edit Movie";
 
 		return View("movies.edit")
 			->with('authUser', $authUser)
 			->with('movie', $movie)
 			->with('object', $movie)
+			->with('genres', $genres)
 			->with('page_name', 'movie-edit')
 			->with('title', $title);
 	}
@@ -143,7 +149,7 @@ class MoviesController extends Controller {
 
 		$movie->name = $input['name'];
 		$movie->summary = $input['summary'];
-		$movie->genre = $input['summary'];
+		$movie->genres_id = $input['genres_id'];
 		$movie->rating = $input['rating'];
 		$movie->budget = $input['budget'];
 		$movie->release_at = $input['release_at'];

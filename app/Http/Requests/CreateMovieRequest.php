@@ -24,7 +24,7 @@ class CreateMovieRequest extends Request {
 		return [
             'name' => ['required'],
             'summary' => ['required'],
-            'genre' =>['required'],
+            'genres_id' =>['required'],
             'rating' =>['required'],
             'budget' =>['required']
         ];

@@ -40,8 +40,8 @@
                     <div class="control-group">
                         <label class="control-label" for="MovieGenre">Genre</label>
                         <div class="controls">
-                            {!! Form::text('genre', null, ['class'=>'span8', 'placeholder'=>'This will be a select box']) !!}
-                            <span class="help-inline">Choose from list as you type</span>
+                            {!! Form::select('genres_id', $genres, null, ['class'=>'span8']) !!}
+                            <span class="help-inline">Choose from genre list</span>
                         </div>
                     </div>
 
@@ -49,7 +49,7 @@
                         <label class="control-label" for="MovieRating">Rating</label>
                         <div class="controls">
                             {!! Form::text('rating', null, ['class'=>'span8 rating', 'min'=>'1', 'max'=>'5']) !!}
-                            <span class="help-inline">Minimum 4 Characters</span>
+                            <span class="help-inline">Enter 1 to 5</span>
                         </div>
                     </div>
 
@@ -57,7 +57,7 @@
                         <label class="control-label" for="MovieBudget">Budget</label>
                         <div class="controls">
                             <span class="add-on">$</span>{!! Form::text('budget', null, ['class'=>'span8', 'placeholder'=>'0']) !!}
-                            <span class="help-inline">Minimum 4 Characters</span>
+                            <span class="help-inline">This is in millions</span>
                         </div>
                     </div>
 

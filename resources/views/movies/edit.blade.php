@@ -40,7 +40,7 @@
                     <div class="control-group">
                         <label class="control-label" for="MovieGenre">Genre</label>
                         <div class="controls">
-                            {!! Form::text('genre', $movie->genre, ['class'=>'span8', 'placeholder'=>'This will be a select box']) !!}
+                            {!! Form::select('genres_id', $genres, $movie->genres_id, ['class'=>'span8']) !!}
                             <span class="help-inline">Choose from list as you type</span>
                         </div>
                     </div>

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddGenreToMovies extends Migration {
+class AddGenre2 extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -15,13 +15,12 @@ class AddGenreToMovies extends Migration {
 		Schema::table('movies', function(Blueprint $table)
 		{
 			// need to remove the limit field as it's not necessary now
-			$table->dropColumn('genre');
+			//$table->dropColumn('genre');
 
-			//add auction dates to the leagues table
-			$table->integer('genres_id')->unsigned()->default(0);
+			//add genres link
+			$table->integer('genres_id')->unsigned()->default(1);
 			$table->foreign('genres_id')->references('id')->on('genres')->onDelete('cascade');
 		});
-
 	}
 
 	/**
