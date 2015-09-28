@@ -6,25 +6,16 @@
                 <div class="categories widget clearfix">
                     
                     <div class="title-caption">
-                        <h3>Categories</h3>
+                        <h3>Movie Genres</h3>
                     </div><!--/ .title-caption-->
                     
+                    @if(isset($genres_list))
                     <ul>
-                        <li class="active"><div><a href="#">Action</a><span>(293)</span></div></li>
-                        <li><div><a href="#">Racing</a><span>(76)</span></div></li>
-                        <li><div><a href="#">Adventure</a><span>(108)</span></div></li>
-                        <li><div><a href="#">Role-Playing</a><span>(72)</span></div></li>
-                        <li><div><a href="#">Fighting</a><span>(52)</span></div></li>
-                        <li><div><a href="#">Shooter</a><span>(174)</span></div></li>
-                        <li><div><a href="#">Kids & Family</a><span>(25)</span></div></li>
-                        <li><div><a href="#">Simulation</a><span>(98)</span></div></li>
-                        <li><div><a href="#">LucasArts</a><span>(0)</span></div></li>
-                        <li><div><a href="#">Sports</a><span>(180)</span></div></li>
-                        <li><div><a href="#">Music</a><span>(67)</span></div></li>
-                        <li><div><a href="#">Strategy</a><span>(57)</span></div></li>
-                        <li><div><a href="#">Puzzle</a><span>(23)</span></div></li>
+                        @foreach($genres_list as $genre)
+                        <li><div><a href="{{URL('movies-genre', [$genre->id])}}">{{$genre->name}}</a><span>({{$genre->movie_count()}})</span></div></li>
+                        @endforeach
                     </ul>
-                    
+                    @endif
                 </div><!--/ .categories-->
                 <!-- ************** - END Categories - ************** -->
                 
@@ -33,7 +24,7 @@
                 <div class="topgames widget">
                     
                     <div class="title-caption">
-                        <h3>New Movies</h3>
+                        <h3>Movies</h3>
                     </div><!--/ .title-captin -->
                     
                     <div class="entry-holder">
@@ -41,9 +32,9 @@
                         <div class="tabs-2">
                             <ul class="tabs-nav tabs-2 clearfix">
                                 <li><a href="#tab4">All</a></li>
-                                <li><a href="#tab5">Xbox369</a></li>
-                                <li><a href="#tab6">PC</a></li>
-                                <li><a href="#tab7">PS3</a></li>
+                                <li><a href="#tab5">New</a></li>
+                                <li><a href="#tab6">Release</a></li>
+                                <li><a href="#tab7">Auction</a></li>
                             </ul><!--/ .tabs-nav -->
 
                             <div class="tabs-container">

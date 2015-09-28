@@ -606,4 +606,103 @@ class LeaguesController extends Controller {
         return Redirect::route('league-rules', [$leaguerule->leagues_id]);
     }
 
+    /**
+     * Loop through all leagues that aren't running and setup ready to run
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function startAuctions() 
+    {
+        //TODO: Move to  command
+        $leaguesToReview = League::whereNull('auction_start_date')->get();
+
+        //need to make sure each league has rules!
+        foreach ($leaguesToReview as $league) {
+            
+            if (!is_null($league->rule)) {
+                //ok we have rules find out the number of players
+                $player_count = $league->players->count();
+                $rules = $league->rule;
+                
+                if ($player_count >= $rules->min_players && $player_count <= $rules->max_players) {
+                    $start_time = $rules->start_time;
+                    $time_to_start = time() + (60 * 60 * 4); //60 secs * 60 mins * 4 = 4hours
+                    //echo "Time dif: $time_to_start - ".strtotime($start_time) . "<br/>";
+                    if ($time_to_start > strtotime($start_time)) {
+                        //the new date is no good so set the time for the next day
+                        $league->auction_start_date = date("Y-m-d G:i:s", strtotime('+1 day', strtotime((date("Y-m-d")." ".$start_time))));
+                    } else {
+                        $auction_start_date = date("Y-m-d G:i:s", strtotime($start_time));
+                        // ok we are fine to go ahead with this date today - so lets set the time to it
+                        $league->auction_start_date = $auction_start_date;
+                    }
+                    $league->save();
+                } else {
+                    //TODO: Send out reminder to league players to find more players to get involved
+                }
+            }
+        }
+
+    }
+
+    /**
+     * Loop through all leagues that aren't running and have auction date set
+     * to determine whether to send out updates to say auctions about to start
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function preparePlayersForAuctions() 
+    {
+        //TODO: Move to  command
+        $leaguesToNotify = League::whereNotNull('auction_start_date')->
+            whereNull('auction_close_date')->where('auction_start_date', '<', time())->get();
+
+        //need to make sure each league has rules!
+        foreach ($leaguesToNotify as $league) {
+            $rules = $league->rule;
+
+            //if league auction is 12 hours away send reminder
+
+            //if league auction is 6 hours away send reminder and populate the movies if required
+            if (is_null($rules->auction_movie_release) && $rules->auto_select == 'Y') {
+                //need to find the required number of movies
+                //get the minimum for now
+                $min_movies = $rules->min_movies;
+
+                //randomly populate movies
+                
+            }
+
+            //if league auction is 10 minutes away send final reminder
+
+            //TODO: perhaps ther should be options in the profile to restrict this?
+        }
+    }
+
+    /**
+     * Check for all auctions that have no movies and have just started
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function executeAuctions() 
+    {
+        //TODO: Move to  command
+        $leaguesStarted = League::whereNotNull('auction_start_date')->
+            whereNull('auction_close_date')->where('auction_start_date', '>=', time())
+            ->where('auction_stage', 0)->get();
+
+        foreach ($leaguesStarted as $league) {
+            //set that the auction has started
+            $league->auction_stage = 1;
+
+            if ($league->movies->count() == 0 && $) {
+                //we need to determine the movies
+
+            }
+        }
+
+    }
 }

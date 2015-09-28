@@ -4,6 +4,7 @@ use App\Models\User;
 use App\Models\League;
 use App\Models\LeagueUser;
 use App\Models\RuleSet;
+use App\Models\Genre;
 
 class WelcomeController extends Controller {
 
@@ -36,7 +37,10 @@ class WelcomeController extends Controller {
 	public function index()
 	{
 		$authUser = Auth::user();
+		$genres_list = Genre::all();
+
 		return view('welcome')
+			->with('genres_list', $genres_list)
 			->with('authUser', $authUser);
 	}
 

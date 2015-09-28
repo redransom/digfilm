@@ -29,6 +29,7 @@ Route::get('league/{id}', ['as'=>'league', 'uses'=>'WelcomeController@getLeague'
 Route::get('league/{id}/manage', ['as'=>'league-manage', 'uses'=>'LeaguesController@getLeague']);
 Route::post('league', ['as'=>'league', 'uses'=>'WelcomeController@getLeague']);
 
+
 Route::get('choose-movies/{id}', ['as'=>'choose-movies', 'uses'=>'WelcomeController@addMovies']);
 Route::post('select-movies', ['as'=>'select-movies', 'uses'=>'LeaguesController@postMultipleMovies']);
 Route::get('select-participants/{id}', ['as'=>'select-participants', 'uses'=>'WelcomeController@addParticipants']);
@@ -81,6 +82,8 @@ Route::group(['middleware'=>'auth'], function() {
 
         Route::get('dashboard', ['as' => 'dashboard', 'uses'=>'UsersController@usersDashboard']);
 
+        Route::get('auctions', ['as'=>'league-auctions', 'uses'=>'LeaguesController@startAuctions']);
+        Route::get('notifyauctions', ['as'=>'notify-auctions', 'uses'=>'LeaguesController@preparePlayersForAuctions']);
 });
 
 
