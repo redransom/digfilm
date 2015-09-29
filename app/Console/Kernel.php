@@ -11,7 +11,8 @@ class Kernel extends ConsoleKernel {
 	 * @var array
 	 */
 	protected $commands = [
-		'App\Console\Commands\Inspire',
+        /*'App\Console\Commands\Inspire',*/
+        'App\Console\Commands\StartAuction',
 	];
 
 	/**
@@ -25,8 +26,10 @@ class Kernel extends ConsoleKernel {
 		$schedule->command('inspire')
 				 ->hourly();
 
-		/*$schedule->command('auction:start')
-				 ->everyMinute();*/
+        $schedule->command('auction:start')
+                 //->everyFiveMinutes()
+                 ->sendOutputTo('tasks.log')
+                 ->emailOutputTo('kinsley@redransom.co.uk');
 	}
 
 }

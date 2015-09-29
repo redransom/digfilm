@@ -54,7 +54,7 @@ return [
 	|
 	*/
 
-	'from' => ['address' => null, 'name' => null],
+	'from' => ['address' => 'mail@digfilm.co.uk', 'name' => 'DigFilm Entertainment'],
 
 	/*
 	|--------------------------------------------------------------------------

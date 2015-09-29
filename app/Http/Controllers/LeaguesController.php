@@ -638,6 +638,7 @@ class LeaguesController extends Controller {
                         $league->auction_start_date = $auction_start_date;
                     }
                     $league->save();
+                    var_dump($league);
                 } else {
                     //TODO: Send out reminder to league players to find more players to get involved
                 }
@@ -657,7 +658,7 @@ class LeaguesController extends Controller {
     {
         //TODO: Move to  command
         $leaguesToNotify = League::whereNotNull('auction_start_date')->
-            whereNull('auction_close_date')->where('auction_start_date', '<', time())->get();
+            whereNull('auction_close_date')->where('auction_start_date', '>', time())->get();
 
         //need to make sure each league has rules!
         foreach ($leaguesToNotify as $league) {
@@ -666,13 +667,48 @@ class LeaguesController extends Controller {
             //if league auction is 12 hours away send reminder
 
             //if league auction is 6 hours away send reminder and populate the movies if required
-            if (is_null($rules->auction_movie_release) && $rules->auto_select == 'Y') {
+            if ($rules->auto_select == 'Y') {
                 //need to find the required number of movies
                 //get the minimum for now
                 $min_movies = $rules->min_movies;
+                //TODO: WIll need to add time on to this date to give leeway
+                $earliest_release_date = $league->auction_start_date;
 
                 //randomly populate movies
+                $available_movies = Movie::where('release_at', '>', $earliest_release_date)->lists('id');
+
+                //need to make sure we have enough movies
+                if (count($available_movies) > $min_movies) {
+                    $chosen_movies = array();
+
+                    for($movie_no = 0; $movie_no<$min_movies; $movie_no++) {
+                        $random_pos = rand(0, (count($available_movies) - 1));
+
+                        $chosen_movies[$movie_no] = $available_movies[$random_pos];
+                        unset($available_movies[$random_pos]);
+                        $available_movies = array_values($available_movies);
+                    }
+
+                    var_dump($chosen_movies);
+
+                    //we have the available movies lets add them to the league
+                    foreach ($chosen_movies as $movie_id) {
+                        $league_movie = new LeagueMovie();
+                        $league_movie->leagues_id = $league->id;
+                        $league_movie->movies_id = $movie_id;
+                        var_dump($league_movie);
+                        $league_movie->save();
+
+                        unset($league_movie);
+                    }
+                }
                 
+            } elseif ($rules->auto_select != 'Y') {
+                //TODO: this needs an email to be sent to the league owner if the movies are empty
+                if ($league->movies->count() == 0) {
+                    //SEND EMAIL 
+                }
+
             }
 
             //if league auction is 10 minutes away send final reminder
@@ -698,10 +734,10 @@ class LeaguesController extends Controller {
             //set that the auction has started
             $league->auction_stage = 1;
 
-            if ($league->movies->count() == 0 && $) {
+            /*if ($league->movies->count() == 0 && $) {
                 //we need to determine the movies
 
-            }
+            }*/
         }
 
     }

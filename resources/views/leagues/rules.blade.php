@@ -88,7 +88,7 @@
                         <label class="control-label" for="LeagueName">Randomizer</label>
                         <div class="controls">
                             {!! Form::select('randomizer', ["Y"=>"Yes", "N" => "No"], $league->rule->randomizer, ['class'=>'span2']) !!}
-                            <span class="help-inline">(NOT USED).</span>
+                            <span class="help-inline">This is used with the autction movie release - if not All then it will randomly choose films for each group.</span>
                         </div>
                     </div>
 
@@ -103,8 +103,8 @@
                     <div class="control-group">
                         <label class="control-label" for="LeagueName">Auction Movie Release</label>
                         <div class="controls">
-                            {!! Form::text('auction_movie_release', $league->rule->auction_movie_release, ['class'=>'span8', 'placeholder'=>'Leave empty if any movie allowed..']) !!}
-                            <span class="help-inline">All Movies or use a group of movies.</span>
+                            {!! Form::text('auction_movie_release', $league->rule->auction_movie_release, ['class'=>'span2']) !!}
+                            <span class="help-inline">Leave empty for all movies or use a group of movies e.g. 10.</span>
                         </div>
                     </div>
 
