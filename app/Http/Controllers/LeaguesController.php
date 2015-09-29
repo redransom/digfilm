@@ -689,14 +689,14 @@ class LeaguesController extends Controller {
                         $available_movies = array_values($available_movies);
                     }
 
-                    var_dump($chosen_movies);
+                    //var_dump($chosen_movies);
 
                     //we have the available movies lets add them to the league
                     foreach ($chosen_movies as $movie_id) {
                         $league_movie = new LeagueMovie();
                         $league_movie->leagues_id = $league->id;
                         $league_movie->movies_id = $movie_id;
-                        var_dump($league_movie);
+                        //var_dump($league_movie);
                         $league_movie->save();
 
                         unset($league_movie);

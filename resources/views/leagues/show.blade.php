@@ -45,7 +45,10 @@
 
                         <div class="module-body">
                         @if(!is_null($league->rule))
-
+                            <dl>
+                                <dt>Public/Private: </dt>
+                                <dd>{{$league->rule->league_type}}</dd>   
+                            </dl>
                         @else
                         <p>No rules have been selected so far - go to the <a href="{{URL('leagues/'.$league->id.'/edit')}}">Edit League</a> page</p>
                         @endif
