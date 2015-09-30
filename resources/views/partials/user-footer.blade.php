@@ -68,7 +68,7 @@
             </section><!--/ .entry-footer-->
 
             <div class="copyright">
-                Copyright © 2012. ThemeMakers. All rights reserved
+                Copyright © {{date("Y")}}. DigFilm Entertainment. All rights reserved
             </div><!--/ .copyright-->
         
             
