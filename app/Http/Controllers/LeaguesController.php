@@ -626,9 +626,10 @@ class LeaguesController extends Controller {
                 $rules = $league->rule;
                 
                 if ($player_count >= $rules->min_players && $player_count <= $rules->max_players) {
+                    echo "League ".$league->name." has the players - ". $player_count;
                     $start_time = $rules->start_time;
                     $time_to_start = time() + (60 * 60 * 4); //60 secs * 60 mins * 4 = 4hours
-                    //echo "Time dif: $time_to_start - ".strtotime($start_time) . "<br/>";
+                    echo "Time dif: $time_to_start - ".strtotime($start_time) . "<br/>";
                     if ($time_to_start > strtotime($start_time)) {
                         //the new date is no good so set the time for the next day
                         $league->auction_start_date = date("Y-m-d G:i:s", strtotime('+1 day', strtotime((date("Y-m-d")." ".$start_time))));

@@ -82,8 +82,9 @@ Route::group(['middleware'=>'auth'], function() {
 
         Route::get('dashboard', ['as' => 'dashboard', 'uses'=>'UsersController@usersDashboard']);
 
-        Route::get('auctions', ['as'=>'league-auctions', 'uses'=>'LeaguesController@startAuctions']);
+
         Route::get('notifyauctions', ['as'=>'notify-auctions', 'uses'=>'LeaguesController@preparePlayersForAuctions']);
 });
 
-
+/* cron jobs */
+Route::get('start-auctions/5Htzx6V6nud998R353kz', ['as'=>'league-auctions', 'uses'=>'LeaguesController@startAuctions']);
