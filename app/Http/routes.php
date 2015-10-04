@@ -77,14 +77,18 @@ Route::group(['middleware'=>'auth'], function() {
         Route::resource('contributors', 'ContributorsController');
         Route::resource('leagues', 'LeaguesController');
         Route::resource('rulesets', 'RuleSetsController');
+        Route::resource('auctions', 'AuctionsController');
 
         Route::get('leagues/{id}/join', 'LeaguesController@join');
 
         Route::get('dashboard', ['as' => 'dashboard', 'uses'=>'UsersController@usersDashboard']);
 
 
-        Route::get('notifyauctions', ['as'=>'notify-auctions', 'uses'=>'LeaguesController@preparePlayersForAuctions']);
 });
 
 /* cron jobs */
 Route::get('start-auctions/5Htzx6V6nud998R353kz', ['as'=>'league-auctions', 'uses'=>'LeaguesController@startAuctions']);
+Route::get('notify-auctions/63zdE1TnIWUQ444PHPNa', ['as'=>'notify-auctions', 'uses'=>'LeaguesController@preparePlayersForAuctions']);
+Route::get('phase1-run-auctions/bf2Kc6hOuU7CO948h60s', ['as'=>'phase1-auctions', 'uses'=>'LeaguesController@executeAuctions']);
+Route::get('phase2-run-auctions/RBbgCtpSeTsKzM0UgoCg', ['as'=>'load-movies', 'uses'=>'LeaguesController@loadNextMovies']);
+Route::get('clear-auctions/Qjr13b0VbElXE8TdmcTc', ['as'=>'clear-auctions', 'uses'=>'LeaguesController@clearAuctions']);

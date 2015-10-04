@@ -12,16 +12,19 @@
                                         <tr>
                                             <th>Name</th>
                                             <th>Players</th>
-                                            <th>Created By</th>
+                                            <th>Start?</th>
+                                            <th>Owned By</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php $leagueCnt = 1; ?>
                                         @foreach($leagues as $league)
+                                        <?php if (is_null($league->auction_start_date)) $start = ""; else $start = date("d M Y", strtotime($league->auction_start_date)); ?>
                                         <tr class="<?php echo (($leagueCnt++ % 2) == 0) ? "odd" : "even"; ?> user{{$league->users_id}}">
                                             <td><a href="{{URL('leagues', array('id'=>$league->id))}}">{{$league->name}}</a></td>
                                             <td>{{count($league->players)}}</td>
+                                            <td>{{$start}}</td>
                                             <td class="center"><a href="{{URL('users/'.$league->owner->id)}}">{{$league->owner->name}}</a></td>
                                             <td>
                                             <a class="btn btn-mini btn-primary" href="{{URL('leagues/'.$league->id.'/edit')}}">Edit</a>

@@ -140,6 +140,12 @@ Breadcrumbs::register('rulesets', function($breadcrumbs)
     $breadcrumbs->push('Rule Sets', route('rulesets.index'));
 });
 
+Breadcrumbs::register('auctions', function($breadcrumbs)
+{
+    $breadcrumbs->parent('admin-dashboard');
+    $breadcrumbs->push('Auctions', route('auctions.index'));
+});
+
 /** 
 Players Breadcrumbs
 */

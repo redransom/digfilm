@@ -53,6 +53,16 @@
                                         <li><a href="{{URL('rulesets/create')}}"><i class="icon-th"></i>Add New</a></li>
                                     </ul>
                                 </li>                                
+
+                                <li><a class="collapsed" data-toggle="collapse" href="#toggleAuctions"><i class="menu-icon icon-th">
+                                </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right"></i>Auctions</a>
+                                    <ul id="toggleAuctions" class="collapse unstyled">
+                                        <li><a href="{{URL('auctions')}}"><i class="icon-th"></i>All</a></li>
+                                        <li><a href="{{URL('auctions-start')}}"><i class="icon-th"></i>About to Start</a></li>
+                                        <li><a href="{{URL('auctions-live')}}"><i class="icon-th"></i>Live</a></li>
+                                        <li><a href="{{URL('auctions-closed')}}"><i class="icon-th"></i>Closed</a></li>
+                                    </ul>
+                                </li>                                
                             </ul>
                             <!--/.widget-nav-->
                             <!--ul class="widget widget-menu unstyled">
