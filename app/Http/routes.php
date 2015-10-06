@@ -23,20 +23,8 @@ Route::get('create', 'WelcomeController@create');
 /*
 Need to check for login
 */
-Route::get('profile', ['as'=>'profile', 'uses'=>'WelcomeController@getProfile']);
-
-Route::get('league/{id}', ['as'=>'league', 'uses'=>'WelcomeController@getLeague']);
-Route::get('league/{id}/manage', ['as'=>'league-manage', 'uses'=>'LeaguesController@getLeague']);
-//Route::post('league', ['as'=>'league', 'uses'=>'WelcomeController@getLeague']);
 
 
-Route::get('choose-movies/{id}', ['as'=>'choose-movies', 'uses'=>'WelcomeController@addMovies']);
-Route::post('select-movies', ['as'=>'select-movies', 'uses'=>'LeaguesController@postMultipleMovies']);
-Route::get('select-participants/{id}', ['as'=>'select-participants', 'uses'=>'WelcomeController@addParticipants']);
-Route::post('choose-participants', ['as'=>'choose-participants', 'uses'=>'LeaguesController@postSelectParticipants']);
-
-Route::post('league-invite', ['as'=>'league-invite', 'uses'=>'LeaguesController@postInvitePlayer']);
-Route::get('place-bid/{id}', ['as'=>'place-auction-bid', 'uses'=>'AuctionsController@placeBid']);
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
@@ -45,6 +33,21 @@ Route::controllers([
 
 Route::group(['middleware'=>'auth'], function() {
 
+        /* Player routes */
+        Route::get('profile', ['as'=>'profile', 'uses'=>'WelcomeController@getProfile']);
+
+        Route::get('league/{id}', ['as'=>'league-show', 'uses'=>'WelcomeController@getLeague']);
+        Route::get('league/{id}/manage', ['as'=>'league-manage', 'uses'=>'LeaguesController@getLeague']);
+        Route::post('league', ['as'=>'league', 'uses'=>'WelcomeController@getLeague']);
+        Route::get('choose-movies/{id}', ['as'=>'choose-movies', 'uses'=>'WelcomeController@addMovies']);
+        Route::post('select-movies', ['as'=>'select-movies', 'uses'=>'LeaguesController@postMultipleMovies']);
+        Route::get('select-participants/{id}', ['as'=>'select-participants', 'uses'=>'WelcomeController@addParticipants']);
+        Route::post('choose-participants', ['as'=>'choose-participants', 'uses'=>'LeaguesController@postSelectParticipants']);
+
+        Route::post('league-invite', ['as'=>'league-invite', 'uses'=>'LeaguesController@postInvitePlayer']);
+        Route::get('place-bid/{id}', ['as'=>'place-auction-bid', 'uses'=>'AuctionsController@placeBid']);
+
+        /* Admin routes */
         Route::get('users/{id}/disable', ['as'=>'user-disable', 'uses'=>'UsersController@disable']);
         Route::get('users/{id}/enable', ['as'=>'user-enable', 'uses'=>'UsersController@enable']);
 

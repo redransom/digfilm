@@ -151,7 +151,7 @@ class AuctionsController extends Controller {
         $auction->bid_count++;
         $auction->save();
 
-        return Redirect::route('league', [$auction->leagues_id]);
+        return Redirect::route('league-show', [$auction->leagues_id]);
     }
 
     /**

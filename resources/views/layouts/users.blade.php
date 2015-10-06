@@ -7,9 +7,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="shortcut" href="/images/favicon.ico" />
 <link type="text/css" href="{{ asset('/css/style.css') }}" rel="stylesheet">
+<link type="text/css" href="{{ asset('http//:code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css') }}" rel="stylesheet">
 
 <!-- initialize jQuery Library -->
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="{{ asset('/js/jquery.countdown.js') }}"></script>
+<script src="{{ asset('http://code.jquery.com/jquery-1.10.2.js') }}"></script>
+<script src="{{ asset('http://code.jquery.com/ui/1.11.4/jquery-ui.js') }}"></script>
 
 <!--[if lt IE 9]>
     <script src="js/modernizr.custom.js"></script>

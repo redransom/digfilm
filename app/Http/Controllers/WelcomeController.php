@@ -94,6 +94,8 @@ class WelcomeController extends Controller {
 	 */
 	public function getLeague($id) {
 		$authUser = Auth::user();
+		if (!isset($authUser))
+			return redirect('/auth/login');
 
 		$league = League::find($id);
 
