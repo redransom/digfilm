@@ -21,13 +21,13 @@ Route::get('all-leagues', 'WelcomeController@leagues');
 Route::get('create', 'WelcomeController@create');
 
 /*
-
+Need to check for login
 */
 Route::get('profile', ['as'=>'profile', 'uses'=>'WelcomeController@getProfile']);
 
 Route::get('league/{id}', ['as'=>'league', 'uses'=>'WelcomeController@getLeague']);
 Route::get('league/{id}/manage', ['as'=>'league-manage', 'uses'=>'LeaguesController@getLeague']);
-Route::post('league', ['as'=>'league', 'uses'=>'WelcomeController@getLeague']);
+//Route::post('league', ['as'=>'league', 'uses'=>'WelcomeController@getLeague']);
 
 
 Route::get('choose-movies/{id}', ['as'=>'choose-movies', 'uses'=>'WelcomeController@addMovies']);
@@ -36,6 +36,7 @@ Route::get('select-participants/{id}', ['as'=>'select-participants', 'uses'=>'We
 Route::post('choose-participants', ['as'=>'choose-participants', 'uses'=>'LeaguesController@postSelectParticipants']);
 
 Route::post('league-invite', ['as'=>'league-invite', 'uses'=>'LeaguesController@postInvitePlayer']);
+Route::get('place-bid/{id}', ['as'=>'place-auction-bid', 'uses'=>'AuctionsController@placeBid']);
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
@@ -83,6 +84,9 @@ Route::group(['middleware'=>'auth'], function() {
 
         Route::get('dashboard', ['as' => 'dashboard', 'uses'=>'UsersController@usersDashboard']);
 
+
+        /* Auction tasks */
+        Route::get('auction-close/{id}', ['as'=>'close-auction', 'uses'=>'AuctionsController@close']);
 
 });
 

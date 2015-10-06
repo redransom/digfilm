@@ -279,7 +279,8 @@ class LeaguesController extends Controller {
             }
             return Redirect::route('leagues.index');
         }
-        return Redirect::route('leagues.index')->with('message', 'You don\'t have the permissions to complete this task.');
+        Flash::message('You don\'t have the permissions to complete this task.');
+        return Redirect::route('leagues.index');
     }
 
     /**
@@ -305,7 +306,8 @@ class LeaguesController extends Controller {
             }
             return Redirect::route('leagues.index');
         }
-        return Redirect::route('leagues.index')->with('message', 'You don\'t have the permissions to complete this task.');
+        Flash::message('You don\'t have the permissions to complete this task.');
+        return Redirect::route('leagues.index');
     }
     /**
      * Add player to league

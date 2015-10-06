@@ -9,12 +9,11 @@ use App\Models\Contributor;
 use App\Models\ContributorType;
 use App\Models\Role;
 use App\Models\Auction;
+use App\Models\League;
 use Session;
 use Input;
 use Redirect;
-/*use App\Http\Requests\CreateRuleSetRequest;
-use App\Http\Requests\UpdateRuleSetRequest;
-*/
+use Flash;
 use Illuminate\Http\Request;
 
 class AuctionsController extends Controller {
@@ -30,10 +29,10 @@ class AuctionsController extends Controller {
         if (!isset($authUser))
             return redirect('/auth/login');
 
-        $auctions = Auction::paginate(10);
+        $leagues = League::where('auction_stage', '2')->paginate(10);
 
         return View("auctions.all")
-            ->with('auctions', $auctions)
+            ->with('leagues', $leagues)
             ->with('authUser', $authUser)
             ->with('page_name', 'auctions')
             ->with('instructions', 'All Auctions.')
@@ -62,15 +61,14 @@ class AuctionsController extends Controller {
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store new bid
      *
      * @return Response
      */
-    public function store(CreateContributorRequest $request)
+    public function store()
     {
         //      
         $input = Input::all();
-        $contributor = Contributor::create( $input );
 
         if ($request->file('thumbnail') != "") {
             $imageName = $contributor->id.str_replace(' ', '_', strtolower($input['first_name'])) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
@@ -133,30 +131,27 @@ class AuctionsController extends Controller {
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the auction
      *
      * @param  int  $id
      * @return Response
      */
-    public function update($id, UpdateContributorRequest $request)
+    public function update($id, Request $request)
     {
         //
-        $contributor = Contributor::find($id);
+        $authUser = Auth::user();
+        if (!isset($authUser))
+            return redirect('/auth/login');
+
+        $auction = Auction::find($id);
         $input = $request->all();
 
-        $contributor->first_name = $input['first_name'];
-        $contributor->surname = $input['surname'];
+        $auction->users_id = $authUser->id;
+        $auction->bid_amount = $input['bid_amount'];
+        $auction->bid_count++;
+        $auction->save();
 
-        if ($request->file('thumbnail') != "") {
-            $imageName = $contributor->id.str_replace(' ', '_', strtolower($input['first_name'])) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
-            $request->file('thumbnail')->move(base_path() . '/public/images/contributors/', $imageName);
-
-            $contributor->thumbnail = "/images/contributors/".$imageName;
-        }
-
-        $contributor->save();
-
-        return Redirect::route('contributors.index');
+        return Redirect::route('league', [$auction->leagues_id]);
     }
 
     /**
@@ -168,6 +163,59 @@ class AuctionsController extends Controller {
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Close the auction
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function close($id)
+    {
+        //
+        $authUser = Auth::user();
+
+        //ensure permissions are available - should probably check for permissions and not role
+        if ($authUser->hasRole("Admin")) {
+            $auction = Auction::find($id);
+            $message = "";
+            if (!empty($auction)) {
+                $movie = $auction->movie;
+                $league = $auction->league;
+
+                $message = "Auction " .$movie->name. " has been closed in league ".$league->name.".";
+                Flash::message($message);
+                $auction->ready_for_auction = 2;
+                $auction->save();
+            }
+            return Redirect::route('auctions.index');
+        }
+        Flash::message('You don\'t have the permissions to complete this task.');
+        return Redirect::route('auctions.index');
+    }
+
+    /**
+     * Bid on auction
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function placeBid($id)
+    {
+        //
+        $authUser = Auth::user();
+        if (!isset($authUser))
+            return redirect('/auth/login');
+
+        $auction = Auction::find($id);
+        $league = League::find($auction->leagues_id);
+        $rule = $league->rule;
+
+        return View("auctions.placebid")
+            ->with('authUser', $authUser)
+            ->with('auction', $auction)
+            ->with('rule', $rule);
     }
 
 }

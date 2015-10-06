@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Auth;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Auction;
 use Session;
 use Input;
 use Redirect;
@@ -291,8 +292,12 @@ class UsersController extends Controller {
 		if (!isset($authUser))
 			return redirect('/auth/login');
 
+		//totals 
+		$totals['liveAuctionTotal'] = Auction::where('ready_for_auction', '1')->count();
+		
 		return View("users.admin")
 			->with('use_graph', true)
+			->with('totals', $totals)
 			->with('authUser', $authUser)
 			->with('page_name', 'dashboard')
 			->with('title', 'Welcome to the DigFilm adminstration system Dashboard');
