@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use Log;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
@@ -153,18 +154,21 @@ class AuctionsController extends Controller {
             $prev_bid_user = $auction->users_id;
         }
 
+        Log::info('Bid on auction:'.$auction->id.' by user:'.$authUser->id.' amount:'.$input['bid_amount']);
         $auction->users_id = $authUser->id;
         $auction->bid_amount = $input['bid_amount'];
         $auction->bid_count++;
         $auction->save();
 
         //remove amount from users balance / need to do a check to see if it overrides a previous users amount and gives it too them back
+        Log::info('Reduce balance by user:'.$authUser->id.' amount:'.$input['bid_amount']);
         $leagueUser = LeagueUser::where('league_id', $auction->leagues_id)->where('user_id', $authUser->id)->first();
         $leagueUser->balance -= $input['bid_amount'];
         $leagueUser->save();
         unset($leagueUser);
 
         if (isset($bid_refund)) {
+            Log::info('Refund user:'.$prev_bid_user.' amount:'.$bid_refund);
             $leagueUser = LeagueUser::where('league_id', $auction->leagues_id)->where('user_id', $prev_bid_user)->first();
             $leagueUser->balance += $bid_refund;
             $leagueUser->save();

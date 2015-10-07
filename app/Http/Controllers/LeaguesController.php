@@ -3,6 +3,7 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
+use Log;
 use DB;
 use App\Models\User;
 use App\Models\League;
@@ -756,15 +757,6 @@ class LeaguesController extends Controller {
                 //all movies to be enabled
                 foreach ($league->movies as $movie) {
                     $this->addAuction($league, $movie, $rule);
-                    /*$auction = new Auction();
-                    $auction->leagues_id = $league->id;
-                    $auction->movies_id = $movie->id;
-                    $auction->users_id = 0;
-                    $auction->auction_start_time = date("H:i:s", time());
-                    $auction->auction_end_time = date("H:i:s", time() + ($rule->ind_film_countdown * 60));
-                    $auction->ready_for_auction = 1;
-                    $auction->save();
-                    unset($auction);*/
                 }
 
 
@@ -784,15 +776,6 @@ class LeaguesController extends Controller {
                     if ($movie_no < $league_movies_count) {
                         foreach ($league->movies as $movie) {
                             $this->addAuction($league, $movie, $rule);
-                            /*$auction = new Auction();
-                            $auction->leagues_id = $league->id;
-                            $auction->movies_id = $movie->id;
-                            $auction->auction_start_time = time();
-                            $auction->auction_end_time = time() + ($rule->ind_film_countdown * 60);
-                            $auction->ready_for_auction = 1;
-                            $auction->save();
-                            unset($auction);*/
-
                             if (($movie_add_count++) == $movie_no)
                                 break;
                         }
@@ -859,14 +842,6 @@ class LeaguesController extends Controller {
                             if ($movie_no < $league_movies_count) {
                                 foreach ($league->movies as $movie) {
                                     $this->addAuction($league, $movie, $rule);
-                                    /*$auction = new Auction();
-                                    $auction->leagues_id = $league->id;
-                                    $auction->movies_id = $movie->id;
-                                    $auction->auction_start_time = $rule->starrt_time;
-                                    $auction->auction_end_time = strtotime($start_time) + ($rule->ind_film_countdown * 60);
-                                    $auction->ready_for_auction = 1;
-                                    $auction->save();
-                                    unset($auction);*/
 
                                     if (($movie_add_count++) == $movie_no)
                                         break;
@@ -896,7 +871,7 @@ class LeaguesController extends Controller {
         $auction->ready_for_auction = 1;
         $auction->save();
 
-        echo "Add Auction: ".$movie->name." to ".$league->name." from ".$auction->auction_start_time." to ".$auction->auction_end_time."<br/>";
+        Log::info("Add Auction: ".$movie->name." to ".$league->name." from ".$auction->auction_start_time." to ".$auction->auction_end_time);
         unset($auction);
     }
 
