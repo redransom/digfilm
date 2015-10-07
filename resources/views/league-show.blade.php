@@ -88,7 +88,7 @@
             @if($auction->pivot->users_id == $authUser->id)
             <td>PLACED</td>
             @else
-            <td><a href="{{URL('place-bid', [$auction->pivot->id])}}" class="popup">PLACE BID</a></td>
+            <td id="bid_link_{{$auction->pivot->id}}"><a href="{{URL('place-bid', [$auction->pivot->id])}}" class="popup">PLACE BID</a></td>
             @endif
             @if($auction->pivot->users_id != 0)
             <td>{{$players[$auction->pivot->users_id]}}</td>
@@ -136,6 +136,9 @@
     <script type="text/javascript">
       $('#timer<?php echo $auctionid; ?>').countdown('<?php echo date("Y-m-d", strtotime($auctionDate))." ".$auctionTime; ?>', function(event) {
         $(this).html(event.strftime('%-H:%M:%S'));
+        if(event.elapsed) {
+            $('#bid_link_{{$auctionid}}').val = "ENDED";
+        }
       });
     </script>
 <?php } ?>

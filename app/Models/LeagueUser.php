@@ -6,5 +6,5 @@ class LeagueUser extends Model {
 
     //
     protected $table = 'league_users';
-    protected $fillable = array('league_id', 'user_id');
+    protected $fillable = array('league_id', 'user_id', 'balance');
 }

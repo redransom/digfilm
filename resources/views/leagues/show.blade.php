@@ -8,8 +8,16 @@
                         <dl class="dl-horizontal">
                             <dt>Owned By</dt>
                             <dd>{{$league->Owner->name}}</dd>
-                            <dt>Started</dt>
+                            @if(is_null($league->auction_start_date))
+                            <dt>Created</dt>
                             <dd>{{date("j M y", strtotime($league->created_at))}}</dd>
+                            @elseif(!is_null($league->auction_start_date) && $league->auction_stage < 2)
+                            <dt>Due to Start</dt>
+                            <dd>{{date("j M y", strtotime($league->auction_start_date))}}</dd>
+                            @else
+                            <dt>Started</dt>
+                            <dd>{{date("j M y", strtotime($league->auction_start_date))}}</dd>
+                            @endif
                         </dl>
                     </div>
 

@@ -42,7 +42,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	}
 
 	public function inLeagues() {
-		return $this->belongsToMany("\App\Models\League", "league_users", "user_id", "league_id");
+		return $this->belongsToMany("\App\Models\League", "league_users", "user_id", "league_id")->withPivot('id');
 	}
 
 }

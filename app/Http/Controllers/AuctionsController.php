@@ -10,6 +10,7 @@ use App\Models\ContributorType;
 use App\Models\Role;
 use App\Models\Auction;
 use App\Models\League;
+use App\Models\LeagueUser;
 use Session;
 use Input;
 use Redirect;
@@ -146,10 +147,29 @@ class AuctionsController extends Controller {
         $auction = Auction::find($id);
         $input = $request->all();
 
+        if($auction->bid_count != 0) {
+            //some one else has bid on it previously
+            $bid_refund = $auction->bid_amount;
+            $prev_bid_user = $auction->users_id;
+        }
+
         $auction->users_id = $authUser->id;
         $auction->bid_amount = $input['bid_amount'];
         $auction->bid_count++;
         $auction->save();
+
+        //remove amount from users balance / need to do a check to see if it overrides a previous users amount and gives it too them back
+        $leagueUser = LeagueUser::where('league_id', $auction->leagues_id)->where('user_id', $authUser->id)->first();
+        $leagueUser->balance -= $input['bid_amount'];
+        $leagueUser->save();
+        unset($leagueUser);
+
+        if (isset($bid_refund)) {
+            $leagueUser = LeagueUser::where('league_id', $auction->leagues_id)->where('user_id', $prev_bid_user)->first();
+            $leagueUser->balance += $bid_refund;
+            $leagueUser->save();
+
+        }
 
         return Redirect::route('league-show', [$auction->leagues_id]);
     }

@@ -705,6 +705,8 @@ class LeaguesController extends Controller {
                         //var_dump($league_movie);
                         $league_movie->save();
 
+                        echo "Movie - ".$movie_id." added to ".$league->name."<br/>";
+
                         unset($league_movie);
                     }
                 }
@@ -753,7 +755,8 @@ class LeaguesController extends Controller {
 
                 //all movies to be enabled
                 foreach ($league->movies as $movie) {
-                    $auction = new Auction();
+                    $this->addAuction($league, $movie, $rule);
+                    /*$auction = new Auction();
                     $auction->leagues_id = $league->id;
                     $auction->movies_id = $movie->id;
                     $auction->users_id = 0;
@@ -761,7 +764,7 @@ class LeaguesController extends Controller {
                     $auction->auction_end_time = date("H:i:s", time() + ($rule->ind_film_countdown * 60));
                     $auction->ready_for_auction = 1;
                     $auction->save();
-                    unset($auction);
+                    unset($auction);*/
                 }
 
 
@@ -780,14 +783,15 @@ class LeaguesController extends Controller {
                     $movie_add_count = 1;
                     if ($movie_no < $league_movies_count) {
                         foreach ($league->movies as $movie) {
-                            $auction = new Auction();
+                            $this->addAuction($league, $movie, $rule);
+                            /*$auction = new Auction();
                             $auction->leagues_id = $league->id;
                             $auction->movies_id = $movie->id;
                             $auction->auction_start_time = time();
                             $auction->auction_end_time = time() + ($rule->ind_film_countdown * 60);
                             $auction->ready_for_auction = 1;
                             $auction->save();
-                            unset($auction);
+                            unset($auction);*/
 
                             if (($movie_add_count++) == $movie_no)
                                 break;
@@ -854,14 +858,15 @@ class LeaguesController extends Controller {
                             $movie_add_count = 1;
                             if ($movie_no < $league_movies_count) {
                                 foreach ($league->movies as $movie) {
-                                    $auction = new Auction();
+                                    $this->addAuction($league, $movie, $rule);
+                                    /*$auction = new Auction();
                                     $auction->leagues_id = $league->id;
                                     $auction->movies_id = $movie->id;
-                                    $auction->auction_start_time = time();
-                                    $auction->auction_end_time = time() + ($rule->ind_film_countdown * 60);
+                                    $auction->auction_start_time = $rule->starrt_time;
+                                    $auction->auction_end_time = strtotime($start_time) + ($rule->ind_film_countdown * 60);
                                     $auction->ready_for_auction = 1;
                                     $auction->save();
-                                    unset($auction);
+                                    unset($auction);*/
 
                                     if (($movie_add_count++) == $movie_no)
                                         break;
@@ -881,6 +886,19 @@ class LeaguesController extends Controller {
 
     } //end loadNextMovies
 
+
+    private function addAuction($league, $movie, $rule) {
+        $auction = new Auction();
+        $auction->leagues_id = $league->id;
+        $auction->movies_id = $movie->id;
+        $auction->auction_start_time = date("H:i:s", strtotime($rule->start_time));
+        $auction->auction_end_time = date("H:i:s", strtotime($rule->start_time) + ($rule->ind_film_countdown * 60));
+        $auction->ready_for_auction = 1;
+        $auction->save();
+
+        echo "Add Auction: ".$movie->name." to ".$league->name." from ".$auction->auction_start_time." to ".$auction->auction_end_time."<br/>";
+        unset($auction);
+    }
 
     /**
      * Clear out auction movies who are live and whose end time is passed
