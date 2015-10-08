@@ -3,16 +3,16 @@
 <!--[if lte IE 8]>              <html class="ie8 no-js" lang="en">     <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!--> <html class="not-ie no-js" lang="en">  <!--<![endif]-->
 <head>
-<title>DigFim | </title>
+<title>TheNextBigFim | </title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="shortcut" href="/images/favicon.ico" />
 <link type="text/css" href="{{ asset('/css/style.css') }}" rel="stylesheet">
-<link type="text/css" href="{{ asset('http//:code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css') }}" rel="stylesheet">
+<link type="text/css" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
 
 <!-- initialize jQuery Library -->
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script src="{{ asset('http://code.jquery.com/jquery-1.10.2.js') }}"></script>
-<script src="{{ asset('http://code.jquery.com/ui/1.11.4/jquery-ui.js') }}"></script>
+<!--script src="{{ asset('http://code.jquery.com/jquery-1.10.2.js') }}"></script>
+<script src="{{ asset('http://code.jquery.com/ui/1.11.4/jquery-ui.js') }}"></script-->
 <script src="{{ asset('/js/jquery.countdown.js') }}"></script>
 
 <!--[if lt IE 9]>
@@ -33,11 +33,11 @@
     <header class="clearfix">
         
         
-        @include('partials.user-nav')        
+        @include('partials.user-nav')
         
         <!-- ***************** - Logo - ******************* --> 
         <div id="logo">
-            <a href="index.html"><h1>Dig</h1><span>Film</span></a>
+            <a href="/"><h1>TheNextBig</h1><span>Film</span></a>
             <div class="slogan">Games and Films - what's not to like?</div>
         </div><!--/ #logo-->
         <!-- ***************** - END Logo - ******************* --> 

@@ -1,6 +1,9 @@
 <?php namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Models\Genre;
+use Auth;
+use App\Models\User;
 
 class AppServiceProvider extends ServiceProvider {
 
@@ -12,6 +15,8 @@ class AppServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		//
+		$genres = Genre::all();
+		view()->share(['genres_list'=> $genres]);
 	}
 
 	/**

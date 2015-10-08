@@ -19,7 +19,8 @@ Route::get('privacy', 'WelcomeController@privacy');
 Route::get('contact', 'WelcomeController@contact');
 Route::get('all-leagues', 'WelcomeController@leagues');
 Route::get('create', 'WelcomeController@create');
-
+Route::get('movie-knowledge/{id}', 'WelcomeController@movieKnow');
+Route::get('movies-genre/{id}', 'WelcomeController@movieGenre');
 /*
 Need to check for login
 */

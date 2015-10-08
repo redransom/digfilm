@@ -5,6 +5,7 @@ use App\Models\League;
 use App\Models\LeagueUser;
 use App\Models\RuleSet;
 use App\Models\Genre;
+use App\Models\Movie;
 
 class WelcomeController extends Controller {
 
@@ -37,10 +38,8 @@ class WelcomeController extends Controller {
 	public function index()
 	{
 		$authUser = Auth::user();
-		$genres_list = Genre::all();
 
 		return view('welcome')
-			->with('genres_list', $genres_list)
 			->with('authUser', $authUser);
 	}
 
@@ -99,8 +98,12 @@ class WelcomeController extends Controller {
 
 		$league = League::find($id);
 
+		$leagueUsers = LeagueUser::where('league_id', $league->id)->get();
+		$currentLeagueUser = LeagueUser::where('user_id', $authUser->id)->where('league_id', $league->id)->first();
 		return view('league-show')
 			->with('league', $league)
+			->with('leagueUsers', $leagueUsers)
+			->with('currentLeagueUser', $currentLeagueUser)
 			->with('authUser', $authUser);	
 	}
 
@@ -174,4 +177,33 @@ class WelcomeController extends Controller {
 			->with('user', $authUser);	
 	}
 
- }
+	public function movieKnow($id) {
+		$authUser = Auth::user();
+
+		$movie = Movie::find($id);
+		if (is_null($movie)) {
+			//try for the slug
+			$movie = Movie::where('slug', $id)->first();
+		}
+
+		return view('movie-know')
+			->with('authUser', $authUser)
+			->with('movie', $movie);	
+
+	}
+
+	public function movieGenre($id) {
+		$authUser = Auth::user();
+
+		$genre = Genre::find($id);
+/*		if (is_null($movie)) {
+			//try for the slug
+			$movie = Movie::where('slug', $id)->first();
+		}
+*/
+		return view('movie-genre')
+			->with('authUser', $authUser)
+			->with('genre', $genre);	
+
+	}
+}

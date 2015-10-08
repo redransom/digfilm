@@ -77,6 +77,8 @@ class MoviesController extends Controller {
 		//
 		$input = Input::all();
 		$movie = Movie::create( $input );
+		$movie->slug = str_slug($movie->name, "-");
+		$movie->save();
 
 		return Redirect::route('movies.show', [$movie->id]);
 	}
@@ -153,6 +155,7 @@ class MoviesController extends Controller {
 		$movie->rating = $input['rating'];
 		$movie->budget = $input['budget'];
 		$movie->release_at = $input['release_at'];
+		$movie->slug = str_slug($input["name"], "-");
 		$movie->save();
 
 		return Redirect::route('movies.index');

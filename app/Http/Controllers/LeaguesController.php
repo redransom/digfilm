@@ -470,11 +470,11 @@ class LeaguesController extends Controller {
                 //check this is correct
                 $lm->delete();
             }
+            return Redirect::route('leagues.show', $league->id);
         } else
             Flash::message("You don\'t have the permissions to complete this task.");
 
-        return Redirect::route('leagues.show', $league->id);
-
+                return Redirect::route('leagues.index');
     }
 
     /**

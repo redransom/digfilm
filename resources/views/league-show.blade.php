@@ -82,8 +82,13 @@
     });
   });
     </script>
-        @foreach($league->auctions as $auction)
-            <tr><td><a href="{{URL('movie-knowledge', [$auction->id])}}">{{$auction->name}}</a></td>
+        @foreach($league->auctions()->orderBy('name', 'asc')->get() as $auction)
+            <tr><td>
+            @if(is_null($auction->slug))
+            <a href="{{URL('movie-knowledge', [$auction->id])}}">
+            @else
+            <a href="{{URL('movie-knowledge', [$auction->slug])}}">
+            @endif{{$auction->name}}</a></td>
             <td>{{date("j-M-y", strtotime($auction->release_at))}}</td><td>{{$auction->pivot->bid_amount}}</td>
             @if($auction->pivot->users_id == $authUser->id)
             <td>PLACED</td>
@@ -123,8 +128,8 @@
     <p>This is a list of all movies that are to be played for in this league.</p>
     @if($league->movies->count() > 0)
     <ul>
-    @foreach($league->movies as $movie)
-        <li>{{$movie->name}}</li>
+    @foreach($league->movies()->orderBy('name', 'asc')->get() as $movie)
+        <li><a href="{{URL('movie-knowledge', [$movie->id])}}">{{$movie->name}}</a></li>
     @endforeach
     </ul>
     @endif

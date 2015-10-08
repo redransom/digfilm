@@ -45,4 +45,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		return $this->belongsToMany("\App\Models\League", "league_users", "user_id", "league_id")->withPivot('id');
 	}
 
+	public function auctions() {
+		return $this->belongsToMany("\App\Models\Movie", "auctions", "users_id", "movies_id")->withPivot(['bid_amount', 'auction_start_time', 'auction_end_time', 'users_id', 'id', 'ready_for_auction']);
+	}
 }

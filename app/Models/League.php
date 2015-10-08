@@ -19,7 +19,7 @@ class League extends Model {
     }
 
     public function players() {
-        return $this->belongsToMany("\App\Models\User", "league_users", "league_id", "user_id");
+        return $this->belongsToMany("\App\Models\User", "league_users", "league_id", "user_id")->withPivot(['balance']);
     }
 
     public function movies() {
@@ -31,7 +31,7 @@ class League extends Model {
     }
 
     public function auctions() {
-        return $this->belongsToMany("\App\Models\Movie", "auctions", "leagues_id", "movies_id")->withPivot(['bid_amount', 'auction_start_time', 'auction_end_time', 'users_id', 'id', 'ready_for_auction']);
+        return $this->belongsToMany("\App\Models\Movie", "auctions", "leagues_id", "movies_id")->withPivot(['bid_amount', 'auction_start_time', 'auction_end_time', 'users_id', 'id', 'ready_for_auction', 'created_at', 'updated_at']);
     }
 
     /**
