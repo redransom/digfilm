@@ -10,7 +10,7 @@ class Genre extends Model {
 
     //TODO: Has many movies..
     public function movies() {
-        return $this->hasMany("\App\Models\Movie", 'genres_id', 'id');
+        return $this->hasMany("\App\Models\Movie", 'genres_id', 'id')->where('enabled', '1');
     }
 
     public function movie_count() {
