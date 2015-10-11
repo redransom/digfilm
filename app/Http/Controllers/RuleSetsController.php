@@ -12,9 +12,10 @@ use App\Models\RuleSet;
 use Session;
 use Input;
 use Redirect;
-/*use App\Http\Requests\CreateRuleSetRequest;
+use Flash;
+use App\Http\Requests\CreateRuleSetRequest;
 use App\Http\Requests\UpdateRuleSetRequest;
-*/
+
 use Illuminate\Http\Request;
 
 class RuleSetsController extends Controller {
@@ -30,7 +31,7 @@ class RuleSetsController extends Controller {
         if (!isset($authUser))
             return redirect('/auth/login');
 
-        $rulesets = RuleSet::paginate(4);
+        $rulesets = RuleSet::all();
 
         return View("rulesets.all")
             ->with('rulesets', $rulesets)
@@ -51,14 +52,12 @@ class RuleSetsController extends Controller {
         if (!isset($authUser))
             return redirect('/auth/login');
 
-        $types = ContributorType::lists('name', 'id');
-
-        return View("contributors.add")
+        
+        return View("rulesets.add")
             ->with('authUser', $authUser)
-            //->with('contributor_types', $types)
-            ->with('page_name', 'contributor-add')
-            ->with('instructions', 'Add New Contributor to Database')
-            ->with('title', 'Add Contributor');
+            ->with('page_name', 'ruleset-add')
+            ->with('instructions', 'Add New Rule Set to Database')
+            ->with('title', 'Add Rule Set');
     }
 
     /**
@@ -66,22 +65,13 @@ class RuleSetsController extends Controller {
      *
      * @return Response
      */
-    public function store(CreateContributorRequest $request)
+    public function store(CreateRuleSetRequest $request)
     {
         //      
         $input = Input::all();
-        $contributor = Contributor::create( $input );
-
-        if ($request->file('thumbnail') != "") {
-            $imageName = $contributor->id.str_replace(' ', '_', strtolower($input['first_name'])) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
-            $request->file('thumbnail')->move(base_path() . '/public/images/contributors/', $imageName);
-
-            $contributor->thumbnail = "/images/contributors/".$imageName;
-            $contributor->save();
-        }
-
-
-        return Redirect::route('contributors.index')->with('message', 'Contributor created.');
+        $ruleset = RuleSet::create( $input );
+        Flash::message('Rule set '.$ruleset->name. ' has been created successfully.');
+        return Redirect::route('rulesets.index');
 
     }
 
@@ -121,14 +111,14 @@ class RuleSetsController extends Controller {
         if (!isset($authUser))
             return redirect('/auth/login');
 
-        $contributor = Contributor::find($id);
-        $title = "Edit Contributor";
+        $ruleset = RuleSet::find($id);
+        $title = "Edit Rule Set";
 
-        return View("contributors.edit")
+        return View("rulesets.edit")
             ->with('authUser', $authUser)
-            ->with('contributor', $contributor)
-            ->with('object', $contributor)
-            ->with('page_name', 'contributor-edit')
+            ->with('ruleset', $ruleset)
+            ->with('object', $ruleset)
+            ->with('page_name', 'ruleset-edit')
             ->with('title', $title);
     }
 
@@ -138,25 +128,35 @@ class RuleSetsController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function update($id, UpdateContributorRequest $request)
+    public function update($id, UpdateRuleSetRequest $request)
     {
         //
-        $contributor = Contributor::find($id);
+        $ruleset = RuleSet::find($id);
         $input = $request->all();
 
-        $contributor->first_name = $input['first_name'];
-        $contributor->surname = $input['surname'];
+        $ruleset->name = $input['name'];
+        $ruleset->description = $input['description'];
+        $ruleset->blind_bid = $input['blind_bid'];
+        $ruleset->min_players = $input['min_players'];
+        $ruleset->max_players = $input['max_players'];
+        $ruleset->min_movies = $input['min_movies'];
+        $ruleset->max_movies = $input['max_movies'];
+        $ruleset->auction_duration = $input['auction_duration'];
+        $ruleset->ind_film_countdown = $input['ind_film_countdown'];
+        $ruleset->joint_ownership = $input['joint_ownership'];
+        $ruleset->auction_timeout = $input['auction_timeout'];
+        $ruleset->min_bid = $input['min_bid'];
+        $ruleset->max_bid = $input['max_bid'];
+        $ruleset->randomizer = $input['randomizer'];
+        $ruleset->auction_movie_release = $input['auction_movie_release'];
+        $ruleset->start_time = $input['start_time'];
+        $ruleset->close_time = $input['close_time'];
+        $ruleset->league_type = $input['league_type'];
+        $ruleset->auto_select = $input['auto_select'];
+        $ruleset->save();
 
-        if ($request->file('thumbnail') != "") {
-            $imageName = $contributor->id.str_replace(' ', '_', strtolower($input['first_name'])) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
-            $request->file('thumbnail')->move(base_path() . '/public/images/contributors/', $imageName);
-
-            $contributor->thumbnail = "/images/contributors/".$imageName;
-        }
-
-        $contributor->save();
-
-        return Redirect::route('contributors.index');
+        Flash::message('Rule set '.$ruleset->name. ' has been updated successfully.');
+        return Redirect::route('rulesets.index');
     }
 
     /**

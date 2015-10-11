@@ -140,6 +140,18 @@ Breadcrumbs::register('rulesets', function($breadcrumbs)
     $breadcrumbs->push('Rule Sets', route('rulesets.index'));
 });
 
+Breadcrumbs::register('ruleset-add', function($breadcrumbs)
+{
+    $breadcrumbs->parent('rulesets');
+    $breadcrumbs->push('Add Rule Set');
+});
+
+Breadcrumbs::register('ruleset-edit', function($breadcrumbs, $ruleset)
+{
+    $breadcrumbs->parent('rulesets');
+    $breadcrumbs->push('Edit Rule Set', route('rulesets.edit', $ruleset->id));
+});
+
 Breadcrumbs::register('auctions', function($breadcrumbs)
 {
     $breadcrumbs->parent('admin-dashboard');

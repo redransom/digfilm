@@ -38,7 +38,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	}
 
 	public function leagues() {
-		return $this->hasMany("\App\Models\League", "users_id");
+		return $this->hasMany("\App\Models\League", "users_id")->where('enabled', '1');
 	}
 
 	public function inLeagues() {

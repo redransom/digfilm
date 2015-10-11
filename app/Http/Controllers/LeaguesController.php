@@ -105,6 +105,7 @@ class LeaguesController extends Controller {
         if (!empty($ruleset) && is_numeric($ruleset->id)) {
             //copy rule details into the rule for the league
             $leaguerule = new LeagueRule();
+            $leaguerule->bind_bid = $ruleset->blind_bid;
             $leaguerule->min_players = $ruleset->min_players;
             $leaguerule->max_players = $ruleset->max_players;
             $leaguerule->min_movies = $ruleset->min_movies;
@@ -112,6 +113,7 @@ class LeaguesController extends Controller {
             $leaguerule->auction_duration = $ruleset->auction_duration;
             $leaguerule->ind_film_countdown = $ruleset->ind_film_countdown;
             $leaguerule->joint_ownership = $ruleset->joint_ownership;
+            $leaguerule->auction_timeout = $ruleset->auction_timeout;
             $leaguerule->min_bid = $ruleset->min_bid;
             $leaguerule->max_bid = $ruleset->max_bid;
             $leaguerule->randomizer = $ruleset->randomizer;
@@ -221,6 +223,7 @@ class LeaguesController extends Controller {
         if (isset($ruleset) && is_numeric($ruleset->id)) {
             //copy rule details into the rule for the league
             $leaguerule = new LeagueRule();
+            $leaguerule->blind_bid = $ruleset->blind_bid;
             $leaguerule->min_players = $ruleset->min_players;
             $leaguerule->max_players = $ruleset->max_players;
             $leaguerule->min_movies = $ruleset->min_movies;
@@ -228,6 +231,7 @@ class LeaguesController extends Controller {
             $leaguerule->auction_duration = $ruleset->auction_duration;
             $leaguerule->ind_film_countdown = $ruleset->ind_film_countdown;
             $leaguerule->joint_ownership = $ruleset->joint_ownership;
+            $leaguerule->auction_timeout = $ruleset->auction_timeout;
             $leaguerule->min_bid = $ruleset->min_bid;
             $leaguerule->max_bid = $ruleset->max_bid;
             $leaguerule->randomizer = $ruleset->randomizer;
@@ -751,6 +755,7 @@ class LeaguesController extends Controller {
 
             $rule = $league->rule;
 
+            echo "Adding Auctions for league ".$league->name."<br/>";
             if (is_null($rule->auction_movie_release) || $rule->auction_movie_release == '') {
                 //TODO: Put this into model / controller of auction
 
@@ -768,6 +773,8 @@ class LeaguesController extends Controller {
                     //choose random movies
                     //randomly choose the order of the first lot
                     $chosen_movies = array();
+
+                    $movie_ids = $league->movies->lists('id');
 
                 } else {
                     //enable first movies
@@ -876,7 +883,8 @@ class LeaguesController extends Controller {
     }
 
     /**
-     * Clear out auction movies who are live and whose end time is passed
+     * Clear out auction movies who are live and whose end time is passed or
+     * Clear out auction movies who are live and 
      *
      * @param  int  $id
      * @return Response

@@ -10,7 +10,7 @@
     @if(is_null($league->auction_start_date))
     <p>The auction will start soon!</p>
     @elseif(strtotime($league->auction_start_date) > time())
-    <p>The auction will start on the <strong>{{date("d M y h:iA", strtotime($league->auction_start_date))}}</strong>.</p>
+    <p>The auction will start on the <strong>{{date("d M y g:iA", strtotime($league->auction_start_date))}}</strong>.</p>
     @else
     <?php $players = $league->players->lists('name', 'id'); ?>
     <p>See a list of movies you can bid on:</p>

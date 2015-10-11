@@ -17,11 +17,14 @@
             <a href="#"><img src="images/temp/img_1.jpg" width="159" height="100" alt="" /></a>
             @endif
         </section><!--/ .post-thumb-->
-        
         <section class="post-entry">
             <div class="post-date">{{date("l, jS F Y", strtotime($movie->release_at))}}</div><!--/ .post-date-->
             <div class="post-title">
+                @if(!is_null($movie->slug) && $movie->slug != "")
                 <h5><a href="{{URL('movie-knowledge', $movie->slug)}}">{{$movie->name}}</a></h5>
+                @else
+                <h5><a href="{{URL('movie-knowledge', $movie->id)}}">{{$movie->name}}</a></h5>
+                @endif
             </div><!--/ .post-title-->
             <div class="description">
                 {{$movie->summary}}

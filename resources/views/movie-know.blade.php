@@ -23,10 +23,13 @@
             <div class="post-date">Released: {{date("l, jS F Y", strtotime($movie->release_at))}}</div><!--/ .post-date-->
             <div class="post-title">
                 <h5><a href="#">{{$movie->summary}}</a></h5>
-            </div><!--/ .post-title-->
-            <div class="star"></div><!--/ .star-->
-            <p>
-            </p>
+            </div><!--/ .post-title-->            
+            <div style="display:inline !important; padding-bottom: 10px" id="rating_{{$movie->id}}"></div><!--/ .star-->
+            <script>
+            $(function() {
+                $('#rating_{{$movie->id}}').raty({ score: {{$movie->rating}}});
+            });
+            </script>
             
             <blockquote>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod <br /> tempor incididunt ut labore 
