@@ -767,23 +767,47 @@ class LeaguesController extends Controller {
 
             } else {
                 //we need to split the movies
-                $movie_no = $rule->auction_movie_release;
+                $movie_group = $rule->auction_movie_release;
 
                 if ($rule->randomizer == 'Y') {
                     //choose random movies
                     //randomly choose the order of the first lot
                     $chosen_movies = array();
 
-                    $movie_ids = $league->movies->lists('id');
+                    $auctioned_movies = Auction::where('leagues_id', $league->id)->lists('id');
+                    $movies = $league->movies()->whereNotIn('movies_id', $auctioned_movies)->get();
+                    $available_movies = $movies->lists('id');
 
+                    $movie_add_count = 1;
+                    $available_movie_count = count($available_movies);
+
+                    for($movie_no = 0; $movie_no<$movie_group; $movie_no++) {
+
+                        $random_pos = rand(0, ($available_movie_count - 1));
+
+                        $chosen_movies[$movie_no] = $available_movies[$random_pos];
+                        unset($available_movies[$random_pos]);
+                        $available_movies = array_values($available_movies);
+                        $available_movie_count--;
+
+                    }
+
+                    /*foreach ($available_movies as $movie) {
+    
+
+                        $this->addAuction($league, $movie, $rule);
+
+                        if (($movie_add_count++) == $movie_no)
+                                break;
+                    }*/
                 } else {
                     //enable first movies
                     $league_movies_count = $league->movies->count();
                     $movie_add_count = 1;
-                    if ($movie_no < $league_movies_count) {
+                    if ($movie_group < $league_movies_count) {
                         foreach ($league->movies as $movie) {
                             $this->addAuction($league, $movie, $rule);
-                            if (($movie_add_count++) == $movie_no)
+                            if (($movie_add_count++) == $movie_group)
                                 break;
                         }
 
@@ -842,6 +866,12 @@ class LeaguesController extends Controller {
                             //randomly choose the order of the first lot
                             $chosen_movies = array();
 
+                            $auctioned_movies = Auction::where('leagues_id', $league->id)->lists('id');
+                            $available_movies = $league->movie()->whereNotIn('movies_id', $auctioned_movies);
+
+                            var_dump($auctioned_movies);
+                            var_dump($available_movies);
+
                         } else {
                             //enable first movies
                             $league_movies_count = $league->movies->count();
@@ -872,13 +902,16 @@ class LeaguesController extends Controller {
     private function addAuction($league, $movie, $rule) {
         $auction = new Auction();
         $auction->leagues_id = $league->id;
-        $auction->movies_id = $movie->id;
+        if(is_numeric($movie))
+            $auction->movies_id = $movie;
+        else
+            $auction->movies_id = $movie->id;
         $auction->auction_start_time = date("H:i:s", strtotime($rule->start_time));
         $auction->auction_end_time = date("H:i:s", strtotime($rule->start_time) + ($rule->ind_film_countdown * 60));
         $auction->ready_for_auction = 1;
         $auction->save();
 
-        Log::info("Add Auction: ".$movie->name." to ".$league->name." from ".$auction->auction_start_time." to ".$auction->auction_end_time);
+        Log::info("Add Auction: ".(!is_numeric($movie)? $movie->name : $movie)." to ".$league->name." from ".$auction->auction_start_time." to ".$auction->auction_end_time);
         unset($auction);
     }
 
