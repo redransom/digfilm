@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label" for="TakingCountry">Country</label>
+                        <label class="control-label" for="TakingCountry">Currency</label>
                         <div class="controls">
                             {!! Form::select('country', $countries, null, ['class'=>'span8']) !!}
                         </div>

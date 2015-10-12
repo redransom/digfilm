@@ -1,9 +1,9 @@
             <!-- ************** - Sidebar - ************** -->              
             <aside id="sidebar">
-                @if(isset($genres_list))
+                @if(isset($currentLeague))
+                @include('partials.user-league-details', ['currentLeagueUser'=>$currentLeagueUser, 'league'=>$currentLeague])
+                @elseif(isset($genres_list))
                 @include('partials.user-sidebar-genres')
-                @elseif(isset($league->auctions))
-                @include('partials.user-league-details', ['currentLeagueUser'=>$currentLeagueUser, 'league'=>$league])
                 @endif
                 
                 <!-- ************** - Top Games - ************** -->    

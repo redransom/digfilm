@@ -3,16 +3,16 @@
 @section('content')
 <section class="entry sbr clearfix">
     <div class="title-caption-large">
-        <h3>{{$league->name}} League</h3>
+        <h3>{{$currentLeague->name}} League</h3>
     </div>
 
     <h2>Auction</h2>
-    @if(is_null($league->auction_start_date))
+    @if(is_null($currentLeague->auction_start_date))
     <p>The auction will start soon!</p>
-    @elseif(strtotime($league->auction_start_date) > time())
-    <p>The auction will start on the <strong>{{date("d M y g:iA", strtotime($league->auction_start_date))}}</strong>.</p>
+    @elseif(strtotime($currentLeague->auction_start_date) > time())
+    <p>The auction will start on the <strong>{{date("d M y g:iA", strtotime($currentLeague->auction_start_date))}}</strong>.</p>
     @else
-    <?php $players = $league->players->lists('name', 'id'); ?>
+    <?php $players = $currentLeague->players->lists('name', 'id'); ?>
     <p>See a list of movies you can bid on:</p>
 
     <table class="feature-table dark-gray">
@@ -82,7 +82,7 @@
     });
   });
     </script>
-        @foreach($league->auctions()->orderBy('name', 'asc')->get() as $auction)
+        @foreach($currentLeague->auctions()->orderBy('name', 'asc')->get() as $auction)
             <tr><td>
             @if(is_null($auction->slug))
             <a href="{{URL('movie-knowledge', [$auction->id])}}">
@@ -100,7 +100,7 @@
             @else
             <td>&nbsp;</td>
             @endif
-            <td><?php auctionTimer($auction->pivot->id, $league->auction_close_date,  $auction->pivot->auction_end_time); ?></td>
+            <td><?php auctionTimer($auction->pivot->id, $currentLeague->auction_close_date,  $auction->pivot->auction_end_time); ?></td>
             @if($auction->pivot->ready_for_auction == 1)
             <td>Yes</td>
             @else
@@ -112,12 +112,12 @@
     </table>
     @endif
 
-    @if(is_null($league->auction_start_date) || (strtotime($league->auction_start_date) > time())) 
+    @if(is_null($currentLeague->auction_start_date) || (strtotime($currentLeague->auction_start_date) > time())) 
     <h2>Players</h2>
     <p>Who you are competing against.</p>
-    @if($league->players->count())
+    @if($currentLeague->players->count())
     <ul>
-        @foreach($league->players as $player)
+        @foreach($currentLeague->players as $player)
         <li>{{$player->name}}</li>
         @endforeach
     </ul>
@@ -126,9 +126,9 @@
     <br/>
     <h2>Movies</h2>
     <p>This is a list of all movies that are to be played for in this league.</p>
-    @if($league->movies->count() > 0)
+    @if($currentLeague->movies->count() > 0)
     <ul>
-    @foreach($league->movies()->orderBy('name', 'asc')->get() as $movie)
+    @foreach($currentLeague->movies()->orderBy('name', 'asc')->get() as $movie)
         <li><a href="{{URL('movie-knowledge', [$movie->id])}}">{{$movie->name}}</a></li>
     @endforeach
     </ul>

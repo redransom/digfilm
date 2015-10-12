@@ -101,7 +101,7 @@ class WelcomeController extends Controller {
 		$leagueUsers = LeagueUser::where('league_id', $league->id)->get();
 		$currentLeagueUser = LeagueUser::where('user_id', $authUser->id)->where('league_id', $league->id)->first();
 		return view('league-show')
-			->with('league', $league)
+			->with('currentLeague', $league)
 			->with('leagueUsers', $leagueUsers)
 			->with('currentLeagueUser', $currentLeagueUser)
 			->with('authUser', $authUser);	
