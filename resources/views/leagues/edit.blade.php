@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label" for="LeagueName">League Owner</label>
+                        <label class="control-label" for="LeagueUsersId">League Owner</label>
                         <div class="controls">
                             {!! Form::select('users_id', $users, $league->users_id, ['class'=>'span8']) !!}
                             <span class="help-inline">Who owns this league?</span>
@@ -38,13 +38,37 @@
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label" for="LeagueName">Rule Set</label>
+                        <label class="control-label" for="LeagueRuleSet">Rule Set</label>
                         <div class="controls">
-                            {!! Form::select('rule_set', $sets, null, ['class'=>'span8']) !!}
+                            {!! Form::select('rule_set', [null=>'Please Select'] + $sets, null, ['class'=>'span8']) !!}
                             <span class="help-inline">Which default options to use?</span>
                         </div>
                     </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="LeagueStartDate">Start Date</label>
+                        <div class="controls">
+                            {!! Form::text('auction_start_date', $league->auction_start_date, ['class'=>'span8', 'placeholder'=>'YYYY-MM-DD HH:mm:SS']) !!}
+                            <span class="help-inline">When does the auction start?</span>
+                        </div>
+                    </div>
                     
+                    <div class="control-group">
+                        <label class="control-label" for="LeagueCloseDate">Close Date</label>
+                        <div class="controls">
+                            {!! Form::text('auction_close_date', $league->auction_close_date, ['class'=>'span8', 'placeholder'=>'YYYY-MM-DD HH:mm:SS']) !!}
+                            <span class="help-inline">When does the auction finish?</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="LeagueAuctionStage">Status{{$league->auction_stage}}</label>
+                        <div class="controls">
+                            {!! Form::select('auction_stage', [null=>'Not Ready', '0'=>'League Ready for Auction', '1'=>'Movies Chosen', '2'=>'Auctions Live'], $league->auction_stage, ['class'=>'span8']) !!}
+                            <span class="help-inline">Change status of league auctions using this option</span>
+                        </div>
+                    </div>
+
                     <div class="control-group">
                         <div class="controls">
                             <button type="submit" class="btn btn-primary pull-right">Save League</button>

@@ -209,9 +209,17 @@ class LeaguesController extends Controller {
 
         $league->name = $input['name'];
         $league->users_id = $input['users_id'];
+        var_dump($input);
+        if($input['auction_start_date'] != '')
+            $league->auction_start_date = $input['auction_start_date'];
+        if($input['auction_close_date'] != '')
+            $league->auction_close_date = $input['auction_close_date'];
+        if($input['auction_stage'] != '')
+            $league->auction_stage = $input['auction_stage'];
+
         $league->save();
 
-        if (isset($input['rule_set'])) {
+        if (isset($input['rule_set']) && !is_null($league->rule)) {
             //just find out there isn't already a rule defined for this league
             $rules = $league->rule;
             //only look for a rule set if there isn't already rules in place
@@ -775,16 +783,20 @@ class LeaguesController extends Controller {
                     $chosen_movies = array();
 
                     $auctioned_movies = Auction::where('leagues_id', $league->id)->lists('id');
-                    $movies = $league->movies()->whereNotIn('movies_id', $auctioned_movies)->get();
+                    if (!is_null($auctioned_movies)) 
+                        $movies = $league->movies()->whereNotIn('movies_id', $auctioned_movies)->get();
+                    else
+                        $movies = $league->movies;
+
                     $available_movies = $movies->lists('id');
 
                     $movie_add_count = 1;
                     $available_movie_count = count($available_movies);
 
+                    echo "Total Allowed Movie Number:$movie_group<br/>";
                     for($movie_no = 0; $movie_no<$movie_group; $movie_no++) {
 
                         $random_pos = rand(0, ($available_movie_count - 1));
-
                         $chosen_movies[$movie_no] = $available_movies[$random_pos];
                         unset($available_movies[$random_pos]);
                         $available_movies = array_values($available_movies);
@@ -792,14 +804,10 @@ class LeaguesController extends Controller {
 
                     }
 
-                    /*foreach ($available_movies as $movie) {
-    
-
+                    //we have only added the ones that have been chosen so can quit easily
+                    foreach ($chosen_movies as $movie) {
                         $this->addAuction($league, $movie, $rule);
-
-                        if (($movie_add_count++) == $movie_no)
-                                break;
-                    }*/
+                    }
                 } else {
                     //enable first movies
                     $league_movies_count = $league->movies->count();
