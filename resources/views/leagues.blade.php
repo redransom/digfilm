@@ -13,7 +13,12 @@
         </thead>
         <tbody>
             @foreach($leagues as $league)
-            <tr<?php echo (($league_counter % 2) == 1) ? " class='odd'" : ""; ?>><td>{{$league->name}}</td><td>{{count($league->players)}}</td><td>{{$league->owner->name}}</td>
+            <tr<?php echo (($league_counter % 2) == 1) ? " class='odd'" : ""; ?>><td>{{$league->name}}</td>
+            @if($league->rule)
+            <td>{{count($league->players)}} / {{$league->rule->min_players}} / {{$league->rule->max_players}}</td><td>{{$league->owner->name}}</td>
+            @else
+            <td>{{count($league->players)}}</td>
+            @endif
             <td>Yes</td><td>{{date("jS M")}}</td>
             <td>
             @if(isset($authUser) && isset($league->rule) && $league->rule->league_type =='U')
