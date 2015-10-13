@@ -146,17 +146,28 @@ class AuctionsController extends Controller {
             return redirect('/auth/login');
 
         $auction = Auction::find($id);
+        $rule = $auction->league->rule;
         $input = $request->all();
 
         if($auction->bid_count != 0) {
             //some one else has bid on it previously
             $bid_refund = $auction->bid_amount;
             $prev_bid_user = $auction->users_id;
+        } else {
+            //record opening bid for analysis purposes
+            $auction->opening_bid = $input['bid_amount'];
         }
 
+        //add the new bid to the auction
         Log::info('Bid on auction:'.$auction->id.' by user:'.$authUser->id.' amount:'.$input['bid_amount']);
         $auction->users_id = $authUser->id;
         $auction->bid_amount = $input['bid_amount'];
+
+        //add minutes to bid
+        if ($rule->ind_film_countdown != 0) {
+            $auction->auction_end_time = date("H:i:s", strtotime('+'.$rule->ind_film_countdown.' minutes', time()));
+        }
+
         $auction->bid_count++;
         $auction->save();
 

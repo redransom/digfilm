@@ -763,6 +763,12 @@ class LeaguesController extends Controller {
 
             $rule = $league->rule;
 
+            //clear the league balances in case this league has been re-run
+            //LeagueUser::clearBalances($league->id);
+            LeagueUser::where('league_id', $league->id)->update(['balance'=>100]);
+            //clear out old auctions
+            Auction::where('leagues_id', $league->id)->delete();
+
             echo "Adding Auctions for league ".$league->name."<br/>";
             if (is_null($rule->auction_movie_release) || $rule->auction_movie_release == '') {
                 //TODO: Put this into model / controller of auction
@@ -793,7 +799,7 @@ class LeaguesController extends Controller {
                     $movie_add_count = 1;
                     $available_movie_count = count($available_movies);
 
-                    echo "Total Allowed Movie Number:$movie_group<br/>";
+                    //echo "Total Allowed Movie Number:$movie_group<br/>";
                     for($movie_no = 0; $movie_no<$movie_group; $movie_no++) {
 
                         $random_pos = rand(0, ($available_movie_count - 1));
