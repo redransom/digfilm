@@ -929,23 +929,5 @@ class LeaguesController extends Controller {
         unset($auction);
     }
 
-    /**
-     * Clear out auction movies who are live and whose end time is passed or
-     * Clear out auction movies who are live and 
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function clearAuctions() 
-    {
-        $auctionsToClear = Auction::where('ready_for_auction', '1')->where('auction_end_time', '<', time())->get();
 
-        if ($auctionsToClear->count() > 0) {
-            foreach ($auctionsToClear as $auction) {
-                $auction->ready_for_auction = 2; //finished
-                $auction->save();
-            }    
-        }
-        
-    } 
 }

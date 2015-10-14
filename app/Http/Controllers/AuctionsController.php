@@ -253,4 +253,61 @@ class AuctionsController extends Controller {
             ->with('rule', $rule);
     }
 
+    /**
+     * Clear out auction movies who are live and whose end time is passed.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function clearEndTimeAuctions() 
+    {
+        $auctionsToClear = Auction::where('ready_for_auction', '1')->where('auction_end_time', '<', time())->get();
+
+        if ($auctionsToClear->count() > 0) {
+            foreach ($auctionsToClear as $auction) {
+                Log::info("Auction End Time Cleared: ".$auction->id);
+                $auction->ready_for_auction = 2; //finished
+                $auction->save();
+            }    
+        }
+
+    }
+
+    /**
+     * Clear out auction movies who are live and whose last bid time was over the league rule
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function clearTimeoutAuctions() 
+    {    
+        $rules = LeagueRule::where('auction_timeout', '>', '0')->get();
+        $affected_league = array();
+        foreach($rules as $rule) {
+            $affected_league[] = $rule->leagues_id;
+        }
+        
+        //get all auctions that are live and in the affected leagues
+        $auctionsTimedOut = Auction::whereIn('leagues_id', $affected_league)->where('ready_for_auction', '1')->get();
+
+        foreach ($auctionsTimedOut as $auction) {
+            //get the time the auction was last updated and add the auction time out to it
+            //if this new time is less than now than it needs to be closed
+            $rule = $this->getLeagueRule($rules, $auction->leagues_id);
+            $test_time = date("H:i:s", strtotime($auction->updated_at)."+".$rule->auction_timeout." minutes");  
+            if ($test_time < time()) {
+                $auction->ready_for_auction = 2;
+                Log::info("Auction Time Out Cleared: ".$auction->id);
+                $auction->save();
+            }
+        }
+    }
+
+    private function getLeagueRule($rules, $league_id) {
+        foreach ($rules as $rule) {
+            if ($rule->league_id == $league_id)
+                return $rule;
+        }
+    }
+
 }

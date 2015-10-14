@@ -11,7 +11,7 @@
                                     <dt>Summary</dt>
                                     <dd>{{$movie->summary}}</dd>
                                     <dt>Genre</dt>
-                                    <dd>{{$movie->genre}}</dd>
+                                    <dd>{{$movie->genre->name}}</dd>
                                     <dt>Rating</dt>
                                     <dd>{{$movie->rating}}</dd>
                                     <dt>Budget</dt>

@@ -48,8 +48,16 @@
             <tr>
                 <td>{{$league->name}}</td>
                 <td>{{count($league->players)}}</td>
-                <td>{{date("jS M Y", strtotime($league->created_at))}}</td>
+                @if(!is_null($league->auction_start_date))
+                <td>{{date("jS M Y", strtotime($league->auction_start_date))}}</td>
+                @else
+                <td>&nbsp;</td>
+                @endif
+                @if(!is_null($league->auction_close_date))
+                <td>{{date("jS M Y", strtotime($league->auction_close_date))}}</td>
+                @else
                 <td>--</td>
+                @endif
             </tr>
             @endforeach
         </tbody>
@@ -59,7 +67,7 @@
     @endif
 
     <h2>Leagues Participating in</h2>
-    <p>Here are the leageus you are in:</p>
+    <p>Here are the leagues you are in:</p>
     @if($authUser->inLeagues->count() > 0)
     <table class="feature-table dark-gray">
         <thead>
@@ -75,7 +83,11 @@
             <tr>
                 <td><a class="btn btn-mini btn-danger" href="{{URL('league/'.$league->id)}}">{{$league->name}}</a></td>
                 <td>{{count($league->players)}}</td>
-                <td>{{date("jS M Y", strtotime($league->created_at))}}</td>
+                @if(!is_null($league->auction_start_date))
+                <td>{{date("jS M Y", strtotime($league->auction_start_date))}}</td>
+                 @else
+                <td>&nbsp;</td>
+                @endif
                 <td>--</td>
             </tr>
             @endforeach
