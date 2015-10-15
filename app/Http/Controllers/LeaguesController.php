@@ -944,6 +944,12 @@ class LeaguesController extends Controller {
         $auction_end_time = date("Y-m-d H:i:s", strtotime($start_date) + ($rule->ind_film_countdown * 60));
         $auction->auction_start_time = $auction_start_time;
         $auction->auction_end_time = $auction_end_time;
+        //save us having to go back to the rules table for this
+        if ($rule->auction_timeout != 0) {
+            $auction->timeout = $rule->auction_timeout;
+            $auction->timeout_date = date("Y-m-d H:i:s", strtotime('+'.intval($auction->timeout).' minutes', strtotime($auction->auction_end_time)));
+        }
+
         $auction->ready_for_auction = 1;
         $auction->save();
 

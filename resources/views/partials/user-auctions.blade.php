@@ -18,7 +18,7 @@
             <td>{{$auction->pivot->opening_bid}}</td>
             @endif
             <td>{{$auction->pivot->bid_amount}}</td>
-            @if($auction->ready_for_auction == 1)
+            @if($auction->pivot->ready_for_auction == 1)
             @if($auction->pivot->users_id == $authUser->id)
             <td>PLACED</td>
             @else
@@ -32,7 +32,11 @@
             @else
             <td>&nbsp;</td>
             @endif
+            @if($auction->pivot->ready_for_auction == 1)
             <td><?php auctionTimer($auction->pivot->id, $auction->pivot->auction_end_time); ?></td>
+            @else
+            <td>&nbsp;</td>
+            @endif
             @if($auction->pivot->ready_for_auction == 1)
             <td>Yes</td>
             @else

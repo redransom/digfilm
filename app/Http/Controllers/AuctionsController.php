@@ -12,6 +12,7 @@ use App\Models\Role;
 use App\Models\Auction;
 use App\Models\League;
 use App\Models\LeagueUser;
+use App\Models\LeagueRule;
 use Session;
 use Input;
 use Redirect;
@@ -172,7 +173,14 @@ class AuctionsController extends Controller {
 
         //add minutes to bid
         if ($rule->ind_film_countdown != 0) {
-            $auction->auction_end_time = date("Y-m-d H:i:s", strtotime('+'.$rule->ind_film_countdown.' minutes', time()));
+            $auction->auction_end_time = date("Y-m-d H:i:s", strtotime('+1 hour', strtotime('+'.intval($rule->ind_film_countdown).' minutes', time())));
+        } else {
+            //default it to 10 minutes
+            $auction->auction_end_time = date("Y-m-d H:i:s", strtotime('+1 hour', strtotime('+10 minutes', time())));
+        }
+
+        if($auction->timeout != 0) {
+            $auction->timeout_date = date("Y-m-d H:i:s", strtotime('+1 hour', strtotime('+'.intval($auction->timeout).' minutes', time())));
         }
 
         $auction->bid_count++;
@@ -252,10 +260,12 @@ class AuctionsController extends Controller {
 
         $auction = Auction::find($id);
         $league = League::find($auction->leagues_id);
+        $leagueUser = LeagueUser::where('league_id', $auction->leagues_id)->where('user_id', $authUser->id)->first();
         $rule = $league->rule;
 
         return View("auctions.placebid")
             ->with('authUser', $authUser)
+            ->with('leagueUser', $leagueUser)
             ->with('auction', $auction)
             ->with('rule', $rule);
     }
@@ -268,7 +278,9 @@ class AuctionsController extends Controller {
      */
     public function clearEndTimeAuctions() 
     {
-        $auctionsToClear = Auction::where('ready_for_auction', '1')->where('auction_end_time', '<', time())->get();
+        $currentTime = date("Y-m-d H:i:s", strtotime("+1 hour", time()));
+        Log::info("Current Time to clear out: ".$currentTime);
+        $auctionsToClear = Auction::where('ready_for_auction', '1')->where('auction_end_time', '<', $currentTime)->get();
 
         if ($auctionsToClear->count() > 0) {
             foreach ($auctionsToClear as $auction) {
@@ -288,25 +300,18 @@ class AuctionsController extends Controller {
      */
     public function clearTimeoutAuctions() 
     {    
-        $rules = LeagueRule::where('auction_timeout', '>', '0')->get();
-        $affected_league = array();
-        foreach($rules as $rule) {
-            $affected_league[] = $rule->leagues_id;
-        }
-        
-        //get all auctions that are live and in the affected leagues
-        $auctionsTimedOut = Auction::whereIn('leagues_id', $affected_league)->where('ready_for_auction', '1')->get();
+        $currentTime = date("Y-m-d H:i:s", strtotime("+1 hour", time()));
+        Log::info("Current Time to clear time out: ".$currentTime);
+        $auctionsToClear = Auction::where('ready_for_auction', '1')->where('timeout_date', '<', $currentTime)->get();
 
-        foreach ($auctionsTimedOut as $auction) {
-            //get the time the auction was last updated and add the auction time out to it
-            //if this new time is less than now than it needs to be closed
-            $rule = $this->getLeagueRule($rules, $auction->leagues_id);
-            $test_time = date("H:i:s", strtotime($auction->updated_at)."+".$rule->auction_timeout." minutes");  
-            if ($test_time < time()) {
-                $auction->ready_for_auction = 2;
-                Log::info("Auction Time Out Cleared: ".$auction->id);
+        //Auction::where('ready_for_auction', '1')->where('timeout_date', '<', $currentTime)
+        //    ->update(['ready_for_auction'=>2]);
+        if ($auctionsToClear->count() > 0) {
+            foreach ($auctionsToClear as $auction) {
+                Log::info("Auction End Time Out Cleared: ".$auction->id);
+                $auction->ready_for_auction = 2; //finished
                 $auction->save();
-            }
+            }    
         }
     }
 

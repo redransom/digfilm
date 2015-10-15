@@ -5,11 +5,12 @@
     <div class="title-caption-large">
         <h3>{{$currentLeague->name}} League</h3>
     </div>
+
     <h2>Auction</h2>
     @if(is_null($currentLeague->auction_start_date))
     <p>The auction will start soon!</p>
 
-    @elseif(strtotime($currentLeague->auction_start_date) > time())
+    @elseif(strtotime($currentLeague->auction_start_date) > strtotime("+1 hour",time()))
     <p>The auction will start on the <strong>{{date("d M y g:iA", strtotime($currentLeague->auction_start_date))}}</strong>.</p>
     @else
     <?php $players = $currentLeague->players->lists('name', 'id'); ?>
@@ -47,7 +48,7 @@
     <div id="timer<?php echo $auctionid; ?>"></div>
     <script type="text/javascript">
       $('#timer<?php echo $auctionid; ?>').countdown('<?php echo $auctionTime; ?>', function(event) {
-        $(this).html(event.strftime('%-H:%M:%S'));
+        $(this).html(event.strftime('%-M:%-S'));
         if(event.elapsed) {
             $('#bid_link_{{$auctionid}}').val = "ENDED";
         }
