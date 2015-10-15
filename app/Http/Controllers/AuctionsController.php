@@ -31,7 +31,14 @@ class AuctionsController extends Controller {
         if (!isset($authUser))
             return redirect('/auth/login');
 
-        $leagues = League::where('auction_stage', '2')->paginate(10);
+        if ($status == '')
+            $leagues = League::whereIn('auction_stage', ['0', '1', '2', '3'])->get();
+        elseif($status == '1')
+            $leagues = League::whereIn('auction_stage', ['0', '1'])->get();
+        elseif($status == '2')
+            $leagues = League::where('auction_stage', '2')->get();
+        elseif($status == '3')
+            $leagues = League::where('auction_stage', '>', '3')->get();
 
         return View("auctions.all")
             ->with('leagues', $leagues)
@@ -165,7 +172,7 @@ class AuctionsController extends Controller {
 
         //add minutes to bid
         if ($rule->ind_film_countdown != 0) {
-            $auction->auction_end_time = date("H:i:s", strtotime('+'.$rule->ind_film_countdown.' minutes', time()));
+            $auction->auction_end_time = date("Y-m-d H:i:s", strtotime('+'.$rule->ind_film_countdown.' minutes', time()));
         }
 
         $auction->bid_count++;
@@ -310,9 +317,17 @@ class AuctionsController extends Controller {
         }
     }
 
-    //set auction codes to 3 when the auction is closed and the auction has not been bidded on
-    //set auctuon code to 4 when the auction is closed and the auctuion has been bidded on
-
-    
+    /**
+     * Set auction codes to 3 when the auction is closed and the auction has not been bidded on
+     * Set auctuon code to 4 when the auction is closed and the auctuion has been bidded on 
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function prepareClearedAuctions() 
+    {    
+        Auction::where('ready_for_auction', '2')->where('bid_count', '0')->update(['ready_for_auction'=>3]);
+        Auction::where('ready_for_auction', '2')->where('bid_count', '>', '0')->update(['ready_for_auction'=>4]);
+    }
 
 }

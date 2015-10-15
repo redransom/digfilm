@@ -18,9 +18,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php $leagueCnt = 1; ?>
+                                        <?php $leagueCnt = 1; 
+                                        $stage = null;
+                                        $stage_array = [null=>'Not Ready', '0'=>'Start Set', '1'=>'Movies Chosen', '2'=>'Auctions Live'];
+                                        ?>
                                         @foreach($leagues as $league)
-                                        <?php if (is_null($league->auction_start_date)) $start = ""; else $start = date("d M Y", strtotime($league->auction_start_date)); ?>
+                                        <?php if (is_null($league->auction_start_date)) $start = ""; else $start = date("Y-m-d H:i", strtotime($league->auction_start_date)); ?>
+                                        @if($stage != $league->auction_stage || is_null($stage))
+                                            <tr><td colspan='5'>{{$stage_array[$stage]}}</td></tr>
+                                            <?php $stage = $league->auction_stage; ?>
+                                        @endif
                                         <tr class="<?php echo (($leagueCnt++ % 2) == 0) ? "odd" : "even"; ?> user{{$league->users_id}}">
                                             <td><a href="{{URL('leagues', array('id'=>$league->id))}}">{{$league->name}}</a></td>
                                             <td>{{count($league->players)}}</td>

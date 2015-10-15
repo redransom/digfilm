@@ -39,7 +39,7 @@ class LeaguesController extends Controller {
             return redirect('/auth/login');
 
         //$leagues = League::all();
-        $leagues = League::paginate(10);
+        $leagues = League::orderBy('auction_stage', 'asc')->paginate(10);
 
         return View("leagues.all")
             ->with('leagues', $leagues)
@@ -642,10 +642,10 @@ class LeaguesController extends Controller {
                 $rules = $league->rule;
                 
                 if ($player_count >= $rules->min_players && $player_count <= $rules->max_players) {
-                    echo "League ".$league->name." has the players - ". $player_count;
+                    Log::info("League ".$league->name." has the players - ". $player_count);
                     $start_time = $rules->start_time;
                     $time_to_start = time() + (60 * 60 * 4); //60 secs * 60 mins * 4 = 4hours
-                    echo "Time dif: $time_to_start - ".strtotime($start_time) . "<br/>";
+                    Log::info("Time dif: $time_to_start - ".strtotime($start_time));
                     if ($time_to_start > strtotime($start_time)) {
                         //the new date is no good so set the time for the next day
                         $league->auction_start_date = date("Y-m-d G:i:s", strtotime('+1 day', strtotime((date("Y-m-d")." ".$start_time))));
@@ -937,8 +937,13 @@ class LeaguesController extends Controller {
             $auction->movies_id = $movie;
         else
             $auction->movies_id = $movie->id;
-        $auction->auction_start_time = date("H:i:s", strtotime($rule->start_time));
-        $auction->auction_end_time = date("H:i:s", strtotime($rule->start_time) + ($rule->ind_film_countdown * 60));
+
+        $start_date = $league->auction_start_date;
+        //based on the auction start date we need to work out the auction start time and end time
+        $auction_start_time = date("Y-m-d H:i:s", strtotime($start_date));
+        $auction_end_time = date("Y-m-d H:i:s", strtotime($start_date) + ($rule->ind_film_countdown * 60));
+        $auction->auction_start_time = $auction_start_time;
+        $auction->auction_end_time = $auction_end_time;
         $auction->ready_for_auction = 1;
         $auction->save();
 

@@ -28,7 +28,13 @@
             <div id="tab{{$league->id}}" class="tab-content">
             Currently has the following players:<br/>
             <br/>
-            Starts at <strong>{{date("jS M Y", strtotime($league->created_at))}}</strong>&nbsp;&nbsp;
+            @if(!is_null($league->auction_start_date))
+            Starts at <strong>{{date("jS M Y", strtotime($league->auction_start_date))}}</strong>
+            @else
+            Needs more players!
+            @endif
+            &nbsp;&nbsp;
+
             <a class="button small dark" href="{{URL('league/'.$league->id.'/manage')}}">Manage</a>
             </div>
             @endforeach

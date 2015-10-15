@@ -59,9 +59,6 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="pagination pagination-centered">
-                                    <?php echo $leagues->render(); ?>
-                                </div>
                         </div>
                     </div>
 <!--/.content-->

@@ -77,6 +77,7 @@ Route::group(['middleware'=>'auth'], function() {
         Route::post('add-player/{id}', ['as'=>'add-player', 'uses'=>'LeaguesController@postPlayer']);
         Route::get('admin-dashboard', ['as' => 'admin-dashboard', 'uses'=>'UsersController@adminDashboard']);
 
+        Route::get('auctions/{status?}', ['as'=>'auctions', 'uses'=>'AuctionsController@index']);
         Route::resource('users', 'UsersController');
         Route::resource('movies', 'MoviesController');
         Route::resource('contributors', 'ContributorsController');
@@ -101,3 +102,4 @@ Route::get('phase1-run-auctions/bf2Kc6hOuU7CO948h60s', ['as'=>'phase1-auctions',
 Route::get('phase2-run-auctions/RBbgCtpSeTsKzM0UgoCg', ['as'=>'load-movies', 'uses'=>'LeaguesController@loadNextMovies']);
 Route::get('clear-endtime-auctions/Qjr13b0VbElXE8TdmcTc', ['as'=>'clear-endtime-auctions', 'uses'=>'AuctionsController@clearEndTimeAuctions']);
 Route::get('clear-timeout-auctions/N4KuW01N6cVmQZPTQcxd', ['as'=>'clear-timeout-auctions', 'uses'=>'AuctionsController@clearTimeoutAuctions']);
+Route::get('prep-cleared-auctions/N4KuW01N6cVmQZPTQcxd', ['as'=>'prepare-clear-auctions', 'uses'=>'AuctionsController@prepareClearedAuctions']);

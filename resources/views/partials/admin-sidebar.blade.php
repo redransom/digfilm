@@ -58,9 +58,9 @@
                                 </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right"></i>Auctions</a>
                                     <ul id="toggleAuctions" class="collapse unstyled">
                                         <li><a href="{{URL('auctions')}}"><i class="icon-exchange"></i>All</a></li>
-                                        <li><a href="{{URL('auctions-start')}}"><i class="icon-exchange"></i>About to Start</a></li>
-                                        <li><a href="{{URL('auctions-live')}}"><i class="icon-exchange"></i>Live</a></li>
-                                        <li><a href="{{URL('auctions-closed')}}"><i class="icon-exchange"></i>Closed</a></li>
+                                        <li><a href="{{URL('auctions/1')}}"><i class="icon-exchange"></i>About to Start</a></li>
+                                        <li><a href="{{URL('auctions/2')}}"><i class="icon-exchange"></i>Live</a></li>
+                                        <li><a href="{{URL('auctions/3')}}"><i class="icon-exchange"></i>Closed</a></li>
                                     </ul>
                                 </li>                                
                                 <li><a class="collapsed" data-toggle="collapse" href="#toggleTasks"><i class="menu-icon icon-group">
@@ -72,6 +72,7 @@
                                         <li><a href="{{route('load-movies')}}" target="_blank"><i class="icon-group"></i>4) Load Next Movies</a></li>
                                         <li><a href="{{route('clear-endtime-auctions')}}" target="_blank"><i class="icon-group"></i>5a) Clear End Time Auctions</a></li>
                                         <li><a href="{{route('clear-timeout-auctions')}}" target="_blank"><i class="icon-group"></i>5b) Clear Time out Auctions</a></li>
+                                        <li><a href="{{route('prepare-clear-auctions')}}" target="_blank"><i class="icon-group"></i>5c) End Auctions</a></li>
                                     </ul>
                                 </li>                                
                             </ul>
