@@ -310,4 +310,9 @@ class AuctionsController extends Controller {
         }
     }
 
+    //set auction codes to 3 when the auction is closed and the auction has not been bidded on
+    //set auctuon code to 4 when the auction is closed and the auctuion has been bidded on
+
+    
+
 }

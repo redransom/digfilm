@@ -847,11 +847,6 @@ class LeaguesController extends Controller {
     {
         $leaguesStarted = League::where('auction_stage', 2)->where('enabled', '1')->get();
 
-        /*
-        1) get leagues which havent closed
-        2) 
-        */
-
         foreach ($leaguesStarted as $league) {
             //set that the auction has started
             //$league->auction_stage = 2;
@@ -881,10 +876,32 @@ class LeaguesController extends Controller {
                             $chosen_movies = array();
 
                             $auctioned_movies = Auction::where('leagues_id', $league->id)->lists('id');
-                            $available_movies = $league->movie()->whereNotIn('movies_id', $auctioned_movies);
+                            if (!is_null($auctioned_movies)) 
+                                $movies = $league->movies()->whereNotIn('movies_id', $auctioned_movies)->get();
+                            else
+                                $movies = $league->movies;
 
-                            var_dump($auctioned_movies);
-                            var_dump($available_movies);
+                            $available_movies = $movies->lists('id');
+
+                            $movie_add_count = 1;
+                            $available_movie_count = count($available_movies);
+
+                            //echo "Total Allowed Movie Number:$movie_group<br/>";
+                            for($movie_no = 0; $movie_no<$movie_group; $movie_no++) {
+
+                                $random_pos = rand(0, ($available_movie_count - 1));
+                                $chosen_movies[$movie_no] = $available_movies[$random_pos];
+                                unset($available_movies[$random_pos]);
+                                $available_movies = array_values($available_movies);
+                                $available_movie_count--;
+
+                            }
+
+                            //we have only added the ones that have been chosen so can quit easily
+                            foreach ($chosen_movies as $movie) {
+                                $this->addAuction($league, $movie, $rule);
+                            }
+
 
                         } else {
                             //enable first movies

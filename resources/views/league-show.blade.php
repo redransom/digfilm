@@ -35,10 +35,14 @@
             <td>{{$auction->pivot->opening_bid}}</td>
             @endif
             <td>{{$auction->pivot->bid_amount}}</td>
+            @if($auction->ready_for_auction == 1)
             @if($auction->pivot->users_id == $authUser->id)
             <td>PLACED</td>
             @else
             <td id="bid_link_{{$auction->pivot->id}}"><a href="{{URL('place-bid', [$auction->pivot->id])}}" class="popup">PLACE BID</a></td>
+            @endif
+            @else
+            <td>ENDED</td>
             @endif
             @if($auction->pivot->users_id != 0)
             <td>{{$players[$auction->pivot->users_id]}}</td>
