@@ -173,14 +173,17 @@ class AuctionsController extends Controller {
 
         //add minutes to bid
         if ($rule->ind_film_countdown != 0) {
-            $auction->auction_end_time = date("Y-m-d H:i:s", strtotime('+1 hour', strtotime('+'.intval($rule->ind_film_countdown).' minutes', time())));
+            //$auction->auction_end_time = date("Y-m-d H:i:s", strtotime('+1 hour', strtotime('+'.intval($rule->ind_film_countdown).' minutes', time())));
+            $auction->auction_end_time = date("Y-m-d H:i:s", strtotime('+'.intval($rule->ind_film_countdown).' minutes', time()));
         } else {
             //default it to 10 minutes
-            $auction->auction_end_time = date("Y-m-d H:i:s", strtotime('+1 hour', strtotime('+10 minutes', time())));
+            //$auction->auction_end_time = date("Y-m-d H:i:s", strtotime('+1 hour', strtotime('+10 minutes', time())));
+            $auction->auction_end_time = date("Y-m-d H:i:s", strtotime('+10 minutes', time()));
         }
 
         if($auction->timeout != 0) {
-            $auction->timeout_date = date("Y-m-d H:i:s", strtotime('+1 hour', strtotime('+'.intval($auction->timeout).' minutes', time())));
+            //$auction->timeout_date = date("Y-m-d H:i:s", strtotime('+1 hour', strtotime('+'.intval($auction->timeout).' minutes', time())));
+            $auction->timeout_date = date("Y-m-d H:i:s", strtotime('+'.intval($auction->timeout).' minutes', time()));
         }
 
         $auction->bid_count++;
@@ -278,7 +281,7 @@ class AuctionsController extends Controller {
      */
     public function clearEndTimeAuctions() 
     {
-        $currentTime = date("Y-m-d H:i:s", strtotime("+1 hour", time()));
+        $currentTime = date("Y-m-d H:i:s"); //, strtotime("+1 hour", time()));
         Log::info("Current Time to clear out: ".$currentTime);
         $auctionsToClear = Auction::where('ready_for_auction', '1')->where('auction_end_time', '<', $currentTime)->get();
 
@@ -300,7 +303,7 @@ class AuctionsController extends Controller {
      */
     public function clearTimeoutAuctions() 
     {    
-        $currentTime = date("Y-m-d H:i:s", strtotime("+1 hour", time()));
+        $currentTime = date("Y-m-d H:i:s"); //, strtotime("+1 hour", time()));
         Log::info("Current Time to clear time out: ".$currentTime);
         $auctionsToClear = Auction::where('ready_for_auction', '1')->where('timeout_date', '<', $currentTime)->get();
 
@@ -335,4 +338,16 @@ class AuctionsController extends Controller {
         Auction::where('ready_for_auction', '2')->where('bid_count', '>', '0')->update(['ready_for_auction'=>4]);
     }
 
+
+    /**
+     * Set leagues to final stage when all auctions are complete
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function completeLeagues() 
+    {    
+    
+        //look for leagues where the auction_stage = 2
+    }
 }

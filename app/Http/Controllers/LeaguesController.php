@@ -219,7 +219,7 @@ class LeaguesController extends Controller {
 
         $league->save();
 
-        if (isset($input['rule_set']) && !is_null($league->rule)) {
+        if (isset($input['rule_set']) && is_null($league->rule)) {
             //just find out there isn't already a rule defined for this league
             $rules = $league->rule;
             //only look for a rule set if there isn't already rules in place
@@ -253,7 +253,6 @@ class LeaguesController extends Controller {
             $leaguerule->leagues_id = $league->id;
             $leaguerule->save();
         }
-
         Flash::message('League has been updated');
         return Redirect::route('leagues.index');
     }
