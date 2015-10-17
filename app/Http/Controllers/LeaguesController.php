@@ -105,7 +105,7 @@ class LeaguesController extends Controller {
         if (!empty($ruleset) && is_numeric($ruleset->id)) {
             //copy rule details into the rule for the league
             $leaguerule = new LeagueRule();
-            $leaguerule->bind_bid = $ruleset->blind_bid;
+            $leaguerule->blind_bid = $ruleset->blind_bid;
             $leaguerule->min_players = $ruleset->min_players;
             $leaguerule->max_players = $ruleset->max_players;
             $leaguerule->min_movies = $ruleset->min_movies;
@@ -682,7 +682,7 @@ class LeaguesController extends Controller {
             $rules = $league->rule;
 
             //if league auction is 12 hours away send reminder
-            echo "Name: ".$league->name." Auto: ".$rules->auto_select."<br/>";
+            Log::info("Name: ".$league->name." Auto: ".$rules->auto_select);
             //if league auction is 6 hours away send reminder and populate the movies if required
             if ($rules->auto_select == 'Y') {
                 //need to find the required number of movies
@@ -695,7 +695,7 @@ class LeaguesController extends Controller {
                 $available_movies = Movie::where('release_at', '>', $earliest_release_date)->lists('id');
                 $available_movie_count = count($available_movies);
                 
-                echo "Movie Check - Available: ".count($available_movies)." Min: ".$min_movies."<br/>";
+                Log::info("Movie Check - Available: ".count($available_movies)." Min Required: ".$min_movies);
                 //need to make sure we have enough movies
                 if (count($available_movies) > $min_movies) {
                     $chosen_movies = array();
@@ -717,14 +717,19 @@ class LeaguesController extends Controller {
                         //var_dump($league_movie);
                         $league_movie->save();
 
-                        echo "Movie - ".$movie_id." added to ".$league->name."<br/>";
+                        Log::info("Movie - ".$movie_id." added to ".$league->name);
 
                         unset($league_movie);
                     }
+
+                    //only set this if there are movies added to the league
+                    if (count($chosen_movies) > 0)
+                        $league->auction_stage = 1;
+                } else {
+                    Log::info("There aren't enough movies for this league: ".$league->id." - ".$league->name);
                 }
 
                 //movies have been populated - set the auction stage to 1
-                $league->auction_stage = 1;
                 $league->save();
                 
             } elseif ($rules->auto_select != 'Y') {

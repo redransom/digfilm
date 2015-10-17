@@ -7,6 +7,37 @@
     </div>
 
     <h1>Hi {{$authUser->forenames}}, Welcome to TheNextBigFilm today.</h1>
+
+    <h2>Leagues Participating in</h2>
+    <p>Here are the leagues you are in:</p>
+    @if($authUser->inLeagues->count() > 0)
+    <table class="feature-table dark-gray">
+        <thead>
+            <tr> 
+                <th width="49%">Name</th> 
+                <th width="15%">Players</th>
+                <th width="18%">Started?</th>
+                <th width="18%">Ends?</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($authUser->inLeagues as $league)
+            <tr>
+                <td><a class="btn btn-mini btn-danger" href="{{URL('league/'.$league->id)}}">{{$league->name}}</a></td>
+                <td>{{count($league->players)}}</td>
+                @if(!is_null($league->auction_start_date))
+                <td>{{date("jS M Y", strtotime($league->auction_start_date))}}</td>
+                 @else
+                <td>&nbsp;</td>
+                @endif
+                <td>--</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table><!--/ feature-table-->
+    @else
+    <p>You are not part of any leagues currently.</p>
+    @endif
     
     <h2>Leagues Owned</h2>
 
@@ -70,37 +101,6 @@
     </table><!--/ feature-table-->
     @else
     <p>You currently own no leagues.</p>
-    @endif
-
-    <h2>Leagues Participating in</h2>
-    <p>Here are the leagues you are in:</p>
-    @if($authUser->inLeagues->count() > 0)
-    <table class="feature-table dark-gray">
-        <thead>
-            <tr> 
-                <th width="49%">Name</th> 
-                <th width="15%">Players</th>
-                <th width="18%">Started?</th>
-                <th width="18%">Ends?</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($authUser->inLeagues as $league)
-            <tr>
-                <td><a class="btn btn-mini btn-danger" href="{{URL('league/'.$league->id)}}">{{$league->name}}</a></td>
-                <td>{{count($league->players)}}</td>
-                @if(!is_null($league->auction_start_date))
-                <td>{{date("jS M Y", strtotime($league->auction_start_date))}}</td>
-                 @else
-                <td>&nbsp;</td>
-                @endif
-                <td>--</td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table><!--/ feature-table-->
-    @else
-    <p>You are not part of any leagues currently.</p>
     @endif
 
 </section>    

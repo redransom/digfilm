@@ -5,20 +5,23 @@
                         <div class="module-head">
                             <h3>{{$league->name}}</h3>
                         </div>
-                        <dl class="dl-horizontal">
-                            <dt>Owned By</dt>
-                            <dd>{{$league->Owner->name}}</dd>
-                            @if(is_null($league->auction_start_date))
-                            <dt>Created</dt>
-                            <dd>{{date("j M y", strtotime($league->created_at))}}</dd>
-                            @elseif(!is_null($league->auction_start_date) && $league->auction_stage < 2)
-                            <dt>Due to Start</dt>
-                            <dd>{{date("j M y", strtotime($league->auction_start_date))}}</dd>
-                            @else
-                            <dt>Started</dt>
-                            <dd>{{date("j M y", strtotime($league->auction_start_date))}}</dd>
-                            @endif
-                        </dl>
+                        <div class="module-body">
+                            <dl class="dl-horizontal">
+                                <dt>Owned By</dt>
+                                <dd>{{$league->Owner->name}}</dd>
+                                @if(is_null($league->auction_start_date))
+                                <dt>Created</dt>
+                                <dd>{{date("j M y", strtotime($league->created_at))}}</dd>
+                                @elseif(!is_null($league->auction_start_date) && $league->auction_stage < 2)
+                                <dt>Due to Start</dt>
+                                <dd>{{date("j M y h:iA", strtotime($league->auction_start_date))}}</dd>
+                                @else
+                                <dt>Started</dt>
+                                <dd>{{date("j M y h:iA", strtotime($league->auction_start_date))}}</dd>
+                                @endif
+                            </dl>
+                            <a class="btn" href="{{route('leagues.edit', [$league->id])}}">Edit League</a>
+                        </div>
                     </div>
 
                     <div class="module">

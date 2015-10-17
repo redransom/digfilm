@@ -4,7 +4,7 @@
     </thead>
     <tbody>
     
-    @foreach($currentLeague->auctions()->where('ready_for_auction', 2)->orderBy('name', 'asc')->get() as $auction)
+    @foreach($currentLeague->auctions()->where('ready_for_auction', 1)->orderBy('name', 'asc')->get() as $auction)
         <tr><td>
         @if(is_null($auction->slug) || $auction->slug == '')
         <a href="{{URL('movie-knowledge', [$auction->id])}}">
@@ -21,8 +21,10 @@
         @if($auction->pivot->ready_for_auction == 1)
         @if($auction->pivot->users_id == $authUser->id)
         <td>PLACED</td>
-        @elseif ($leagueUser->balance > 0)
+        @elseif ($leagueUser->balance > 0 && $auction->pivot->bid_amount < $currentLeague->rule->max_bid)
         <td id="bid_link_{{$auction->pivot->id}}"><a href="{{URL('place-bid', [$auction->pivot->id])}}" class="popup">PLACE BID</a></td>
+        @elseif($leagueUser->balance > 0 && $auction->pivot->bid_amount >= $currentLeague->rule->max_bid)
+        <td>MAX BID</td>
         @else
         <td>NO MONEY</td>
         @endif
