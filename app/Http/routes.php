@@ -40,6 +40,7 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('league/{id}', ['as'=>'league-show', 'uses'=>'WelcomeController@getLeague']);
         Route::get('league/{id}/manage', ['as'=>'league-manage', 'uses'=>'LeaguesController@getLeague']);
         Route::post('league', ['as'=>'league', 'uses'=>'WelcomeController@getLeague']);
+        Route::get('roster/{id}', ['as'=>'roster', 'uses'=>'WelcomeController@getRoster']);
         Route::get('choose-movies/{id}', ['as'=>'choose-movies', 'uses'=>'WelcomeController@addMovies']);
         Route::post('select-movies', ['as'=>'select-movies', 'uses'=>'LeaguesController@postMultipleMovies']);
         Route::get('select-participants/{id}', ['as'=>'select-participants', 'uses'=>'WelcomeController@addParticipants']);

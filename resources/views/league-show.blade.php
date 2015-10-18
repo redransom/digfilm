@@ -3,17 +3,16 @@
 @section('content')
 <section class="entry sbr clearfix">
     <div class="title-caption-large">
-        <h3>{{$currentLeague->name}} League</h3>
+        <h3>Welcome to the "{{$currentLeague->name}}" League</h3>
     </div>
-    <h2>Auction</h2>
+    <h2>Available Auctions</h2>
     @if(is_null($currentLeague->auction_start_date))
     <p>The auction will start soon!</p>
 
     @elseif(strtotime($currentLeague->auction_start_date) > time())
-    <p>The auction will start on the <strong>{{date("d M y g:iA", strtotime($currentLeague->auction_start_date))}}</strong>.</p>
+    <p>The auction will start on the <strong>{{date("d F y g:iA", strtotime($currentLeague->auction_start_date))}}</strong>.</p>
     @else
     <?php $players = $currentLeague->players->lists('name', 'id'); ?>
-    <p>See a list of movies you can bid on:</p>
 
     @include('partials.user-auctions', ['currentLeague'=>$currentLeague, 'players'=>$players, 'leagueUser'=>$currentLeagueUser])
     

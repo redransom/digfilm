@@ -23,7 +23,11 @@
         <tbody>
             @foreach($authUser->inLeagues as $league)
             <tr>
+                @if($league->auction_stage < 3)
                 <td><a class="btn btn-mini btn-danger" href="{{URL('league/'.$league->id)}}">{{$league->name}}</a></td>
+                @else
+                <td><a class="btn btn-mini btn-danger" href="{{URL('roster/'.$league->id)}}">{{$league->name}}</a></td>
+                @endif
                 <td>{{count($league->players)}}</td>
                 @if(!is_null($league->auction_start_date))
                 <td>{{date("jS M Y", strtotime($league->auction_start_date))}}</td>

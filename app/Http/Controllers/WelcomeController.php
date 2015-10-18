@@ -206,4 +206,24 @@ class WelcomeController extends Controller {
 			->with('genre', $genre);	
 
 	}
+
+	/**
+	 * Show league details
+	 *
+	 * @return void
+	 */
+	public function getRoster($id) {
+		$authUser = Auth::user();
+		if (!isset($authUser))
+			return redirect('/auth/login');
+
+		$league = League::find($id);
+
+		$currentLeagueUser = LeagueUser::where('user_id', $authUser->id)->where('league_id', $league->id)->first();
+		return view('league-movie-roster')
+			->with('currentLeague', $league)
+			->with('currentLeagueUser', $currentLeagueUser)
+			->with('authUser', $authUser);	
+	}
+
 }

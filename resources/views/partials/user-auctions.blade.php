@@ -1,3 +1,6 @@
+
+@if($currentLeague->auctions()->where('ready_for_auction', 1)->count() > 0)
+<p>See a list of movies you can bid on:</p>
 <table class="feature-table dark-gray">
     <thead>
         <tr><th>Movie</th><th>Release Date</th><th>Opening<br/>Bid</th><th>Current Price /<br/>$ USD</th><th>Place Bid</th><th>Owner</th><th>Time</th><th>Active</th></tr>
@@ -50,3 +53,6 @@
     @endforeach
     </tbody>
 </table>
+@else
+<h3>There are no auctions left in this league.</h3>
+@endif
