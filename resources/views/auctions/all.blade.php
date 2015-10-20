@@ -12,6 +12,7 @@
                                         <tr>
                                             <th>Movie</th>
                                             <th>Bidder</th>
+                                            <th>Opening<br/>Bid</th>
                                             <th>Amt</th>
                                             <th>St</th>
                                             <th>Ed</th>
@@ -27,7 +28,7 @@
                                         @foreach($leagues as $league)
                                             <?php $players = $league->players->lists('name', 'id'); ?>
                                         <tr>
-                                            <td colspan="7">{{$league->name}}</td>
+                                            <td colspan="8">{{$league->name}}</td>
                                         </tr>
                                             @foreach($league->auctions as $auction)
 
@@ -38,13 +39,14 @@
                                             @else
                                             <td></td>
                                             @endif
+                                            <td>{{$auction->pivot->opening_bid}}</td>
                                             <td>{{$auction->pivot->bid_amount}}</td>
-                                            <td>{{$auction->pivot->auction_start_time}}</td>
-                                            <td>{{$auction->pivot->auction_end_time}}</td>
+                                            <td>{{date("j M Y H:i", strtotime($auction->pivot->auction_start_time))}}</td>
+                                            <td>{{date("j M Y H:i", strtotime($auction->pivot->auction_end_time))}}</td>
                                             @if(strtotime($auction->pivot->updated_at) == strtotime($auction->pivot->created_at)) 
                                             <td>--</td>
                                             @else
-                                            <td>{{date("h:i:s", strtotime($auction->updated_at))}}</td>
+                                            <td>{{date("H:i:s", strtotime($auction->updated_at))}}</td>
                                             @endif
                                             <td>
                                             @if($auction->pivot->ready_for_auction == 1)

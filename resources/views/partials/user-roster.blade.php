@@ -1,4 +1,4 @@
-@if($currentLeague->auctions()->where('ready_for_auction', 2)->count() > 0)
+@if($currentLeague->auctions()->where('ready_for_auction', 3)->count() > 0)
 
 <table class="feature-table dark-gray">
     <thead>
@@ -7,6 +7,18 @@
     <tbody>
     
     @foreach($currentLeague->auctions()->where('users_id', $authUser->id)->orderBy('name', 'asc')->get() as $auction)
+        <?php
+        //total gross can be retrieved by the movie with the end date of the movie
+        //value is based on total gross / bid amount / 100,000
+
+        $takings = 1;
+        if ($auction->takings->count() > 0) {
+            $takings = $auction->takings->sum('amount');
+            $takings *= 1000000;
+        }
+
+        $value = ($takings * $auction->pivot->bid_amount) / 100000;
+        ?>
         <tr><td>
         @if(is_null($auction->slug) || $auction->slug == '')
         <a href="{{URL('movie-knowledge', [$auction->id])}}">
@@ -17,15 +29,15 @@
         @if(is_null($auction->pivot->opening_bid))
         <td></td>
         @else
-        <td>{{$auction->pivot->opening_bid}}</td>
+        <td>${{$auction->pivot->opening_bid}}</td>
         @endif
-        <td>{{$auction->pivot->bid_amount}}</td>
+        <td>${{$auction->pivot->bid_amount}}</td>
         @if($auction->pivot->users_id != 0)
         @else
         <td>&nbsp;</td>
         @endif
-        <td>$0.00</td>
-        <td>0.00</td>
+        <td>${{number_format($takings, 0, ".", ",")}}</td>
+        <td>{{number_format($value, 2)}}</td>
         </tr>
     @endforeach
         

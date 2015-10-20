@@ -21,6 +21,9 @@
                                 @endif
                             </dl>
                             <a class="btn" href="{{route('leagues.edit', [$league->id])}}">Edit League</a>
+                            &nbsp;
+                            <a class="btn" href="{{URL('leagues/'.$league->id.'/rules')}}">Edit Rules</a>
+                            
                         </div>
                     </div>
 

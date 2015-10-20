@@ -6,7 +6,14 @@
                             <div class="module-head">
                                 <h3>Movies Database</h3>
                             </div>
+                            
+                            <div class="module-body">
+                                <a class="btn" href="{{route('movies.create')}}">Add Movie</a>
+                            </div>
+                            
                             <div class="module-body table">
+                                
+
                                 <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped  display" width="100%">
                                     <thead>
                                         <tr>
@@ -27,7 +34,11 @@
                                             <td></td><td></td>
                                             @else
                                             <td>{{date("j M Y", strtotime($movie->release_at))}}</td>
+                                            @if(is_null($movie->takings_close_date))
                                             <td>{{date("j M Y", strtotime($movie->release_at."+2 month"))}}</td>
+                                            @else
+                                            <td>{{date("j M Y", strtotime($movie->takings_close_date))}}</td>
+                                            @endif
                                             @endif
                                             <td><a class="btn btn-mini btn-primary" href="{{URL('movies/'.$movie->id.'/edit')}}">Edit</a>
                                             <a class="btn btn-mini btn-inverse" href="{{URL('movie-add-takings/'.$movie->id)}}">Add Takings</a>

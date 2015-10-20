@@ -84,12 +84,15 @@ class LeaguesController extends Controller {
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created league.
      *
      * @return Response
      */
     public function store(\App\Http\Requests\CreateLeagueRequest $request)
     {
+        $authUser = Auth::user();
+        if (!isset($authUser))
+            return redirect('/auth/login');
         //
         $input = Input::all();
         $league = League::create( $input );
@@ -131,11 +134,16 @@ class LeaguesController extends Controller {
         $direction = isset($input['source']) ? $input['source'] : "A";
 
         if ($direction == "A") {
+            //user comes from admin - get league owner and add as a league player
+            $leagueuser = LeagueUser::create( ['user_id'=>$league->users_id, 'league_id'=>$league->id] );
+
             Flash::message('League created.');
             return Redirect::route('leagues.index');
         } else {
             /* come by customer create league so go to select movies page */
-            //return Redirect::route('choose-movies', [$league->id]);
+            //user comes from admin - get league owner and add as a league player
+            $leagueuser = LeagueUser::create( ['user_id'=>$authUser->id, 'league_id'=>$league->id] );
+
             return Redirect::route('select-participants', [$league->id]);
         }
         
@@ -510,7 +518,7 @@ class LeaguesController extends Controller {
                 $lu->save();
                 unset($lu);//clear out to start afresh
             }
-            return Redirect::route('league', [$league_id])->with('message', 'Players have been invited to the league');
+            return Redirect::route('select-participants', [$league_id])->with('message', 'Players have been invited to the league');
         }
         return Redirect::route('dashboard');
     }
@@ -653,10 +661,17 @@ class LeaguesController extends Controller {
                         // ok we are fine to go ahead with this date today - so lets set the time to it
                         $league->auction_start_date = $auction_start_date;
                     }
+
+                    //need to create close date for auction
+                    $close_date = $league->auction_start_date;
+                    $auction_duration = $rules->auction_duration;
+                    $league->auction_close_date = date("Y-m-d G:i:s", strtotime('+'.$auction_duration.' hours', strtotime($close_date)));
+
                     $league->auction_stage = 0;
                     $league->save();
                 } else {
                     //TODO: Send out reminder to league players to find more players to get involved
+                    Log::info('League '.$league->id.' - '.$league->name.' needs more players.');
                 }
             }
         }
@@ -672,9 +687,8 @@ class LeaguesController extends Controller {
      */
     public function preparePlayersForAuctions() 
     {
-        //TODO: Move to  command
-        $leaguesToNotify = League::whereNotNull('auction_start_date')->
-            whereNull('auction_close_date')->where('auction_start_date', '>', time())
+        $leaguesToNotify = League::whereNotNull('auction_start_date')
+            ->where('auction_start_date', '>', date("Y-m-d H:i:s"))
             ->where('enabled', '1')->where('auction_stage', '0')->get();
 
         //need to make sure each league has rules!
@@ -689,7 +703,7 @@ class LeaguesController extends Controller {
                 //get the minimum for now
                 $min_movies = $rules->min_movies;
                 //TODO: WIll need to add time on to this date to give leeway
-                $earliest_release_date = $league->auction_start_date;
+                $earliest_release_date = $league->auction_close_date;
 
                 //randomly populate movies
                 $available_movies = Movie::where('release_at', '>', $earliest_release_date)->lists('id');
@@ -756,9 +770,9 @@ class LeaguesController extends Controller {
      */
     public function executeAuctions() 
     {
-        //TODO: Move to  command
+        //only populate auctions when the time has passed
         $leaguesStarted = League::whereNotNull('auction_start_date')->
-            whereNull('auction_close_date')->where('auction_start_date', '>=', time())
+            where('auction_start_date', '<', date("Y-m-d H:i:s"))
             ->where('auction_stage', 1)->where('enabled', '1')->get();
 
         foreach ($leaguesStarted as $league) {
@@ -857,61 +871,60 @@ class LeaguesController extends Controller {
 
             $rule = $league->rule;
 
-            if (!(is_null($rule->auction_movie_release) || $rule->auction_movie_release == '')) {
+            if (!(is_null($rule->auction_movie_release) && $rule->auction_movie_release != '')) {
                 //we need to split the movies
                 $movie_no = $rule->auction_movie_release;
 
                 //get list of movies currently chosen
-                $auction_movies = Auction::where('leagues_id', $league->id)->where('auction_end_time', '>', time())->get();
-                if ($auction_movies->count() > 0) {
+                //$auction_movies = Auction::where('leagues_id', $league->id)->where('auction_end_time', '>', time())->get();
+                $auction_movies_count = $league->auctions()->where('ready_for_auction', 1)->count();
+                if ($auction_movies_count > 0) {
                     //do nowt - carry on
+                    Log::info('League '.$league->id.' - '.$league->name.' has auctions '.$auction_movies_count.' live.');
                 } else {
                     //ok the end time has come - do we need to add more movies?
-                    $auctioned_movies_count = $auction_movies->count();
-
+                    $auctioned_movies_count = $league->auctions()->count();
                     $league_movies_count = $league->movies->count();
 
+                    //DB::connection()->enableQueryLog();
+                    Log::info('League '.$league->id.' - '.$league->name.' has auctions '.$auctioned_movies_count.' and has '.$league_movies_count.' chosen movies.');
                     if ($auctioned_movies_count < $league_movies_count) {
+                        
                         //brilliant - lets add some more movies
+                        $chosen_movies = array();
+
+                        $auctioned_movies = Auction::where('leagues_id', $league->id)->lists('movies_id');    
+                        if (!empty($auctioned_movies))
+                            $movies = $league->movies()->whereNotIn('movies_id', $auctioned_movies)->get();
+                        else
+                            $movies = $league->movies;
+
+                        $available_movies = $movies->lists('id');
+                        $available_movie_count = count($available_movies);
 
                         if ($rule->randomizer == 'Y') {
                             //choose random movies
                             //randomly choose the order of the first lot
-                            $chosen_movies = array();
-
-                            $auctioned_movies = Auction::where('leagues_id', $league->id)->lists('id');
-                            if (!is_null($auctioned_movies)) 
-                                $movies = $league->movies()->whereNotIn('movies_id', $auctioned_movies)->get();
-                            else
-                                $movies = $league->movies;
-
-                            $available_movies = $movies->lists('id');
-
-                            $movie_add_count = 1;
-                            $available_movie_count = count($available_movies);
-
-                            //echo "Total Allowed Movie Number:$movie_group<br/>";
-                            for($movie_no = 0; $movie_no<$movie_group; $movie_no++) {
+                            //$movie_add_count = 1;
+                            Log::info("Add Random Movies to league: ".$league->id." - ".$league->name);
+                            for($movie_cnt = 0; $movie_cnt<$movie_no; $movie_cnt++) {
 
                                 $random_pos = rand(0, ($available_movie_count - 1));
-                                $chosen_movies[$movie_no] = $available_movies[$random_pos];
+                                $chosen_movies[$movie_cnt] = $available_movies[$random_pos];
+
                                 unset($available_movies[$random_pos]);
                                 $available_movies = array_values($available_movies);
                                 $available_movie_count--;
-
                             }
-
-                            //we have only added the ones that have been chosen so can quit easily
-                            foreach ($chosen_movies as $movie) {
-                                $this->addAuction($league, $movie, $rule);
-                            }
-
 
                         } else {
-                            //enable first movies
-                            $league_movies_count = $league->movies->count();
-                            $movie_add_count = 1;
-                            if ($movie_no < $league_movies_count) {
+                            Log::info("Add Movies to league: ".$league->id." - ".$league->name);
+                            //if not randomizer need to add find next group of films to add
+                            for($movie_cnt = 0; $movie_cnt<$movie_no; $movie_cnt++) {
+                                $chosen_movies[$movie_cnt] = $available_movies[$movie_cnt];
+                            }
+                            /*$movie_add_count = 1;
+                            if ($movie_no < $available_movie_count) {
                                 foreach ($league->movies as $movie) {
                                     $this->addAuction($league, $movie, $rule);
 
@@ -919,7 +932,12 @@ class LeaguesController extends Controller {
                                         break;
                                 }
 
-                            }
+                            }*/
+                        }
+
+                        //we have only added the ones that have been chosen so can quit easily
+                        foreach ($chosen_movies as $movie) {
+                            $this->addAuction($league, $movie, $rule);
                         }
 
                     }
@@ -942,10 +960,10 @@ class LeaguesController extends Controller {
         else
             $auction->movies_id = $movie->id;
 
-        $start_date = $league->auction_start_date;
+        //$start_date = $league->auction_start_date;
         //based on the auction start date we need to work out the auction start time and end time
-        $auction_start_time = date("Y-m-d H:i:s", strtotime($start_date));
-        $auction_end_time = date("Y-m-d H:i:s", strtotime($start_date) + ($rule->ind_film_countdown * 60));
+        $auction_start_time = date("Y-m-d H:i:s", time());
+        $auction_end_time = date("Y-m-d H:i:s", time() + ($rule->ind_film_countdown * 60));
         $auction->auction_start_time = $auction_start_time;
         $auction->auction_end_time = $auction_end_time;
         //save us having to go back to the rules table for this

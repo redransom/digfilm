@@ -53,7 +53,7 @@
                         </div>
                     </div>
 
-                    <h3>League Details</h3>
+                    <h3>League Details &amp; Roster Details</h3>
                     <div class="control-group">
                         <label class="control-label" for="LeagueName">No Of Players</label>
                         <div class="controls">
@@ -72,12 +72,28 @@
                         </div>
                     </div>
 
+                    <div class="control-group">
+                        <label class="control-label" for="LeagueName">Movie Takings Duration</label>
+                        <div class="controls">
+                            {!! Form::text('movie_takings_duration', null, ['class'=>'span2', 'placeholder'=>'Default is 8 weeks']) !!}
+                            <span class="help-inline">This can be used to override the standard 2 months that are expected.</span>
+                        </div>
+                    </div>
+
                     <h3>Auction Details</h3>
                     <div class="control-group">
                         <label class="control-label" for="LeagueName">Auction Duration</label>
                         <div class="controls">
                             {!! Form::text('auction_duration', null, ['class'=>'span2', 'placeholder'=>'Enter auction duration here...']) !!}
                             <span class="help-inline">TODO: This needs to be done by 10 movies i.e. 2 hours or 24 hours per 10</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="LeagueName">Round Duration</label>
+                        <div class="controls">
+                            {!! Form::text('round_duration', null, ['class'=>'span2', 'placeholder'=>'Enter round duration here...']) !!}
+                            <span class="help-inline">This is only beneficial if the quantity of movies is split up.</span>
                         </div>
                     </div>
 
@@ -103,6 +119,14 @@
                         <div class="controls">
                             {!! Form::text('start_time', null, ['class'=>'span2']) !!} to {!! Form::text('close_time', null, ['class'=>'span2']) !!}
                             <span class="help-inline">Start and finish time (NOTE This will need to depend on the auction duration).</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="LeagueName">Minimum Denominations</label>
+                        <div class="controls">
+                            {!! Form::text('denomination', null, ['class'=>'span2']) !!}
+                            <span class="help-inline">Whats the lowest denomination that can be used? Use 0.1 for 10cents, and 3 for 3 dollars.</span>
                         </div>
                     </div>
 

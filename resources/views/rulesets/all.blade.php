@@ -6,6 +6,11 @@
                             <div class="module-head">
                                 <h3>Rule Sets</h3>
                             </div>
+
+                            <div class="module-body">
+                                <a class="btn" href="{{route('rulesets.create')}}">Add Rule Set</a>
+                            </div>
+                            
                             <div class="module-body table">
                                 <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped  display" width="100%">
                                     <thead>
@@ -22,6 +27,8 @@
                                             <td><a href="{{URL('rulesets', array('id'=>$ruleset->id))}}">{{$ruleset->name}}</a></td>
                                             <td>{{$ruleset->description}}</td>
                                             <td><a class="btn btn-mini btn-primary" href="{{URL('rulesets/'.$ruleset->id.'/edit')}}">Edit</a>
+                                            <a class="btn btn-mini btn-danger" href="{{URL('rulesets/'.$ruleset->id)}}">Delete</a>
+                           
                                             </td>
                                         </tr>
                                         @endforeach

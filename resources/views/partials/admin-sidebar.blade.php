@@ -73,6 +73,7 @@
                                         <li><a href="{{route('clear-endtime-auctions')}}" target="_blank"><i class="icon-group"></i>5a) Clear End Time Auctions</a></li>
                                         <li><a href="{{route('clear-timeout-auctions')}}" target="_blank"><i class="icon-group"></i>5b) Clear Time out Auctions</a></li>
                                         <li><a href="{{route('prepare-clear-auctions')}}" target="_blank"><i class="icon-group"></i>5c) End Auctions</a></li>
+                                        <li><a href="{{route('close-league-auctions')}}" target="_blank"><i class="icon-group"></i>6) Close League Auctions</a></li>
                                     </ul>
                                 </li>                                
                             </ul>

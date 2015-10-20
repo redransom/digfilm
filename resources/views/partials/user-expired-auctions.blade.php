@@ -1,4 +1,4 @@
-@if($currentLeague->auctions()->where('ready_for_auction', 2)->count() > 0)
+@if($currentLeague->auctions()->where('ready_for_auction', '>', '1')->count() > 0)
 <h2>Expired Auctions</h2>
 
 <table class="feature-table dark-gray">
@@ -7,7 +7,7 @@
     </thead>
     <tbody>
     
-    @foreach($currentLeague->auctions()->where('ready_for_auction', 2)->orderBy('name', 'asc')->get() as $auction)
+    @foreach($currentLeague->auctions()->where('ready_for_auction', '>', 1)->orderBy('name', 'asc')->get() as $auction)
         <tr><td>
         @if(is_null($auction->slug) || $auction->slug == '')
         <a href="{{URL('movie-knowledge', [$auction->id])}}">

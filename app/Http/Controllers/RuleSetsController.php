@@ -9,6 +9,7 @@ use App\Models\Contributor;
 use App\Models\ContributorType;
 use App\Models\Role;
 use App\Models\RuleSet;
+use App\Models\LeagueRule;
 use Session;
 use Input;
 use Redirect;
@@ -167,7 +168,21 @@ class RuleSetsController extends Controller {
      */
     public function destroy($id)
     {
-        //
+        $authUser = Auth::user();
+        if (!isset($authUser))
+            return redirect('/auth/login');
+
+        //not sure if this is a function...
+        if (RuleSet::exists($id)) {
+            $ruleset = RuleSet::find($id);
+            Flash::message('Rule Set '.$ruleset->name.' has been removed from the system.');
+
+            if ($ruleset->delete()) {
+                LeagueRule::where('ruleset_id', $id)->update(['ruleset_id'=>'0']);
+            }
+            
+            return Redirect::route('rulesets.index');
+        }
     }
 
 }

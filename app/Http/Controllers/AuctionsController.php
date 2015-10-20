@@ -327,7 +327,7 @@ class AuctionsController extends Controller {
 
     /**
      * Set auction codes to 3 when the auction is closed and the auction has not been bidded on
-     * Set auctuon code to 4 when the auction is closed and the auctuion has been bidded on 
+     * Set auctuon code to 4 when the auction is closed and the auction has been bidded on 
      *
      * @param  int  $id
      * @return Response
@@ -349,5 +349,24 @@ class AuctionsController extends Controller {
     {    
     
         //look for leagues where the auction_stage = 2
+        $leagues = League::where('auction_stage', 2)->get();
+
+        //loop through leagues
+        foreach($leagues as $league) {
+            //we will need to check for round here to make sure there aren't more rounds to add
+            $total_auction_count = $league->auctions()->count();
+            $movie_count = $league->movies()->count();
+
+            if ($total_auction_count == $movie_count) {
+                $auction_count = $league->auctions()->where('ready_for_auction', '<', '2')->count();
+
+                if ($auction_count == 0) {
+                    //stage = 3 / auctions are over
+                    $league->auction_stage = 3;
+                    $league->save();
+                }
+            }
+        }
+
     }
 }

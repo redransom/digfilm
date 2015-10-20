@@ -7,17 +7,21 @@
                     </div><!--/ .title-caption-->
                     
                     <div class="entry-holder">
-                        @if((is_null($league->rule->auction_movie_release) || $league->auction_movie_release == 0) && $league->auction_stage < 3)
+                        @if((is_null($league->rule->auction_movie_release) || $league->auction_movie_release == 0) && ($league->auction_stage == 2))
                         <h3>Remaining Auction Time: </h3>
-                        <ul class="dropspot-list"><li><span class="dropspot" style="width: 170px !important"><?php auctionTimer($league->id, $league->auction_close_date); ?></span></li></ul>
+                        <ul class="dropspot-list"><li><span class="dropspot" style="width: 170px !important"><?php auctionTimer($league->id, $league->auction_close_date, 'league'); ?></span></li></ul>
                         <div class="clear"></div>
-                        @endif
-                        
+
                         <h4>Bid Rules:</h4>
                         <ul>
                             <li>Minimum Bid: <strong><?php echo (($league->rule->min_bid < 1) ? number_format(($league->rule->min_bid * 100), 0)."cents" : (number_format($league->rule->min_bid, 0))); ?></strong></li>
                             <li>Maximum Bid: <strong>{{number_format($league->rule->max_bid, 0)}}USD</strong></li>
                         </ul>
+                        @else
+                        <?php $closeDate = date("d M Y", strtotime("+2 months", strtotime($league->auction_close_date)));  ?>
+                        <h3>Time Left</h3>
+                        <p>League Closes: <span>{{$closeDate}}</span></p>
+                        @endif
                     </div>
                 </div>
 

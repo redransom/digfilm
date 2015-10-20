@@ -24,7 +24,7 @@
                     <div class="control-group">
                         <label class="control-label" for="MovieName">Name</label>
                         <div class="controls">
-                            {!! Form::text('name', $movie->name, ['class'=>'span8', 'placeholder'=>'Enter movie name here...']) !!}
+                            {!! Form::text('name', $movie->name, ['class'=>'span4', 'placeholder'=>'Enter movie name here...']) !!}
                             <span class="help-inline">Minimum 4 Characters.</span>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                     <div class="control-group">
                         <label class="control-label" for="MovieGenre">Genre</label>
                         <div class="controls">
-                            {!! Form::select('genres_id', $genres, $movie->genres_id, ['class'=>'span8']) !!}
+                            {!! Form::select('genres_id', $genres, $movie->genres_id, ['class'=>'span4']) !!}
                             <span class="help-inline">Choose from list as you type</span>
                         </div>
                     </div>
@@ -48,7 +48,7 @@
                     <div class="control-group">
                         <label class="control-label" for="MovieRating">Rating</label>
                         <div class="controls">
-                            {!! Form::text('rating', $movie->rating, ['class'=>'span8 rating', 'min'=>'1', 'max'=>'5']) !!}
+                            {!! Form::text('rating', $movie->rating, ['class'=>'span4 rating', 'min'=>'1', 'max'=>'5']) !!}
                             <span class="help-inline">From 1 to 5</span>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                         <label class="control-label" for="MovieBudget">Budget</label>
                         <div class="controls">
                             <div class="input-prepend">
-                                <span class="add-on">$</span>{!! Form::text('budget', $movie->budget, ['class'=>'span8', 'placeholder'=>'0']) !!}
+                                <span class="add-on">$</span>{!! Form::text('budget', $movie->budget, ['class'=>'span4', 'placeholder'=>'0']) !!}
                                 <span class="help-inline">In millions of dollars</span>
                             </div>
                         </div>
@@ -66,8 +66,24 @@
                     <div class="control-group">
                         <label class="control-label" for="MovieReleaseDate">Release Date</label>
                         <div class="controls">
-                            {!! Form::date('release_at', $movie->release_at, ['class'=>'span8']) !!}
+                            {!! Form::date('release_at', $movie->release_at, ['class'=>'span4']) !!}
                             <span class="help-inline">Date film is released</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="MovieTakingsCloseDate">Takings Close Date</label>
+                        <div class="controls">
+                            {!! Form::date('takings_close_date', $movie->takings_close_date, ['class'=>'span4']) !!}
+                            <span class="help-inline">Date takings stop being compiled</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="MovieTakingsFrequency">Takings Frequency</label>
+                        <div class="controls">
+                            {!! Form::select('takings_frequency', ['W'=>'Weekly', 'D'=>'Daily'], $movie->takings_frequency, ['class'=>'span4']) !!}
+                            <span class="help-inline">How frequent are takings taken?</span>
                         </div>
                     </div>
 

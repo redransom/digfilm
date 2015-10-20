@@ -78,6 +78,8 @@ class MoviesController extends Controller {
 		$input = Input::all();
 		$movie = Movie::create( $input );
 		$movie->slug = str_slug($movie->name, "-");
+		if (!empty($input['release_at']))
+			$movie->takings_close_date = date("Y-m-d", strtotime("+2 months", strtotime($movie->release_at)));
 		$movie->save();
 
 		return Redirect::route('movies.show', [$movie->id]);
@@ -156,6 +158,8 @@ class MoviesController extends Controller {
 		$movie->budget = $input['budget'];
 		$movie->release_at = $input['release_at'];
 		$movie->slug = str_slug($input["name"], "-");
+		$movie->takings_close_date = $input['takings_close_date'];
+		$movie->takings_frequency = $input['takings_frequency'];
 		$movie->save();
 
 		return Redirect::route('movies.index');

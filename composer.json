@@ -10,7 +10,8 @@
 		"davejamesmiller/laravel-breadcrumbs": "^3.0",
 		"laracasts/flash": "~1.3",
 		"kartik-v/bootstrap-star-rating": "@dev",
-		"doctrine/dbal": "2.5.1"
+		"doctrine/dbal": "2.5.1",
+		"guzzlehttp/guzzle": "~5.3|~6.0"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",

@@ -44,13 +44,13 @@
     @endif
 </section>
 
-<?php function auctionTimer ($auctionid, $auctionTime) { ?>
-    <div id="timer<?php echo $auctionid; ?>"></div>
+<?php function auctionTimer ($auctionid, $auctionTime, $name='bid_link') { ?>
+    <div id="{{$name}}<?php echo $auctionid; ?>"></div>
     <script type="text/javascript">
-      $('#timer<?php echo $auctionid; ?>').countdown('<?php echo $auctionTime; ?>', function(event) {
+      $('#{{$name}}<?php echo $auctionid; ?>').countdown('<?php echo $auctionTime; ?>', function(event) {
         $(this).html(event.strftime('%-M:%S'));
         if(event.elapsed) {
-            $('#bid_link_{{$auctionid}}').val = "ENDED";
+            $('#{{$name}}_{{$auctionid}}').val = "ENDED";
         }
       });
     </script>
