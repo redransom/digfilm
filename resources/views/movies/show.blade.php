@@ -52,13 +52,22 @@
                                 @if($movie->Media->count() > 0)
                                 <ul class="inline">
                                 @foreach($movie->Media as $item)
+                                    <?php
+                                    if ($item->type =='T' && str_contains($item->url, "youtu.be")) {
+                                        $url = $item->url;
+
+                                        //only use youtube currently
+                                        $path = parse_url($url, PHP_URL_PATH);
+                                        $base_url = "http://www.youtube.com/embed".$path;
+                                    } else
+                                        $base_url = $item->url; //not known where it comes from
+
+                                    ?>
                                     <li>
                                     @if($item->type == 'I')
                                     <img src="{{$item->file_name}}" alt="{{$item->name}}" width="100px"/>
                                     @else
-                                    <span>EMBEDDED VIDEO:<br/> 
-                                    <iframe width="200" height="150" src="{{$item->url}}" frameborder="0" allowfullscreen></iframe>
-                                    </span>
+                                    <iframe width="200" height="150" src="{{$base_url}}" frameborder="0" allowfullscreen></iframe>
                                     @endif
                                     </li>
                                 @endforeach

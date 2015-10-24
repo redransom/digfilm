@@ -104,6 +104,10 @@ class LeaguesController extends Controller {
             $ruleset = RuleSet::find($input['rule_set']);
         }
 
+        //add rule set for future reference
+        $league->rule_sets_id = $ruleset->id;
+        $league->save();        
+
         //TODO: Move this to the league rule model?
         if (!empty($ruleset) && is_numeric($ruleset->id)) {
             //copy rule details into the rule for the league
@@ -217,7 +221,7 @@ class LeaguesController extends Controller {
 
         $league->name = $input['name'];
         $league->users_id = $input['users_id'];
-        var_dump($input);
+        
         if($input['auction_start_date'] != '')
             $league->auction_start_date = $input['auction_start_date'];
         if($input['auction_close_date'] != '')
@@ -225,6 +229,9 @@ class LeaguesController extends Controller {
         if($input['auction_stage'] != '')
             $league->auction_stage = $input['auction_stage'];
 
+        //add rule set for future reference
+        if ($input['rule_set'] != '')
+            $league->rule_sets_id = $input['rule_set'];
         $league->save();
 
         if (isset($input['rule_set']) && is_null($league->rule)) {
@@ -772,7 +779,7 @@ class LeaguesController extends Controller {
     {
         //only populate auctions when the time has passed
         $leaguesStarted = League::whereNotNull('auction_start_date')->
-            where('auction_start_date', '<', date("Y-m-d H:i:s"))
+            where('auction_start_date', '<=', date("Y-m-d H:i"))
             ->where('auction_stage', 1)->where('enabled', '1')->get();
 
         foreach ($leaguesStarted as $league) {
@@ -787,7 +794,7 @@ class LeaguesController extends Controller {
             //clear out old auctions
             Auction::where('leagues_id', $league->id)->delete();
 
-            echo "Adding Auctions for league ".$league->name."<br/>";
+            Log::info("Adding Auctions for league ".$league->name);
             if (is_null($rule->auction_movie_release) || $rule->auction_movie_release == '') {
                 //TODO: Put this into model / controller of auction
 

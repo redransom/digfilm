@@ -98,6 +98,12 @@ class WelcomeController extends Controller {
 
 		$league = League::find($id);
 
+		if ($league->auction_stage == '3') {
+			//redirect to the roster page
+			return redirect('/roster/'.$league->id);
+		}
+
+
 		$leagueUsers = LeagueUser::where('league_id', $league->id)->get();
 		$currentLeagueUser = LeagueUser::where('user_id', $authUser->id)->where('league_id', $league->id)->first();
 		return view('league-show')

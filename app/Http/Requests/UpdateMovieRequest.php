@@ -26,7 +26,9 @@ class UpdateMovieRequest extends Request {
             'summary' => ['required'],
             'genres_id' =>['required'],
             'rating' =>['required'],
-            'budget' =>['required']
+            'budget' =>['required'],
+            'release_at' =>['required'],
+            'takings_frequency' =>['required']
         ];
 	}
 

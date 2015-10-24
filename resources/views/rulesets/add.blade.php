@@ -85,7 +85,7 @@
                         <label class="control-label" for="LeagueName">Auction Duration</label>
                         <div class="controls">
                             {!! Form::text('auction_duration', null, ['class'=>'span2', 'placeholder'=>'Enter auction duration here...']) !!}
-                            <span class="help-inline">TODO: This needs to be done by 10 movies i.e. 2 hours or 24 hours per 10</span>
+                            <span class="help-inline">Total duration of the auction including any rounds.</span>
                         </div>
                     </div>
 
@@ -143,7 +143,7 @@
                         <label class="control-label" for="LeagueName">Randomizer</label>
                         <div class="controls">
                             {!! Form::select('randomizer', ["Y"=>"Yes", "N" => "No"], null, ['class'=>'span2']) !!}
-                            <span class="help-inline">This is used with the autction movie release - if not All then it will randomly choose films for each group.</span>
+                            <span class="help-inline">This is used with the auction movie release - if not All then it will randomly choose films for each group.</span>
                         </div>
                     </div>
 

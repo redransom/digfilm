@@ -11,13 +11,15 @@
 
     @elseif(strtotime($currentLeague->auction_start_date) > time())
     <p>The auction will start on the <strong>{{date("d F y g:iA", strtotime($currentLeague->auction_start_date))}}</strong>.</p>
-    @else
+    @elseif($currentLeague->auctions()->count() > 0)
     <?php $players = $currentLeague->players->lists('name', 'id'); ?>
 
     @include('partials.user-auctions', ['currentLeague'=>$currentLeague, 'players'=>$players, 'leagueUser'=>$currentLeagueUser])
     
     @include('partials.user-expired-auctions', ['currentLeague'=>$currentLeague, 'players'=>$players, 'leagueUser'=>$currentLeagueUser])
 
+    @else
+    <p>The auction is almost ready!</p>
     @endif
 
     @if(is_null($currentLeague->auction_start_date) || (strtotime($currentLeague->auction_start_date) > time())) 

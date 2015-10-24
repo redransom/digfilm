@@ -46,6 +46,14 @@
                     </div>
 
                     <div class="control-group">
+                        <label class="control-label" for="MovieGenre">Rating</label>
+                        <div class="controls">
+                            {!! Form::select('ratings[]', $ratings, null, ['class'=>'span4', 'multiple'=>'multiple']) !!}
+                            <span class="help-inline"></span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
                         <label class="control-label" for="MovieRating">Rating</label>
                         <div class="controls">
                             {!! Form::text('rating', null, ['class'=>'span8 rating', 'min'=>'1', 'max'=>'5']) !!}

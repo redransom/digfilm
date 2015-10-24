@@ -41,12 +41,20 @@
                         <label class="control-label" for="MovieGenre">Genre</label>
                         <div class="controls">
                             {!! Form::select('genres_id', $genres, $movie->genres_id, ['class'=>'span4']) !!}
-                            <span class="help-inline">Choose from list as you type</span>
+                            <span class="help-inline">Select from drop down</span>
                         </div>
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label" for="MovieRating">Rating</label>
+                        <label class="control-label" for="MovieGenre">Rating</label>
+                        <div class="controls">
+                            {!! Form::select('ratings[]', $ratings, $movie->ratings()->lists('ratings_id'), ['class'=>'span4', 'multiple'=>'multiple']) !!}
+                            <span class="help-inline"></span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="MovieRating">Score (out of 5)</label>
                         <div class="controls">
                             {!! Form::text('rating', $movie->rating, ['class'=>'span4 rating', 'min'=>'1', 'max'=>'5']) !!}
                             <span class="help-inline">From 1 to 5</span>

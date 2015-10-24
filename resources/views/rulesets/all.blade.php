@@ -27,7 +27,9 @@
                                             <td><a href="{{URL('rulesets', array('id'=>$ruleset->id))}}">{{$ruleset->name}}</a></td>
                                             <td>{{$ruleset->description}}</td>
                                             <td><a class="btn btn-mini btn-primary" href="{{URL('rulesets/'.$ruleset->id.'/edit')}}">Edit</a>
-                                            <a class="btn btn-mini btn-danger" href="{{URL('rulesets/'.$ruleset->id)}}">Delete</a>
+                                             {!! Form::open(array('route' => array('rulesets.destroy', $ruleset->id), 'method' => 'delete', 'style'=>'display:inline')) !!}
+                                                <button type="submit" class="btn btn-danger btn-mini">Delete</button>
+                                            {!! Form::close() !!}
                            
                                             </td>
                                         </tr>

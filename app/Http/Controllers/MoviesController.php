@@ -12,6 +12,8 @@ use App\Models\Role;
 use App\Models\MovieTaking;
 use App\Models\MovieMedia;
 use App\Models\Genre;
+use App\Models\Rating;
+use App\Models\MovieRating;
 use Session;
 use Input;
 use Redirect;
@@ -58,11 +60,17 @@ class MoviesController extends Controller {
 		if (!isset($authUser))
 			return redirect('/auth/login');
 		$genres = Genre::orderBy('name', 'asc')->lists('name', 'id');
+		$ratings = Rating::all();
 
+		$ratings_list = array();
+		foreach ($ratings as $rating) {
+			$ratings_list[$rating->id] = $rating->name." (".$rating->country.")";
+		}
 		return View("movies.add")
 			->with('authUser', $authUser)
 			->with('genres', $genres)
 			->with('page_name', 'movie-add')
+			->with('ratings', $ratings_list)
 			->with('instructions', 'Add New Movie to Database')
 			->with('title', 'Add Movie');
 	}
@@ -81,6 +89,11 @@ class MoviesController extends Controller {
 		if (!empty($input['release_at']))
 			$movie->takings_close_date = date("Y-m-d", strtotime("+2 months", strtotime($movie->release_at)));
 		$movie->save();
+
+		foreach($input['ratings'] as $rating_id) {
+			$rating = new MovieRating(['movies_id'=>$movie->id, 'ratings_id'=>$rating_id]);
+			$rating->save();
+		}
 
 		return Redirect::route('movies.show', [$movie->id]);
 	}
@@ -127,6 +140,13 @@ class MoviesController extends Controller {
 			return redirect('/auth/login');
 
 		$movie = Movie::find($id);
+		$ratings = Rating::all();
+
+		$ratings_list = array();
+		foreach ($ratings as $rating) {
+			$ratings_list[$rating->id] = $rating->name." (".$rating->country.")";
+		}
+
 		$genres = Genre::orderBy('name', 'asc')->lists('name', 'id');
 		$title = "Edit Movie";
 
@@ -134,6 +154,7 @@ class MoviesController extends Controller {
 			->with('authUser', $authUser)
 			->with('movie', $movie)
 			->with('object', $movie)
+			->with('ratings', $ratings_list)
 			->with('genres', $genres)
 			->with('page_name', 'movie-edit')
 			->with('title', $title);
@@ -158,10 +179,24 @@ class MoviesController extends Controller {
 		$movie->budget = $input['budget'];
 		$movie->release_at = $input['release_at'];
 		$movie->slug = str_slug($input["name"], "-");
-		$movie->takings_close_date = $input['takings_close_date'];
+
+		if ($input['takings_close_date'] == '' && $input['release_at'] != '')
+			$movie->takings_close_date = date("Y-m-d", strtotime("+2 months", strtotime($input['release_at'])));
+		else
+			$movie->takings_close_date = $input['takings_close_date'];
+
 		$movie->takings_frequency = $input['takings_frequency'];
 		$movie->save();
 
+		//clear out old ratings movie
+		MovieRating::where('movies_id', $id)->delete();
+
+		foreach($input['ratings'] as $rating_id) {
+			$rating = new MovieRating(['movies_id'=>$id, 'ratings_id'=>$rating_id]);
+			$rating->save();
+		}
+
+		Flash::message('Movie '.$movie->name. ' has been updated!');
 		return Redirect::route('movies.index');
 
 	}
