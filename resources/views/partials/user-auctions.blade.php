@@ -17,10 +17,10 @@
 
         <td>{{date("j-M-y", strtotime($auction->release_at))}}</td>
 
-        @if(is_null($auction->pivot->opening_bid))
+        @if(is_null($auction->pivot->initial_bid))
         <td></td>
         @else
-        <td>{{$auction->pivot->opening_bid}}</td>
+        <td>{{$auction->pivot->initial_bid}}</td>
         @endif
 
         <td>{{$auction->pivot->bid_amount}}</td>

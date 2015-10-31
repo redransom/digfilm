@@ -18,9 +18,9 @@
                                     <thead>
                                         <tr>
                                             <th width="25%">Name</th>
-                                            <th width="10%">Genre</th>
-                                            <th width="12%">Release Dt</th>
-                                            <th width="12%">Close Dt</th>
+                                            <th width="10%">Opening<br/>Bid</th>
+                                            <th width="13%">Release Dt</th>
+                                            <th width="13%">Close Dt</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -29,7 +29,11 @@
                                         @foreach($movies as $movie)
                                         <tr class="<?php echo (($movieCnt++ % 2) == 0) ? "odd" : "even"; ?> rating{{$movie->rating}}">
                                             <td><a href="{{URL('movies', array('id'=>$movie->id))}}">{{$movie->name}}</a></td>
-                                            <td>{{$movie->genre->name}}</td>
+                                            @if(!is_null($movie->opening_bid))
+                                            <td>{{$movie->opening_bid}}</td>
+                                            @else
+                                            <td>0.00</td>
+                                            @endif
                                             @if(is_null($movie->release_at))
                                             <td></td><td></td>
                                             @else

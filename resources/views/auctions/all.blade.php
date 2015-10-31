@@ -39,7 +39,7 @@
                                             @else
                                             <td></td>
                                             @endif
-                                            <td>{{$auction->pivot->opening_bid}}</td>
+                                            <td>{{$auction->pivot->initial_bid}}</td>
                                             <td>{{$auction->pivot->bid_amount}}</td>
                                             <td>{{date("j M Y H:i", strtotime($auction->pivot->auction_start_time))}}</td>
                                             <td>{{date("j M Y H:i", strtotime($auction->pivot->auction_end_time))}}</td>

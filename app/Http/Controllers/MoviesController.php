@@ -178,6 +178,9 @@ class MoviesController extends Controller {
 		$movie->rating = $input['rating'];
 		$movie->budget = $input['budget'];
 		$movie->release_at = $input['release_at'];
+		if(!is_null($input['opening_bid']))
+			$movie->opening_bid = $input['opening_bid'];
+		
 		$movie->slug = str_slug($input["name"], "-");
 
 		if ($input['takings_close_date'] == '' && $input['release_at'] != '')

@@ -38,6 +38,14 @@
                     </div>
 
                     <div class="control-group">
+                        <label class="control-label" for="MovieOpeningBid">Opening Bid</label>
+                        <div class="controls">
+                            {!! Form::text('opening_bid', $movie->opening_bid, ['class'=>'span4', 'placeholder'=>'0.00']) !!}
+                            <span class="help-inline">Default is 0.00 - only change if you need a minimum to be shown when purchasing the movie.</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
                         <label class="control-label" for="MovieGenre">Genre</label>
                         <div class="controls">
                             {!! Form::select('genres_id', $genres, $movie->genres_id, ['class'=>'span4']) !!}

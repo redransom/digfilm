@@ -6,11 +6,14 @@
     <h3>Place Bid</h3>
     <?php
         $min_bid = $rule->min_bid;
+        $opening_bid = $auction->movie->opening_bid;
+
         $bid_amount = $auction->bid_amount;
 
         if ($bid_amount != 0 && $bid_amount > $rule->min_bid) {
             $min_bid = $bid_amount;
-        }
+        } elseif($bid_amount == 0 && $opening_bid != 0)
+            $min_bid = $opening_bid;
 
         $max_bid = $rule->max_bid;
         //make sure user cant overspend on this league

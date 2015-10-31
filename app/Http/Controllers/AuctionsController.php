@@ -163,7 +163,7 @@ class AuctionsController extends Controller {
             $prev_bid_user = $auction->users_id;
         } else {
             //record opening bid for analysis purposes
-            $auction->opening_bid = $input['bid_amount'];
+            $auction->initial_bid = $input['bid_amount'];
         }
 
         //add the new bid to the auction
