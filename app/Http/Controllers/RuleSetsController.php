@@ -10,6 +10,7 @@ use App\Models\ContributorType;
 use App\Models\Role;
 use App\Models\RuleSet;
 use App\Models\LeagueRule;
+use App\Models\League;
 use Session;
 use Input;
 use Redirect;
