@@ -677,8 +677,22 @@ class LeaguesController extends Controller {
                     $league->auction_stage = 0;
                     $league->save();
                 } else {
-                    //TODO: Send out reminder to league players to find more players to get involved
+                    //send email to league owner to find more players
                     Log::info('League '.$league->id.' - '.$league->name.' needs more players.');
+
+                    $data = ['ownerName' => (!is_null($league->owner->forenames) ? $league->owner->forenames : $league->owner->name),
+                            'leagueName' => $league->name];
+
+                    $ownerEmail = $league->owner->email;
+                    Mail::send('emails.players_needed', $data, function($message) use ($ownerEmail)
+                    {
+                        $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
+                        $message->to($ownerEmail);
+                    });
+
+                    //TODO: Find more players to see if there are any that can be invited
+                    
+
                 }
             }
         }
@@ -754,9 +768,18 @@ class LeaguesController extends Controller {
                 $league->save();
                 
             } elseif ($rules->auto_select != 'Y') {
-                //TODO: this needs an email to be sent to the league owner if the movies are empty
                 if ($league->movies->count() == 0) {
-                    //SEND EMAIL 
+
+                    //need to pass in the league details for the owner
+                    $data = ['ownerName' => (!is_null($league->owner->forenames) ? $league->owner->forenames : $league->owner->name),
+                            'leagueName' => $league->name];
+
+                    $ownerEmail = $league->owner->email;
+                    Mail::send('emails.movies_needed', $data, function($message) use ($ownerEmail)
+                    {
+                        $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
+                        $message->to($ownerEmail);
+                    });
                 }
 
             }
