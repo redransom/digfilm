@@ -120,12 +120,10 @@ class WelcomeController extends Controller {
 	 */
 	public function create() {
 		$authUser = Auth::user();
-
-		$rulesets = RuleSet::lists('name', 'id');
-
+		$rules = RuleSet::all();
 
 		return view('create-league')
-			->with('sets', $rulesets)
+			->with('rules', $rules)
 			->with('authUser', $authUser);	
 	}
 

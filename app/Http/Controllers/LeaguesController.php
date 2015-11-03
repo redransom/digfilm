@@ -148,6 +148,11 @@ class LeaguesController extends Controller {
             //user comes from admin - get league owner and add as a league player
             $leagueuser = LeagueUser::create( ['user_id'=>$authUser->id, 'league_id'=>$league->id] );
 
+            if (isset($leaguerule)) {
+                //check if the auto complete is chosen go to the choose participants
+                if ($leaguerule->auto_select == 'Y')
+                    return Redirect::route('select-participants', [$league->id]);
+            }
             return Redirect::route('choose-movies', [$league->id]);
         }
         

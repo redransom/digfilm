@@ -7,10 +7,10 @@
     </div>
 
     @if(isset($authUser))
+    {!! Form::open(array('route' => 'leagues.store', 'class'=>'form-horizontal row-fluid', 'id'=>'contactform')) !!}
     <p>Use the below form to enter the name of the league you wish to create and select the movies to be auctioned for.</p>
     <div id="contact">
         <div id="message"></div>
-        {!! Form::open(array('route' => 'leagues.store', 'class'=>'form-horizontal row-fluid', 'id'=>'contactform')) !!}
             <fieldset>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="source" value="P">
@@ -21,17 +21,35 @@
                         {!! Form::text('name', null, ['class'=>'span8', 'placeholder'=>'Enter league name here...']) !!}
                     </div><!--/ row-->
                     
-                    <div class="row">
-                        <label for="name"><span class="required">*</span>Rule Set:</label>
-                        {!! Form::select('rule_set', $sets, ['class'=>'span8']) !!}
-                    </div><!--/ row-->
-                    
-                    <input type="submit" class="button green small" id="submit" value="Submit" />
                 </div><!--/ textfield-->
             </fieldset>
-        </form>
     </div><!--/ contact-->
+    <div class="clear"></div>
+
+    @foreach($rules as $rule)
+    <!-- ************ - Small Package - ************** -->  
+        <div class="small-package">
+            <div class="head-title"><h3><span>{{$rule->name}}</span> Rules</h3></div>
+            <div class="price">
+                {{$rule->min_players}} to {{$rule->max_players}} players<br/>
+                {{$rule->min_movies}} to {{$rule->max_movies}} movies
+            </div><!--/ price-->
+            <div class="content-price">
+                <p>
+                    {{$rule->description}}
+                </p>
+            </div><!--/ content-price-->
+            <div class="foot-price">
+                <input type="radio" name="rule_set" value="{{$rule->id}}"/>
+                <a href="#" class="button medium yellow">Choose</a>  
+            </div><!--/ foot-price-->
+        </div><!--/ small-package-->
+
+    @endforeach
+    <div class="clear"></div>
+        <input type="submit" class="button green small" id="submit" value="Next Step" />
     
+    </form>
     @else
     <p>You need to be logged in if you want create a league here for your friends to play in.</p>
     @endif

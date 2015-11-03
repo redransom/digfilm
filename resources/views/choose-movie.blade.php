@@ -6,7 +6,7 @@
         <h3>Choose the movies for your league</h3>
     </div>
 
-    <p>Select 10 movies from the movie selection below.</p>
+    <p>Select {{$league->rule->min_movies}} movies from the movie selection below.</p>
     <p>We only provide movies that are yet to be released.</p>
     <div id="contact">
         <div id="message"></div>
