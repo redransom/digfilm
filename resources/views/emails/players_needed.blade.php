@@ -24,7 +24,7 @@
                                           <!-- Title -->
                                           <tr>
                                              <td style="font-family: Helvetica, arial, sans-serif; font-size: 14px; font-weight:bold; color: #333333; text-align:left;line-height: 24px;">
-                                                Movies required for league!
+                                                More players required for league!
                                              </td>
                                           </tr>
                                           <!-- End of Title -->
@@ -37,7 +37,7 @@
                                           <tr>
                                              <td style="font-family: Helvetica, arial, sans-serif; font-size: 13px; color: #333333; text-align:left;line-height: 24px;">
                                                 Hi <strong>{{$ownerName}}</strong>!<br/>
-                                                You currently have movies missing in your <strong>{{$leagueName}}</strong> league which need adding to make sure it can go live.
+                                                You need to find more players for your <strong>{{$leagueName}}</strong> league!
                                              </td>
                                           </tr>
                                           <!-- End of content -->

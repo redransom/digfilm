@@ -686,13 +686,15 @@ class LeaguesController extends Controller {
                     Log::info('League '.$league->id.' - '.$league->name.' needs more players.');
 
                     $data = ['ownerName' => (!is_null($league->owner->forenames) ? $league->owner->forenames : $league->owner->name),
-                            'leagueName' => $league->name];
+                            'leagueName' => $league->name,
+                            'subject' => 'More Players Needed!'];
 
-                    $ownerEmail = $league->owner->email;
+                    $ownerEmail = 'kinsley@redransom.co.uk'; //$league->owner->email;
                     Mail::send('emails.players_needed', $data, function($message) use ($ownerEmail)
                     {
                         $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
                         $message->to($ownerEmail);
+                        $message->subject('More Players Needed!');
                     });
 
                     //TODO: Find more players to see if there are any that can be invited

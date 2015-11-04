@@ -161,7 +161,7 @@
 </tbody>
 </table-->
 <!-- End of LOGO -->    
-
+@yield('content')
 <!-- Start of postfooter -->
 <table width="100%" bgcolor="#202020" cellpadding="0" cellspacing="0" border="0" id="backgroundTable">
    <tbody>
