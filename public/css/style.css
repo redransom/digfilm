@@ -4921,3 +4921,35 @@ footer .copyright {
     }
     
     
+
+    /*--------------------------------*/
+    /*  MOVIES                 */
+    /*--------------------------------*/
+    
+    #movie-badge {margin-bottom: 10px;}
+    #movie-badge li {float: left; margin: 0 10px 7px 0; width: 120px; /* height: 120px; */}
+
+    #movie-badge li img {
+        display: block;
+        width: 108px;
+        height: 108px;
+        padding: 4px;
+        background-color: #303030;
+        -webkit-box-shadow: 0 2px 1px rgba(0,0,0,.6);
+        -moz-box-shadow: 0 2px 1px rgba(0,0,0,.6);
+        box-shadow: 0 2px 1px rgba(0,0,0,.6);
+    }
+    
+    .ie7 #movie-badge li img,
+    .ie8 #movie-badge li img {
+        border-left: 1px solid #242424;
+        border-right: 1px solid #242424;
+        border-bottom: 4px solid #242424;
+    }
+    
+    #movie-badge li:hover img {background-color: #b8b9ba;}
+    
+    #movie-badge li:nth-child(3n) {margin-right: 0;}
+    
+    .ie7 #movie-badge li.last,
+    .ie8 #movie-badge li.last {margin-right: 0;}

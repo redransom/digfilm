@@ -38,12 +38,19 @@ class MoviesController extends Controller {
 		if (!isset($authUser))
 			return redirect('/auth/login');
 
-		$movies = Movie::paginate(10);
+		$input = Input::all();
+		$search = "";
+		if (isset($input['movies-search-text'])) {
+			$movies = Movie::where('name', 'LIKE', '%'.$input['movies-search-text'].'%')->paginate(10);
+			$search = $input['movies-search-text'];
+		} else
+			$movies = Movie::paginate(10);
 
 		return View("movies.all")
 			->with('movies', $movies)
 			->with('authUser', $authUser)
 			->with('page_name', 'movies')
+			->with('search', $search)
 			->with('instructions', 'All Movies registered in the site.')
 			->with('title', 'Movies');
 	}

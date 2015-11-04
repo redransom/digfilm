@@ -171,6 +171,13 @@ class AuctionsController extends Controller {
         $auction->users_id = $authUser->id;
         $auction->bid_amount = $input['bid_amount'];
 
+        //check that the bid isnt the max allowed
+        if($auction->bid_amount == $rule->max_bid) {
+            //need to clear auction
+            $auction->ready_for_auction = 2;
+            Log::info('Closed auction off:'.$auction->id.' by user:'.$authUser->id.' amount:'.$input['bid_amount']);
+        }
+
         //add minutes to bid
         if ($rule->ind_film_countdown != 0) {
             //$auction->auction_end_time = date("Y-m-d H:i:s", strtotime('+1 hour', strtotime('+'.intval($rule->ind_film_countdown).' minutes', time())));

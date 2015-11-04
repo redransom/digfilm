@@ -10,7 +10,7 @@
     <p>The auction will start soon!</p>
 
     @elseif(strtotime($currentLeague->auction_start_date) > time())
-    <p>The auction will start on the <strong>{{date("d F y g:iA", strtotime($currentLeague->auction_start_date))}}</strong>.</p>
+    <p>The auction will start on the <strong>{{date("jS F Y g:iA", strtotime($currentLeague->auction_start_date))}}</strong>.</p>
     @elseif($currentLeague->auctions()->count() > 0)
     <?php $players = $currentLeague->players->lists('name', 'id'); ?>
 
@@ -37,11 +37,32 @@
     <h2>Movies</h2>
     <p>This is a list of all movies that are to be played for in this league.</p>
     @if($currentLeague->movies->count() > 0)
-    <ul>
-    @foreach($currentLeague->movies()->orderBy('name', 'asc')->get() as $movie)
-        <li><a href="{{URL('movie-knowledge', [$movie->id])}}">{{$movie->name}}</a></li>
+
+    <?php $movieCnt = 0; ?>
+    <ul id="movie-badge" class="clearfix">
+    @foreach($movies as $movie)
+        @if(($movieCnt % 4) == 0 && $movieCnt != 0)
+        <li class="last">
+        @else
+        <li>
+        @endif
+        
+        @if($movie->Media->count() > 0)
+            @foreach($movie->Media as $media)
+                @if($media->type == 'I')
+                <img src="{{$media->file_name}}" alt="{{$media->description}}" width="100px"/>
+                <br/>
+                @endif
+            @endforeach
+        @endif
+        <a href="{{URL('movie-knowledge', [$movie->id])}}">{{$movie->name}}</a>
+        @if($movie->opening_bid != 0)
+        <br/>Opening Bid: <strong>${{$movie->opening_bid}}</strong>
+        @endif
+        </li>
+        <?php $movieCnt++;?>
     @endforeach
-    </ul>
+        </ul>
     @endif
     @endif
 </section>

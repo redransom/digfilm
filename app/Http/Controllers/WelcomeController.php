@@ -103,12 +103,24 @@ class WelcomeController extends Controller {
 			return redirect('/roster/'.$league->id);
 		}
 
+		$movies = array();
+		if ($league->movies()->count() > 0) {
+			$movies_attached = $league->movies()->get();
+
+			$movie_ids = array();
+			foreach($movies_attached as $attach) {
+				$movie_ids[] = $attach->id;
+			}
+
+			$movies = Movie::whereIn('id', $movie_ids)->orderBy('name', 'asc')->get();
+		}
 
 		$leagueUsers = LeagueUser::where('league_id', $league->id)->get();
 		$currentLeagueUser = LeagueUser::where('user_id', $authUser->id)->where('league_id', $league->id)->first();
 		return view('league-show')
 			->with('currentLeague', $league)
 			->with('leagueUsers', $leagueUsers)
+			->with('movies', $movies)
 			->with('currentLeagueUser', $currentLeagueUser)
 			->with('authUser', $authUser);	
 	}

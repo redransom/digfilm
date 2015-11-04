@@ -38,6 +38,7 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('profile', ['as'=>'profile', 'uses'=>'WelcomeController@getProfile']);
 
         Route::get('league/{id}', ['as'=>'league-show', 'uses'=>'WelcomeController@getLeague']);
+        Route::put('movies-admin-search', ['as'=>'movies-admin-search', 'uses'=>'MoviesController@index']);
         Route::get('league/{id}/manage', ['as'=>'league-manage', 'uses'=>'LeaguesController@getLeague']);
         Route::post('league', ['as'=>'league', 'uses'=>'WelcomeController@getLeague']);
         Route::get('roster/{id}', ['as'=>'roster', 'uses'=>'WelcomeController@getRoster']);

@@ -7,6 +7,8 @@
                     </div><!--/ .title-caption-->
                     
                     <div class="entry-holder">
+                        @if($league->auction_stage == 2)
+
                         @if((is_null($league->rule->auction_movie_release) || $league->auction_movie_release == 0) && ($league->auction_stage == 2))
                         <h3>Remaining Auction Time: </h3>
                         <ul class="dropspot-list"><li><span class="dropspot" style="width: 170px !important"><?php auctionTimer($league->id, $league->auction_close_date, 'league'); ?></span></li></ul>
@@ -22,9 +24,16 @@
                             @endif
                         </ul>
                         @else
-                        <?php $closeDate = date("j M Y h:iA", strtotime("+2 months", strtotime($league->auction_close_date)));  ?>
+                        <?php $closeDate = date("j M Y h:iA", strtotime($league->auction_close_date));  ?>
                         <h3>Time Left</h3>
                         <p>League Closes: <span>{{$closeDate}}</span></p>
+                        @endif
+
+                        @elseif($league->auction_stage == 1)
+                        <h3>Auction is due to start</h3>
+                        <p>At: <strong>{{date("j M Y h:iA", strtotime($league->auction_start_date))}}</strong></p>
+                        @else
+
                         @endif
                     </div>
                 </div>
