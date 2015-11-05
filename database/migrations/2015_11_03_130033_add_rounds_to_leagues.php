@@ -27,9 +27,12 @@ class AddRoundsToLeagues extends Migration {
 	 */
 	public function down()
 	{
-		$table->dropColumn('round_amount');
-		$table->dropColumn('current_round');
-		$table->dropColumn('round_start_date');
+		Schema::table('movies', function(Blueprint $table)
+		{
+			$table->dropColumn('round_amount');
+			$table->dropColumn('current_round');
+			$table->dropColumn('round_start_date');
+		});
 	}
 
 }

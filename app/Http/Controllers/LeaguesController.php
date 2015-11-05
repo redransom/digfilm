@@ -112,7 +112,6 @@ class LeaguesController extends Controller {
         if (!empty($ruleset) && is_numeric($ruleset->id)) {
             //copy rule details into the rule for the league
             $leaguerule = new LeagueRule();
-            $leaguerule->blind_bid = $ruleset->blind_bid;
             $leaguerule->min_players = $ruleset->min_players;
             $leaguerule->max_players = $ruleset->max_players;
             $leaguerule->min_movies = $ruleset->min_movies;
@@ -129,6 +128,11 @@ class LeaguesController extends Controller {
             $leaguerule->close_time = $ruleset->close_time;
             $leaguerule->league_type = $ruleset->league_type;
             $leaguerule->auto_select = $ruleset->auto_select;
+            $leaguerule->blind_bid = $ruleset->blind_bid;
+            $leaguerule->auction_timeout = $ruleset->auction_timeout;
+            $leaguerule->round_duration = $ruleset->round_duration;
+            $leaguerule->denomination = $ruleset->denomination;
+            $leaguerule->movie_takings_duration = $ruleset->movie_takings_duration;
 
             //add league id
             $leaguerule->leagues_id = $league->id;
@@ -251,7 +255,6 @@ class LeaguesController extends Controller {
         if (isset($ruleset) && is_numeric($ruleset->id)) {
             //copy rule details into the rule for the league
             $leaguerule = new LeagueRule();
-            $leaguerule->blind_bid = $ruleset->blind_bid;
             $leaguerule->min_players = $ruleset->min_players;
             $leaguerule->max_players = $ruleset->max_players;
             $leaguerule->min_movies = $ruleset->min_movies;
@@ -268,6 +271,11 @@ class LeaguesController extends Controller {
             $leaguerule->close_time = $ruleset->close_time;
             $leaguerule->league_type = $ruleset->league_type;
             $leaguerule->auto_select = $ruleset->auto_select;
+            $leaguerule->blind_bid = $ruleset->blind_bid;
+            $leaguerule->auction_timeout = $ruleset->auction_timeout;
+            $leaguerule->round_duration = $ruleset->round_duration;
+            $leaguerule->denomination = $ruleset->denomination;
+            $leaguerule->movie_takings_duration = $ruleset->movie_takings_duration;
 
             //add league id
             $leaguerule->leagues_id = $league->id;

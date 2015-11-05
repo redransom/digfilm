@@ -41,7 +41,7 @@ class MoviesController extends Controller {
 		$input = Input::all();
 		$search = "";
 		if (isset($input['movies-search-text'])) {
-			$movies = Movie::where('name', 'LIKE', '%'.$input['movies-search-text'].'%')->paginate(10);
+			$movies = Movie::where('name', 'LIKE', '%'.$input['movies-search-text'].'%')->paginate();
 			$search = $input['movies-search-text'];
 		} else
 			$movies = Movie::paginate(10);

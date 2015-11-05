@@ -11,7 +11,8 @@
         $bid_amount = $auction->bid_amount;
 
         if ($bid_amount != 0 && $bid_amount > $rule->min_bid) {
-            $min_bid = $bid_amount;
+            //need to include the denomination so that we aren't lower or the same as the previous bid
+            $min_bid = $bid_amount + $rule->denomination;
         } elseif($bid_amount == 0 && $opening_bid != 0)
             $min_bid = $opening_bid;
 

@@ -390,4 +390,34 @@ class UsersController extends Controller {
         return Redirect::route('users.index');
 	}
 
+	/**
+	 * Confirm User Registration
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function confirmRegister($confirmation_code)
+	{
+		 if( ! $confirmation_code)
+        {
+            throw new InvalidConfirmationCodeException;
+        }
+
+        $user = User::whereConfirmationCode($confirmation_code)->first();
+
+        if ( ! $user)
+        {
+            throw new InvalidConfirmationCodeException;
+        }
+
+        $user->enabled = 1;
+        $user->confirmation_code = null;
+        $user->save();
+
+        Flash::message('You have successfully verified your account.');
+
+        return Redirect::route('login_path');
+	}
+
+
 }

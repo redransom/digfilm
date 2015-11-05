@@ -46,6 +46,7 @@ class AuthController extends Controller {
 		]);
 
 		$credentials = $request->only('email', 'password');
+		$credentials['enabled'] = '1';
 
 		if ($this->auth->attempt($credentials, $request->has('remember')))
 		{
@@ -91,11 +92,24 @@ class AuthController extends Controller {
 		$this->auth->login($this->registrar->create($request->all()));
 
 		$user = $this->auth->user();
+
+		/* add confirmation code for the email */
+		$confirmation_code = str_random(30);
+		$user->confirmation_code = $confirmation_code;
+		$user->save();
+
 		$role = \App\Models\Role::where('name', 'Player')->first();
 		$roleUser = new \App\Models\RoleUser();
 		$roleUser->user_id = $user->id;
 		$roleUser->role_id = $role->id;
 		$roleUser->save(['timestamps' => false]);		
+
+		Mail::send('emails.verify', $confirmation_code, function($message) {
+            $message->to(Input::get('email'), Input::get('username'))
+                ->subject('Verify your email address');
+        });
+
+		Flash::message('Thanks for signing up! Please check your email.');
 
 		return redirect($this->redirectPath());
 	}
