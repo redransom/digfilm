@@ -16,7 +16,7 @@ class AddRoundsToLeagues extends Migration {
 		{
 			$table->smallInteger('round_amount')->nullable();
 			$table->smallInteger('current_round')->nullable();
-			$table->date('round_start_date')->nullable();
+			$table->dateTime('round_start_date')->nullable();
 		});
 	}
 
