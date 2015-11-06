@@ -143,7 +143,7 @@ class LeaguesController extends Controller {
 
         if ($direction == "A") {
             //user comes from admin - get league owner and add as a league player
-            $leagueuser = LeagueUser::create( ['user_id'=>$league->users_id, 'league_id'=>$league->id] );
+            $leagueuser = LeagueUser::create( ['user_id'=>$league->users_id, 'league_id'=>$league->id, 'balance'=>100] );
 
             Flash::message('League created.');
             return Redirect::route('leagues.index');
@@ -535,6 +535,7 @@ class LeaguesController extends Controller {
                 $lu = new LeagueUser();
                 $lu->league_id = $league_id;
                 $lu->user_id = $user_id;
+                $lu->balance = 100; //TODO: Put this in the league rules
                 $lu->save();
                 unset($lu);//clear out to start afresh
             }
@@ -643,6 +644,11 @@ class LeaguesController extends Controller {
         $leaguerule->close_time = $input['close_time'];
         $leaguerule->league_type = $input['league_type'];
         $leaguerule->auto_select = $input['auto_select'];
+        $leaguerule->blind_bid = $input['blind_bid'];
+        $leaguerule->auction_timeout = $input['auction_timeout'];
+        $leaguerule->round_duration = $input['round_duration'];
+        $leaguerule->denomination = $input['denomination'];
+        $leaguerule->movie_takings_duration = $input['movie_takings_duration'];
         $leaguerule->save();
         
         Flash::message('League rules have been updated.');
