@@ -41,8 +41,13 @@
                                 <li><a class="collapsed" data-toggle="collapse" href="#toggleLeagues"><i class="menu-icon icon-th">
                                 </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right"></i>Leagues </a>
                                     <ul id="toggleLeagues" class="collapse unstyled">
-                                        <li><a href="{{URL('leagues')}}"><i class="icon-th"></i>List</a></li>
-                                        <li><a href="{{URL('leagues/create')}}"><i class="icon-th"></i>Add New</a></li>
+                                        <li><a href="{{URL('leagues')}}"><i class="icon-th"></i> All List</a></li>
+                                        <li><a href="{{URL('leagues/0')}}"><i class="icon-th"></i> Not Ready</a></li>
+                                        <li><a href="{{URL('leagues/1')}}"><i class="icon-th"></i> Start Set</a></li>
+                                        <li><a href="{{URL('leagues/2')}}"><i class="icon-th"></i> Movies Chosen</a></li>
+                                        <li><a href="{{URL('leagues/3')}}"><i class="icon-th"></i> Auctions Live</a></li>
+                                        <li><a href="{{URL('leagues/4')}}"><i class="icon-th"></i> Roster</a></li>
+                                        <li><a href="{{URL('leagues/create')}}"><i class="icon-th"></i> Add New</a></li>
                                     </ul>
                                 </li>
 
@@ -57,23 +62,23 @@
                                 <li><a class="collapsed" data-toggle="collapse" href="#toggleAuctions"><i class="menu-icon icon-exchange">
                                 </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right"></i>Auctions</a>
                                     <ul id="toggleAuctions" class="collapse unstyled">
-                                        <li><a href="{{URL('auctions')}}"><i class="icon-exchange"></i>All</a></li>
-                                        <li><a href="{{URL('auctions/1')}}"><i class="icon-exchange"></i>About to Start</a></li>
-                                        <li><a href="{{URL('auctions/2')}}"><i class="icon-exchange"></i>Live</a></li>
-                                        <li><a href="{{URL('auctions/3')}}"><i class="icon-exchange"></i>Closed</a></li>
+                                        <li><a href="{{URL('auctions')}}"><i class="icon-exchange"></i> All</a></li>
+                                        <li><a href="{{URL('auctions/1')}}"><i class="icon-exchange"></i> About to Start</a></li>
+                                        <li><a href="{{URL('auctions/2')}}"><i class="icon-exchange"></i> Live</a></li>
+                                        <li><a href="{{URL('auctions/3')}}"><i class="icon-exchange"></i> Closed</a></li>
                                     </ul>
                                 </li>                                
                                 <li><a class="collapsed" data-toggle="collapse" href="#toggleTasks"><i class="menu-icon icon-group">
                                 </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right"></i>Automated Tasks</a>
                                     <ul id="toggleTasks" class="collapse unstyled">
-                                        <li><a href="{{route('league-auctions')}}" target="_blank"><i class="icon-group"></i>1) Set Auction Start Dates</a></li>
-                                        <li><a href="{{route('notify-auctions')}}" target="_blank"><i class="icon-group"></i>2) Auction Updates</a></li>
-                                        <li><a href="{{route('phase1-auctions')}}" target="_blank"><i class="icon-group"></i>3) Run Auctions</a></li>
-                                        <li><a href="{{route('load-movies')}}" target="_blank"><i class="icon-group"></i>4) Load Next Movies</a></li>
-                                        <li><a href="{{route('clear-endtime-auctions')}}" target="_blank"><i class="icon-group"></i>5a) Clear End Time Auctions</a></li>
-                                        <li><a href="{{route('clear-timeout-auctions')}}" target="_blank"><i class="icon-group"></i>5b) Clear Time out Auctions</a></li>
-                                        <li><a href="{{route('prepare-clear-auctions')}}" target="_blank"><i class="icon-group"></i>5c) End Auctions</a></li>
-                                        <li><a href="{{route('close-league-auctions')}}" target="_blank"><i class="icon-group"></i>6) Close League Auctions</a></li>
+                                        <li><a href="{{route('league-auctions')}}" target="_blank"><i class="icon-group"></i> 1) Set Auction Start Dates</a></li>
+                                        <li><a href="{{route('notify-auctions')}}" target="_blank"><i class="icon-group"></i> 2) Auction Updates</a></li>
+                                        <li><a href="{{route('phase1-auctions')}}" target="_blank"><i class="icon-group"></i> 3) Run Auctions</a></li>
+                                        <li><a href="{{route('load-movies')}}" target="_blank"><i class="icon-group"></i> 4) Load Next Movies</a></li>
+                                        <li><a href="{{route('clear-endtime-auctions')}}" target="_blank"><i class="icon-group"></i> 5a) Clear End Time Auctions</a></li>
+                                        <li><a href="{{route('clear-timeout-auctions')}}" target="_blank"><i class="icon-group"></i> 5b) Clear Time out Auctions</a></li>
+                                        <li><a href="{{route('prepare-clear-auctions')}}" target="_blank"><i class="icon-group"></i> 5c) End Auctions</a></li>
+                                        <li><a href="{{route('close-league-auctions')}}" target="_blank"><i class="icon-group"></i> 6) Close League Auctions</a></li>
                                     </ul>
                                 </li>                                
                             </ul>

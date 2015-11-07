@@ -7,12 +7,12 @@
     <?php
         $min_bid = $rule->min_bid;
         $opening_bid = $auction->movie->opening_bid;
-
+        $denomination = (!is_null($rule->denomination) && $denomination != 0) ? $denomination : 0.5;
         $bid_amount = $auction->bid_amount;
 
         if ($bid_amount != 0 && $bid_amount > $rule->min_bid) {
             //need to include the denomination so that we aren't lower or the same as the previous bid
-            $min_bid = $bid_amount + $rule->denomination;
+            $min_bid = $bid_amount + $denomination;
         } elseif($bid_amount == 0 && $opening_bid != 0)
             $min_bid = $opening_bid;
 
@@ -28,7 +28,7 @@
         <div class="control-group">
             <label class="control-label" for="AuctionAmount">Amount</label>
             <div class="controls">
-                {!! Form::number('bid_amount', $min_bid, ['class'=>'span8', 'min'=>$min_bid, 'max'=>$max_bid, 'type'=>'number', 'step'=>'0.5', 'required']) !!}
+                {!! Form::number('bid_amount', $min_bid, ['class'=>'span8', 'min'=>$min_bid, 'max'=>$max_bid, 'type'=>'number', 'step'=>$denomination, 'required']) !!}
             </div>
         </div>
 

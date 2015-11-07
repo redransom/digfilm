@@ -19,6 +19,8 @@
                                 <dt>Started</dt>
                                 <dd>{{date("j M y h:iA", strtotime($league->auction_start_date))}}</dd>
                                 @endif
+                                <dt>Public/Private: </dt>
+                                <dd>{{(($league->type == 'U') ? 'Public' : 'Private')}}</dd>   
                             </dl>
                             <a class="btn" href="{{route('leagues.edit', [$league->id])}}">Edit League</a>
                             &nbsp;
@@ -60,8 +62,6 @@
                         <div class="module-body">
                         @if(!is_null($league->rule))
                             <dl>
-                                <dt>Public/Private: </dt>
-                                <dd>{{$league->rule->league_type}}</dd>   
                             </dl>
                         @else
                         <p>No rules have been selected so far - go to the <a href="{{URL('leagues/'.$league->id.'/edit')}}">Edit League</a> page</p>

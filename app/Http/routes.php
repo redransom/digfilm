@@ -83,6 +83,9 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('admin-dashboard', ['as' => 'admin-dashboard', 'uses'=>'UsersController@adminDashboard']);
 
         Route::get('auctions/{status?}', ['as'=>'auctions', 'uses'=>'AuctionsController@index']);
+        Route::get('leagues/{status?}', ['as'=>'leagues', 'uses'=>'LeaguesController@index']);
+        Route::get('league/{id}', ['as'=>'leagues', 'uses'=>'LeaguesController@show']);
+
         Route::resource('users', 'UsersController');
         Route::resource('movies', 'MoviesController');
         Route::resource('contributors', 'ContributorsController');

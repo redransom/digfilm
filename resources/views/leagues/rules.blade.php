@@ -18,17 +18,15 @@
                 @endforeach
                 @endif
 
+                <a class="btn" href="{{route('leagues.edit', [$league->id])}}">Edit League</a>
+                &nbsp;
+                <a class="btn" href="{{URL('leagues/'.$league->id)}}">League Details</a>
+
+
                 {!! Form::open(array('route' => array('league-rules', $league->rule->id), 'class'=>'form-horizontal row-fluid', 'method'=>'POST')) !!}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                     <h3>Game Specification</h3>
-                    <div class="control-group">
-                        <label class="control-label" for="LeagueName">Public/Private</label>
-                        <div class="controls">
-                            {!! Form::select('league_type', ["U"=>"Public", "R" => "Private"], $league->rule->league_type, ['class'=>'span2']) !!}
-                            <span class="help-inline">Is it available for anyone to join (PUBLIC) or just those invited (PRIVATE).</span>
-                        </div>
-                    </div>
 
                     <div class="control-group">
                         <label class="control-label" for="LeagueName">Blind?</label>
@@ -60,7 +58,10 @@
                     <div class="control-group">
                         <label class="control-label" for="LeagueName">Movie Takings Duration</label>
                         <div class="controls">
-                            {!! Form::text('movie_takings_duration', $league->rule->movie_takings_duration, ['class'=>'span2', 'placeholder'=>'Default is 8 weeks']) !!}
+                            <div class="input-append">
+                                {!! Form::text('movie_takings_duration', $league->rule->movie_takings_duration, ['class'=>'span2', 'placeholder'=>'Default is 8 weeks']) !!}
+                                <span class="add-on">weeks</span>
+                            </div>
                             <span class="help-inline">This can be used to override the standard 2 months that are expected.</span>
                         </div>
                     </div>
@@ -69,7 +70,10 @@
                     <div class="control-group">
                         <label class="control-label" for="LeagueName">Auction Duration</label>
                         <div class="controls">
-                            {!! Form::text('auction_duration', $league->rule->auction_duration, ['class'=>'span2', 'placeholder'=>'Enter auction duration here...']) !!}
+                            <div class="input-append">
+                                {!! Form::text('auction_duration', $league->rule->auction_duration, ['class'=>'span2', 'placeholder'=>'Enter auction duration here...']) !!}
+                                <span class="add-on">hours</span>
+                            </div><br/>
                             <span class="help-inline">Total duration of the auction including any rounds.</span>
                         </div>
                     </div>
@@ -77,15 +81,21 @@
                     <div class="control-group">
                         <label class="control-label" for="LeagueName">Round Duration</label>
                         <div class="controls">
-                            {!! Form::text('round_duration', $league->rule->round_duration, ['class'=>'span2', 'placeholder'=>'Enter round duration here...']) !!}
+                            <div class="input-append">
+                                {!! Form::text('round_duration', $league->rule->round_duration, ['class'=>'span2', 'placeholder'=>'Enter round duration here...']) !!}
+                                <span class="add-on">hours</span>
+                            </div><br/>
                             <span class="help-inline">This is only beneficial if the quantity of movies is split up.</span>
                         </div>
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label" for="LeagueName">Individual Film Countdown</label>
+                        <label class="control-label" for="LeagueName">Film Countdown</label>
                         <div class="controls">
-                            {!! Form::text('ind_film_countdown', $league->rule->ind_film_countdown, ['class'=>'span2', 'placeholder'=>'Enter film countdown here...']) !!}
+                            <div class="input-append">
+                                {!! Form::text('ind_film_countdown', $league->rule->ind_film_countdown, ['class'=>'span2', 'placeholder'=>'Enter film countdown here...']) !!}
+                                <span class="add-on">mins</span>
+                            </div><br/>
                             <span class="help-inline">Each film once it appears on the list counts down at the start.</span>
                         </div>
                     </div>
@@ -118,8 +128,11 @@
                     <div class="control-group">
                         <label class="control-label" for="LeagueName">Auction Time-out</label>
                         <div class="controls">
-                            {!! Form::text('auction_timeout', $league->rule->auction_timeout, ['class'=>'span2', 'placeholder'=>'Leave empty if no expiry on auctions']) !!}
-                            <span class="help-inline">Put in the number of minutes till this auction is closed off after previous bid. If this is empty then it just waits till end of auciton.</span>
+                            <div class="input-append">
+                                {!! Form::text('auction_timeout', $league->rule->auction_timeout, ['class'=>'span2', 'placeholder'=>'Leave empty if no expiry on auctions']) !!}
+                                <span class="add-on">mins</span>
+                            </div><br/>
+                            <span class="help-inline">Put in the number of minutes till this auction is closed off after previous bid. If this is zero then it just waits till end of auction.</span>
                         </div>
                     </div>
 
@@ -143,8 +156,11 @@
                     <div class="control-group">
                         <label class="control-label" for="LeagueName">Auction Movie Release</label>
                         <div class="controls">
-                            {!! Form::text('auction_movie_release', $league->rule->auction_movie_release, ['class'=>'span2']) !!}
-                            <span class="help-inline">Leave empty for all movies or use a group of movies e.g. 10.</span>
+                            <div class="input-append">
+                                {!! Form::text('auction_movie_release', $league->rule->auction_movie_release, ['class'=>'span2']) !!}
+                                <span class="add-on">number of movies</span>
+                            </div><br/>
+                            <span class="help-inline">Leave zero for all movies or use a group of movies e.g. 10.</span>
                         </div>
                     </div>
 

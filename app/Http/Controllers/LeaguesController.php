@@ -32,19 +32,36 @@ class LeaguesController extends Controller {
      *
      * @return Response
      */
-    public function index()
+    public function index($status = null)
     {
         $authUser = Auth::user();
         if (!isset($authUser))
             return redirect('/auth/login');
 
         //$leagues = League::all();
-        $leagues = League::orderBy('auction_stage', 'asc')->paginate(10);
+        $paginate = true;
+        if (is_null($status))
+            $leagues = League::orderBy('auction_stage', 'asc')->paginate(10);
+        else {
+            if($status == 0)
+                $leagues = League::whereNull('auction_stage')->orderBy('auction_stage', 'asc')->get();
+            elseif($status == 1)
+                $leagues = League::where('auction_stage', '0')->orderBy('auction_stage', 'asc')->get();
+            elseif($status == 2)
+                $leagues = League::where('auction_stage', '1')->orderBy('auction_stage', 'asc')->get();
+            elseif($status == 3)
+                $leagues = League::where('auction_stage', '2')->orderBy('auction_stage', 'asc')->get();
+            elseif($status == 4)
+                $leagues = League::where('auction_stage', '3')->orderBy('auction_stage', 'asc')->get();
+
+            $paginate = false;
+        }
 
         return View("leagues.all")
             ->with('leagues', $leagues)
             ->with('authUser', $authUser)
             ->with('page_name', 'leagues')
+            ->with('paginate', $paginate)
             ->with('instructions', 'All Leagues registered in the site.')
             ->with('title', 'Leagues');
     }
@@ -126,8 +143,12 @@ class LeaguesController extends Controller {
             $leaguerule->auction_movie_release = $ruleset->auction_movie_release;
             $leaguerule->start_time = $ruleset->start_time;
             $leaguerule->close_time = $ruleset->close_time;
-            $leaguerule->league_type = $ruleset->league_type;
-            $leaguerule->auto_select = $ruleset->auto_select;
+
+            if(isset($input['auto_select']))
+                $leaguerule->auto_select = $input['auto_select'];
+            else
+                $leaguerule->auto_select = $ruleset->auto_select;
+
             $leaguerule->blind_bid = $ruleset->blind_bid;
             $leaguerule->auction_timeout = $ruleset->auction_timeout;
             $leaguerule->round_duration = $ruleset->round_duration;
@@ -146,7 +167,7 @@ class LeaguesController extends Controller {
             $leagueuser = LeagueUser::create( ['user_id'=>$league->users_id, 'league_id'=>$league->id, 'balance'=>100] );
 
             Flash::message('League created.');
-            return Redirect::route('leagues.index');
+            return Redirect::route('leagues.show', ['id'=>$league->id]);
         } else {
             /* come by customer create league so go to select movies page */
             //user comes from admin - get league owner and add as a league player
@@ -269,7 +290,6 @@ class LeaguesController extends Controller {
             $leaguerule->auction_movie_release = $ruleset->auction_movie_release;
             $leaguerule->start_time = $ruleset->start_time;
             $leaguerule->close_time = $ruleset->close_time;
-            $leaguerule->league_type = $ruleset->league_type;
             $leaguerule->auto_select = $ruleset->auto_select;
             $leaguerule->blind_bid = $ruleset->blind_bid;
             $leaguerule->auction_timeout = $ruleset->auction_timeout;
@@ -642,7 +662,6 @@ class LeaguesController extends Controller {
         $leaguerule->auction_movie_release = $input['auction_movie_release'];
         $leaguerule->start_time = $input['start_time'];
         $leaguerule->close_time = $input['close_time'];
-        $leaguerule->league_type = $input['league_type'];
         $leaguerule->auto_select = $input['auto_select'];
         $leaguerule->blind_bid = $input['blind_bid'];
         $leaguerule->auction_timeout = $input['auction_timeout'];

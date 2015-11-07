@@ -6,7 +6,9 @@
                             <div class="module-head">
                                 <h3>Leagues</h3>
                             </div>
+                            @if($leagues->count() > 0)
                             <div class="module-body table">
+
                                 <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped  display" width="100%">
                                     <thead>
                                         <tr>
@@ -32,7 +34,7 @@
                                         @endif
                                         <tr class="<?php echo (($leagueCnt++ % 2) == 0) ? "odd" : "even"; ?> user{{$league->id}}">
                                             <td>{{$league->id}}</td>
-                                            <td><a href="{{URL('leagues', array('id'=>$league->id))}}">{{$league->name}}</a></td>
+                                            <td><a href="{{URL('league', array('id'=>$league->id))}}">{{$league->name}}</a></td>
                                             <td>{{count($league->players)}}</td>
                                             <td>{{$start}}</td>
                                             <td class="center"><a href="{{URL('users/'.$league->owner->id)}}">{{$league->owner->name}}</a></td>
@@ -52,9 +54,16 @@
                                     </tbody>
                                 </table>
                             </div>
+                            @else
+                            <div class="module-body">
+                            <p>There are no leagues with this status.</p>
+                            </div>
+                            @endif
+                            @if($paginate)
                             <div class="pagination pagination-centered">
-                                    <?php echo $leagues->render(); ?>
-                                </div>
+                                <?php echo $leagues->render(); ?>
+                            </div>
+                            @endif
                         </div>
                     </div>
 <!--/.content-->

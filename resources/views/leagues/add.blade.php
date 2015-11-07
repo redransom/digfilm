@@ -46,6 +46,38 @@
                     </div>
 
                     <div class="control-group">
+                        <label class="control-label" for="LeagueName">Public/Private</label>
+                        <div class="controls">
+                            {!! Form::select('type', ["U"=>"Public", "R" => "Private"], null, ['class'=>'span2']) !!}
+                            <span class="help-inline">Is it available for anyone to join (PUBLIC) or just those invited (PRIVATE).</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="LeagueStartDate">Start Date</label>
+                        <div class="controls">
+                            {!! Form::text('auction_start_date', null, ['class'=>'span8', 'placeholder'=>'YYYY-MM-DD HH:mm:SS']) !!}
+                            <span class="help-inline">When does the auction start?</span>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label" for="LeagueCloseDate">Close Date</label>
+                        <div class="controls">
+                            {!! Form::text('auction_close_date', null, ['class'=>'span8', 'placeholder'=>'YYYY-MM-DD HH:mm:SS']) !!}
+                            <span class="help-inline">When does the auction finish?</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="LeagueName">Auto-select</label>
+                        <div class="controls">
+                            {!! Form::select('auto_select', ["Y"=>"Yes", "N" => "No"], null, ['class'=>'span2']) !!}
+                            <span class="help-inline">Auto select the movies for population.</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
                         <div class="controls">
                             <button type="submit" class="btn btn-primary pull-right">Add League</button>
                         </div>
