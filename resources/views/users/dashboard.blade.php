@@ -24,7 +24,7 @@
             @foreach($authUser->inLeagues as $league)
             <tr>
                 @if($league->auction_stage < 3)
-                <td><a class="btn btn-mini btn-danger" href="{{URL('league/'.$league->id)}}">{{$league->name}}</a></td>
+                <td><a class="btn btn-mini btn-danger" href="{{URL('league-show/'.$league->id)}}">{{$league->name}}</a></td>
                 @else
                 <td><a class="btn btn-mini btn-danger" href="{{URL('roster/'.$league->id)}}">{{$league->name}}</a></td>
                 @endif

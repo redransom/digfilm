@@ -47,7 +47,7 @@
                                         <li><a href="{{URL('leagues/2')}}"><i class="icon-th"></i> Movies Chosen</a></li>
                                         <li><a href="{{URL('leagues/3')}}"><i class="icon-th"></i> Auctions Live</a></li>
                                         <li><a href="{{URL('leagues/4')}}"><i class="icon-th"></i> Roster</a></li>
-                                        <li><a href="{{URL('leagues/create')}}"><i class="icon-th"></i> Add New</a></li>
+                                        <li><a href="{{URL('create-league')}}"><i class="icon-th"></i> Add New</a></li>
                                     </ul>
                                 </li>
 

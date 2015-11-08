@@ -40,7 +40,7 @@ Route::group(['middleware'=>'auth'], function() {
         /* Player routes */
         Route::get('profile', ['as'=>'profile', 'uses'=>'WelcomeController@getProfile']);
 
-        Route::get('league/{id}', ['as'=>'league-show', 'uses'=>'WelcomeController@getLeague']);
+        Route::get('league-show/{id}', ['as'=>'league-show', 'uses'=>'WelcomeController@getLeague']);
         Route::put('movies-admin-search', ['as'=>'movies-admin-search', 'uses'=>'MoviesController@index']);
         Route::get('league/{id}/manage', ['as'=>'league-manage', 'uses'=>'LeaguesController@getLeague']);
         Route::post('league', ['as'=>'league', 'uses'=>'WelcomeController@getLeague']);
@@ -84,6 +84,7 @@ Route::group(['middleware'=>'auth'], function() {
 
         Route::get('auctions/{status?}', ['as'=>'auctions', 'uses'=>'AuctionsController@index']);
         Route::get('leagues/{status?}', ['as'=>'leagues', 'uses'=>'LeaguesController@index']);
+        Route::get('create-league', ['as'=>'league-create', 'uses'=>'LeaguesController@create']);
         Route::get('league/{id}', ['as'=>'leagues', 'uses'=>'LeaguesController@show']);
 
         Route::resource('users', 'UsersController');

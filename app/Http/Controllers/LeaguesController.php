@@ -41,18 +41,18 @@ class LeaguesController extends Controller {
         //$leagues = League::all();
         $paginate = true;
         if (is_null($status))
-            $leagues = League::orderBy('auction_stage', 'asc')->paginate(10);
+            $leagues = League::orderBy('auction_stage', 'asc')->orderBy('created_at', 'desc')->paginate(10);
         else {
             if($status == 0)
-                $leagues = League::whereNull('auction_stage')->orderBy('auction_stage', 'asc')->get();
+                $leagues = League::whereNull('auction_stage')->orderBy('auction_stage', 'asc')->orderBy('created_at', 'desc')->get();
             elseif($status == 1)
-                $leagues = League::where('auction_stage', '0')->orderBy('auction_stage', 'asc')->get();
+                $leagues = League::where('auction_stage', '0')->orderBy('auction_stage', 'asc')->orderBy('created_at', 'desc')->get();
             elseif($status == 2)
-                $leagues = League::where('auction_stage', '1')->orderBy('auction_stage', 'asc')->get();
+                $leagues = League::where('auction_stage', '1')->orderBy('auction_stage', 'asc')->orderBy('created_at', 'desc')->get();
             elseif($status == 3)
-                $leagues = League::where('auction_stage', '2')->orderBy('auction_stage', 'asc')->get();
+                $leagues = League::where('auction_stage', '2')->orderBy('auction_stage', 'asc')->orderBy('created_at', 'desc')->get();
             elseif($status == 4)
-                $leagues = League::where('auction_stage', '3')->orderBy('auction_stage', 'asc')->get();
+                $leagues = League::where('auction_stage', '3')->orderBy('auction_stage', 'asc')->orderBy('created_at', 'desc')->get();
 
             $paginate = false;
         }
@@ -167,7 +167,8 @@ class LeaguesController extends Controller {
             $leagueuser = LeagueUser::create( ['user_id'=>$league->users_id, 'league_id'=>$league->id, 'balance'=>100] );
 
             Flash::message('League created.');
-            return Redirect::route('leagues.show', ['id'=>$league->id]);
+            //return Redirect::route('league', ['id'=>$league->id]);
+            return redirect()->route('leagues', [$league->id]);
         } else {
             /* come by customer create league so go to select movies page */
             //user comes from admin - get league owner and add as a league player
