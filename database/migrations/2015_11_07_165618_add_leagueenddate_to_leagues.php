@@ -12,7 +12,10 @@ class AddLeagueenddateToLeagues extends Migration {
 	 */
 	public function up()
 	{
-		//
+		Schema::table('leagues', function(Blueprint $table)
+		{
+			$table->dateTime('end_date')->nullable();
+		});
 	}
 
 	/**
@@ -22,7 +25,10 @@ class AddLeagueenddateToLeagues extends Migration {
 	 */
 	public function down()
 	{
-		//
+		Schema::table('leagues', function(Blueprint $table)
+		{
+			$table->dropColumn('end_date');
+		});
 	}
 
 }
