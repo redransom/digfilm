@@ -242,4 +242,21 @@ class WelcomeController extends Controller {
 			->with('authUser', $authUser);	
 	}
 
+	/**
+	 * Made it in registering!
+	 *
+	 * @return void
+	 */
+	public function registerSuccessful() {
+		return view('register-successful');	
+	}
+
+	/**
+	 * Approved email
+	 *
+	 * @return void
+	 */
+	public function emailVerified() {
+		return view('email-completed');	
+	}
 }

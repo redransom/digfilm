@@ -14,7 +14,7 @@ class AddOpeningbiddateToMovies extends Migration {
 	{
 		Schema::table('movies', function(Blueprint $table)
 		{
-			$table->dateTime('opening_bid_date')->nullable();
+			$table->date('opening_bid_date')->nullable();
 		});
 	}
 

@@ -74,7 +74,7 @@
 						<input type="password" class="form-control" name="password_confirmation">
 					</div><!--/ row-->
 
-					<button type="submit" class="btn btn-primary">
+					<button type="submit" class="button green small">
 						Register
 					</button>
 				</div>

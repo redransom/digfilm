@@ -7,6 +7,10 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
+use Mail;
+use Input;
+use Flash;
+use Redirect;
 
 class AuthController extends Controller {
 
@@ -104,13 +108,18 @@ class AuthController extends Controller {
 		$roleUser->role_id = $role->id;
 		$roleUser->save(['timestamps' => false]);		
 
-		Mail::send('emails.verify', $confirmation_code, function($message) {
+		$data = ['confirmation_code'=>$confirmation_code, 
+				'user'=>$user,
+				'subject'=>'Verify Your Email Address'];
+
+		Mail::send('emails.verify', $data, function($message) {
             $message->to(Input::get('email'), Input::get('username'))
                 ->subject('Verify your email address');
         });
 
 		Flash::message('Thanks for signing up! Please check your email.');
 
-		return redirect($this->redirectPath());
+		return Redirect::route('register-successful');
+		//return redirect($this->redirectPath());
 	}
 }

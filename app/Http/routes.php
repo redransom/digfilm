@@ -21,6 +21,8 @@ Route::get('all-leagues', 'WelcomeController@leagues');
 Route::get('create', 'WelcomeController@create');
 Route::get('movie-knowledge/{id}', 'WelcomeController@movieKnow');
 Route::get('movies-genre/{id}', 'WelcomeController@movieGenre');
+Route::get('register-successful', ['as'=>'register-successful', 'uses'=>'WelcomeController@registerSuccessful']);
+Route::get('email-verified', ['as'=>'email-verified', 'uses'=>'WelcomeController@emailVerified']);
 /*
 Need to check for login
 */

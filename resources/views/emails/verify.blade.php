@@ -1,4 +1,4 @@
-@extends('layouts.email)
+@extends('layouts.email')
 
 @section('content')
 <!-- start textbox-with-title -->

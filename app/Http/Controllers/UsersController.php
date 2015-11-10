@@ -206,7 +206,9 @@ class UsersController extends Controller {
 
 		//check the passwords are not set
 		if (isset($input['password'])) {
-			$user->password = bcrypt($input['password']);	
+			$user->password = bcrypt($input['password']);
+		} else {
+			$user->password = $user->password;
 		}
 
 		$user->name = $input['name'];
@@ -398,15 +400,13 @@ class UsersController extends Controller {
 	 */
 	public function confirmRegister($confirmation_code)
 	{
-		 if( ! $confirmation_code)
-        {
+		 if( ! $confirmation_code) {
             throw new InvalidConfirmationCodeException;
         }
 
         $user = User::whereConfirmationCode($confirmation_code)->first();
 
-        if ( ! $user)
-        {
+        if ( ! $user) {
             throw new InvalidConfirmationCodeException;
         }
 
@@ -416,7 +416,8 @@ class UsersController extends Controller {
 
         Flash::message('You have successfully verified your account.');
 
-        return Redirect::route('login_path');
+        return Redirect::route('email-verified');
+        //return redirect('/auth/login');
 	}
 
 
