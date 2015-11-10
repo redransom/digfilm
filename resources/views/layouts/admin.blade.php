@@ -11,10 +11,32 @@
     <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600'
         rel='stylesheet'>
 
+    <link type="text/css" href="{{ asset('/admin/css/jquery.datetimepicker.css') }}" rel="stylesheet">
+
     @if(isset($show_stars))
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ asset('/admin/css/star-rating.min.css') }}" media="all" rel="stylesheet" type="text/css" />
     @endif
+
+    <script src="{{ asset('/admin/scripts/jquery-1.9.1.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/admin/scripts/jquery-ui-1.10.1.custom.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/admin/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
+
+    @if(isset($use_graph))
+    <script src="{{ asset('/admin/scripts/flot/jquery.flot.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/admin/scripts/flot/jquery.flot.resize.js') }}" type="text/javascript"></script>
+
+    <script src="{{ asset('/admin/scripts/datatables/jquery.dataTables.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/admin/scripts/common.js') }}" type="text/javascript"></script>
+    @endif
+    @if(isset($show_stars))
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="{{ asset('/admin/scripts/star-rating.min.js') }}" type="text/javascript"></script>
+    @endif
+
+    <script type="text/javascript" src="{{ asset('/admin/scripts/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/admin/scripts/jquery.datetimepicker.min.js') }}"></script>
+
 </head>
 <body>
     <!-- NAVBAR GOES HERE -->
@@ -58,20 +80,6 @@
                 <b class="copyright">&copy; <?php echo date("Y"); ?> RedRansom Software </b>All rights reserved.
             </div>
         </div>
-        <script src="{{ asset('/admin/scripts/jquery-1.9.1.min.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('/admin/scripts/jquery-ui-1.10.1.custom.min.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('/admin/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
-        @if(isset($use_graph))
-        <script src="{{ asset('/admin/scripts/flot/jquery.flot.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('/admin/scripts/flot/jquery.flot.resize.js') }}" type="text/javascript"></script>
 
-        <script src="{{ asset('/admin/scripts/datatables/jquery.dataTables.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('/admin/scripts/common.js') }}" type="text/javascript"></script>
-        @endif
-        @if(isset($show_stars))
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        <script src="{{ asset('/admin/scripts/star-rating.min.js') }}" type="text/javascript"></script>
-        @endif
-      
     </body>
 </html> 

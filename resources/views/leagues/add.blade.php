@@ -2,7 +2,14 @@
 
 @section('content')
 <div class="content">
-
+<script>
+   /* $(document).ready(function(){
+        $('#startdate').datetimepicker({
+            formatTime:'H:i',
+            formatDate:'Y-m-d'
+        });
+    });*/
+</script>
     <div class="module">
         <div class="module-head">
             <h3>Add League</h3>
@@ -56,7 +63,7 @@
                     <div class="control-group">
                         <label class="control-label" for="LeagueStartDate">Start Date</label>
                         <div class="controls">
-                            {!! Form::text('auction_start_date', null, ['class'=>'span8', 'placeholder'=>'YYYY-MM-DD HH:mm:SS']) !!}
+                            {!! Form::text('auction_start_date', null, ['class'=>'span8', 'placeholder'=>'YYYY-MM-DD HH:mm:SS', 'id'=>'startdate']) !!}
                             <span class="help-inline">When does the auction start?</span>
                         </div>
                     </div>

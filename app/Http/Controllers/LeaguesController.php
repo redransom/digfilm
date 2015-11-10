@@ -120,7 +120,6 @@ class LeaguesController extends Controller {
 
         //add rule set for future reference
         $league->rule_sets_id = $ruleset->id;
-        $league->save();        
 
         //TODO: Move this to the league rule model?
         if (!empty($ruleset) && is_numeric($ruleset->id)) {
@@ -156,6 +155,14 @@ class LeaguesController extends Controller {
             $leaguerule->leagues_id = $league->id;
             $leaguerule->save();
         }
+
+        if ($input['auction_close_date'] == '') {
+            $close_date = $league->auction_start_date;
+            $auction_duration = $leaguerule->auction_duration;
+            $league->auction_close_date = date("Y-m-d G:i:s", strtotime('+'.$auction_duration.' hours', strtotime($close_date)));
+        }
+
+        $league->save(); 
 
         $direction = isset($input['source']) ? $input['source'] : "A";
 
@@ -311,7 +318,18 @@ class LeaguesController extends Controller {
      */
     public function destroy($id)
     {
-        //
+        $authUser = Auth::user();
+        if (!isset($authUser) || !$authUser->hasRole("Admin"))
+            return redirect('/auth/login');
+
+        //not sure if this is a function...
+        if (League::exists($id)) {
+            $league = League::find($id);
+            Flash::message('League '.$league->name.' has been removed from the system.');
+            $league->delete();
+            
+            return Redirect::route('leagues.index');
+        }
     }
 
     /**
@@ -708,7 +726,7 @@ class LeaguesController extends Controller {
     public function startAuctions() 
     {
         //TODO: Move to  command
-        $leaguesToReview = League::whereNull('auction_start_date')->where('enabled', '1')->get();
+        $leaguesToReview = League::whereNull('auction_stage')->where('enabled', '1')->get();
 
         //need to make sure each league has rules!
         foreach ($leaguesToReview as $league) {
@@ -737,7 +755,7 @@ class LeaguesController extends Controller {
                     $auction_duration = $rules->auction_duration;
                     $league->auction_close_date = date("Y-m-d G:i:s", strtotime('+'.$auction_duration.' hours', strtotime($close_date)));
 
-                    //$league->auction_stage = 0;
+                    $league->auction_stage = 0;
                     $league->save();
                 } else {
                     //send email to league owner to find more players
@@ -960,6 +978,23 @@ class LeaguesController extends Controller {
 
             $league->save();
             
+            //now send email to players to tell them the auction is live
+             //need to pass in the league details for the owner
+            foreach ($league->players as $player) {
+
+                $data = ['playerName' => $player->fullName(),
+                        'leagueName' => $league->name,
+                        'leagueId' => $league->id,
+                        'subject' => 'League '.$league->name.' has started!'];
+
+                $playerEmail = $player->email;
+                Mail::send('emails.auction_started', $data, function($message) use ($playerEmail)
+                {
+                    $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
+                    $message->to($playerEmail);
+                });
+
+            }            
         }
 
     }

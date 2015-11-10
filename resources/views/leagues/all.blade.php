@@ -41,12 +41,18 @@
                                             <td>
                                             <a class="btn btn-mini btn-primary" href="{{URL('leagues/'.$league->id.'/edit')}}">Edit</a>
                                             @if($league->enabled)
-                                            <a class="btn btn-mini btn-danger" href="{{URL('leagues/'.$league->id.'/disable')}}">Disable</a>
+                                            <a class="btn btn-mini btn-warning" href="{{URL('leagues/'.$league->id.'/disable')}}">Disable</a>
                                             @else
                                             <a class="btn btn-mini btn-info" href="{{URL('leagues/'.$league->id.'/enable')}}">Enable</a>
                                             @endif
                                             @if(!is_null($league->rule))
                                             <a class="btn btn-mini btn-inverse" href="{{URL('leagues/'.$league->id.'/rules')}}">Rules</a>
+                                            @endif
+                                            @if(!$league->enabled)
+
+                                            {!! Form::open(array('route' => array('leagues.destroy', $league->id), 'method' => 'delete', 'style'=>'display:inline')) !!}
+                                                <button type="submit" class="btn btn-danger btn-mini">Delete</button>
+                                            {!! Form::close() !!}
                                             @endif
                                             </td>
                                         </tr>
