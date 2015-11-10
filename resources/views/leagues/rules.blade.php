@@ -20,7 +20,7 @@
 
                 <a class="btn" href="{{route('leagues.edit', [$league->id])}}">Edit League</a>
                 &nbsp;
-                <a class="btn" href="{{URL('leagues/'.$league->id)}}">League Details</a>
+                <a class="btn" href="{{URL('league', array('id'=>$league->id))}}">League Details</a>
 
 
                 {!! Form::open(array('route' => array('league-rules', $league->rule->id), 'class'=>'form-horizontal row-fluid', 'method'=>'POST')) !!}

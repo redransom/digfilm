@@ -17,7 +17,7 @@ class CreateLeagueInvitesTable extends Migration {
 			$table->increments('id');
 			$table->integer('leagues_id')->unsigned()->default(0);
 			$table->foreign('leagues_id')->references('id')->on('leagues')->onDelete('cascade');
-			$table->integer('users_id')->unsigned()->default(0);
+			$table->integer('users_id')->unsigned()->nullable();
 			$table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
 			$table->string('name', 50)->nullable();
 			$table->string('email', 100)->nullable();

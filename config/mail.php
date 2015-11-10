@@ -54,7 +54,7 @@ return [
 	|
 	*/
 
-	'from' => ['address' => 'mail@digfilm.co.uk', 'name' => 'DigFilm Entertainment'],
+	'from' => ['address' => 'digfilm@redransom-php.co.uk', 'name' => 'TheNextBigFilm Entertainment'],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -119,6 +119,6 @@ return [
 	|
 	*/
 
-	'pretend' => false,
+	'pretend' => true,
 
 ];

@@ -30,14 +30,16 @@
                             </div>
 
                             <div class="module-body">
+                                @if($movie->contributors->count() > 0)
                                 <dl class="dl-horizontal">
                                     @foreach($movie->Contributors as $contributor)
                                     <dt>{{$contributor->first_name}} {{$contributor->surname}}</dt>
                                     <dd>{{$types[$contributor->pivot->contributor_types_id]}}</dd>
                                     @endforeach
                                 </dl>
-                                <p>NOTE: I'd like to be able to have this as a free text field that adds a line with the contributor type.
-                                <br/> I'll have a look into it but for getting this out quickly I'll make it a standard entry page for now.</p>
+                                @else
+                                <p>There are no contributors for this movie currently.</p>
+                                @endif
                                 <ul class="inline">
                                     <li><a href="{{URL('movie-add-contributor', array('id'=>$movie->id))}}">Add Contributor</a></li>
                                 </ul>
@@ -69,6 +71,7 @@
                                     @else
                                     <iframe width="200" height="150" src="{{$base_url}}" frameborder="0" allowfullscreen></iframe>
                                     @endif
+                                    <a href="{{URL('movie-remove-media', array($item->id))}}" title="Remove Media {{$item->name}}">x</a>
                                     </li>
                                 @endforeach
                                 </ul>

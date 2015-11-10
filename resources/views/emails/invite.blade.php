@@ -36,10 +36,10 @@
                                           <!-- content -->
                                           <tr>
                                              <td style="font-family: Helvetica, arial, sans-serif; font-size: 13px; color: #333333; text-align:left;line-height: 24px;">
-                                               Your friend <strong>{{$ownerName}}</strong> has invited you to the <strong>{{$leagueName}}</strong> league.<br/>
+                                               Your friend <strong>{{$ownerName}}</strong> has invited you to the <strong>{{$league->name}}</strong> league.<br/>
                                                <br/>
-                                               If you want to join in - please follow this link: <em>{{URL::to('join-league/'.$league_id)}}</em> or if you want to decline use
-                                               this link <em>{{URL::to('decline-league/'.$league_id)}}</em>.
+                                               If you want to join in - please follow this link: <em>{{URL::to('join-league/'.$league->id)}}</em> or if you want to decline use
+                                               this link <em>{{URL::to('decline-league/'.$league->id)}}</em>.
                                              </td>
                                           </tr>
                                           <!-- End of content -->

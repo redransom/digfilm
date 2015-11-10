@@ -68,6 +68,7 @@ Route::group(['middleware'=>'auth'], function() {
 
         Route::get('movies/{id}/disable', ['as'=>'movie-disable', 'uses'=>'MoviesController@disable']);
         Route::get('movies/{id}/enable', ['as'=>'movie-enable', 'uses'=>'MoviesController@enable']);
+        Route::get('movie-remove-media/{id}', ['as'=>'movie-remove-media', 'uses'=>'MoviesController@removeMedia']);
 
         Route::get('movie-add-contributor/{id}', ['as'=>'movie-add-contributor', 'uses'=>'MoviesController@addContributor']);
         Route::post('add-contributor/{id}', ['as'=>'add-contributor', 'uses'=>'MoviesController@postContributor']);

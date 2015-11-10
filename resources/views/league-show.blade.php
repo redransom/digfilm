@@ -71,7 +71,7 @@
     <div id="{{$name}}<?php echo $auctionid; ?>"></div>
     <script type="text/javascript">
       $('#{{$name}}<?php echo $auctionid; ?>').countdown('<?php echo $auctionTime; ?>', function(event) {
-        $(this).html(event.strftime('%-M:%S'));
+        $(this).html(event.strftime('%-H:%-M:%S'));
         if(event.elapsed) {
             $('#{{$name}}_{{$auctionid}}').val = "ENDED";
         }

@@ -48,4 +48,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	public function auctions() {
 		return $this->belongsToMany("\App\Models\Movie", "auctions", "users_id", "movies_id")->withPivot(['bid_amount', 'auction_start_time', 'auction_end_time', 'users_id', 'id', 'ready_for_auction']);
 	}
+
+	public function fullName() {
+		return (is_null($this->forenames) ? $this->name : $this->forenames." ".$this->surname);
+	}
 }

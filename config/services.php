@@ -15,8 +15,8 @@ return [
 	*/
 
 	'mailgun' => [
-		'domain' => '',
-		'secret' => '',
+		'domain' => 'digfilm.redransom-php.co.uk',
+		'secret' => 'key-cccb67d8bfc6ee79f977c6319ef4ee52',
 	],
 
 	'mandrill' => [

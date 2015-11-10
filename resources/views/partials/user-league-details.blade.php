@@ -9,9 +9,32 @@
                     <div class="entry-holder">
                         @if($league->auction_stage == 2)
 
-                        @if((is_null($league->rule->auction_movie_release) || $league->auction_movie_release == 0) && ($league->auction_stage == 2))
+                        @if($league->auction_stage == 2)
+                        @if((is_null($league->rule->auction_movie_release) || $league->rule->auction_movie_release == 0))
                         <h3>Remaining Auction Time: </h3>
                         <ul class="dropspot-list"><li><span class="dropspot" style="width: 170px !important"><?php auctionTimer($league->id, $league->auction_close_date, 'league'); ?></span></li></ul>
+                        @else
+                        <h3>Remaining Round Time: </h3>
+                        <ul class="dropspot-list"><li><span class="dropspot" style="width: 170px !important"><?php auctionTimer($league->id, $league->round_start_date, 'league'); ?></span></li></ul>
+                        
+                        <style>
+                        .round {
+                            float:left;
+                            display:block;
+                            clear:both;
+                            width: 250px !important;
+                            font-weight:bold;
+                            font-size: 2em;
+                        }
+                        </style>
+                        <div class="round">
+                        @if($league->current_round < $league->round_amount)
+                        <span>Round No: {{$league->current_round}} of {{$league->round_amount}}</span>
+                        @else
+                        <span>Final Round!</span>
+                        @endif
+                        </div>
+                        @endif
 
                         <div class="clear"></div>
 

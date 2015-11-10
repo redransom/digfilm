@@ -19,7 +19,7 @@
                     <div class="alignleft">
                         <ul>
                         @foreach($users as $user)
-                            <li>{!! Form::checkbox('users_id[]', $user->id, false) !!}&nbsp;&nbsp;{{$user->forenames}} {{$user->surname}}</li>
+                            <li>{!! Form::checkbox('users_id[]', $user->id, false) !!}&nbsp;&nbsp;{{$user->fullName()}}</li>
                         @endforeach
                         </ul>
                         <br/>
@@ -36,7 +36,7 @@
     <div class="one-fourth">
         <h4>Invite Friend</h4>
         @if(isset($message))
-        <span>{{$message}}</span>
+        <span class="alert">{{$message}}</span>
         @endif
         <div id="contact">
             <div id="message"></div>
@@ -59,7 +59,7 @@
                 </fieldset>
             </form>
         </div><!--/ contact-->
-    </div>    
+    </div>
 </section>
 
 @endsection

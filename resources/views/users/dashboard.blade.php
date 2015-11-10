@@ -108,7 +108,7 @@
         </tbody>
     </table><!--/ feature-table-->
     @else
-    <p>You currently own no leagues.</p>
+    <p>You don't currently own any leagues.</p>
     @endif
 
 </section>    

@@ -38,19 +38,20 @@
                         @if(!empty($players))
                         <ul class="unstyled">
                         @foreach ($players as $player)
-                            @if(!is_null($player->forenames))
-                            <li><a href="{{URL('users', array('id'=>$player->id))}}">{{$player->forenames}} {{$player->surname}}</li>
-                            @else
-                            <li><a href="{{URL('users', array('id'=>$player->id))}}">{{$player->name}}</li>
-                            @endif
+                            <li><a href="{{URL('users', array('id'=>$player->id))}}">{{$player->fullName()}}</a></li>
                         @endforeach
                         </ul>
                         @else
                         <p>The league has no players currently. </p>
                         @endif
+                        @if($players->count() < $league->rule->min_players)
+                        <p><strong>More players are needed for this league before it can go live.</strong></p>
+                        @endif
+                        @if($players->count() < $league->rule->max_players)
                         <ul class="inline">
                             <li><a href="{{URL('league-add-player', array('id'=>$league->id))}}">Add Player</a></li>
                         </ul>
+                        @endif
                         </div>
                     </div>
 
@@ -62,6 +63,22 @@
                         <div class="module-body">
                         @if(!is_null($league->rule))
                             <dl>
+                                <dt>Players</dt>
+                                <dd>Min: {{$league->rule->min_players}} Max: {{$league->rule->max_players}}</dd>
+                                <dt>Movies</dt>
+                                <dd>Min: {{$league->rule->min_movies}} Max: {{$league->rule->max_movies}}</dd>
+                                <dt>Durations</dt>
+                                <dd>Auction: {{$league->rule->auction_duration}} hours <br/>Round: {{$league->rule->round_duration}} hours <br/>Movies: {{$league->rule->ind_film_countdown}} mins</dd>
+                                <dt>Bids</dt>
+                                <dd>Min: {{$league->rule->min_bid}} Max: {{$league->rule->max_bid}}</dd>
+                                <dt>Start/End</dt>
+                                <dd>Start Time: {{$league->rule->start_time}} End Time: {{$league->rule->end_time}}</dd>
+                                <dt>Selection</dt>
+                                <dd>Random: {{($league->rule->randomizer == "Y") ? "Yes" : "No"}} <br/>Auto-Select: {{($league->rule->auto_select == 'Y') ? "Yes" : "No"}} <br/>Grouped: {{$league->rule->auction_movie_release}}</dd>
+                                <dt>Blind</dt>
+                                <dd>{{$league->rule->blind_bid == "Y" ? "Yes" : "No"}}</dd>
+                                <dt>Misc</dt>
+                                <dd>Timeout: {{$league->rule->auction_timeout}} mins <br/>Denomination: {{$league->rule->denomination}} <br/>Movie Takings: {{$league->rule->movie_takings_duration}} weeks</dd>
                             </dl>
                         @else
                         <p>No rules have been selected so far - go to the <a href="{{URL('leagues/'.$league->id.'/edit')}}">Edit League</a> page</p>
@@ -84,7 +101,6 @@
                             @else
                             <p>There are no movies associated with this league presently.</p>
                             @endif
-                            <p>TODO: I'd like to make this free entry population much like tags.</p>
                             <ul class="inline">
                                 <li><a href="{{URL('league-add-movie', array('id'=>$league->id))}}">Add Movie</a></li>
                             </ul>

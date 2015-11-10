@@ -10,6 +10,7 @@ use App\Models\Contributor;
 use App\Models\ContributorType;
 use App\Models\Role;
 use App\Models\Auction;
+use App\Models\AuctionBid;
 use App\Models\League;
 use App\Models\LeagueUser;
 use App\Models\LeagueRule;
@@ -195,6 +196,14 @@ class AuctionsController extends Controller {
 
         $auction->bid_count++;
         $auction->save();
+
+        //create new auction bid for history purposes
+        $bid = new AuctionBid();
+        $bid->auctions_id = $auction->id;
+        $bid->users_id = $auction->users_id;
+        $bid->bid_amount = $auction->bid_amount;
+        $bid->save();
+        unset($bid);
 
         //remove amount from users balance / need to do a check to see if it overrides a previous users amount and gives it too them back
         Log::info('Reduce balance by user:'.$authUser->id.' amount:'.$input['bid_amount']);

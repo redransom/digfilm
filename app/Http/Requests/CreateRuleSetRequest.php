@@ -29,8 +29,7 @@ class CreateRuleSetRequest extends Request {
             'max_movies' => ['required'],
             'auction_duration' => ['required'],
             'min_bid' => ['required'],
-            'max_bid' => ['required'],
-            'league_type' => ['required']
+            'max_bid' => ['required']
         ];
 	}
 

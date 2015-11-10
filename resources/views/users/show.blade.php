@@ -16,7 +16,9 @@
                                             {{$user->forenames}} {{$user->surname}}<small>{{$user->name}}</small>
                                         </h4>
                                         <p class="profile-brief">
-                                            TEXT - Do we want to have users be able to provide a profile description?
+                                            @if(!is_null($user->description))
+                                            {{$user->description}}
+                                            @endif
                                         </p>
                                         <div class="profile-details muted">
                                             <a href="#" class="btn"><i class="icon-plus shaded"></i>Send Friend Request </a>

@@ -7,7 +7,7 @@
     <?php
         $min_bid = $rule->min_bid;
         $opening_bid = $auction->movie->opening_bid;
-        $denomination = (!is_null($rule->denomination) && $denomination != 0) ? $denomination : 0.5;
+        $denomination = (!is_null($rule->denomination) && $rule->denomination != 0) ? $rule->denomination : 0.5;
         $bid_amount = $auction->bid_amount;
 
         if ($bid_amount != 0 && $bid_amount > $rule->min_bid) {

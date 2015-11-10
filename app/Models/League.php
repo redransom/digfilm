@@ -23,7 +23,7 @@ class League extends Model {
     }
 
     public function movies() {
-        return $this->belongsToMany("\App\Models\Movie", "league_movies", "leagues_id", "movies_id")->withPivot('id');
+        return $this->belongsToMany("\App\Models\Movie", "league_movies", "leagues_id", "movies_id")->withPivot(['id', 'chosen']);
     }
 
     public function rule() {

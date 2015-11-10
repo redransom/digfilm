@@ -266,6 +266,34 @@ class MoviesController extends Controller {
         return Redirect::route('movies.index');
 	}
 
+    /**
+     * Remove media from movie
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function removeMedia($id)
+    {
+        //
+        $authUser = Auth::user();
+
+        //ensure permissions are available - should probably check for permissions and not role
+        if ($authUser->hasRole("Admin")) {
+            $mm = MovieMedia::find($id);
+            if (!empty($mm)) {
+                $movie = Movie::find($mm->movies_id);
+                $message = "Media ".$mm->name." has been removed from ".$movie->name;
+                Flash::message($message);
+
+                $mm->delete();
+            }
+            return Redirect::route('movies.show', $movie->id);
+        } else
+            Flash::message("You don\'t have the permissions to complete this task.");
+
+        return Redirect::route('movies.index');
+    }
+
 	public function addContributor($id) {
 		$authUser = Auth::user();
 		if (!isset($authUser))
