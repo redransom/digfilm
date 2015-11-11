@@ -1032,21 +1032,26 @@ class LeaguesController extends Controller {
                 //choose random movies
                 //randomly choose the order of the first lot
                 Log::info("Add Random Movies to league: ".$league->id." - ".$league->name);
-                for($movie_cnt = 0; $movie_cnt<$movie_no; $movie_cnt++) {
+                if ($available_movie_count > 0) {
+                    for($movie_cnt = 0; $movie_cnt<$movie_no; $movie_cnt++) {
 
-                    $random_pos = rand(0, ($available_movie_count - 1));
-                    $chosen_movies[$movie_cnt] = $available_movies[$random_pos];
+                        $random_pos = rand(0, ($available_movie_count - 1));
+                        if(isset($available_movies[$random_pos])) {
+                            $chosen_movies[] = $available_movies[$random_pos];
 
-                    unset($available_movies[$random_pos]);
-                    $available_movies = array_values($available_movies);
-                    $available_movie_count--;
-                }
+                            unset($available_movies[$random_pos]);
+                            $available_movies = array_values($available_movies);
+                            $available_movie_count--;
+                        }
+                    }
+                } else
+                    Log::info("Error with auction - no more movies to read in..");
 
             } else {
                 Log::info("Add Movies to league: ".$league->id." - ".$league->name);
                 //if not randomizer need to add find next group of films to add
                 for($movie_cnt = 0; $movie_cnt<$movie_no; $movie_cnt++) {
-                    $chosen_movies[$movie_cnt] = $available_movies[$movie_cnt];
+                    $chosen_movies[] = $available_movies[$movie_cnt];
                 }
             }
 
@@ -1056,7 +1061,7 @@ class LeaguesController extends Controller {
             }
 
             //update league movies to set to current round
-            LeagueMovie::where('leagues_id', $league->id)->whereIn('movies_id', $chosen_movies)
+            LeagueMovie::where('leagues_id', $league->id)->whereIn('movies_id', $chosen_movies)->where('chosen', '0')
                     ->update(['chosen'=>$league->current_round]);
             $league->save();
             

@@ -93,6 +93,10 @@ class MoviesController extends Controller {
 		$input = Input::all();
 		$movie = Movie::create( $input );
 		$movie->slug = str_slug($movie->name, "-");
+
+		if(is_numeric($input['opening_bid']) && $input['opening_bid'] > 0)
+			$movie->opening_bid_date = date("Y-m-d H:i");
+
 		if (!empty($input['release_at']))
 			$movie->takings_close_date = date("Y-m-d", strtotime("+2 months", strtotime($movie->release_at)));
 		$movie->save();
@@ -187,7 +191,10 @@ class MoviesController extends Controller {
 		$movie->release_at = $input['release_at'];
 		if(!is_null($input['opening_bid']))
 			$movie->opening_bid = $input['opening_bid'];
-		
+
+		if(is_numeric($input['opening_bid']) && $input['opening_bid'] > 0)
+			$movie->opening_bid_date = date("Y-m-d H:i");
+
 		$movie->slug = str_slug($input["name"], "-");
 
 		if ($input['takings_close_date'] == '' && $input['release_at'] != '')
