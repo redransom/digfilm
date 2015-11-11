@@ -13,6 +13,7 @@
         @if($users->count()>0)
         <div id="contact">
             {!! Form::open(array('route' => 'choose-participants', 'class'=>'form-horizontal row-fluid', 'id'=>'contactform')) !!}
+                <p>You can choose <strong>{{$league->rule->max_players - $league->players->count()}}</strong> more players.</p>
                 <fieldset>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="leagues_id" value="{{$league->id}}">
@@ -35,9 +36,6 @@
     </div>
     <div class="one-fourth">
         <h4>Invite Friend</h4>
-        @if(isset($message))
-        <span class="alert">{{$message}}</span>
-        @endif
         <div id="contact">
             <div id="message"></div>
             {!! Form::open(array('route' => 'league-invite', 'class'=>'form-horizontal row-fluid', 'id'=>'contactform')) !!}
@@ -45,15 +43,18 @@
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="leagues_id" value="{{$league->id}}">
                     <div class="alignleft">
+                        @for($player_cnt = 1; $player_cnt <= ($league->rule->max_players - $league->players->count()); $player_cnt++)
+                        <h3>Friend  {{$player_cnt}}</h3>
                         <div class="row">
-                            <label for="name"><span class="required">*</span>Friend Name:</label>
-                            {!! Form::text('name', null, ['class'=>'span8', 'placeholder'=>'Enter friends name here...']) !!}
+                            <label for="name"><span class="required">*</span>Name:</label>
+                            {!! Form::text('name[]', null, ['class'=>'span8', 'placeholder'=>'Enter friends name here...']) !!}
                         </div><!--/ row-->
                         
                         <div class="row">
                             <label for="name"><span class="required">*</span>Email:</label>
-                            {!! Form::text('email_address', null, ['class'=>'span8', 'placeholder'=>'Enter email address here...']) !!}
+                            {!! Form::text('email_address[]', null, ['class'=>'span8', 'placeholder'=>'Enter email address here...']) !!}
                         </div><!--/ row-->
+                        @endfor
                         <input type="submit" class="button green small" id="submit" value="Invite" />
                     </div><!--/ textfield-->
                 </fieldset>

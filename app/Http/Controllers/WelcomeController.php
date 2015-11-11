@@ -177,7 +177,10 @@ class WelcomeController extends Controller {
 		$userLeaguesPlayedIn = LeagueUser::whereIn('league_id', $leaguesPlayedIn)->lists('user_id');
 
 		$availableUsers = $userLeaguesOwns + $userLeaguesPlayedIn;
-		$users = User::whereIn('id', $availableUsers)->where('id', '!=', $authUser->id)->get();
+		$playersInLeague = $league->players;
+		$notInThisLeague = $playersInLeague->lists('id');
+
+		$users = User::whereIn('id', $availableUsers)->where('id', '!=', $authUser->id)->whereNotIn('id', $notInThisLeague)->get();
 		
 		return view('choose-participants')
 			->with('league', $league)

@@ -566,6 +566,12 @@ class LeaguesController extends Controller {
         if (isset($input['leagues_id']) && isset($input['users_id']) && !empty($input['users_id'])) {
             //we have league id so we can continue
             $league_id = $input['leagues_id'];
+            $league = League::find($league_id);
+
+            //work out allowed number of players
+            $allowed_player_number = $league->rule->max_players - $league->players->count();
+            Log::info('Adding players to league '.$league->id.' allowed number is: '.$allowed_player_number);
+            $selected_cnt = 1;
             foreach ($input['users_id'] as $user_id) {
                 $lu = new LeagueUser();
                 $lu->league_id = $league_id;
@@ -580,8 +586,15 @@ class LeaguesController extends Controller {
                 $invite->users_id = $user_id;
                 $invite->save();
                 unset($invite);
+
+                //we can only select a pre-determind amount of players currently
+                $selected_cnt++;
+
+                if($selected_cnt > $allowed_player_number)
+                    break;
             }
-            return Redirect::route('league-manage', [$league_id])->with('message', 'Players have been invited to the league');
+            Flash::message('Players have been added to the league');
+            return Redirect::route('league-manage', [$league_id]);
         }
         return Redirect::route('dashboard');
     }
@@ -599,46 +612,52 @@ class LeaguesController extends Controller {
         $input = Input::all();
         $league = League::find($input['leagues_id']);
 
-        /* Take details and send it as an email invite */
-        $nonplayerName = $input['name'];
-        $nonplayerEmail = $input['email_address'];
-
         if (!is_null($authUser->forenames)) {
             $ownerName = $authUser->forenames. "(".$authUser->name.")";
         } else
             $ownerName .= $authUser->name;
 
-        //do invite as well
-        $invite = new LeagueInvite();
-        $invite->leagues_id = $league->id;
-        $invite->users_id = null;
-        $invite->name = $nonplayerName;
-        $invite->email = $nonplayerEmail;
-        $invite->save();
-        unset($invite);
+        /* Take details and send it as an email invite */
+        for($name_count=0; $name_count<count($input['name']); $name_count++) {
 
-        $subject = "You've been invited to join the ".$league->name." league!";
-        $data = ['inviteName' => $nonplayerName,
-                'inviteEmail' => $nonplayerEmail,
-                'user' => $authUser,
-                'ownerName' =>$ownerName,
-                'league'=>$league,
-                'subject'=>$subject];
+            $nonplayerName = isset($input['name'][$name_count]) ? $input['name'][$name_count] : "";
+            $nonplayerEmail = isset($input['email_address'][$name_count]) ? $input['email_address'][$name_count] : "";
+            $currentUser = User::where('email', $nonplayerEmail)->first();
 
-        $currentUser = User::where('email', $nonplayerEmail)->first();
-        if (!isset($currentUser->id)) {
-            //send invite email to new player
-            Mail::send('emails.invite', $data, function($message) use ($nonplayerEmail)
-            {
-                $message->from('invite@digfilm.com', 'DigFilm Entertainment');
-                $message->to($nonplayerEmail);
-            });
+            if (!isset($currentUser->id)) {
+
+                $subject = "You've been invited to join the ".$league->name." league!";
+                $data = ['inviteName' => $nonplayerName,
+                        'inviteEmail' => $nonplayerEmail,
+                        'user' => $authUser,
+                        'ownerName' =>$ownerName,
+                        'league'=>$league,
+                        'subject'=>$subject];
+
+                //send invite email to new player
+                Mail::send('emails.invite', $data, function($message) use ($nonplayerEmail)
+                {
+                    $message->from('invite@digfilm.com', 'DigFilm Entertainment');
+                    $message->to($nonplayerEmail);
+                });
+
+                //do invite as well
+                $invite = new LeagueInvite();
+                $invite->leagues_id = $league->id;
+                $invite->users_id = null;
+                $invite->name = $nonplayerName;
+                $invite->email = $nonplayerEmail;
+                $invite->save();
+                unset($invite);
+            }
 
         }
 
-        $success_message = $nonplayerName." has been invited to your league!";
+        Flash::message('Players have been invited to the league');
+
+        //$success_message = $nonplayerName." has been invited to your league!";
         /* route back to the invite page */
-        return Redirect::route('league-manage', [$league->id])->with(['message'=>$success_message]);
+        return Redirect::route('league-manage', [$league->id]);//->with(['message'=>$success_message]);
     }
 
     /**

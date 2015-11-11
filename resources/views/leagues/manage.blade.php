@@ -20,16 +20,17 @@
 
     <div class="one-quarter">
         <h4>Players</h4>
-        <ul class="unstyled">
+        <ul>
         @foreach ($league->players as $player)
-            <li><a href="{{URL('users', array('id'=>$player->id))}}">{{$player->fullName()}}</li>
+            <li><a href="{{URL('users', array('id'=>$player->id))}}">{{$player->fullName()}}</a></li>
         @endforeach
         </ul>
 
-        <ul>
-            <li><a href="{{URL('league-add-player', array('id'=>$league->id))}}">Add Player</a></li>
-        </ul>
-
+        @if($league->players->count() < $league->rule->max_players)
+        <br/>
+        <a href="{{URL('select-participants', array('id'=>$league->id))}}" class="button green small">Add more players</a></li>
+        
+        @endif
     </div>
 
     <div class="one-quarter last">
@@ -49,37 +50,64 @@
         </fieldset>
         {!! Form::close() !!}
 
-        <dl>
-            <dt>Durations</dt>
-            <dd>Auction: {{$league->rule->auction_duration}} hours <br/>Round: {{$league->rule->round_duration}} hours <br/>Movies: {{$league->rule->ind_film_countdown}} mins</dd>
-            <dt>Bids</dt>
-            <dd>Min: {{$league->rule->min_bid}} Max: {{$league->rule->max_bid}}</dd>
-            <dt>Selection</dt>
-            <dd>Random: {{($league->rule->randomizer == "Y") ? "Yes" : "No"}} <br/>Auto-Select: {{($league->rule->auto_select == 'Y') ? "Yes" : "No"}} <br/>Grouped: {{$league->rule->auction_movie_release}}</dd>
-            <dt>Blind</dt>
-            <dd>{{$league->rule->blind_bid == "Y" ? "Yes" : "No"}}</dd>
-            <dt>Misc</dt>
-            <dd>Timeout: {{$league->rule->auction_timeout}} mins <br/>Denomination: {{$league->rule->denomination}} <br/>Movie Takings: {{$league->rule->movie_takings_duration}} weeks</dd>
-        </dl>
+        <table class="feature-table dark-gray">
+            <tr>
+                <td>Durations</td>
+                <td>Auction: {{$league->rule->auction_duration}} hours <br/>Round: {{$league->rule->round_duration}} hours <br/>Movies: {{$league->rule->ind_film_countdown}} mins</td>
+            </tr>
+            <tr>
+                <td>Bids</td>
+                <td>Min: {{$league->rule->min_bid}} Max: {{$league->rule->max_bid}}</td>
+            </tr>
+            <tr>
+                <td>Selection</td>
+                <td>Random: {{($league->rule->randomizer == "Y") ? "Yes" : "No"}} <br/>Auto-Select: {{($league->rule->auto_select == 'Y') ? "Yes" : "No"}} <br/>Grouped: {{$league->rule->auction_movie_release}}</td>
+            </tr>
+            <tr>
+                <td>Blind</td>
+                <td>{{$league->rule->blind_bid == "Y" ? "Yes" : "No"}}</td>
+            </tr>
+            <tr>
+                <td>Misc</td>
+                <td>Timeout: {{$league->rule->auction_timeout}} mins <br/>Denomination: {{$league->rule->denomination}} <br/>Movie Takings: {{$league->rule->movie_takings_duration}} weeks</td>
+            </tr>
+        </table>
         @else
-        <dl>
-            <dt>Players</dt>
-            <dd>Min: {{$league->rule->min_players}} Max: {{$league->rule->max_players}}</dd>
-            <dt>Movies</dt>
-            <dd>Min: {{$league->rule->min_movies}} Max: {{$league->rule->max_movies}}</dd>
-            <dt>Durations</dt>
-            <dd>Auction: {{$league->rule->auction_duration}} hours <br/>Round: {{$league->rule->round_duration}} hours <br/>Movies: {{$league->rule->ind_film_countdown}} mins</dd>
-            <dt>Bids</dt>
-            <dd>Min: {{$league->rule->min_bid}} Max: {{$league->rule->max_bid}}</dd>
-            <dt>Start/End</dt>
-            <dd>Start Time: {{$league->rule->start_time}} End Time: {{$league->rule->end_time}}</dd>
-            <dt>Selection</dt>
-            <dd>Random: {{($league->rule->randomizer == "Y") ? "Yes" : "No"}} <br/>Auto-Select: {{($league->rule->auto_select == 'Y') ? "Yes" : "No"}} <br/>Grouped: {{$league->rule->auction_movie_release}}</dd>
-            <dt>Blind</dt>
-            <dd>{{$league->rule->blind_bid == "Y" ? "Yes" : "No"}}</dd>
-            <dt>Misc</dt>
-            <dd>Timeout: {{$league->rule->auction_timeout}} mins <br/>Denomination: {{$league->rule->denomination}} <br/>Movie Takings: {{$league->rule->movie_takings_duration}} weeks</dd>
-        </dl>
+
+        <table class="feature-table dark-gray">
+            <tr>
+                <td>Players</td>
+                <td>Min: {{$league->rule->min_players}} Max: {{$league->rule->max_players}}</td>
+            </tr>
+            <tr>
+                <td>Movies</td>
+                <td>Min: {{$league->rule->min_movies}} Max: {{$league->rule->max_movies}}</td>
+            </tr>
+            <tr>
+                <td>Start/End</td>
+                <td>Start Time: {{$league->rule->start_time}} End Time: {{$league->rule->end_time}}</td>
+            </tr>
+            <tr>
+                <td>Durations</td>
+                <td>Auction: {{$league->rule->auction_duration}} hours <br/>Round: {{$league->rule->round_duration}} hours <br/>Movies: {{$league->rule->ind_film_countdown}} mins</td>
+            </tr>
+            <tr>
+                <td>Bids</td>
+                <td>Min: {{$league->rule->min_bid}} Max: {{$league->rule->max_bid}}</td>
+            </tr>
+            <tr>
+                <td>Selection</td>
+                <td>Random: {{($league->rule->randomizer == "Y") ? "Yes" : "No"}} <br/>Auto-Select: {{($league->rule->auto_select == 'Y') ? "Yes" : "No"}} <br/>Grouped: {{$league->rule->auction_movie_release}}</td>
+            </tr>
+            <tr>
+                <td>Blind</td>
+                <td>{{$league->rule->blind_bid == "Y" ? "Yes" : "No"}}</td>
+            </tr>
+            <tr>
+                <td>Misc</td>
+                <td>Timeout: {{$league->rule->auction_timeout}} mins <br/>Denomination: {{$league->rule->denomination}} <br/>Movie Takings: {{$league->rule->movie_takings_duration}} weeks</td>
+            </tr>
+        </table>
     @endif
 
     </div>
@@ -87,16 +115,14 @@
     <div class="sep"></div>
     <h4>Available Movies</h4>
     @if($league->movies->count() > 0)
-    <ul class="inline">
+    <ul>
+
     @foreach($league->movies as $movie)
-        <li>{{$movie->pivot->id}}: {{$movie->name}} <a href="{{URL('league-remove-movie', array($movie->pivot->id))}}">x</a></li>
+        <li>{{$movie->pivot->id}}: {{$movie->name}}</li>
     @endforeach
     </ul>
     @else
     <p>There are no movies associated with this league presently.</p>
     @endif
-    <ul class="inline">
-        <li><a href="{{URL('league-add-movie', array('id'=>$league->id))}}">Add Movie</a></li>
-    </ul>
 </section>
 @endsection

@@ -64,6 +64,12 @@
             <!-- ************** - Content - ************** -->
             <div id="content">
                 
+                @if (Session::has('flash_notification.message'))
+                <div class="success custom-box-wrap">
+                    <p>{{ Session::get('flash_notification.message') }}</p>
+                </div><!--/ info-->
+                @endif
+
                 @yield('content')
                 
             </div><!--/ #content-->
