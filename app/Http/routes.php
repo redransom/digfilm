@@ -22,7 +22,16 @@ Route::get('create', 'WelcomeController@create');
 Route::get('movie-knowledge/{id}', 'WelcomeController@movieKnow');
 Route::get('movies-genre/{id}', 'WelcomeController@movieGenre');
 Route::get('register-successful', ['as'=>'register-successful', 'uses'=>'WelcomeController@registerSuccessful']);
-Route::get('email-verified', ['as'=>'email-verified', 'uses'=>'WelcomeController@emailVerified']);
+Route::get('accept-invite/{id}', ['as'=>'accept-invite', 'uses'=>'LeaguesController@acceptInvite']);
+Route::get('decline-invite/{id}', ['as'=>'decline-invite', 'uses'=>'LeaguesController@declineInvite']);
+
+// Registration routes...
+Route::get('auth/register', [
+  'as' => 'register', 
+  'uses' => 'Auth\AuthController@getRegister'
+]);
+Route::post('auth/register', 'Auth\AuthController@postRegister');
+
 /*
 Need to check for login
 */

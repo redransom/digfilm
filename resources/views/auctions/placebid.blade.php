@@ -18,7 +18,7 @@
 
         $max_bid = $rule->max_bid;
         //make sure user cant overspend on this league
-        if ($max_bid > $leagueUser->balance || (is_null($max_bid) || $max_bid == 0)
+        if (($max_bid > $leagueUser->balance) || (is_null($max_bid) || $max_bid == 0))
             $max_bid = $leagueUser->balance;
     ?>
     <p>Bid on <strong>{{$auction->movie->name}}</strong>.</p>

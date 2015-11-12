@@ -156,7 +156,7 @@ class LeaguesController extends Controller {
             $leaguerule->save();
         }
 
-        if ($input['auction_close_date'] == '') {
+        if (!isset($input['auction_close_date'])) {
             $close_date = $league->auction_start_date;
             $auction_duration = $leaguerule->auction_duration;
             $league->auction_close_date = date("Y-m-d G:i:s", strtotime('+'.$auction_duration.' hours', strtotime($close_date)));
@@ -176,7 +176,7 @@ class LeaguesController extends Controller {
         } else {
             /* come by customer create league so go to select movies page */
             //user comes from admin - get league owner and add as a league player
-            $leagueuser = LeagueUser::create( ['user_id'=>$authUser->id, 'league_id'=>$league->id] );
+            $leagueuser = LeagueUser::create( ['user_id'=>$authUser->id, 'league_id'=>$league->id, 'balance'=>100] );
 
             if (isset($leaguerule)) {
                 //check if the auto complete is chosen go to the choose participants
@@ -624,22 +624,7 @@ class LeaguesController extends Controller {
             $nonplayerEmail = isset($input['email_address'][$name_count]) ? $input['email_address'][$name_count] : "";
             $currentUser = User::where('email', $nonplayerEmail)->first();
 
-            if (!isset($currentUser->id)) {
-
-                $subject = "You've been invited to join the ".$league->name." league!";
-                $data = ['inviteName' => $nonplayerName,
-                        'inviteEmail' => $nonplayerEmail,
-                        'user' => $authUser,
-                        'ownerName' =>$ownerName,
-                        'league'=>$league,
-                        'subject'=>$subject];
-
-                //send invite email to new player
-                Mail::send('emails.invite', $data, function($message) use ($nonplayerEmail)
-                {
-                    $message->from('invite@digfilm.com', 'DigFilm Entertainment');
-                    $message->to($nonplayerEmail);
-                });
+            if (!isset($currentUser->id) && $nonplayerEmail != "") {
 
                 //do invite as well
                 $invite = new LeagueInvite();
@@ -648,7 +633,26 @@ class LeaguesController extends Controller {
                 $invite->name = $nonplayerName;
                 $invite->email = $nonplayerEmail;
                 $invite->save();
+                $invite_id = $invite->id;
+
                 unset($invite);
+
+                $subject = "You've been invited to join the ".$league->name." league!";
+                $data = ['inviteName' => $nonplayerName,
+                        'inviteEmail' => $nonplayerEmail,
+                        'user' => $authUser,
+                        'ownerName' =>$ownerName,
+                        'league'=>$league,
+                        'subject'=>$subject,
+                        'invite_id'=>$invite_id];
+
+                //send invite email to new player
+                Mail::send('emails.invite', $data, function($message) use ($nonplayerEmail)
+                {
+                    $message->from('invite@digfilm.com', 'DigFilm Entertainment');
+                    $message->to($nonplayerEmail);
+                });
+
             }
 
         }
@@ -658,6 +662,84 @@ class LeaguesController extends Controller {
         //$success_message = $nonplayerName." has been invited to your league!";
         /* route back to the invite page */
         return Redirect::route('league-manage', [$league->id]);//->with(['message'=>$success_message]);
+    }
+
+    /**
+     * Player has accepted invitation
+     * Update LeagueInvite with success
+     * Take the player to the registration page
+     * On registration check that the player has accepted an invitation and add them to the league if they have.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function acceptInvite($inviteId) 
+    {
+         if( ! $inviteId) {
+            throw new InvalidInviteCodeException;
+        }
+
+        $invite = LeagueInvite::find($inviteId);//whereInvite($confirmation_code)->first();
+        $league = League::find($invite->leagues_id);
+
+        //update invite to say it's been accepted
+        $invite->status = 'A';
+        $invite->save();
+
+        //TODO: Need to determine if league hasn't already started 
+        //if this is the case we need to let them know its too late
+
+        if (!is_null($invite->users_id)) {
+            //this is already a player - add them to the league and direct them to it
+
+            Flash::message('Thank you for accepting '.$league->owner->name.' invitation to join the '.$league->name.' league.');
+
+            //just make sure the player isn't already a player in the league
+            $player = LeagueUser::where('league_id', $league->id)->where('user_id', $invite->users_id)->first();
+            if ($player->id) {
+                $lu = new LeagueUser();
+                $lu->league_id = $league->id;
+                $lu->user_id = $invite->users_id;
+                $lu->balance = 100;
+                $lu->save();
+
+            }
+
+            return Redirect::route('league-show', [$league->id]);
+        } else {
+            //a new player - redirect to the registration page
+            Flash::message('Thank you for accepting '.$league->owner->name.' invitation to join the '.$league->name.' league.');
+            return Redirect::route('register');
+        }
+    }
+
+    /**
+     * Player has declined invitation
+     * Update the player invite to decline
+     * TODO: Add message for player to say this invite has failed
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function declineInvite($inviteId=0) 
+    {
+         if( ! $inviteId) {
+            throw new InvalidInviteCodeException;
+        }
+
+        $invite = LeagueInvite::find($inviteId);//whereInvite($confirmation_code)->first();
+        $league = League::find($invite->leagues_id);
+
+        //update invite to say it's been accepted
+        $invite->status = 'D';
+        $invite->save();
+
+        if (!is_null($invite->users_id)) {
+            Flash::message('We are sorry you have declined '.$league->owner->name.' invitation to join the '.$league->name.' league. Perhaps there are other leagues you are interested in joining?');
+        } else {
+            Flash::message('We are sorry you have declined '.$league->owner->name.' invitation to join the '.$league->name.' league. You can still join the website if you want to?');            
+        }
+        return Redirect::route('/');
     }
 
     /**
@@ -757,22 +839,29 @@ class LeaguesController extends Controller {
                 
                 if ($player_count >= $rules->min_players && $player_count <= $rules->max_players) {
                     Log::info("League ".$league->name." has the players - ". $player_count);
-                    $start_time = $rules->start_time;
-                    $time_to_start = time() + (60 * 60 * 4); //60 secs * 60 mins * 4 = 4hours
-                    Log::info("Time dif: $time_to_start - ".strtotime($start_time));
-                    if ($time_to_start > strtotime($start_time)) {
-                        //the new date is no good so set the time for the next day
-                        $league->auction_start_date = date("Y-m-d G:i:s", strtotime('+1 day', strtotime((date("Y-m-d")." ".$start_time))));
-                    } else {
-                        $auction_start_date = date("Y-m-d G:i:s", strtotime($start_time));
-                        // ok we are fine to go ahead with this date today - so lets set the time to it
-                        $league->auction_start_date = $auction_start_date;
+
+                    if(is_null($league->auction_start_date)) {
+                        $start_time = $rules->start_time;
+                        $time_to_start = time() + (60 * 60 * 4); //60 secs * 60 mins * 4 = 4hours
+                        Log::info("Time dif: $time_to_start - ".strtotime($start_time));
+                        if ($time_to_start > strtotime($start_time)) {
+                            //the new date is no good so set the time for the next day
+                            $league->auction_start_date = date("Y-m-d G:i:s", strtotime('+1 day', strtotime((date("Y-m-d")." ".$start_time))));
+                        } else {
+                            $auction_start_date = date("Y-m-d G:i:s", strtotime($start_time));
+                            // ok we are fine to go ahead with this date today - so lets set the time to it
+                            $league->auction_start_date = $auction_start_date;
+                        }
+
                     }
 
-                    //need to create close date for auction
-                    $close_date = $league->auction_start_date;
-                    $auction_duration = $rules->auction_duration;
-                    $league->auction_close_date = date("Y-m-d G:i:s", strtotime('+'.$auction_duration.' hours', strtotime($close_date)));
+                    if(is_null($league->auction_close_date)) {
+                        //need to create close date for auction
+                        $close_date = $league->auction_start_date;
+                        $auction_duration = $rules->auction_duration;
+                        $league->auction_close_date = date("Y-m-d G:i:s", strtotime('+'.$auction_duration.' hours', strtotime($close_date)));
+
+                    }
 
                     $league->auction_stage = 0;
                     $league->save();
@@ -785,12 +874,12 @@ class LeaguesController extends Controller {
                             'subject' => 'More Players Needed!'];
 
                     $ownerEmail = $league->owner->email;
-                    /*Mail::send('emails.players_needed', $data, function($message) use ($ownerEmail)
+                    Mail::send('emails.players_needed', $data, function($message) use ($ownerEmail)
                     {
                         $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
                         $message->to($ownerEmail);
                         $message->subject('More Players Needed!');
-                    });*/
+                    });
 
                     //TODO: Find more players to see if there are any that can be invited
                     
@@ -810,10 +899,14 @@ class LeaguesController extends Controller {
      */
     public function preparePlayersForAuctions() 
     {
+        
+        //DB::connection()->enableQueryLog();
         $leaguesToNotify = League::whereNotNull('auction_start_date')
             ->where('auction_start_date', '>', date("Y-m-d H:i:s"))
             ->where('enabled', '1')->where('auction_stage', '0')->get();
 
+        /*$queries = DB::getQueryLog();
+        print_r($queries);*/
         //need to make sure each league has rules!
         foreach ($leaguesToNotify as $league) {
             $rules = $league->rule;
@@ -833,8 +926,29 @@ class LeaguesController extends Controller {
                 $available_movie_count = count($available_movies);
                 
                 Log::info("Movie Check - Available: ".count($available_movies)." Min Required: ".$min_movies);
+
+                //if Movie amount is less than what's required - we need to get an amount that is allowable based on 
+                //the auction type. the auction movie release option determines if we can take all
+                //available movies or a select amount
+                $grouping = $rules->auction_movie_release;
+                if (is_null($grouping) || $grouping == 0) {
+                    //all movies to be added
+                    $min_movies = count($available_movies);
+                } else {
+                    //make a calculation to determine which is the best set of movies to take
+                    /* this works as:
+                        max movies is 34 
+                        total requireid is 50 
+                        not possible so using grouping of 10
+                        34 / 10 = 3.4 which we then round down to 3
+                        3 * 10 = 30 movies that we can take
+                    */
+                    $movie_multiplier = intval(count($available_movies) / $grouping);
+                    $min_movies = $movie_multiplier * $grouping;
+                }
+
                 //need to make sure we have enough movies
-                if (count($available_movies) > $min_movies) {
+                if (count($available_movies) >= $min_movies) {
                     $chosen_movies = array();
 
                     for($movie_no = 0; $movie_no<$min_movies; $movie_no++) {

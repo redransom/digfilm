@@ -21,6 +21,10 @@
                         {!! Form::text('name', null, ['class'=>'span8', 'placeholder'=>'Enter league name here...']) !!}
                     </div><!--/ row-->
                     
+                    <div class="row">
+                        <label for="name"><span class="required">*</span>Start Date/Time:</label>
+                        {!! Form::text('auction_start_date', null, ['class'=>'span8', 'placeholder'=>'YYYY-MM-DD HH:II']) !!}
+                    </div><!--/ row-->
                 </div><!--/ textfield-->
             </fieldset>
     </div><!--/ contact-->
