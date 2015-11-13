@@ -138,6 +138,7 @@ class RuleSetsController extends Controller {
 
         $ruleset->name = $input['name'];
         $ruleset->description = $input['description'];
+        $ruleset->admin_only = $input['admin_only'];
         $ruleset->blind_bid = $input['blind_bid'];
         $ruleset->min_players = $input['min_players'];
         $ruleset->max_players = $input['max_players'];

@@ -36,8 +36,9 @@
     <div class="one-quarter last">
         <h4>Rules</h4>
         @if($league->auction_stage == 0)
-        {!! Form::open(array('route' => array('league-rules', $league->rule->id), 'class'=>'form-horizontal row-fluid', 'method'=>'POST')) !!}
+        {!! Form::open(array('route' => array('player-rules', $league->id), 'class'=>'form-horizontal row-fluid', 'method'=>'POST')) !!}
         <fieldset>
+            <input type="hidden" name="location" value="C"/>
             <label>Number of players:</label><br/>
             {!! Form::select('min_players', [1=>1, 2=>2, 3=>3, 4=>4, 5=>5, 6=>6, 7=>7, 8=>8, 9=>9, 10=>10], $league->rule->min_players, ['class'=>'span2']) !!} to 
             {!! Form::select('max_players', [1=>1, 2=>2, 3=>3, 4=>4, 5=>5, 6=>6, 7=>7, 8=>8, 9=>9, 10=>10, 11=>11, 12=>12, 13=>13, 14=>14, 15=>15], $league->rule->max_players, ['class'=>'span2']) !!}<br/>

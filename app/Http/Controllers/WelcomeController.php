@@ -132,7 +132,7 @@ class WelcomeController extends Controller {
 	 */
 	public function create() {
 		$authUser = Auth::user();
-		$rules = RuleSet::all();
+		$rules = RuleSet::where('admin_only', 'N')->get();
 
 		return view('create-league')
 			->with('rules', $rules)

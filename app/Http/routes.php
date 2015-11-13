@@ -64,6 +64,8 @@ Route::group(['middleware'=>'auth'], function() {
         Route::post('league-invite', ['as'=>'league-invite', 'uses'=>'LeaguesController@postInvitePlayer']);
         Route::get('place-bid/{id}', ['as'=>'place-auction-bid', 'uses'=>'AuctionsController@placeBid']);
 
+        Route::post('players/{id}/rules', ['as'=>'player-rules', 'uses'=>'LeaguesController@postPlayerRules']);
+
         /* Admin routes */
         Route::get('users/{id}/disable', ['as'=>'user-disable', 'uses'=>'UsersController@disable']);
         Route::get('users/{id}/enable', ['as'=>'user-enable', 'uses'=>'UsersController@enable']);
@@ -72,6 +74,8 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('leagues/{id}/enable', ['as'=>'league-enable', 'uses'=>'LeaguesController@enable']);
         Route::get('leagues/{id}/rules', ['as'=>'league-rules', 'uses'=>'LeaguesController@getRules']);
         Route::post('leagues/{id}/rules', ['as'=>'league-rules', 'uses'=>'LeaguesController@postRules']);
+
+
 
         Route::get('league-add-movie/{id}', ['as'=>'league-add-movie', 'uses'=>'LeaguesController@addMovie']);
         Route::post('add-movie/{id}', ['as'=>'add-movie', 'uses'=>'LeaguesController@postMovie']);

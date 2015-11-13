@@ -23,7 +23,8 @@ class CreateLeagueRequest extends Request {
 	{
 		return [
             'name' => ['required'],
-            'users_id' => ['required']
+            'users_id' => ['required'],
+            'auction_start_date' => ['required']
         ];
 	}
 

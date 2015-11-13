@@ -15,8 +15,9 @@
                                 <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped  display" width="100%">
                                     <thead>
                                         <tr>
-                                            <th width="30%">Name</th>
-                                            <th width="30%">Desc</th>
+                                            <th width="20%">Name</th>
+                                            <th width="40%">Desc</th>
+                                            <th width="10%">Admin</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -26,6 +27,7 @@
                                         <tr class="<?php echo (($ruleCnt++ % 2) == 0) ? "odd" : "even"; ?> rating{{$ruleset->id}}">
                                             <td><a href="{{URL('rulesets', array('id'=>$ruleset->id))}}">{{$ruleset->name}}</a></td>
                                             <td>{{$ruleset->description}}</td>
+                                            <td>{{(($ruleset->admin_only == 'Y') ? "Yes" : "No")}}</td>
                                             <td><a class="btn btn-mini btn-primary" href="{{URL('rulesets/'.$ruleset->id.'/edit')}}">Edit</a>
                                              {!! Form::open(array('route' => array('rulesets.destroy', $ruleset->id), 'method' => 'delete', 'style'=>'display:inline')) !!}
                                                 <button type="submit" class="btn btn-danger btn-mini">Delete</button>

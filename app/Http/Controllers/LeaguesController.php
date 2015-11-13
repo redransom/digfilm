@@ -624,17 +624,21 @@ class LeaguesController extends Controller {
             $nonplayerEmail = isset($input['email_address'][$name_count]) ? $input['email_address'][$name_count] : "";
             $currentUser = User::where('email', $nonplayerEmail)->first();
 
-            if (!isset($currentUser->id) && $nonplayerEmail != "") {
+            if ($nonplayerEmail != "") {
 
                 //do invite as well
                 $invite = new LeagueInvite();
                 $invite->leagues_id = $league->id;
-                $invite->users_id = null;
-                $invite->name = $nonplayerName;
-                $invite->email = $nonplayerEmail;
+
+                if (!isset($currentUser->id)) {
+                    $invite->name = $nonplayerName;
+                    $invite->email = $nonplayerEmail;
+                } else {
+                    $invite->users_id = $currentUser->id;
+                }
+
                 $invite->save();
                 $invite_id = $invite->id;
-
                 unset($invite);
 
                 $subject = "You've been invited to join the ".$league->name." league!";
@@ -647,9 +651,10 @@ class LeaguesController extends Controller {
                         'invite_id'=>$invite_id];
 
                 //send invite email to new player
-                Mail::send('emails.invite', $data, function($message) use ($nonplayerEmail)
+                Mail::send('emails.invite', $data, function($message) use ($nonplayerEmail, $subject)
                 {
                     $message->from('invite@digfilm.com', 'DigFilm Entertainment');
+                    $message->subject($subject);
                     $message->to($nonplayerEmail);
                 });
 
@@ -661,7 +666,7 @@ class LeaguesController extends Controller {
 
         //$success_message = $nonplayerName." has been invited to your league!";
         /* route back to the invite page */
-        return Redirect::route('league-manage', [$league->id]);//->with(['message'=>$success_message]);
+        //return Redirect::route('league-manage', [$league->id]);//->with(['message'=>$success_message]);
     }
 
     /**
@@ -997,6 +1002,7 @@ class LeaguesController extends Controller {
                     Mail::send('emails.movies_needed', $data, function($message) use ($ownerEmail)
                     {
                         $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
+                        $message->subject('More movies are needed');
                         $message->to($ownerEmail);
                     });
                 }
@@ -1114,16 +1120,17 @@ class LeaguesController extends Controller {
             //now send email to players to tell them the auction is live
              //need to pass in the league details for the owner
             foreach ($league->players as $player) {
-
+                $subject = 'League '.$league->name.' has started!';
                 $data = ['playerName' => $player->fullName(),
                         'leagueName' => $league->name,
                         'leagueId' => $league->id,
-                        'subject' => 'League '.$league->name.' has started!'];
+                        'subject' => $subject];
 
                 $playerEmail = $player->email;
-                Mail::send('emails.auction_started', $data, function($message) use ($playerEmail)
+                Mail::send('emails.auction_started', $data, function($message) use ($playerEmail, $subject)
                 {
                     $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
+                    $message->subject($subject);
                     $message->to($playerEmail);
                 });
 

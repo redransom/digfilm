@@ -36,6 +36,14 @@
                         </div>
                     </div>
 
+                    <div class="control-group">
+                        <label class="control-label" for="LeagueName">Admin Only?</label>
+                        <div class="controls">
+                            {!! Form::select('admin_only', ["N"=>"No", "Y" => "Yes"], $ruleset->admin_only, ['class'=>'span2']) !!}
+                            <span class="help-inline">Set this to be yes if you only want it to be available on admin. Can also be used to hide rule sets.</span>
+                        </div>
+                    </div>
+
                     <h3>Game Specification</h3>
 
                     <div class="control-group">
