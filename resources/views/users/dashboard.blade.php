@@ -10,7 +10,58 @@
 
     <h2>Leagues Participating in</h2>
     <p>Here are the leagues you are in:</p>
-    @if($authUser->inLeagues->count() > 0)
+    @if($authUser->inLeagues()->where('auction_stage', '2')->count() > 0)
+
+    <h3>Live Auctions</h3>
+    <table class="feature-table dark-gray">
+        <thead>
+            <tr> 
+                <th width="40%">Name</th> 
+                <th width="18%">Rules</th> 
+                <th width="12%">Players</th>
+                <th width="21%">Auction Ends?</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($authUser->inLeagues()->where('auction_stage', '2')->orderBy('auction_close_date', 'asc')->get() as $league)
+            <tr>
+                <td><a class="btn btn-mini btn-danger" href="{{URL('league-show/'.$league->id)}}">{{$league->name}}</a></td>
+                <td>{{$league->rule_set->name}}</td>
+                <td>{{count($league->players)}}</td>
+                <td>{{date("jS M Y H:i", strtotime($league->auction_close_date))}}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table><!--/ feature-table-->
+
+    @endif
+
+    @if($authUser->inLeagues()->where('auction_stage', '3')->count() > 0)
+    <h3>Live Leagues</h3>
+    <table class="feature-table dark-gray">
+        <thead>
+            <tr> 
+                <th width="40%">Name</th> 
+                <th width="18%">Rules</th>
+                <th width="12%">Players</th>
+                <th width="21%">League Ends?</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($authUser->inLeagues()->where('auction_stage', '3')->orderBy('name', 'asc')->get() as $league)
+            <tr>
+                <td><a class="btn btn-mini btn-danger" href="{{URL('roster/'.$league->id)}}">{{$league->name}}</a></td>
+                <td>{{$league->rule_set->name}}</td>
+                <td>{{count($league->players)}}</td>
+                <td>{{date("jS M Y H:i", strtotime($league->end_date))}}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table><!--/ feature-table-->
+    @endif
+
+    @if($authUser->inLeagues()->where('auction_stage', '<', '2')->count() > 0)
+    <h3>Leagues due to start</h3>
     <table class="feature-table dark-gray">
         <thead>
             <tr> 
@@ -21,7 +72,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($authUser->inLeagues as $league)
+            @foreach($authUser->inLeagues()->where('auction_stage', '<', '2')->orderBy('name', 'asc')->get() as $league)
             <tr>
                 @if($league->auction_stage < 3)
                 <td><a class="btn btn-mini btn-danger" href="{{URL('league-show/'.$league->id)}}">{{$league->name}}</a></td>
@@ -43,10 +94,12 @@
             @endforeach
         </tbody>
     </table><!--/ feature-table-->
-    @else
+    @endif
+
+    @if($authUser->inLeagues()->where('auction_stage', '<', '4')->count() > 0)
     <p>You are not part of any leagues currently.</p>
     @endif
-    
+
     <h2>Leagues Owned</h2>
 
     @if($authUser->leagues->count() > 0)

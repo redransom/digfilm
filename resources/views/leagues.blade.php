@@ -23,12 +23,12 @@
                 <td>{{((!empty($league->rule) && $league->rule->league_type == 'R') ? "Private" : "Public")}}</td>
                 <td>{{date("jS M Y")}}</td>
                 <td>
-                @if(isset($authUser) && isset($league->rule) && $league->rule->league_type =='U')
+                @if(isset($authUser) && isset($league->rule) && $league->type =='U')
                 <a class="button small dark" href="{{URL('leagues/'.$league->id.'/join')}}">Join</a>
                 @elseif(isset($authUser) && isset($league->rule) && $league->rule->league_type =='R')
-                <a title="This league is invite only">Invite Only</a>
+                <a class="button small dark" title="This league is invite only">Invite Only</a>
                 @else
-                <a title="You need to be logged in to join a league">Join</a>
+                <a class="button small red" title="You need to be logged in to join a league">Join</a>
                 @endif
                 </td>
                 </tr>

@@ -8,10 +8,10 @@
                                     All Members</h3>
                             </div>
                             <div class="module-option clearfix">
-                                <form>
+                                {!! Form::open(array('route' => array('users-admin-search'), 'method'=>'PUT')) !!}
                                 <div class="input-append pull-left">
-                                    <input type="text" class="span3" placeholder="Filter by name...">
-                                    <button type="submit" class="btn">
+                                    <input type="text" class="span3" placeholder="Filter by name..." name="users-search-text" value="{{(isset($search) ? $search : "")}}">
+                                    <button class="btn" type="submit">
                                         <i class="icon-search"></i>
                                     </button>
                                 </div>

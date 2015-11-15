@@ -29,7 +29,18 @@ class UsersController extends Controller {
 		if (!isset($authUser))
 			return redirect('/auth/login');
 
-		$users = User::paginate(4);
+		$input = Input::all();
+		$search = "";
+		if (isset($input['users-search-text'])) {
+			$search_like = '%'.$input['users-search-text'].'%';
+
+			$users = User::where('name', 'LIKE', $search_like)
+				->orWhere('forenames', 'LIKE', $search_like)
+				->orWhere('surname', 'LIKE', $search_like)->paginate();
+			$search = $input['users-search-text'];
+		} else
+			$users = User::paginate(4);
+
 		$roles = Role::all();
 
 		return View("users.all")
@@ -37,6 +48,7 @@ class UsersController extends Controller {
 			->with('roles', $roles)
 			->with('authUser', $authUser)
 			->with('page_name', 'users')
+			->with('search', $search)
 			->with('instructions', 'Members List')
 			->with('title', 'Members');
 	}
@@ -414,9 +426,23 @@ class UsersController extends Controller {
         $user->confirmation_code = null;
         $user->save();
 
+        //make sure invites are handled
+        $invites = LeagueInvite::whereEmail($user->email)->get();
+        if($invites->count() > 0) {
+        	foreach ($invites as $invite) {
+        		$lu = new LeagueUser();
+        		$lu->league_id = $invite->leagues_id;
+        		$lu->user_id = $user->id;
+        		$lu->balance = 100;
+        		$lu->save();
+
+        		unset($lu);
+        	}
+        }
+
         Flash::message('You have successfully verified your account.');
 
-        return Redirect::route('email-verified');
+        return Redirect::route('email-verified');	
         //return redirect('/auth/login');
 	}
 

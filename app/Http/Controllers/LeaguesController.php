@@ -436,6 +436,44 @@ class LeaguesController extends Controller {
     }
 
     /**
+     * Update player rules when the league hasn't started
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function postPlayerRules($id) {
+        $input = Input::all();
+
+        //update min players/movies and start date
+        $league = League::find($id);
+        if(is_numeric($league->id)) {
+            $rule = $league->rule;
+
+            $movies_cnt = $league->movies->count();
+            $players_cnt = $league->players->count();
+
+            //now we can update the rules
+            $rule->min_movies = $input['min_movies'];
+            if ($movies_cnt < $input['max_movies'])
+                $rule->max_movies = $input['max_movies'];
+
+            $rule->min_players = $input['min_players'];
+            if ($players_cnt < $input['max_players'])
+                $rule->max_players = $input['max_players'];
+
+            $rule->save();
+
+            if($input['auction_start_date'] != '') 
+                $league->auction_start_date = $input['auction_start_date'];
+            $league->save();
+
+            Flash::message('League rules have been updated.');
+        }
+
+        return redirect()->route('league-manage', [$id]);
+    }
+
+    /**
      * Join  player to league - this will depend on rules eventally
      *
      * @param  int  $id
@@ -666,7 +704,7 @@ class LeaguesController extends Controller {
 
         //$success_message = $nonplayerName." has been invited to your league!";
         /* route back to the invite page */
-        //return Redirect::route('league-manage', [$league->id]);//->with(['message'=>$success_message]);
+        return Redirect::route('league-manage', [$league->id]);//->with(['message'=>$success_message]);
     }
 
     /**
@@ -923,11 +961,15 @@ class LeaguesController extends Controller {
                 //need to find the required number of movies
                 //get the minimum for now
                 $min_movies = $rules->min_movies;
-                //TODO: WIll need to add time on to this date to give leeway
+                $max_bid = $rules->max_bid;
+
+                //TODO: Make this option as a rule maybe?
                 $earliest_release_date = strtotime("+1 week", strtotime($league->auction_close_date));
 
                 //randomly populate movies
-                $available_movies = Movie::where('release_at', '>', date("Y-m-d", $earliest_release_date))->lists('id');
+                $available_movies = Movie::where('release_at', '>', date("Y-m-d", $earliest_release_date))
+                    ->where('original_bid', '<', $max_bid)->lists('id');
+
                 $available_movie_count = count($available_movies);
                 
                 Log::info("Movie Check - Available: ".count($available_movies)." Min Required: ".$min_movies);

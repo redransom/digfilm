@@ -98,7 +98,10 @@
             </tr>
             <tr>
                 <td>Selection</td>
-                <td>Random: {{($league->rule->randomizer == "Y") ? "Yes" : "No"}} <br/>Auto-Select: {{($league->rule->auto_select == 'Y') ? "Yes" : "No"}} <br/>Grouped: {{$league->rule->auction_movie_release}}</td>
+                <td>Random: {{($league->rule->randomizer == "Y") ? "Yes" : "No"}} <br/>Auto-Select: {{($league->rule->auto_select == 'Y') ? "Yes" : "No"}} 
+                @if(!is_null($league->rule->auction_movie_release))
+                <br/>Grouped: {{$league->rule->auction_movie_release}}
+                @endif</td>
             </tr>
             <tr>
                 <td>Blind</td>

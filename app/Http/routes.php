@@ -37,8 +37,7 @@ Need to check for login
 */
 
 Route::get('register/verify/{confirmationCode}', [
-    'as' => 'confirmation_path',
-    'uses' => 'UsersController@confirmRegister'
+    'as' => 'confirmation_path', 'uses' => 'UsersController@confirmRegister'
 ]);
 
 Route::controllers([
@@ -46,13 +45,20 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 ]);
 
+
+/*Route::group(['prefix' => 'admin', 'middleware' => ['role:Admin']], function() {
+    Route::get('/', 'UsersController@adminDashboard');
+    Route::get('/manage', ['middleware' => ['permission:manage-admins'], 'uses' => 'AdminController@manageAdmins']); 
+
+});
+*/
+
 Route::group(['middleware'=>'auth'], function() {
 
         /* Player routes */
         Route::get('profile', ['as'=>'profile', 'uses'=>'WelcomeController@getProfile']);
 
         Route::get('league-show/{id}', ['as'=>'league-show', 'uses'=>'WelcomeController@getLeague']);
-        Route::put('movies-admin-search', ['as'=>'movies-admin-search', 'uses'=>'MoviesController@index']);
         Route::get('league/{id}/manage', ['as'=>'league-manage', 'uses'=>'LeaguesController@getLeague']);
         Route::post('league', ['as'=>'league', 'uses'=>'WelcomeController@getLeague']);
         Route::get('roster/{id}', ['as'=>'roster', 'uses'=>'WelcomeController@getRoster']);
@@ -67,6 +73,27 @@ Route::group(['middleware'=>'auth'], function() {
         Route::post('players/{id}/rules', ['as'=>'player-rules', 'uses'=>'LeaguesController@postPlayerRules']);
 
         /* Admin routes */
+
+        /* Setting Entrust to ensure permissions are correct */
+        Entrust::routeNeedsRole('admin-dashboard', ['Admin'], Redirect::to('/'));
+        Entrust::routeNeedsRole('user-disable', ['Admin'], Redirect::to('/'));
+        Entrust::routeNeedsRole('user-enable', ['Admin'], Redirect::to('/'));
+        Entrust::routeNeedsRole('users', ['Admin'], Redirect::to('/'));
+        Entrust::routeNeedsRole('league-disable', ['Admin'], Redirect::to('/'));
+        Entrust::routeNeedsRole('movies', ['Admin'], Redirect::to('/'));
+        Entrust::routeNeedsRole('contributors', ['Admin'], Redirect::to('/'));
+        Entrust::routeNeedsRole('leagues*', ['Admin'], Redirect::to('/'));
+        Entrust::routeNeedsRole('rulesets*', ['Admin'], Redirect::to('/'));
+        Entrust::routeNeedsRole('auctions*', ['Admin'], Redirect::to('/'));
+
+        Entrust::routeNeedsRole('league-disable', ['Admin'], Redirect::to('/'));
+        Entrust::routeNeedsRole('league-enable', ['Admin'], Redirect::to('/'));
+        Entrust::routeNeedsRole('movie-disable', ['Admin'], Redirect::to('/'));
+        Entrust::routeNeedsRole('movie-enable', ['Admin'], Redirect::to('/'));
+
+        Route::put('movies-admin-search', ['as'=>'movies-admin-search', 'uses'=>'MoviesController@index']);
+        Route::put('users-admin-search', ['as'=>'users-admin-search', 'uses'=>'UsersController@index']);
+
         Route::get('users/{id}/disable', ['as'=>'user-disable', 'uses'=>'UsersController@disable']);
         Route::get('users/{id}/enable', ['as'=>'user-enable', 'uses'=>'UsersController@enable']);
 
@@ -74,8 +101,6 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('leagues/{id}/enable', ['as'=>'league-enable', 'uses'=>'LeaguesController@enable']);
         Route::get('leagues/{id}/rules', ['as'=>'league-rules', 'uses'=>'LeaguesController@getRules']);
         Route::post('leagues/{id}/rules', ['as'=>'league-rules', 'uses'=>'LeaguesController@postRules']);
-
-
 
         Route::get('league-add-movie/{id}', ['as'=>'league-add-movie', 'uses'=>'LeaguesController@addMovie']);
         Route::post('add-movie/{id}', ['as'=>'add-movie', 'uses'=>'LeaguesController@postMovie']);
