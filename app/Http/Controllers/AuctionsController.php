@@ -13,12 +13,14 @@ use App\Models\Auction;
 use App\Models\AuctionBid;
 use App\Models\League;
 use App\Models\LeagueUser;
+use App\Models\LeagueMovie;
 use App\Models\LeagueRule;
 use Session;
 use Input;
 use Redirect;
 use Flash;
 use Illuminate\Http\Request;
+use Mail;
 
 class AuctionsController extends Controller {
 
@@ -385,4 +387,244 @@ class AuctionsController extends Controller {
         }
 
     }
+
+    /**
+     * Auctions have started with stage = 1 to see if they need more movies moved in
+     * Need to close the movies that are in there
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function loadNextMovies() 
+    {
+        //get all leagues where there are more rounds to play and the end date(start) is less than the current date
+        $leaguesStarted = League::where('auction_stage', 2)->where('enabled', '1')
+            ->where('round_amount','>','current_round')
+            ->where('round_start_date', '<', date("Y-m-d H:i"))->get();
+
+        foreach ($leaguesStarted as $league) {
+            $rule = $league->rule;
+
+            $movie_no = $rule->auction_movie_release;
+            $league_movies_count = $league->movies->count();
+
+            $league->current_round = $league->current_round + 1;
+            $round_duration = ($league->rule->round_duration != 0) ? $league->rule->round_duration : 1;
+            $league->round_start_date = date("Y-m-d H:i:s", strtotime("+".$round_duration." hours"));
+            
+            //clear out auctions that are being superceeded by the new round
+            //$this->prepareClearedAuctions();
+            //TODO: move this to above function with - all parameter
+            Auction::where('leagues_id', $league->id)->whereIn('ready_for_auction', ['1', '2'])
+                ->where('bid_count', '0')->update(['ready_for_auction'=>3]);
+            Auction::where('leagues_id', $league->id)->whereIn('ready_for_auction', ['1', '2'])
+                ->where('bid_count', '>', '0')->update(['ready_for_auction'=>4]);
+
+            $chosen_movies = array();
+            $movies = $league->movies()->where('chosen', '0')->get();
+            $available_movies = $movies->lists('id');
+            $available_movie_count = count($available_movies);
+
+            if ($rule->randomizer == 'Y') {
+                //choose random movies
+                //randomly choose the order of the first lot
+                Log::info("Add Random Movies to league: ".$league->id." - ".$league->name);
+                if ($available_movie_count > 0) {
+                    for($movie_cnt = 0; $movie_cnt<$movie_no; $movie_cnt++) {
+
+                        $random_pos = rand(0, ($available_movie_count - 1));
+                        if(isset($available_movies[$random_pos])) {
+                            $chosen_movies[] = $available_movies[$random_pos];
+
+                            unset($available_movies[$random_pos]);
+                            $available_movies = array_values($available_movies);
+                            $available_movie_count--;
+                        }
+                    }
+                } else
+                    Log::info("Error with auction - no more movies to read in..");
+
+            } else {
+                Log::info("Add Movies to league: ".$league->id." - ".$league->name);
+                //if not randomizer need to add find next group of films to add
+                for($movie_cnt = 0; $movie_cnt<$movie_no; $movie_cnt++) {
+                    $chosen_movies[] = $available_movies[$movie_cnt];
+                }
+            }
+
+            //we have only added the ones that have been chosen so can quit easily
+            foreach ($chosen_movies as $movie) {
+                $this->addAuction($league, $movie, $rule);
+            }
+
+            //check that this next round is final round - if so - add any movies that missed out in previous rounds
+            if ($league->current_round == $league->round_amount) {
+                $auction_start_time = date("Y-m-d H:i:s", time());
+                $auction_end_time = date("Y-m-d H:i:s", time() + ($rule->ind_film_countdown * 60));
+
+                Auction::where('leagues_id', $league->id)->where('ready_for_auction', '3')
+                    ->update(['ready_for_auction'=>'1', 'auction_start_time'=>$auction_start_time, 
+                            'auction_end_time'=>$auction_end_time]);                
+            }
+
+
+            //update league movies to set to current round
+            LeagueMovie::where('leagues_id', $league->id)->whereIn('movies_id', $chosen_movies)->where('chosen', '0')
+                    ->update(['chosen'=>($league->current_round - 1)]);
+            $league->save();
+            
+        }
+
+    } //end loadNextMovies
+
+    private function addAuction($league, $movie, $rule) {
+        $auction = new Auction();
+        $auction->leagues_id = $league->id;
+        if(is_numeric($movie))
+            $auction->movies_id = $movie;
+        else
+            $auction->movies_id = $movie->id;
+
+        //$start_date = $league->auction_start_date;
+        //based on the auction start date we need to work out the auction start time and end time
+        $auction_start_time = date("Y-m-d H:i:s", time());
+        $auction_end_time = date("Y-m-d H:i:s", time() + ($rule->ind_film_countdown * 60));
+        $auction->auction_start_time = $auction_start_time;
+        $auction->auction_end_time = $auction_end_time;
+        //save us having to go back to the rules table for this
+        if ($rule->auction_timeout != 0) {
+            $auction->timeout = $rule->auction_timeout;
+            $auction->timeout_date = date("Y-m-d H:i:s", strtotime('+'.intval($auction->timeout).' minutes', strtotime($auction->auction_end_time)));
+        }
+
+        $auction->ready_for_auction = 1;
+        $auction->save();
+
+        Log::info("Add Auction: ".(!is_numeric($movie)? $movie->name : $movie)." to ".$league->name." from ".$auction->auction_start_time." to ".$auction->auction_end_time);
+        unset($auction);
+    }
+
+    /**
+     * Auctions have started so look for all movies that have auction 
+     * Set stage to 1 - as its open
+     * Set first ten movies if necessary - 
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function executeAuctions() 
+    {
+        //only populate auctions when the time has passed
+        $leaguesStarted = League::whereNotNull('auction_start_date')->
+            where('auction_start_date', '<=', date("Y-m-d H:i"))
+            ->where('auction_stage', 1)->where('enabled', '1')->get();
+
+        foreach ($leaguesStarted as $league) {
+            //set that the auction has started
+            $league->auction_stage = 2;
+
+            $rule = $league->rule;
+
+            //clear the league balances in case this league has been re-run
+            //LeagueUser::clearBalances($league->id);
+            LeagueUser::where('league_id', $league->id)->update(['balance'=>100]);
+            //clear out old auctions
+            Auction::where('leagues_id', $league->id)->delete();
+
+            Log::info("Adding Auctions for league ".$league->name);
+            if (is_null($rule->auction_movie_release) || $rule->auction_movie_release == '') {
+                //TODO: Put this into model / controller of auction
+
+                //all movies to be enabled
+                foreach ($league->movies as $movie) {
+                    $this->addAuction($league, $movie, $rule);
+                }
+
+            } else {
+                //we need to split the movies
+                $movie_group = $rule->auction_movie_release;
+
+                //work out the rounds necessary
+                $movie_cnt = $league->movies->count();
+                $league->round_amount = $movie_cnt / $movie_group;
+                $league->current_round = 1;
+                //TODO: this is a botch job as I have named the column wrongly - should be round_end_date
+                //add round duration to the current time at the start
+                //default to 1 in case this has been overlooked
+                $round_duration = ($league->rule->round_duration != 0) ? $league->rule->round_duration : 1;
+                $league->round_start_date = date("Y-m-d H:i:s", strtotime("+".$round_duration." hours"));
+
+                if ($rule->randomizer == 'Y') {
+                    //choose random movies
+                    //randomly choose the order of the first lot
+                    $chosen_movies = array();
+
+                    $auctioned_movies = Auction::where('leagues_id', $league->id)->lists('id');
+                    if (!is_null($auctioned_movies)) 
+                        $movies = $league->movies()->whereNotIn('movies_id', $auctioned_movies)->get();
+                    else
+                        $movies = $league->movies;
+
+                    $available_movies = $movies->lists('id');
+
+                    $movie_add_count = 1;
+                    $available_movie_count = count($available_movies);
+
+                    for($movie_no = 0; $movie_no<$movie_group; $movie_no++) {
+
+                        $random_pos = rand(0, ($available_movie_count - 1));
+                        $chosen_movies[$movie_no] = $available_movies[$random_pos];
+                        unset($available_movies[$random_pos]);
+                        $available_movies = array_values($available_movies);
+                        $available_movie_count--;
+
+                    }
+
+                    //update league movies to set to current round
+                    LeagueMovie::where('leagues_id', $league->id)->whereIn('movies_id', $chosen_movies)
+                            ->update(['chosen'=>$league->current_round]);
+
+                    //we have only added the ones that have been chosen so can quit easily
+                    foreach ($chosen_movies as $movie) {
+                        $this->addAuction($league, $movie, $rule);
+                    }
+                } else {
+                    //enable first movies
+                    $league_movies_count = $league->movies->count();
+                    $movie_add_count = 1;
+                    if ($movie_group < $league_movies_count) {
+                        foreach ($league->movies as $movie) {
+                            $this->addAuction($league, $movie, $rule);
+                            if (($movie_add_count++) == $movie_group)
+                                break;
+                        }
+
+                    }
+                }
+
+            } // end auction movie release check
+
+            $league->save();
+            
+            //now send email to players to tell them the auction is live
+             //need to pass in the league details for the owner
+            foreach ($league->players as $player) {
+                $subject = 'League '.$league->name.' has started!';
+                $data = ['playerName' => $player->fullName(),
+                        'leagueName' => $league->name,
+                        'leagueId' => $league->id,
+                        'subject' => $subject];
+
+                $playerEmail = $player->email;
+                Mail::send('emails.auction_started', $data, function($message) use ($playerEmail, $subject)
+                {
+                    $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
+                    $message->subject($subject);
+                    $message->to($playerEmail);
+                });
+
+            }            
+        }
+
+    } //execute auctions
 }

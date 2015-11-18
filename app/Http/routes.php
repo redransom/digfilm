@@ -75,6 +75,7 @@ Route::group(['middleware'=>'auth'], function() {
         /* Admin routes */
 
         /* Setting Entrust to ensure permissions are correct */
+        Entrust::routeNeedsRole('place-auction-bid', ['Player'], Redirect::to('/'));
         Entrust::routeNeedsRole('admin-dashboard', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('user-disable', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('user-enable', ['Admin'], Redirect::to('/'));
@@ -84,7 +85,7 @@ Route::group(['middleware'=>'auth'], function() {
         Entrust::routeNeedsRole('contributors', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('leagues*', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('rulesets*', ['Admin'], Redirect::to('/'));
-        Entrust::routeNeedsRole('auctions*', ['Admin'], Redirect::to('/'));
+        Entrust::routeNeedsRole('auctions', ['Admin'], Redirect::to('/'));
 
         Entrust::routeNeedsRole('league-disable', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('league-enable', ['Admin'], Redirect::to('/'));
@@ -148,8 +149,8 @@ Route::group(['middleware'=>'auth'], function() {
 /* cron jobs */
 Route::get('start-auctions/5Htzx6V6nud998R353kz', ['as'=>'league-auctions', 'uses'=>'LeaguesController@startAuctions']);
 Route::get('notify-auctions/63zdE1TnIWUQ444PHPNa', ['as'=>'notify-auctions', 'uses'=>'LeaguesController@preparePlayersForAuctions']);
-Route::get('phase1-run-auctions/bf2Kc6hOuU7CO948h60s', ['as'=>'phase1-auctions', 'uses'=>'LeaguesController@executeAuctions']);
-Route::get('phase2-run-auctions/RBbgCtpSeTsKzM0UgoCg', ['as'=>'load-movies', 'uses'=>'LeaguesController@loadNextMovies']);
+Route::get('phase1-run-auctions/bf2Kc6hOuU7CO948h60s', ['as'=>'phase1-auctions', 'uses'=>'AuctionsController@executeAuctions']);
+Route::get('phase2-run-auctions/RBbgCtpSeTsKzM0UgoCg', ['as'=>'load-movies', 'uses'=>'AuctionsController@loadNextMovies']);
 Route::get('clear-endtime-auctions/Qjr13b0VbElXE8TdmcTc', ['as'=>'clear-endtime-auctions', 'uses'=>'AuctionsController@clearEndTimeAuctions']);
 Route::get('clear-timeout-auctions/N4KuW01N6cVmQZPTQcxd', ['as'=>'clear-timeout-auctions', 'uses'=>'AuctionsController@clearTimeoutAuctions']);
 Route::get('prep-cleared-auctions/N4KuW01N6cVmQZPTQcxd', ['as'=>'prepare-clear-auctions', 'uses'=>'AuctionsController@prepareClearedAuctions']);
