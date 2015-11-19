@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use Log;
+use DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
@@ -397,10 +398,13 @@ class AuctionsController extends Controller {
      */
     public function loadNextMovies() 
     {
-        //get all leagues where there are more rounds to play and the end date(start) is less than the current date
+ /*       DB::connection()->enableQueryLog();
+ */       //get all leagues where there are more rounds to play and the end date(start) is less than the current date
         $leaguesStarted = League::where('auction_stage', 2)->where('enabled', '1')
-            ->where('round_amount','>','current_round')
+            ->whereRaw('round_amount > current_round')
             ->where('round_start_date', '<', date("Y-m-d H:i"))->get();
+/*            $queries = DB::getQueryLog();
+                print_r($queries)*/;
 
         foreach ($leaguesStarted as $league) {
             $rule = $league->rule;
@@ -412,6 +416,7 @@ class AuctionsController extends Controller {
             $round_duration = ($league->rule->round_duration != 0) ? $league->rule->round_duration : 1;
             $league->round_start_date = date("Y-m-d H:i:s", strtotime("+".$round_duration." hours"));
             
+
             //clear out auctions that are being superceeded by the new round
             //$this->prepareClearedAuctions();
             //TODO: move this to above function with - all parameter

@@ -8,15 +8,17 @@
                     
                     <div class="entry-holder">
 
-                        @if($league->auction_stage == 2)
+                        <!-- First check -->
+                        @if($league->auction_stage == 2) 
                         
+                        <!-- is this for rounds? -->
                         @if((is_null($league->rule->auction_movie_release) || $league->rule->auction_movie_release == 0))
                         
                         <h3>Remaining Auction Time: </h3>
                         <ul class="dropspot-list"><li><span class="dropspot" style="width: 170px !important"><?php auctionTimer($league->id, $league->auction_close_date, 'league'); ?></span></li></ul>
                         
                         @else
-
+                        <!-- show rounds detail -->
                         <h3>Remaining Round Time: </h3>
                         <ul class="dropspot-list"><li><span class="dropspot" style="width: 170px !important"><?php auctionTimer($league->id, $league->round_start_date, 'league'); ?></span></li></ul>
                         
@@ -37,10 +39,24 @@
                         <span>Final Round!</span>
                         @endif
                         </div>
+
                         @endif 
+                        <!-- end rounds check -->
+                        
+                        @elseif($league->auction_stage < 2)
+
+                        <h3>Auction is due to start</h3>
+                        <p>At: <strong>{{date("jS M Y g:iA", strtotime($league->auction_start_date))}}</strong></p>
+                        
                         <!-- end first check -->
 
                         <div class="clear"></div>
+
+                        @elseif($league->auction_stage == 3)
+                        <?php $closeDate = date("j M Y h:iA", strtotime($league->auction_close_date));  ?>
+                        <h3>League Closes: </h3>
+                        <h4><span>{{$closeDate}}</span></h4>
+                        @endif 
 
                         <h4>League Rules:</h4>
                         <ul>
@@ -50,19 +66,10 @@
                             <li style="width:200px !important">League Type: <strong>{{$league->rule_set->name}}</strong></li>
                             @endif
                         </ul>
-                        <?php $closeDate = date("j M Y h:iA", strtotime($league->auction_close_date));  ?>
-                        <h3>Time Left</h3>
-                        <p>League Closes: <span>{{$closeDate}}</span></p>
-                        
-                        @elseif($league->auction_stage < 2)
-                        <h3>Auction is due to start</h3>
-                        <p>At: <strong>{{date("jS M Y g:iA", strtotime($league->auction_start_date))}}</strong></p>
-                        @else
-
-                        @endif
                     </div>
                 </div>
 
+                @if($league->auction_stage < 3)
                 <div class="categories widget clearfix">
                     
                     <div class="title-caption">
@@ -81,7 +88,7 @@
                         </dl>
                     </div>
                 </div>
-
+                @endif
                 <div class="categories widget clearfix">
                     
                     <div class="title-caption">
