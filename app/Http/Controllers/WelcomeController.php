@@ -39,7 +39,20 @@ class WelcomeController extends Controller {
 	{
 		$authUser = Auth::user();
 
+		$earliest_release_date = strtotime("+1 week");
+
+        //randomly populate movies
+        $next_film = Movie::where('release_at', '>', date("Y-m-d", $earliest_release_date))->first();
+
+        $public = League::where('type', 'U')->where('enabled', 1)->whereNull('auction_stage')->count();
+
+        $opening_bid = Movie::where('opening_bid_date', '<=', date("Y-m-d"))->whereNotNull('opening_bid_date')->
+        	where('opening_bid', '>', 0)->orderBy('updated_at', 'DESC')->first();
+
 		return view('welcome')
+			->with('public_count', $public)
+			->with('next_film', $next_film)
+			->with('opening_bid', $opening_bid)
 			->with('authUser', $authUser);
 	}
 

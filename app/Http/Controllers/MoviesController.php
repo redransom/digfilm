@@ -205,12 +205,16 @@ class MoviesController extends Controller {
 		$movie->takings_frequency = $input['takings_frequency'];
 		$movie->save();
 
-		//clear out old ratings movie
-		MovieRating::where('movies_id', $id)->delete();
 
-		foreach($input['ratings'] as $rating_id) {
-			$rating = new MovieRating(['movies_id'=>$id, 'ratings_id'=>$rating_id]);
-			$rating->save();
+		if (isset($input['ratings'])) {
+			//clear out old ratings movie
+			MovieRating::where('movies_id', $id)->delete();
+
+			foreach($input['ratings'] as $rating_id) {
+				$rating = new MovieRating(['movies_id'=>$id, 'ratings_id'=>$rating_id]);
+				$rating->save();
+			}
+
 		}
 
 		Flash::message('Movie '.$movie->name. ' has been updated!');

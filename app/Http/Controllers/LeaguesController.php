@@ -739,7 +739,7 @@ class LeaguesController extends Controller {
 
             //just make sure the player isn't already a player in the league
             $player = LeagueUser::where('league_id', $league->id)->where('user_id', $invite->users_id)->first();
-            if ($player->id) {
+            if (isset($player->id)) {
                 $lu = new LeagueUser();
                 $lu->league_id = $league->id;
                 $lu->user_id = $invite->users_id;

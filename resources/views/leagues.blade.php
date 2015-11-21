@@ -3,8 +3,9 @@
 @section('content')
 <section class="entry sbr clearfix">
     <div class="title-caption-large">
-        <h3>Leagues</h3>
+        <h3>Public Leagues</h3>
     </div>
+    <h4>All leagues available to play for anyone!</h4>
     @if(isset($leagues) && $leagues->count() > 0)
         <?php $league_counter = 0; ?>
         <table class="feature-table dark-gray">

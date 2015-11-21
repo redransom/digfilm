@@ -60,7 +60,7 @@
     </table><!--/ feature-table-->
     @endif
 
-    @if($authUser->inLeagues()->where('auction_stage', '<', '2')->count() > 0)
+    @if($authUser->inLeagues()->where('auction_stage', '<', '2')->orWhereNull('auction_stage')->count() > 0)
     <h3>Leagues due to start</h3>
     <table class="feature-table dark-gray">
         <thead>
@@ -96,7 +96,7 @@
     </table><!--/ feature-table-->
     @endif
 
-    @if($authUser->inLeagues()->where('auction_stage', '<', '4')->count() > 0)
+    @if($authUser->inLeagues()->where('auction_stage', '<', '4')->count() == 0)
     <p>You are not part of any leagues currently.</p>
     @endif
 

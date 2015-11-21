@@ -47,7 +47,7 @@ class League extends Model {
     public static function availableLeagues($user_id) {
         $leagueUsers = LeagueUser::where('user_id', '=', $user_id)->lists('id');
 
-        $leagues = League::where('users_id', '!=', $user_id)->whereNotIn('id', $leagueUsers)->get();
+        $leagues = League::where('users_id', '!=', $user_id)->where('enabled', '1')->whereNull('auction_stage')->whereNotIn('id', $leagueUsers)->get();
 
         /*$leagues = League::with(['league_users' => function($query) {
             $query->where('user_id', '!=', $user_id);

@@ -37,7 +37,9 @@
         
         <!-- ***************** - Logo - ******************* --> 
         <div id="logo">
-            <a href="/"><img src="{{asset('images/BFlogo.png')}}" /></a>
+            <a href="/">
+            <img src="{{asset('images/BFlogo.png')}}" />
+            </a>
             <div class="slogan">Games and Films - what's not to like?</div>
         </div><!--/ #logo-->
         <!-- ***************** - END Logo - ******************* --> 
@@ -57,30 +59,7 @@
         @include('partials.user-genre')
         
         <!-- ************** - END Content Container - ************** -->
-        
-        <!-- ************** - Entry - ************** -->
-        <div class="entry sbr clearfix">
-
-            <!-- ************** - Content - ************** -->
-            <div id="content">
-                
-                @if (Session::has('flash_notification.message'))
-                <div class="success custom-box-wrap">
-                    <p>{{ Session::get('flash_notification.message') }}</p>
-                </div><!--/ info-->
-                @endif
-
-                @yield('content')
-                
-            </div><!--/ #content-->
-            <!-- ************** - END Content - ************** -->
-
-            @include('partials.user-sidebar')
-
-        
-        </div><!--/ .entry-->
-        <!-- ************** - END Entry - ************** -->
-        
+        @yield('content')        
         
        @include('partials.user-footer')
     
