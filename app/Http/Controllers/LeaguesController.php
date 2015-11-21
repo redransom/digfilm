@@ -178,6 +178,10 @@ class LeaguesController extends Controller {
             //user comes from admin - get league owner and add as a league player
             $leagueuser = LeagueUser::create( ['user_id'=>$authUser->id, 'league_id'=>$league->id, 'balance'=>100] );
 
+            //need to make sure the league is private for players (invite only)
+            $league->type = 'R';
+            $league->save();
+
             if (isset($leaguerule)) {
                 //check if the auto complete is chosen go to the choose participants
                 if ($leaguerule->auto_select == 'Y')
@@ -467,7 +471,7 @@ class LeaguesController extends Controller {
                 $league->auction_start_date = $input['auction_start_date'];
             $league->save();
 
-            Flash::message('League rules have been updated.');
+            Flash::success('League rules have been updated.');
         }
 
         return redirect()->route('league-manage', [$id]);
@@ -487,20 +491,24 @@ class LeaguesController extends Controller {
         $league = League::find($id);
 
         //join league
-        $success = false;
         if (is_numeric($league->id)) {
-            $leagueUser = new LeagueUser;
-            $leagueUser->league_id = $league->id;
-            $leagueUser->user_id = $authUser->id;
-            $leagueUser->save();
+            //need to check this user isn't already in this league
+            $inLeague = LeagueUser::where('user_id', $authUser->id)->where('league_id', $league->id)->first();
+            if (is_null($inLeague)) {
+                //should move this process to the Model? 
+                $leagueUser = new LeagueUser;
+                $leagueUser->league_id = $league->id;
+                $leagueUser->user_id = $authUser->id;
+                $leagueUser->balance = 100;
+                $leagueUser->save();
 
-            $success = is_numeric($leagueUser->id);
+                Flash::success('You have successfully managed to join the '.$league->name.' league!');
+                return redirect()->route('league-show', [$id]);
+            }
         }
 
-        return View("join")
-            ->with('authUser', $authUser)
-            ->with('join_success', $success)
-            ->with('league', $league);
+        Flash::warning('You have not been able to join the '.$league->name.' league!');
+        return redirect()->back();
     }
 
     public function addMovie($id) {
@@ -631,7 +639,7 @@ class LeaguesController extends Controller {
                 if($selected_cnt > $allowed_player_number)
                     break;
             }
-            Flash::message('Players have been added to the league');
+            Flash::success('Players have been added to the league');
             return Redirect::route('league-manage', [$league_id]);
         }
         return Redirect::route('dashboard');
@@ -700,7 +708,7 @@ class LeaguesController extends Controller {
 
         }
 
-        Flash::message('Players have been invited to the league');
+        Flash::success('Players have been invited to the league');
 
         //$success_message = $nonplayerName." has been invited to your league!";
         /* route back to the invite page */
@@ -735,11 +743,11 @@ class LeaguesController extends Controller {
         if (!is_null($invite->users_id)) {
             //this is already a player - add them to the league and direct them to it
 
-            Flash::message('Thank you for accepting '.$league->owner->name.' invitation to join the '.$league->name.' league.');
+            Flash::success('Thank you for accepting '.$league->owner->name.' invitation to join the '.$league->name.' league.');
 
             //just make sure the player isn't already a player in the league
             $player = LeagueUser::where('league_id', $league->id)->where('user_id', $invite->users_id)->first();
-            if (isset($player->id)) {
+            if (is_null($player)) {
                 $lu = new LeagueUser();
                 $lu->league_id = $league->id;
                 $lu->user_id = $invite->users_id;
@@ -751,7 +759,7 @@ class LeaguesController extends Controller {
             return Redirect::route('league-show', [$league->id]);
         } else {
             //a new player - redirect to the registration page
-            Flash::message('Thank you for accepting '.$league->owner->name.' invitation to join the '.$league->name.' league.');
+            Flash::success('Thank you for accepting '.$league->owner->name.' invitation to join the '.$league->name.' league.');
             return Redirect::route('register');
         }
     }
@@ -778,9 +786,9 @@ class LeaguesController extends Controller {
         $invite->save();
 
         if (!is_null($invite->users_id)) {
-            Flash::message('We are sorry you have declined '.$league->owner->name.' invitation to join the '.$league->name.' league. Perhaps there are other leagues you are interested in joining?');
+            Flash::warning('We are sorry you have declined '.$league->owner->name.' invitation to join the '.$league->name.' league. Perhaps there are other leagues you are interested in joining?');
         } else {
-            Flash::message('We are sorry you have declined '.$league->owner->name.' invitation to join the '.$league->name.' league. You can still join the website if you want to?');            
+            Flash::warning('We are sorry you have declined '.$league->owner->name.' invitation to join the '.$league->name.' league. You can still join the website if you want to?');            
         }
         return Redirect::route('/');
     }

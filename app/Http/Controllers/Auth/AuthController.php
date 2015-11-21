@@ -117,7 +117,7 @@ class AuthController extends Controller {
                 ->subject('Verify your email address');
         });
 
-		Flash::message('Thanks for signing up! Please check your email.');
+		Flash::success('Thanks for signing up! Please check your email.');
 
 		return Redirect::route('register-successful');
 		//return redirect($this->redirectPath());

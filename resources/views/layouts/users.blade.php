@@ -65,7 +65,7 @@
             <div id="content">
                 
                 @if (Session::has('flash_notification.message'))
-                <div class="success custom-box-wrap">
+                <div class="{{Session::get('flash_notification.level')}} custom-box-wrap">
                     <p>{{ Session::get('flash_notification.message') }}</p>
                 </div><!--/ info-->
                 @endif

@@ -22,7 +22,7 @@
         <h4>Players</h4>
         <ul>
         @foreach ($league->players as $player)
-            <li><a href="{{URL('users', array('id'=>$player->id))}}">{{$player->fullName()}}</a></li>
+            <li>{{$player->fullName()}}</li>
         @endforeach
         </ul>
 

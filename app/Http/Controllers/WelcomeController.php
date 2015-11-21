@@ -128,11 +128,17 @@ class WelcomeController extends Controller {
 			$movies = Movie::whereIn('id', $movie_ids)->orderBy('name', 'asc')->get();
 		}
 
+		//work out auctions
+		$wonAuctions = $league->auctions()->where('ready_for_auction', '4')->where('users_id', $authUser->id)->orderBy('name', 'asc')->get();
+		$expiredAuctions = $league->auctions()->where('ready_for_auction', '3')->orderBy('name', 'asc')->get();
+
 		$leagueUsers = LeagueUser::where('league_id', $league->id)->get();
 		$currentLeagueUser = LeagueUser::where('user_id', $authUser->id)->where('league_id', $league->id)->first();
 		return view('league-show')
 			->with('currentLeague', $league)
 			->with('leagueUsers', $leagueUsers)
+			->with('wonAuctions', $wonAuctions)
+			->with('expiredAuctions', $expiredAuctions)
 			->with('movies', $movies)
 			->with('currentLeagueUser', $currentLeagueUser)
 			->with('authUser', $authUser);	
