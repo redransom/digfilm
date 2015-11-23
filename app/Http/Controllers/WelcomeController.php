@@ -136,7 +136,7 @@ class WelcomeController extends Controller {
 		}
 
 		//work out auctions
-		$wonAuctions = $league->auctions()->where('ready_for_auction', '4')->where('users_id', $authUser->id)->orderBy('name', 'asc')->get();
+		$wonAuctions = $league->auctions()->where('ready_for_auction', '4')->orderBy('name', 'asc')->get();
 		$expiredAuctions = $league->auctions()->where('ready_for_auction', '3')->orderBy('name', 'asc')->get();
 
 		$leagueUsers = LeagueUser::where('league_id', $league->id)->get();

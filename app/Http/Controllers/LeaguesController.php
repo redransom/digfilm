@@ -156,7 +156,7 @@ class LeaguesController extends Controller {
             $leaguerule->save();
         }
 
-        if (!isset($input['auction_close_date'])) {
+        if (!isset($input['auction_close_date']) || $input['auction_close_date'] == '') {
             $close_date = $league->auction_start_date;
             $auction_duration = $leaguerule->auction_duration;
             $league->auction_close_date = date("Y-m-d G:i:s", strtotime('+'.$auction_duration.' hours', strtotime($close_date)));
@@ -172,7 +172,7 @@ class LeaguesController extends Controller {
 
             Flash::message('League created.');
             //return Redirect::route('league', ['id'=>$league->id]);
-            return redirect()->route('leagues', [$league->id]);
+            //return redirect()->route('leagues', [$league->id]);
         } else {
             /* come by customer create league so go to select movies page */
             //user comes from admin - get league owner and add as a league player
@@ -1040,6 +1040,9 @@ class LeaguesController extends Controller {
                     //only set this if there are movies added to the league
                     if (count($chosen_movies) > 0)
                         $league->auction_stage = 1;
+
+                    //TODO: send email with movies
+                    
                 } else {
                     Log::info("There aren't enough movies for this league: ".$league->id." - ".$league->name);
                 }
