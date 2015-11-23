@@ -17,131 +17,61 @@
                         
                         <div class="tabs-2">
                             <ul class="tabs-nav tabs-2 clearfix">
-                                <li><a href="#tab4">All</a></li>
-                                <li><a href="#tab5">New</a></li>
-                                <li><a href="#tab6">Release</a></li>
-                                <li><a href="#tab7">Auction</a></li>
+                                <li><a href="#newmovies">New</a></li>
+                                <li><a href="#newrelease">Release</a></li>
+                                <li><a href="#topauction">Auction</a></li>
                             </ul><!--/ .tabs-nav -->
 
                             <div class="tabs-container">
                                 
-                                <div class="tab-content" id="tab4">
+                                <div class="tab-content" id="newmovies">
                                     <ul class="rate">
+
+                                    @foreach($new_movies as $newmovie)
                                         <li>
-                                            <a href="top-games.html"><img src="/images/temp/temp_thumbs_4.jpg" width="94" height="60" alt="" class="alignleft" /></a>
+                                            <a href="{{URL('movie-knowledge', ['id'=>$newmovie->slug])}}">
+
+                                            <img src="/images/temp/temp_thumbs_5.jpg" width="94" height="60" alt="" class="alignleft" /></a>
                                             <div class="teaser-content">
-                                                <h6><a class="title" href="top-games.html">Lorem ipsum dolor sit amet consec</a></h6>
+                                                <h6><a class="title" href="top-games.html">{{$newmovie->name}}</a></h6>
                                                 <div class="star"></div>
                                             </div><!--/ .teaser-conent-->
                                             <div class="clear"></div>
                                         </li>
-                                        <li>
-                                            <a href="top-games.html"><img src="/images/temp/temp_thumbs_5.jpg" width="94" height="60" alt="" class="alignleft" /></a>
-                                            <div class="teaser-content">
-                                                <h6><a class="title" href="top-games.html">Qui officia deserunt mollit anim id est laborum</a></h6>
-                                                <div class="star"></div>
-                                            </div><!--/ .teaser-conent-->
-                                            <div class="clear"></div>
-                                        </li>
-                                        <li>
-                                            <a href="top-games.html"><img src="/images/temp/temp_thumbs_6.jpg" width="94" height="60" alt="" class="alignleft" /></a>
-                                            <div class="teaser-content">
-                                                <h6><a class="title" href="top-games.html">Deserunt mollit anim id est laborum</a></h6>
-                                                <div class="star"></div>
-                                            </div><!--/ .teaser-conent-->
-                                            <div class="clear"></div>
-                                        </li>
-                                    </ul><!--/ .rate-->
-                                </div><!--/ #tab4-->
-                                
-                                <div class="tab-content" id="tab5">
-                                    <ul class="rate">
-                                        <li>
-                                            <a href="top-games.html"><img src="/images/temp/temp_thumbs_5.jpg" width="94" height="60" alt="" class="alignleft" /></a>
-                                            <div class="teaser-content">
-                                                <h6><a class="title" href="top-games.html">Qui officia deserunt mollit anim id est laborum</a></h6>
-                                                <div class="star"></div>
-                                            </div><!--/ .teaser-conent-->
-                                            <div class="clear"></div>
-                                        </li>
-                                        <li>
-                                            <a href="top-games.html"><img src="/images/temp/temp_thumbs_4.jpg" width="94" height="60" alt="" class="alignleft" /></a>
-                                            <div class="teaser-content">
-                                                <h6><a class="title" href="top-games.html">Lorem ipsum dolor sit amet consec</a></h6>
-                                                <div class="star"></div>
-                                            </div><!--/ .teaser-conent-->
-                                            <div class="clear"></div>
-                                        </li>
-                                        <li>
-                                            <a href="top-games.html"><img src="/images/temp/temp_thumbs_6.jpg" width="94" height="60" alt="" class="alignleft" /></a>
-                                            <div class="teaser-content">
-                                                <h6><a class="title" href="top-games.html">Deserunt mollit anim id est laborum</a></h6>
-                                                <div class="star"></div>
-                                            </div><!--/ .teaser-conent-->
-                                            <div class="clear"></div>
-                                        </li>
+                                    @endforeach
                                     </ul><!--/ .rate-->
                                 </div><!--/ #tab5-->
-                                
-                                <div class="tab-content" id="tab6">
+                                <div class="tab-content" id="newrelease">
                                     <ul class="rate">
+                                        @foreach($released_movies as $relmovie)
                                         <li>
-                                            <a href="top-games.html"><img src="/images/temp/temp_thumbs_5.jpg" width="94" height="60" alt="" class="alignleft" /></a>
+                                            <a href="{{URL('movie-knowledge', ['id'=>$relmovie->slug])}}"><img src="/images/temp/temp_thumbs_5.jpg" width="94" height="60" alt="" class="alignleft" /></a>
                                             <div class="teaser-content">
-                                                <h6><a class="title" href="top-games.html">Qui officia deserunt mollit anim id est laborum</a></h6>
+                                                <h6><a class="title" href="{{URL('movie-knowledge', ['id'=>$relmovie->slug])}}">{{$relmovie->name}}}</a></h6>
                                                 <div class="star"></div>
                                             </div><!--/ .teaser-conent-->
                                             <div class="clear"></div>
                                         </li>
-                                        <li>
-                                            <a href="top-games.html"><img src="/images/temp/temp_thumbs_6.jpg" width="94" height="60" alt="" class="alignleft" /></a>
-                                            <div class="teaser-content">
-                                                <h6><a class="title" href="top-games.html">Deserunt mollit anim id est laborum</a></h6>
-                                                <div class="star"></div>
-                                            </div><!--/ .teaser-conent-->
-                                            <div class="clear"></div>
-                                        </li>
-                                        <li>
-                                            <a href="top-games.html"><img src="/images/temp/temp_thumbs_4.jpg" width="94" height="60" alt="" class="alignleft" /></a>
-                                            <div class="teaser-content">
-                                                <h6><a class="title" href="top-games.html">Lorem ipsum dolor sit amet consec</a></h6>
-                                                <div class="star"></div>
-                                            </div><!--/ .teaser-conent-->
-                                            <div class="clear"></div>
-                                        </li>
+                                        @endforeach
                                     </ul><!--/ .rate-->
                                 </div><!--/ #tab6-->
                                 
-                                <div class="tab-content" id="tab7">
+                                <div class="tab-content" id="topauction">
                                     <ul class="rate">
+                                        @foreach($top_auctions as $topmovie)
                                         <li>
-                                            <a href="top-games.html"><img src="/images/temp/temp_thumbs_6.jpg" width="94" height="60" alt="" class="alignleft" /></a>
+                                            <a href="{{URL('movie-knowledge', ['id'=>$topmovie->slug])}}"><img src="/images/temp/temp_thumbs_6.jpg" width="94" height="60" alt="" class="alignleft" /></a>
                                             <div class="teaser-content">
-                                                <h6><a class="title" href="top-games.html">Deserunt mollit anim id est laborum</a></h6>
-                                                <div class="star"></div>
+                                                <h6><a class="title" href="{{URL('movie-knowledge', ['id'=>$topmovie->slug])}}">{{$topmovie->name}}</a></h6>
+                                                <strong>{{$topmovie->bids()->count()}} bids</strong>
                                             </div><!--/ .teaser-conent-->
                                             <div class="clear"></div>
                                         </li>
-                                        <li>
-                                            <a href="top-games.html"><img src="/images/temp/temp_thumbs_4.jpg" width="94" height="60" alt="" class="alignleft" /></a>
-                                            <div class="teaser-content">
-                                                <h6><a class="title" href="top-games.html">Lorem ipsum dolor sit amet consec</a></h6>
-                                                <div class="star"></div>
-                                            </div><!--/ .teaser-conent-->
-                                            <div class="clear"></div>
-                                        </li>
-                                        <li>
-                                            <a href="top-games.html"><img src="/images/temp/temp_thumbs_5.jpg" width="94" height="60" alt="" class="alignleft" /></a>
-                                            <div class="teaser-content">
-                                                <h6><a class="title" href="top-games.html">Qui officia deserunt mollit anim id est laborum</a></h6>
-                                                <div class="star"></div>
-                                            </div><!--/ .teaser-conent-->
-                                            <div class="clear"></div>
-                                        </li>
+                                        @endforeach
                                     </ul><!--/ .rate-->
                                 </div><!--/ #tab7-->
                                 
-                                <a href="#" class="see-all">See all &raquo;</a>
+                                <a href="{{URL('movies')}}" class="see-all">See all &raquo;</a>
                                 
                             </div><!--/ .tabs container-->                  
                         </div><!--/ .tabs-2-->

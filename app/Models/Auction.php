@@ -15,4 +15,8 @@ class Auction extends Model {
     public function league() {
         return $this->belongsTo("\App\Models\League", "leagues_id");
     }
+
+    public function bids() {
+        return $this->hasMany("\App\Models\AuctionBid", 'auctions_id', 'id');
+    }
 }

@@ -24,6 +24,8 @@ Route::get('movies-genre/{id}', 'WelcomeController@movieGenre');
 Route::get('register-successful', ['as'=>'register-successful', 'uses'=>'WelcomeController@registerSuccessful']);
 Route::get('accept-invite/{id}', ['as'=>'accept-invite', 'uses'=>'LeaguesController@acceptInvite']);
 Route::get('decline-invite/{id}', ['as'=>'decline-invite', 'uses'=>'LeaguesController@declineInvite']);
+Route::get('email-verified', ['as'=>'email-verified', 'uses'=>'WelcomeController@emailVerified']);
+
 
 // Registration routes...
 Route::get('auth/register', [
@@ -60,7 +62,7 @@ Route::group(['middleware'=>'auth'], function() {
 
         Route::get('league-show/{id}', ['as'=>'league-show', 'uses'=>'WelcomeController@getLeague']);
         Route::get('league/{id}/manage', ['as'=>'league-manage', 'uses'=>'LeaguesController@getLeague']);
-        Route::post('league', ['as'=>'league', 'uses'=>'WelcomeController@getLeague']);
+        Route::post('league', ['as'=>'league-create', 'uses'=>'WelcomeController@getLeague']);
         Route::get('roster/{id}', ['as'=>'roster', 'uses'=>'WelcomeController@getRoster']);
         Route::get('choose-movies/{id}', ['as'=>'choose-movies', 'uses'=>'WelcomeController@addMovies']);
         Route::post('select-movies', ['as'=>'select-movies', 'uses'=>'LeaguesController@postMultipleMovies']);
@@ -76,7 +78,9 @@ Route::group(['middleware'=>'auth'], function() {
 
         /* Setting Entrust to ensure permissions are correct */
         /*Entrust::routeNeedsRole('place-auction-bid', ['Player'], Redirect::to('/'));
-        Entrust::routeNeedsRole('leagues/create', ['Player', 'Admin'], Redirect::to('/'));
+        Entrust::routeNeedsRole('choose-movies', ['Player'], Redirect::to('/'));
+        Entrust::routeNeedsRole('leagues/store', ['Player'], Redirect::to('/'));
+        //Entrust::routeNeedsRole('leagues/create', ['Player', 'Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('admin-dashboard', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('user-disable', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('user-enable', ['Admin'], Redirect::to('/'));

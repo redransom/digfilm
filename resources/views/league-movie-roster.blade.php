@@ -8,7 +8,10 @@
     <h2>Your Movie Roster</h2>
 
     @include('partials.user-roster', ['currentLeague'=>$currentLeague, 'leagueUser'=>$currentLeagueUser])
-    
+   
+    <br/>
+    @include('partials.user-league-rules', ['currentLeague'=>$currentLeague, 'leagueUser'=>$currentLeagueUser])
+ 
 </section>
 
 @endsection

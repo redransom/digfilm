@@ -30,4 +30,8 @@ class Movie extends Model {
     public function ratings() {
         return $this->hasMany("\App\Models\MovieRating", 'movies_id', 'id');
     }
+
+    public function bids() {
+        return $this->hasMany("\App\Models\AuctionBid", 'movies_id', 'id');
+    }
 }

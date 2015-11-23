@@ -109,6 +109,20 @@
                                 </ul>
                             </div>
                         </div>
+
+                        <div class="module">
+                            <div class="module-head">
+                                <h3>Bid History</h3>
+                            </div>
+                            <div class="module-body">
+                                <ul>
+                            @foreach($movie->bids as $bid)
+                                <li>&dollar;{{$bid->bid_amount}} at {{date("j M Y H:i", strtotime($bid->created_at))}}</li>
+                            @endforeach
+                                </ul>
+                            </div>
+
+                        </div>
                     </div>
 <!--/.content-->
 @endsection

@@ -19,10 +19,10 @@
                         </li>
                         @if(!is_null($opening_bid))
                         <li>
-                            <a href="#"><img class="small-custom-frame" src="images/temp/temp_img_2.jpg" width="222" height="137" alt="" /></a>
+                            <a href="{{URL('movie-knowledge', ['id'=>$opening_bid->id])}}"><img class="small-custom-frame" src="images/temp/temp_img_2.jpg" width="222" height="137" alt="" /></a>
                             <div class="scroll-caption">
                                 <span>Opening Bid</span>
-                                <h6><a href="#">Include this film at <strong>&dollar;{{$opening_bid->opening_bid}}</strong></a></h6>
+                                <h6><a href="{{URL('movie-knowledge', ['id'=>$opening_bid->id])}}">Include this film at <strong>&dollar;{{$opening_bid->opening_bid}}</strong></a></h6>
                                 <h6><em>{{$opening_bid->name}}</em></h6>
                                 
                             </div><!--/ .scroll-caption-->
@@ -30,11 +30,11 @@
                         @endif
                         @if(!is_null($next_film))
                         <li>
-                            <a href="#"><img class="small-custom-frame" src="{{asset('/images/countdown.png')}}" width="222" height="137" alt="" />
+                            <a href="{{URL('movie-knowledge', ['id'=>$opening_bid->id])}}"><img class="small-custom-frame" src="{{asset('/images/countdown.png')}}" width="222" height="137" alt="" />
                             </a>
                             <div class="scroll-caption">
                                 <span>Next Film Released</span>
-                                <h6><a href="#">{{$next_film->name}}</a></h6>
+                                <h6><a href="{{URL('movie-knowledge', ['id'=>$opening_bid->id])}}">{{$next_film->name}}</a></h6>
                                 <div style="display:inline !important; padding-bottom: 10px" id="rating_{{$next_film->id}}"></div><!--/ .star-->
                                 <script>
                                 $(function() {
@@ -66,6 +66,7 @@
 
 
             <!-- ************** - Content - ************** -->
+            
             <div id="content">
                 
                 <div class="title-caption-large">
@@ -75,46 +76,30 @@
                 <div class="release">
                     <div class="gamelist">
                         <ul class="clearfix">
+                            @foreach($trailers as $item)
+                            <?php                      
+                                $base_url = "";              
+                                if ($item->type =='T' && str_contains($item->url, "youtu.be")) {
+                                    $url = $item->url;
+
+                                    //only use youtube currently
+                                    $path = parse_url($url, PHP_URL_PATH);
+                                    $base_url = "http://www.youtube.com/embed".$path;
+                                }
+                            ?>
                             <li>
-                                <a href="#"><img src="images/temp/img_1.jpg" width="313" height="220" alt="" /></a>
+                                <a href="{{URL('movie-knowledge', ['id'=>$item->movies_id])}}">
+                                    <iframe width="313" height="220" src="{{$base_url}}" frameborder="0" allowfullscreen></iframe>
+                                </a>
                                 <div class="caption">
-                                    <span class="date">Thursday 22-Mar-2012 12:37 PM</span>
-                                    <h5 class="title"><a href="#">Lorem ipsum dolor sit amet consectetur</a></h5>
-                                    <div class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</div>
+                                    <span class="date">{{date("d-M-Y h:i A", strtotime($item->created_at))}}Thursday </span>
+                                    <h5 class="title"><a href="{{URL('movie-knowledge', ['id'=>$item->movie->slug])}}">{{$item->movie->name}}</a></h5>
+                                    <div class="description">{{$item->description}}</div>
                                     
                                 </div><!--/ .caption-->                            
                                 <div class="clear"></div>
                             </li>
-                            <li>
-                                <a href="#"><img src="images/temp/img_1.jpg" width="313" height="220" alt="" /></a>
-                                <div class="caption">
-                                    <span class="date">Thursday 22-Mar-2012 12:37 PM</span>
-                                    <h5 class="title"><a href="#">Lorem ipsum dolor sit amet consectetur</a></h5>
-                                    <div class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</div>
-                                    
-                                </div><!--/ .caption-->                            
-                                <div class="clear"></div>
-                            </li>
-                            <li>
-                                <a href="#"><img src="images/temp/img_1.jpg" width="313" height="220" alt="" /></a>
-                                <div class="caption">
-                                    <span class="date">Thursday 22-Mar-2012 12:37 PM</span>
-                                    <h5 class="title"><a href="#">Lorem ipsum dolor sit amet consectetur</a></h5>
-                                    <div class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</div>
-                                    
-                                </div><!--/ .caption-->                            
-                                <div class="clear"></div>
-                            </li>
-                            <li>
-                                <a href="#"><img src="images/temp/img_1.jpg" width="313" height="220" alt="" /></a>
-                                <div class="caption">
-                                    <span class="date">Thursday 22-Mar-2012 12:37 PM</span>
-                                    <h5 class="title"><a href="#">Lorem ipsum dolor sit amet consectetur</a></h5>
-                                    <div class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</div>
-                                    
-                                </div><!--/ .caption-->                            
-                                <div class="clear"></div>
-                            </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>

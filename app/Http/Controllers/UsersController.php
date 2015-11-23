@@ -9,6 +9,8 @@ use Auth;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Auction;
+use App\Models\LeagueInvite;
+use App\Models\LeagueUser;
 use Session;
 use Input;
 use Redirect;

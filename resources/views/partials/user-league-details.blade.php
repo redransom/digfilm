@@ -53,19 +53,10 @@
                         <div class="clear"></div>
 
                         @elseif($league->auction_stage == 3)
-                        <?php $closeDate = date("j M Y h:iA", strtotime($league->auction_close_date));  ?>
                         <h3>League Closes: </h3>
-                        <h4><span>{{$closeDate}}</span></h4>
+                        <strong>{{date("j M Y h:iA", strtotime($league->auction_close_date))}}</strong>
                         @endif 
 
-                        <h4>League Rules:</h4>
-                        <ul>
-                            <li>Minimum Bid: <strong><?php echo (($league->rule->min_bid < 1) ? number_format(($league->rule->min_bid * 100), 0)."cents" : (number_format($league->rule->min_bid, 0))); ?></strong></li>
-                            <li>Maximum Bid: <strong>{{number_format($league->rule->max_bid, 0)}}USD</strong></li>
-                            @if($league->rule_set)
-                            <li style="width:200px !important">League Type: <strong>{{$league->rule_set->name}}</strong></li>
-                            @endif
-                        </ul>
                     </div>
                 </div>
 
@@ -98,8 +89,10 @@
                     <div class="entry-holder">
                     <dl>
                     @foreach($league->players as $player)
+                        @if($player->id != $authUser->id)
                         <dt><strong>{{$player->name}}</strong></dt>
                         <dd>Has the balance: <strong>{{number_format($player->pivot->balance, 0)}} USD</strong>.</dd>
+                        @endif
                     @endforeach
                     </dl>
                     </div>

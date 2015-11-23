@@ -204,6 +204,7 @@ class AuctionsController extends Controller {
         $bid = new AuctionBid();
         $bid->auctions_id = $auction->id;
         $bid->users_id = $auction->users_id;
+        $bid->movies_id = $auction->movies_id;
         $bid->bid_amount = $auction->bid_amount;
         $bid->save();
         unset($bid);

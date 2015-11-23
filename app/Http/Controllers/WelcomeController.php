@@ -6,6 +6,7 @@ use App\Models\LeagueUser;
 use App\Models\RuleSet;
 use App\Models\Genre;
 use App\Models\Movie;
+use App\Models\MovieMedia;
 
 class WelcomeController extends Controller {
 
@@ -28,6 +29,8 @@ class WelcomeController extends Controller {
 	public function __construct()
 	{
 		$this->middleware('guest');
+
+		//TODO: Set page logic here?
 	}
 
 	/**
@@ -49,9 +52,13 @@ class WelcomeController extends Controller {
         $opening_bid = Movie::where('opening_bid_date', '<=', date("Y-m-d"))->whereNotNull('opening_bid_date')->
         	where('opening_bid', '>', 0)->orderBy('updated_at', 'DESC')->first();
 
+        //new trailers
+        $trailers = MovieMedia::where('type', 'T')->orderBy('created_at', 'DESC')->limit(4)->get();
+
 		return view('welcome')
 			->with('public_count', $public)
 			->with('next_film', $next_film)
+			->with('trailers', $trailers)
 			->with('opening_bid', $opening_bid)
 			->with('authUser', $authUser);
 	}
