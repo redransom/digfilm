@@ -951,7 +951,7 @@ class LeaguesController extends Controller {
     public function preparePlayersForAuctions() 
     {
         
-        DB::connection()->enableQueryLog();
+        //DB::connection()->enableQueryLog();
         $leaguesToNotify = League::whereNotNull('auction_start_date')
             ->where('auction_start_date', '>', date("Y-m-d H:i:s"))
             ->where('enabled', '1')->where('auction_stage', '0')->get();
@@ -983,8 +983,8 @@ class LeaguesController extends Controller {
                 //clear out movies if some already there
                 LeagueMovie::where('leagues_id', $league->id)->delete();
 
-                $queries = DB::getQueryLog();
-                print_r($queries);
+                /*$queries = DB::getQueryLog();
+                print_r($queries);*/
 
                 Log::info("Movie Check - Available: ".count($available_movies)." Min Required: ".$min_movies);
 
@@ -1041,8 +1041,22 @@ class LeaguesController extends Controller {
                     if (count($chosen_movies) > 0)
                         $league->auction_stage = 1;
 
-                    //TODO: send email with movies
-                    
+                    $subject = "League ".$league->name." auctions will start at: ".date("d M y h:iA", strtotime($league->auction_start_date));
+                    foreach($league->players as $player) {
+
+                        $data = ['playerName' => $player->fullName(), 
+                                'leagueName' => $league->name,
+                                'subject' => $subject,
+                                'leagueMovies' =>$league->movies];
+
+                        $playerEmail = $player->email;
+
+                        Mail::send('emails.league_ready', $data, function($message) use ($playerEmail, $subject) {
+                            $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
+                            $message->subject($subject);
+                            $message->to($playerEmail);
+                        });
+                    }
                 } else {
                     Log::info("There aren't enough movies for this league: ".$league->id." - ".$league->name);
                 }

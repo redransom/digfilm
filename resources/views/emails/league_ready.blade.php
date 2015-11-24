@@ -24,7 +24,7 @@
                                           <!-- Title -->
                                           <tr>
                                              <td style="font-family: Helvetica, arial, sans-serif; font-size: 14px; font-weight:bold; color: #333333; text-align:left;line-height: 24px;">
-                                                Hi {{$inviteName}}, you have been invited to join a league!
+                                                League Auction is due to start!
                                              </td>
                                           </tr>
                                           <!-- End of Title -->
@@ -36,10 +36,15 @@
                                           <!-- content -->
                                           <tr>
                                              <td style="font-family: Helvetica, arial, sans-serif; font-size: 13px; color: #333333; text-align:left;line-height: 24px;">
-                                               Your friend <strong>{{$ownerName}}</strong> has invited you to the <strong>{{$league->name}}</strong> league.<br/>
-                                               <br/>
-                                               If you want to join in - please follow this link: <em>{{URL::to('accept-invite/'.$invite_id)}}</em> or if you want to decline use
-                                               this link <em>{{URL::to('decline-invite/'.$invite_id)}}</em>.
+                                                Hi <strong>{{$playerName}}</strong>!<br/>
+                                                The league auction is about to start with the following movies available to bid on:<br/>
+                                                <ol>
+                                                @foreach($leagueMovies as $movie)
+                                                    <li><a href="{{URL('movie-knowledge', ['id'=>$movie->slug])}}">{{$movie->name}}</a></li>
+                                                @endforeach
+                                                </ol>
+                                                <br/>
+                                                Depending on the league rules, they will be released all at the same time or in groups.
                                              </td>
                                           </tr>
                                           <!-- End of content -->
@@ -48,31 +53,6 @@
                                              <td width="100%" height="5"></td>
                                           </tr>
                                           <!-- Spacing -->
-                                          <tr>
-                                             <td style="font-family: Helvetica, arial, sans-serif; font-size: 13px; color: #333333; text-align:left;line-height: 24px;">
-                                               The rules of the league are:
-                                               <dl>
-                                                <dt>Players</dt>
-                                                <dd>Min: {{$league->rule->min_players}} Max: {{$league->rule->max_players}}</dd>
-                                                <dt>Movies</dt>
-                                                <dd>Min: {{$league->rule->min_movies}} Max: {{$league->rule->max_movies}}</dd>
-                                                <dt>Durations</dt>
-                                                <dd>Auction: {{$league->rule->auction_duration}} hours <br/>Round: {{$league->rule->round_duration}} hours <br/>Movies: {{$league->rule->ind_film_countdown}} mins</dd>
-                                                <dt>Bids</dt>
-                                                <dd>Min: {{$league->rule->min_bid}} Max: {{$league->rule->max_bid}}</dd>
-                                                <dt>Selection</dt>
-                                                <dd>Random: {{($league->rule->randomizer == "Y") ? "Yes" : "No"}} <br/>Auto-Select: {{($league->rule->auto_select == 'Y') ? "Yes" : "No"}} 
-                                                    @if(!is_null($league->rule->auction_movie_release))
-                                                    <br/>Grouped: {{$league->rule->auction_movie_release}}
-                                                    @endif</dd>
-                                                <dt>Blind</strong></dt>
-                                                <dd>{{$league->rule->blind_bid == "Y" ? "Yes" : "No"}}</dd>
-                                                <dt>Misc</strong></dt>
-                                                <dd>Timeout: {{$league->rule->auction_timeout}} mins <br/>Denomination: {{$league->rule->denomination}} <br/>Movie Takings: {{$league->rule->movie_takings_duration}} weeks</dd>
-                                              </dl>
-                                             </td>
-                                          </tr>
-
                                        </tbody>
                                     </table>
                                  </td>
