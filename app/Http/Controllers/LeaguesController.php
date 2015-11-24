@@ -172,7 +172,7 @@ class LeaguesController extends Controller {
 
             Flash::message('League created.');
             //return Redirect::route('league', ['id'=>$league->id]);
-            //return redirect()->route('leagues', [$league->id]);
+            return redirect()->route('leagues', [$league->id]);
         } else {
             /* come by customer create league so go to select movies page */
             //user comes from admin - get league owner and add as a league player

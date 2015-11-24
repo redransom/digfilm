@@ -178,7 +178,7 @@ class AuctionsController extends Controller {
         //check that the bid isnt the max allowed
         if($auction->bid_amount == $rule->max_bid) {
             //need to clear auction
-            $auction->ready_for_auction = 2;
+            $auction->ready_for_auction = 4;
             Log::info('Closed auction off:'.$auction->id.' by user:'.$authUser->id.' amount:'.$input['bid_amount']);
         }
 

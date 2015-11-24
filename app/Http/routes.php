@@ -77,9 +77,9 @@ Route::group(['middleware'=>'auth'], function() {
         /* Admin routes */
 
         /* Setting Entrust to ensure permissions are correct */
-        /*Entrust::routeNeedsRole('place-auction-bid', ['Player'], Redirect::to('/'));
+        Entrust::routeNeedsRole('place-auction-bid', ['Player'], Redirect::to('/'));
         Entrust::routeNeedsRole('choose-movies', ['Player'], Redirect::to('/'));
-        Entrust::routeNeedsRole('leagues/store', ['Player'], Redirect::to('/'));
+        Entrust::routeNeedsRole('dashboard', ['Player'], Redirect::to('/'));
         //Entrust::routeNeedsRole('leagues/create', ['Player', 'Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('admin-dashboard', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('user-disable', ['Admin'], Redirect::to('/'));
@@ -88,14 +88,14 @@ Route::group(['middleware'=>'auth'], function() {
         Entrust::routeNeedsRole('league-disable', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('movies', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('contributors', ['Admin'], Redirect::to('/'));
-        Entrust::routeNeedsRole('leagues', ['Admin'], Redirect::to('/'));
+        Entrust::routeNeedsRole('leagues', ['Admin', 'Player'], Redirect::to('/'));
         Entrust::routeNeedsRole('rulesets*', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('auctions', ['Admin'], Redirect::to('/'));
 
         Entrust::routeNeedsRole('league-disable', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('league-enable', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('movie-disable', ['Admin'], Redirect::to('/'));
-        Entrust::routeNeedsRole('movie-enable', ['Admin'], Redirect::to('/'));*/
+        Entrust::routeNeedsRole('movie-enable', ['Admin'], Redirect::to('/'));
 
         Route::put('movies-admin-search', ['as'=>'movies-admin-search', 'uses'=>'MoviesController@index']);
         Route::put('users-admin-search', ['as'=>'users-admin-search', 'uses'=>'UsersController@index']);

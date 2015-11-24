@@ -3,12 +3,13 @@
 
 <table class="feature-table dark-gray">
     <thead>
-        <tr><th>Movie</th><th>Release Date</th><th>Opening<br/>Bid</th><th>Final Price/<br/>$ USD</th><th>Owner</th></tr>
+        <tr><th>&nbsp;</th><th>Movie</th><th>Release Date</th><th>Opening<br/>Bid</th><th>Final Price/<br/>$ USD</th><th>Owner</th></tr>
     </thead>
     <tbody>
     
+    <?php $movieCnt = 1; ?>
     @foreach($auctions as $auction)
-        <tr><td>
+        <tr><td>{{($movieCnt++)}}</td><td>
         @if(is_null($auction->slug) || $auction->slug == '')
         <a href="{{URL('movie-knowledge', [$auction->id])}}">
         @else
