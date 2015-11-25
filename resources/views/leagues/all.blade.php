@@ -15,6 +15,7 @@
                                             <th>ID</th>
                                             <th>Name</th>
                                             <th>Players</th>
+                                            <th>Movies</th>
                                             <th>Start?</th>
                                             <th>Owned By</th>
                                             <th>Actions</th>
@@ -36,6 +37,7 @@
                                             <td>{{$league->id}}</td>
                                             <td><a href="{{URL('league', array('id'=>$league->id))}}">{{$league->name}}</a></td>
                                             <td>{{count($league->players)}}</td>
+                                            <td>{{$league->movies()->count()}}</td>
                                             <td>{{$start}}</td>
                                             <td class="center"><a href="{{URL('users/'.$league->owner->id)}}">{{$league->owner->name}}</a></td>
                                             <td>

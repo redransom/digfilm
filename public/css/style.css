@@ -685,8 +685,7 @@ body.background-2 #logo .slogan {color: #454141;}
 }
 
 #content .content-title {color: #f15b19; text-transform: uppercase; }
-#content p,
-section p {color: #9f9e9e;}
+#content p, section p {color: #9f9e9e;}
 
 #content .title-caption h3 {
     color: #2a2b2b;
@@ -3449,7 +3448,7 @@ footer .copyright {
         padding:0;
         display:table;
         overflow:hidden;
-        color: #fff;
+        color: #fff !important;
     } 
 
     .success {background: #96be2a url(../images/icons/middle/success.png) no-repeat 16px 50%;}
@@ -3460,7 +3459,7 @@ footer .copyright {
     .close-box {
         position:absolute;
         right:20px;
-        top:30px;
+        top:20px;
         display:block;
         cursor:pointer;
         font-size:2em;

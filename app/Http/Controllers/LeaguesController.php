@@ -332,8 +332,11 @@ class LeaguesController extends Controller {
             Flash::message('League '.$league->name.' has been removed from the system.');
             $league->delete();
             
-            return Redirect::route('leagues.index');
-        }
+            //return Redirect::route('leagues.index');
+        } else 
+            Flash::message('You don\'t have the permissions to complete this task.');
+
+        return redirect()->back();
     }
 
     /**
@@ -357,10 +360,11 @@ class LeaguesController extends Controller {
                 $league->enabled = false;
                 $league->save();
             }
-            return Redirect::route('leagues.index');
-        }
-        Flash::message('You don\'t have the permissions to complete this task.');
-        return Redirect::route('leagues.index');
+            //return Redirect::route('leagues.index');
+        } else 
+            Flash::message('You don\'t have the permissions to complete this task.');
+
+        return redirect()->back();
     }
 
     /**
@@ -384,10 +388,11 @@ class LeaguesController extends Controller {
                 $league->enabled = true;
                 $league->save();
             }
-            return Redirect::route('leagues.index');
-        }
-        Flash::message('You don\'t have the permissions to complete this task.');
-        return Redirect::route('leagues.index');
+            //return Redirect::route('leagues.index');
+        } else 
+            Flash::message('You don\'t have the permissions to complete this task.');
+
+        return redirect()->back();
     }
     /**
      * Add player to league
@@ -590,11 +595,10 @@ class LeaguesController extends Controller {
                 //check this is correct
                 $lm->delete();
             }
-            return Redirect::route('leagues.show', $league->id);
         } else
             Flash::message("You don\'t have the permissions to complete this task.");
 
-        return Redirect::route('leagues.index');
+        return redirect()->back();
     }
 
     /**
