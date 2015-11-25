@@ -39,7 +39,7 @@
                                                 Hi <strong>{{$playerName}}</strong>!<br/>
                                                 The league auction is about to start with the following movies available to bid on:<br/>
                                                 <ol>
-                                                @foreach($leagueMovies as $movie)
+                                                @foreach($leagueMovies()->orderBy('name', 'asc')->get() as $movie)
                                                     <li><a href="{{URL('movie-knowledge', ['id'=>$movie->slug])}}">{{$movie->name}}</a></li>
                                                 @endforeach
                                                 </ol>

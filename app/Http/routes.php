@@ -88,7 +88,7 @@ Route::group(['middleware'=>'auth'], function() {
         Entrust::routeNeedsRole('league-disable', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('movies', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('contributors', ['Admin'], Redirect::to('/'));
-        Entrust::routeNeedsRole('leagues', ['Admin', 'Player'], Redirect::to('/'));
+        Entrust::routeNeedsRole('leagues', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('rulesets*', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('auctions', ['Admin'], Redirect::to('/'));
 

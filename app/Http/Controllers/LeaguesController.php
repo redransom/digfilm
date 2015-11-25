@@ -1008,62 +1008,65 @@ class LeaguesController extends Controller {
                         34 / 10 = 3.4 which we then round down to 3
                         3 * 10 = 30 movies that we can take
                     */
-                    $movie_multiplier = intval(count($available_movies) / $grouping);
-                    $min_movies = $movie_multiplier * $grouping;
+                    if ($min_movies > $available_movie_count) {
+                        $movie_multiplier = intval(count($available_movies) / $grouping);
+                        $min_movies = $movie_multiplier * $grouping;
+                    }
+
                 }
 
                 //need to make sure we have enough movies
-                if (count($available_movies) >= $min_movies) {
-                    $chosen_movies = array();
+                //if (count($available_movies) >= $min_movies) {
+                $chosen_movies = array();
 
-                    for($movie_no = 0; $movie_no<$min_movies; $movie_no++) {
-                        $random_pos = rand(0, ($available_movie_count - 1));
+                for($movie_no = 0; $movie_no<$min_movies; $movie_no++) {
+                    $random_pos = rand(0, ($available_movie_count - 1));
 
-                        $chosen_movies[$movie_no] = $available_movies[$random_pos];
-                        unset($available_movies[$random_pos]);
-                        $available_movies = array_values($available_movies);
-                        $available_movie_count--;
-                    }
-
-                    //we have the available movies lets add them to the league
-                    foreach ($chosen_movies as $movie_id) {
-                        $league_movie = new LeagueMovie();
-                        $league_movie->leagues_id = $league->id;
-                        $league_movie->movies_id = $movie_id;
-                        $league_movie->save();
-
-                        Log::info("Movie - ".$movie_id." added to ".$league->name);
-
-                        unset($league_movie);
-                    }
-
-                    //can work out league end date now we have the list of movies
-                    $maxDate = Movie::whereIn('id', $chosen_movies)->max('release_at');
-                    $league->end_date = $maxDate;
-
-                    //only set this if there are movies added to the league
-                    if (count($chosen_movies) > 0)
-                        $league->auction_stage = 1;
-
-                    $subject = "League ".$league->name." auctions will start at: ".date("d M y h:iA", strtotime($league->auction_start_date));
-                    foreach($league->players as $player) {
-
-                        $data = ['playerName' => $player->fullName(), 
-                                'leagueName' => $league->name,
-                                'subject' => $subject,
-                                'leagueMovies' =>$league->movies];
-
-                        $playerEmail = $player->email;
-
-                        Mail::send('emails.league_ready', $data, function($message) use ($playerEmail, $subject) {
-                            $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
-                            $message->subject($subject);
-                            $message->to($playerEmail);
-                        });
-                    }
-                } else {
-                    Log::info("There aren't enough movies for this league: ".$league->id." - ".$league->name);
+                    $chosen_movies[$movie_no] = $available_movies[$random_pos];
+                    unset($available_movies[$random_pos]);
+                    $available_movies = array_values($available_movies);
+                    $available_movie_count--;
                 }
+
+                //we have the available movies lets add them to the league
+                foreach ($chosen_movies as $movie_id) {
+                    $league_movie = new LeagueMovie();
+                    $league_movie->leagues_id = $league->id;
+                    $league_movie->movies_id = $movie_id;
+                    $league_movie->save();
+
+                    Log::info("Movie - ".$movie_id." added to ".$league->name);
+
+                    unset($league_movie);
+                }
+
+                //can work out league end date now we have the list of movies
+                $maxDate = Movie::whereIn('id', $chosen_movies)->max('release_at');
+                $league->end_date = $maxDate;
+
+                //only set this if there are movies added to the league
+                if (count($chosen_movies) > 0)
+                    $league->auction_stage = 1;
+
+                $subject = "League ".$league->name." auctions will start at: ".date("d M y h:iA", strtotime($league->auction_start_date));
+                foreach($league->players as $player) {
+
+                    $data = ['playerName' => $player->fullName(), 
+                            'leagueName' => $league->name,
+                            'subject' => $subject,
+                            'leagueMovies' =>$league->movies()->orderBy('name', 'ASC')->get()];
+
+                    $playerEmail = $player->email;
+
+                    Mail::send('emails.league_ready', $data, function($message) use ($playerEmail, $subject) {
+                        $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
+                        $message->subject($subject);
+                        $message->to($playerEmail);
+                    });
+                }
+                /*} else {
+                    Log::info("There aren't enough movies for this league: ".$league->id." - ".$league->name);
+                }*/
 
                 //movies have been populated - set the auction stage to 1
                 $league->save();
