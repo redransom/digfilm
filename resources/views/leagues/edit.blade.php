@@ -40,7 +40,7 @@
                     <div class="control-group">
                         <label class="control-label" for="LeagueName">Public/Private</label>
                         <div class="controls">
-                            {!! Form::select('type', ["U"=>"Public", "R" => "Private"], $league->type, ['class'=>'span2']) !!}
+                            {!! Form::select('type', ["U"=>"Public", "R" => "Private"], $league->type, ['class'=>'span4']) !!}
                             <span class="help-inline">Is it available for anyone to join (PUBLIC) or just those invited (PRIVATE).</span>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                     <div class="control-group">
                         <label class="control-label" for="LeagueAuctionStage">Status</label>
                         <div class="controls">
-                            {!! Form::select('auction_stage', [null=>'Not Ready', '0'=>'League Ready for Auction', '1'=>'Movies Chosen', '2'=>'Auctions Live'], $league->auction_stage, ['class'=>'span8']) !!}
+                            {!! Form::select('auction_stage', [-1=>'Not Ready', '0'=>'League Ready for Auction', '1'=>'Movies Chosen', '2'=>'Auctions Live', '3'=>'Roster', '4'=>'League Ended'], $league->auction_stage, ['class'=>'span8']) !!}
                             <span class="help-inline">Change status of league auctions using this option</span>
                         </div>
                     </div>

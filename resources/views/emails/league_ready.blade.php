@@ -40,7 +40,16 @@
                                                 The league auction is about to start with the following movies available to bid on:<br/>
                                                 <ol>
                                                 @foreach($leagueMovies()->orderBy('name', 'asc')->get() as $movie)
-                                                    <li><a href="{{URL('movie-knowledge', ['id'=>$movie->slug])}}">{{$movie->name}}</a></li>
+                                                   <li>
+                                                   @if($movie->firstImage())
+                                                   <img src="{{$movie->firstImage()->file_name}}" alt="{{$movie->name}} image" width="100px"/>
+                                                   @endif
+                                                   @if(!is_null($movie->slug))
+                                                    <a href="{{URL('movie-knowledge', ['id'=>$movie->slug])}}">{{$movie->name}}</a>
+                                                   @else
+                                                   <a href="{{URL('movie-knowledge', ['id'=>$movie->id])}}">{{$movie->name}}</a>
+                                                   @endif
+                                                   </li>
                                                 @endforeach
                                                 </ol>
                                                 <br/>

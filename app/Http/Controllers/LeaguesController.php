@@ -271,6 +271,10 @@ class LeaguesController extends Controller {
         //add rule set for future reference
         if ($input['rule_set'] != '')
             $league->rule_sets_id = $input['rule_set'];
+
+        if ($input['auction_stage'] == '-1')
+            $league->auction_stage = null;
+
         $league->save();
 
         if (isset($input['rule_set']) && is_null($league->rule)) {
@@ -311,7 +315,7 @@ class LeaguesController extends Controller {
             $leaguerule->save();
         }
         Flash::message('League has been updated');
-        return Redirect::route('leagues.index');
+        return redirect()->back();//Redirect::route('leagues.index');
     }
 
     /**

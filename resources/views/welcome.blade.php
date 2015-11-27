@@ -30,11 +30,11 @@
                         @endif
                         @if(!is_null($next_film))
                         <li>
-                            <a href="{{URL('movie-knowledge', ['id'=>$opening_bid->id])}}"><img class="small-custom-frame" src="{{asset('/images/countdown.png')}}" width="222" height="137" alt="" />
+                            <a href="{{URL('movie-knowledge', ['id'=>$next_film->id])}}"><img class="small-custom-frame" src="{{asset('/images/countdown.png')}}" width="222" height="137" alt="" />
                             </a>
                             <div class="scroll-caption">
                                 <span>Next Film Released</span>
-                                <h6><a href="{{URL('movie-knowledge', ['id'=>$opening_bid->id])}}">{{$next_film->name}}</a></h6>
+                                <h6><a href="{{URL('movie-knowledge', ['id'=>$next_film->id])}}">{{$next_film->name}}</a></h6>
                                 <div style="display:inline !important; padding-bottom: 10px" id="rating_{{$next_film->id}}"></div><!--/ .star-->
                                 <script>
                                 $(function() {

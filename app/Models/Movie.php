@@ -23,6 +23,10 @@ class Movie extends Model {
         return $this->belongsToMany("\App\Models\League", "league_movies", "movies_id", "leagues_id");
     }
 
+    public function firstImage() {
+        return $this->media->where('type' ,'I')->first();
+    }
+
     public function genre() {
         return $this->belongsTo("\App\Models\Genre", 'genres_id');
     }

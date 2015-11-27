@@ -13,9 +13,12 @@
     <article class="post-item clearfix">
         
         <section class="post-thumb">
-            @if($movie->media)
+            @if($movie->firstImage())
+            <a href="#"><img src="{{$movie->firstImage()->file_name}}" width="159" height="100" alt="" /></a>
+            @else
             <a href="#"><img src="images/temp/img_1.jpg" width="159" height="100" alt="" /></a>
             @endif
+            
         </section><!--/ .post-thumb-->
         <section class="post-entry">
             <div class="post-date">{{date("l, jS F Y", strtotime($movie->release_at))}}</div><!--/ .post-date-->
