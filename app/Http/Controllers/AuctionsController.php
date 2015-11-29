@@ -399,13 +399,13 @@ class AuctionsController extends Controller {
      */
     public function loadNextMovies() 
     {
- /*       DB::connection()->enableQueryLog();
- */       //get all leagues where there are more rounds to play and the end date(start) is less than the current date
+        DB::connection()->enableQueryLog();
+        //get all leagues where there are more rounds to play and the end date(start) is less than the current date
         $leaguesStarted = League::where('auction_stage', 2)->where('enabled', '1')
             ->whereRaw('round_amount > current_round')
             ->where('round_start_date', '<', date("Y-m-d H:i"))->get();
-/*            $queries = DB::getQueryLog();
-                print_r($queries)*/;
+        $queries = DB::getQueryLog();
+        print_r($queries);
 
         foreach ($leaguesStarted as $league) {
             $rule = $league->rule;
@@ -415,8 +415,10 @@ class AuctionsController extends Controller {
 
             $league->current_round = $league->current_round + 1;
             $round_duration = ($league->rule->round_duration != 0) ? $league->rule->round_duration : 1;
-            $league->round_start_date = date("Y-m-d H:i:s", strtotime("+".$round_duration." hours"));
-            
+            if ($round_duration >= 1)
+                $league->round_start_date = date("Y-m-d H:i:s", strtotime("+".$round_duration." hours"));
+            else
+                $league->round_start_date = date("Y-m-d H:i:s", strtotime("+".($round_duration * 60)." mins"));            
 
             //clear out auctions that are being superceeded by the new round
             //$this->prepareClearedAuctions();
@@ -612,6 +614,10 @@ class AuctionsController extends Controller {
 
             $league->save();
             
+            //update chosen movies so that we don't select them again
+            LeagueMovie::where('leagues_id', $league->id)->whereIn('movies_id', $chosen_movies)->where('chosen', '0')
+                    ->update(['chosen'=>1]);
+
             //now send email to players to tell them the auction is live
              //need to pass in the league details for the owner
             foreach ($league->players as $player) {

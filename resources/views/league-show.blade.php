@@ -111,7 +111,13 @@
     <div id="{{$name}}<?php echo $auctionid; ?>"></div>
     <script type="text/javascript">
       $('#{{$name}}<?php echo $auctionid; ?>').countdown('<?php echo $auctionTime; ?>', function(event) {
+        <?php 
+        //if auction finish time - current time is over an hour then show the hour not just the minute
+        if (strtotime($auctionTime) - time() > 3600) { ?>
         $(this).html(event.strftime('%-H:%-M:%S'));
+        <?php } else { ?>
+        $(this).html(event.strftime('%-M:%S'));
+        <?php } ?>
         if(event.elapsed) {
             $('#{{$name}}_{{$auctionid}}').val = "ENDED";
         }
