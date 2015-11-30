@@ -101,15 +101,6 @@
                                           </tr>
                                        </tbody>
                                     </table>
-                                    <table width="280" align="left" border="0" cellpadding="0" cellspacing="0" class="emhide">
-                                       <tbody>
-                                          <tr>
-                                             <td align="right" valign="middle" style="font-family: Helvetica, arial, sans-serif; font-size: 13px;color: #ffffff">
-                                                <a href="#" style="text-decoration: none; color: #ffffff">View Online </a> 
-                                             </td>
-                                          </tr>
-                                       </tbody>
-                                    </table>
                                  </td>
                               </tr>
                               <!-- Spacing -->
@@ -129,7 +120,7 @@
 </table>
 <!-- End of preheader --> 
 <!-- Start of LOGO -->
-<!--table width="100%" bgcolor="#e8eaed" cellpadding="0" cellspacing="0" border="0" id="backgroundTable">
+<table width="100%" bgcolor="#e8eaed" cellpadding="0" cellspacing="0" border="0" id="backgroundTable">
    <tbody>
       <tr>
          <td>
@@ -141,14 +132,14 @@
                            <tbody>
                               <tr>
                                  <!-- start of image -->
-                                 <!--td align="center">
-                                    <a target="_blank" href="#"><img width="600" border="0" height="150" alt="" border="0" style="display:block; border:none; outline:none; text-decoration:none;" src="logo.png" class="logo"></a>
+                                 <td align="center">
+                                    <a target="_blank" href="{{URL('/')}}"><img width="600" border="0" height="150" alt="" border="0" style="display:block; border:none; outline:none; text-decoration:none;" src="{{asset('images/BFlogo.png')}}" class="logo"></a>
                                  </td>
                               </tr>
                            </tbody>
                         </table-->
                         <!-- end of image -->
-                     <!--/td>
+                     </td>
                   </tr>
                </tbody>
             </table>
@@ -159,7 +150,7 @@
 </td>
 </tr>
 </tbody>
-</table-->
+</table>
 <!-- End of LOGO -->    
 @yield('content')
 <!-- Start of postfooter -->
@@ -180,7 +171,7 @@
                               <!-- Spacing -->
                               <tr>
                                  <td align="center" valign="middle" style="font-family: Helvetica, arial, sans-serif; font-size: 13px;color: #ffffff">
-                                    you have recevied this email because you have subscribed to username@company.com<br> If you no longer wish to recive emails please  <a href="#" style="text-decoration: none; color: #9ec459">unsubscribe </a> 
+                                   &nbsp;
                                  </td>
                               </tr>
                               <!-- Spacing -->
