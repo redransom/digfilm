@@ -596,6 +596,12 @@ class AuctionsController extends Controller {
                     foreach ($chosen_movies as $movie) {
                         $this->addAuction($league, $movie, $rule);
                     }
+
+
+                    //update chosen movies so that we don't select them again
+                    LeagueMovie::where('leagues_id', $league->id)->whereIn('movies_id', $chosen_movies)->where('chosen', '0')
+                        ->update(['chosen'=>1]);
+
                 } else {
                     //enable first movies
                     $league_movies_count = $league->movies->count();
@@ -614,10 +620,6 @@ class AuctionsController extends Controller {
 
             $league->save();
             
-            //update chosen movies so that we don't select them again
-            LeagueMovie::where('leagues_id', $league->id)->whereIn('movies_id', $chosen_movies)->where('chosen', '0')
-                    ->update(['chosen'=>1]);
-
             //now send email to players to tell them the auction is live
              //need to pass in the league details for the owner
             foreach ($league->players as $player) {

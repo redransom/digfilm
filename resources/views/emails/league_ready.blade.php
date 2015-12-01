@@ -39,7 +39,7 @@
                                                 Hi <strong>{{$playerName}}</strong>!<br/>
                                                 The league auction is about to start with the following movies available to bid on:<br/>
                                                 <ol>
-                                                @foreach($leagueMovies()->orderBy('name', 'asc')->get() as $movie)
+                                                @foreach($leagueMovies as $movie)
                                                    <li>
                                                    @if($movie->firstImage())
                                                    <img src="{{$movie->firstImage()->file_name}}" alt="{{$movie->name}} image" width="100px"/>

@@ -315,7 +315,7 @@ class UsersController extends Controller {
 			->with('use_graph', true)
 			->with('totals', $totals)
 			->with('authUser', $authUser)
-			->with('page_name', 'dashboard')
+			->with('page_name', 'admin-dashboard')
 			->with('title', 'Welcome to the DigFilm adminstration system Dashboard');
 	}
 
@@ -327,7 +327,6 @@ class UsersController extends Controller {
 		return View("users.dashboard")
 			->with('use_graph', true)
 			->with('authUser', $authUser)
-			->with('page_name', 'add-user')
 			->with('title', 'Welcome to the DigFilm adminstration system Dashboard');
 	}
 

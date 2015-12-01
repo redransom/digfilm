@@ -30,7 +30,7 @@
                                         @foreach($leagues as $league)
                                         <?php if (is_null($league->auction_start_date)) $start = ""; else $start = date("j M Y H:i", strtotime($league->auction_start_date)); ?>
                                         @if($stage != $league->auction_stage || $leagueCnt == 1)
-                                            <tr><td colspan='6'>{{$stage_array[$league->auction_stage]}}</td></tr>
+                                            <tr><td colspan='7'>{{$stage_array[$league->auction_stage]}}</td></tr>
                                             <?php $stage = $league->auction_stage; ?>
                                         @endif
                                         <tr class="<?php echo (($leagueCnt++ % 2) == 0) ? "odd" : "even"; ?> user{{$league->id}}">

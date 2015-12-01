@@ -161,7 +161,7 @@ Breadcrumbs::register('auctions', function($breadcrumbs)
 /** 
 Players Breadcrumbs
 */
-Breadcrumbs::register('dashboard', function($breadcrumbs)
+/*Breadcrumbs::register('dashboard', function($breadcrumbs)
 {
     $breadcrumbs->push('Home', route('dashboard'));
-});
+});*/

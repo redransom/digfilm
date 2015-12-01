@@ -1002,7 +1002,9 @@ class LeaguesController extends Controller {
                 $grouping = $rules->auction_movie_release;
                 if (is_null($grouping) || $grouping == 0) {
                     //all movies to be added
-                    $min_movies = count($available_movies);
+                    if ($min_movies > $available_movie_count)
+                        $min_movies = $available_movie_count;
+
                 } else {
                     //make a calculation to determine which is the best set of movies to take
                     /* this works as:
@@ -1020,7 +1022,6 @@ class LeaguesController extends Controller {
                 }
 
                 //need to make sure we have enough movies
-                //if (count($available_movies) >= $min_movies) {
                 $chosen_movies = array();
 
                 for($movie_no = 0; $movie_no<$min_movies; $movie_no++) {

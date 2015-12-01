@@ -14,13 +14,28 @@
                                 <dd>{{date("j M y", strtotime($league->created_at))}}</dd>
                                 @elseif(!is_null($league->auction_start_date) && $league->auction_stage < 2)
                                 <dt>Due to Start</dt>
-                                <dd>{{date("j M y h:iA", strtotime($league->auction_start_date))}}</dd>
                                 @else
                                 <dt>Started</dt>
-                                <dd>{{date("j M y h:iA", strtotime($league->auction_start_date))}}</dd>
                                 @endif
+                                <dd>{{date("j M Y g:iA", strtotime($league->auction_start_date))}}</dd>
+                                @if(!is_null($league->auction_close_date))
+                                <dt>Close</dt>
+                                <dd>{{date("j M Y g:iA", strtotime($league->auction_close_date))}}</dd>
+                                @endif
+                                <dt>Base Rules</dt>
+                                <dd>{{$league->rule_set->name}}</dd>
                                 <dt>Public/Private: </dt>
                                 <dd>{{(($league->type == 'U') ? 'Public' : 'Private')}}</dd>   
+                                @if(!is_null($league->round_amount))
+                                <dt>No of Rounds</dt>
+                                <dd>{{$league->round_amount}}</dd>
+                                <dt>Current Round</dt>
+                                <dd>{{$league->current_round}}  @if($league->current_round == $league->round_amount)
+                                <strong>Finished!</strong>
+                                @endif</dd>
+                                <dt>Round End Date/Time</dt>
+                                <dd>{{date("j M Y g:iA", strtotime($league->round_start_date))}}</dd>
+                                @endif
                             </dl>
                             <a class="btn" href="{{route('leagues.edit', [$league->id])}}">Edit League</a>
                             &nbsp;

@@ -18,6 +18,10 @@
                 @endforeach
                 @endif
 
+                <a class="btn" href="{{URL('leagues/'.$league->id.'/rules')}}">Edit Rules</a>
+                &nbsp;
+                <a class="btn" href="{{URL('league', array('id'=>$league->id))}}">League Details</a>
+                <br/>
                 <br />
                 {!! Form::open(array('route' => array('leagues.update', $league->id), 'class'=>'form-horizontal row-fluid', 'method'=>'PUT')) !!}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
