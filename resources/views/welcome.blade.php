@@ -14,7 +14,7 @@
                             <a href="{{URL('all-leagues')}}"><img class="small-custom-frame" src="{{asset('/images/publicleagues.png')}}" width="222" height="137" alt="" /></a>
                             <div class="scroll-caption">
                                 <span>Public Leagues</span>
-                                <h6><a href="#">There are <strong>{{$public_count}}</strong> public leagues!</a></h6>
+                                <h6><a href="{{URL('all-leagues')}}">There are <strong>{{$public_count}}</strong> public leagues!</a></h6>
                             </div><!--/ .scroll-caption-->
                         </li>
                         @if(!is_null($opening_bid))

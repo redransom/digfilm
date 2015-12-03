@@ -47,7 +47,21 @@ class WelcomeController extends Controller {
         //randomly populate movies
         $next_film = Movie::where('release_at', '>', date("Y-m-d", $earliest_release_date))->first();
 
-        $public = League::where('type', 'U')->where('enabled', 1)->whereNull('auction_stage')->count();
+/*        $available_movies = Movie::where('release_at', '>', date("Y-m-d", $earliest_release_date))
+            ->Where(function ($query) use ($max_bid) {
+                $query->where('opening_bid', '<', $max_bid)->orWhereNull('opening_bid');
+            })->lists('id');
+
+*/      
+		if (isset($authUser)) {
+			$public = League::availableLeagues($authUser)->count();
+		} else 
+			$public = League::where('type', 'U')->where('enabled', 1)
+	        	->Where(function ($query) {
+	        		$query->whereNull('auction_stage')->orWhere('auction_stage', '<', '2');
+	        	})->count();
+
+
 
         $opening_bid = Movie::where('opening_bid_date', '<=', date("Y-m-d"))->whereNotNull('opening_bid_date')->
         	where('opening_bid', '>', 0)->orderBy('updated_at', 'DESC')->first();
@@ -97,7 +111,10 @@ class WelcomeController extends Controller {
 		$authUser = Auth::user();
 
 		if (!isset($authUser))
-			$leagues = League::all();
+			$leagues = League::where('type', 'U')->where('enabled', 1)
+	        	->Where(function ($query) {
+	        		$query->whereNull('auction_stage')->orWhere('auction_stage', '<', '2');
+	        	})->get();
 		else
 			$leagues = League::availableLeagues($authUser->id);
 

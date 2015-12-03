@@ -34,6 +34,39 @@
         @endforeach
     </ul>
     @endif
+    
+    <br/>
+    <h2>Movies</h2>
+    <p>This is a list of all movies that are to be played for in this league.</p>
+        @if($currentLeague->movies->count() > 0)
+
+            <?php $movieCnt = 0; ?>
+            <ul id="movie-badge" class="clearfix">
+            @foreach($movies as $movie)
+                @if(($movieCnt % 4) == 0 && $movieCnt != 0)
+                <li class="last">
+                @else
+                <li>
+                @endif
+                
+                @if($movie->Media->count() > 0)
+                    @foreach($movie->Media as $media)
+                        @if($media->type == 'I')
+                        <img src="{{$media->file_name}}" alt="{{$media->description}}" width="100px"/>
+                        <br/>
+                        @endif
+                    @endforeach
+                @endif
+                <a href="{{URL('movie-knowledge', [$movie->id])}}">{{$movie->name}}</a>
+                @if($movie->opening_bid != 0)
+                <br/>Opening Bid: <strong>${{$movie->opening_bid}}</strong>
+                @endif
+                </li>
+                <?php $movieCnt++;?>
+            @endforeach
+            </ul>
+        @endif
+    @endif
     <br/>
     <h2>Rules</h2>
         <table class="feature-table dark-gray">
@@ -72,39 +105,7 @@
                 <td>Misc</td>
                 <td>Timeout: {{$currentLeague->rule->auction_timeout}} mins <br/>Denomination: {{$currentLeague->rule->denomination}} <br/>Movie Takings: {{$currentLeague->rule->movie_takings_duration}} weeks</td>
             </tr>
-        </table>
-    <br/>
-    <h2>Movies</h2>
-    <p>This is a list of all movies that are to be played for in this league.</p>
-    @if($currentLeague->movies->count() > 0)
-
-    <?php $movieCnt = 0; ?>
-    <ul id="movie-badge" class="clearfix">
-    @foreach($movies as $movie)
-        @if(($movieCnt % 4) == 0 && $movieCnt != 0)
-        <li class="last">
-        @else
-        <li>
-        @endif
-        
-        @if($movie->Media->count() > 0)
-            @foreach($movie->Media as $media)
-                @if($media->type == 'I')
-                <img src="{{$media->file_name}}" alt="{{$media->description}}" width="100px"/>
-                <br/>
-                @endif
-            @endforeach
-        @endif
-        <a href="{{URL('movie-knowledge', [$movie->id])}}">{{$movie->name}}</a>
-        @if($movie->opening_bid != 0)
-        <br/>Opening Bid: <strong>${{$movie->opening_bid}}</strong>
-        @endif
-        </li>
-        <?php $movieCnt++;?>
-    @endforeach
-        </ul>
-    @endif
-    @endif
+        </table>    
 </section>
 
 <?php function auctionTimer ($auctionid, $auctionTime, $name='bid_link') { ?>

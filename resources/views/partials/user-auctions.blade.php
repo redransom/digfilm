@@ -3,12 +3,12 @@
 <p>See a list of movies you can bid on:</p>
 <table class="feature-table dark-gray">
     <thead>
-        <tr><th>Movie</th><th>Release Date</th><th>Opening<br/>Bid</th><th>Current Price /<br/>$ USD</th><th>Place Bid</th><th>Owner</th><th>Time</th><th>Active</th></tr>
+        <tr><th>No</th><th>Movie</th><th>Release Date</th><th>Opening<br/>Bid</th><th>Current Price /<br/>$ USD</th><th>Place Bid</th><th>Owner</th><th>Time</th><th>Active</th></tr>
     </thead>
     <tbody>
-    
+    <?php $movieCnt = 1; ?>
     @foreach($currentLeague->auctions()->where('ready_for_auction', 1)->orderBy('name', 'asc')->get() as $auction)
-        <tr><td>
+        <tr><td>{{($movieCnt++)}}</td><td>
         @if(is_null($auction->slug) || $auction->slug == '')
         <a href="{{URL('movie-knowledge', [$auction->id])}}">
         @else
