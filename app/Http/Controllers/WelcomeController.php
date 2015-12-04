@@ -154,7 +154,7 @@ class WelcomeController extends Controller {
 
 		//work out auctions
 		$wonAuctions = $league->auctions()->where('ready_for_auction', '4')->orderBy('name', 'asc')->get();
-		$expiredAuctions = $league->auctions()->where('ready_for_auction', '3')->orderBy('name', 'asc')->get();
+		$expiredAuctions = $league->auctions()->whereIn('ready_for_auction', ['2', '3'])->orderBy('name', 'asc')->get();
 
 		$leagueUsers = LeagueUser::where('league_id', $league->id)->get();
 		$currentLeagueUser = LeagueUser::where('user_id', $authUser->id)->where('league_id', $league->id)->first();
@@ -305,4 +305,27 @@ class WelcomeController extends Controller {
 	public function emailVerified() {
 		return view('email-completed');	
 	}
+
+	/**
+     * Invite non-player to join league
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function manageLeague($id) 
+    {
+    	if( ! $id) {
+            return redirect('/');
+        }
+
+        $authUser = Auth::user();
+        $league = League::find($id);
+/*
+        $movies = $league->movies;
+        $rule = $league->rule;
+*/
+        return view('league-manage')
+            ->with('league', $league)
+            ->with('authUser', $authUser);  
+    }
 }

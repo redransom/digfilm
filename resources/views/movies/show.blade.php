@@ -41,7 +41,7 @@
                                 <p>There are no contributors for this movie currently.</p>
                                 @endif
                                 <ul class="inline">
-                                    <li><a href="{{URL('movie-add-contributor', array('id'=>$movie->id))}}">Add Contributor</a></li>
+                                    <li><a href="{{Route('movie-add-contributor', array('id'=>$movie->id))}}">Add Contributor</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -71,7 +71,7 @@
                                     @else
                                     <iframe width="200" height="150" src="{{$base_url}}" frameborder="0" allowfullscreen></iframe>
                                     @endif
-                                    <a href="{{URL('movie-remove-media', array($item->id))}}" title="Remove Media {{$item->name}}">x</a>
+                                    <a href="{{Route('movie-remove-media', array($item->id))}}" title="Remove Media {{$item->name}}">x</a>
                                     </li>
                                 @endforeach
                                 </ul>
@@ -81,7 +81,7 @@
                                 <p>There are no media files/links for this movie currently.</p>
                                 @endif
                                 <ul class="inline">
-                                    <li><a href="{{URL('movie-add-media', array('id'=>$movie->id))}}">Add Media</a></li>
+                                    <li><a href="{{Route('movie-add-media', array('id'=>$movie->id))}}">Add Media</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -105,7 +105,7 @@
                                 <p>No takings have been recorded for this movie currently.</p>
                                 @endif
                                 <ul class="inline">
-                                    <li><a href="{{URL('movie-add-takings', array('id'=>$movie->id))}}">Add Takings</a></li>
+                                    <li><a href="{{Route('movie-add-takings', array('id'=>$movie->id))}}">Add Takings</a></li>
                                 </ul>
                             </div>
                         </div>

@@ -648,8 +648,9 @@ class LeaguesController extends Controller {
                     break;
             }
             Flash::success('Players have been added to the league');
-            return Redirect::route('league-manage', [$league_id]);
+            return Redirect::route('manage', [$league_id]);
         }
+        
         return Redirect::route('dashboard');
     }
 
@@ -707,7 +708,7 @@ class LeaguesController extends Controller {
                 //send invite email to new player
                 Mail::send('emails.invite', $data, function($message) use ($nonplayerEmail, $subject)
                 {
-                    $message->from('invite@digfilm.com', 'DigFilm Entertainment');
+                    $message->from('invite@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
                     $message->subject($subject);
                     $message->to($nonplayerEmail);
                 });
@@ -717,10 +718,7 @@ class LeaguesController extends Controller {
         }
 
         Flash::success('Players have been invited to the league');
-
-        //$success_message = $nonplayerName." has been invited to your league!";
-        /* route back to the invite page */
-        return Redirect::route('league-manage', [$league->id]);//->with(['message'=>$success_message]);
+        return Redirect::route('manage', [$league->id]);
     }
 
     /**
@@ -799,25 +797,6 @@ class LeaguesController extends Controller {
             Flash::warning('We are sorry you have declined '.$league->owner->name.' invitation to join the '.$league->name.' league. You can still join the website if you want to?');            
         }
         return Redirect::route('/');
-    }
-
-    /**
-     * Invite non-player to join league
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function getLeague($id) 
-    {
-        $authUser = Auth::user();
-        $league = League::find($id);
-
-        $movies = $league->movies;
-        $rule = $league->rule;
-
-        return view('leagues.manage')
-            ->with('league', $league)
-            ->with('authUser', $authUser);  
     }
 
     /**

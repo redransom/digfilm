@@ -316,7 +316,7 @@ class UsersController extends Controller {
 			->with('totals', $totals)
 			->with('authUser', $authUser)
 			->with('page_name', 'admin-dashboard')
-			->with('title', 'Welcome to the DigFilm adminstration system Dashboard');
+			->with('title', 'Welcome to the TheNextBigFilm adminstration system Dashboard');
 	}
 
 	public function usersDashboard() {
@@ -327,31 +327,10 @@ class UsersController extends Controller {
 		return View("users.dashboard")
 			->with('use_graph', true)
 			->with('authUser', $authUser)
-			->with('title', 'Welcome to the DigFilm adminstration system Dashboard');
+			->with('title', 'Welcome to the TheNextBigFilm adminstration system Dashboard');
 	}
 
-/*	public function profile() {
-		$authUser = Auth::user();
-		if (!isset($authUser))
-			return redirect('/auth/login');
-
-		if ($authUser->hasRole("Customer")) {
-			$current_domain = Session::get('current_domain');
-			$sites = Session::get('available_domains');
-		} else {
-			$current_domain = null;
-			$sites = array();
-		}
-
-		return View("users.profile")
-			->with('sites', $sites)
-			->with('authUser', $authUser)
-			->with('instructions', 'Make sure you complete all of the required fields before submitting.')
-			->with('page_name', 'profile')
-			->with('title', 'Update your profile');
-	}
-
-*/	/**
+	/**
 	 * Disable the user
 	 *
 	 * @param  int  $id

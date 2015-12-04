@@ -49,13 +49,8 @@
                 <li>
                 @endif
                 
-                @if($movie->Media->count() > 0)
-                    @foreach($movie->Media as $media)
-                        @if($media->type == 'I')
-                        <img src="{{$media->file_name}}" alt="{{$media->description}}" width="100px"/>
-                        <br/>
-                        @endif
-                    @endforeach
+                @if($movie->firstImage())
+                    <img src="{{$movie->firstImage()->file_name}}" alt="{{$movie->firstImage()->description}}" width="100px"/>
                 @endif
                 <a href="{{URL('movie-knowledge', [$movie->id])}}">{{$movie->name}}</a>
                 @if($movie->opening_bid != 0)

@@ -130,7 +130,7 @@
                 @else
                 <td>--</td>
                 @endif
-                <td><a class="button small dark" href="{{URL('league/'.$league->id.'/manage')}}">Manage</a></td>
+                <td><a class="button small dark" href="{{URL('manage/'.$league->id)}}">Manage</a></td>
             </tr>
             @endforeach
         </tbody>

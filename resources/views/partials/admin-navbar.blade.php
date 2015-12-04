@@ -7,7 +7,7 @@
                     <i class="icon-reorder shaded"></i>
                 </a>
 
-                <a class="brand" href="/">DigFilm - Administration Login</a>
+                <a class="brand" href="/">TheNextBigFilm - Administration Login</a>
 
                 <div class="nav-collapse collapse navbar-inverse-collapse">
                 

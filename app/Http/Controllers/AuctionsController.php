@@ -301,9 +301,11 @@ class AuctionsController extends Controller {
      */
     public function clearEndTimeAuctions() 
     {
-        $currentTime = date("Y-m-d H:i:s"); //, strtotime("+1 hour", time()));
+        $currentTime = date("Y-m-d H:i:s"); 
         Log::info("Current Time to clear out: ".$currentTime);
-        $auctionsToClear = Auction::where('ready_for_auction', '1')->where('auction_end_time', '<', $currentTime)->get();
+        $affected = Auction::where('ready_for_auction', '1')->where('auction_end_time', '<', $currentTime)->update(['ready_for_auction'=>'2']);
+        Log::info("Auction End Time Cleared: ".$affected.' auctions');
+        /*$auctionsToClear = Auction::where('ready_for_auction', '1')->where('auction_end_time', '<', $currentTime)->get();
 
         if ($auctionsToClear->count() > 0) {
             foreach ($auctionsToClear as $auction) {
@@ -311,7 +313,7 @@ class AuctionsController extends Controller {
                 $auction->ready_for_auction = 2; //finished
                 $auction->save();
             }    
-        }
+        }*/
 
     }
 
@@ -323,19 +325,19 @@ class AuctionsController extends Controller {
      */
     public function clearTimeoutAuctions() 
     {    
-        $currentTime = date("Y-m-d H:i:s"); //, strtotime("+1 hour", time()));
+        $currentTime = date("Y-m-d H:i:s");
         Log::info("Current Time to clear time out: ".$currentTime);
-        $auctionsToClear = Auction::where('ready_for_auction', '1')->where('timeout_date', '<', $currentTime)->get();
+        $affected = Auction::where('ready_for_auction', '1')->where('timeout_date', '<', $currentTime)->update(['ready_for_auction'=>'2']);
+        Log::info("Auction Time Out Cleared: ".$affected.' auctions');
+/*        $auctionsToClear = Auction::where('ready_for_auction', '1')->where('timeout_date', '<', $currentTime)->get();
 
-        //Auction::where('ready_for_auction', '1')->where('timeout_date', '<', $currentTime)
-        //    ->update(['ready_for_auction'=>2]);
         if ($auctionsToClear->count() > 0) {
             foreach ($auctionsToClear as $auction) {
                 Log::info("Auction End Time Out Cleared: ".$auction->id);
                 $auction->ready_for_auction = 2; //finished
                 $auction->save();
             }    
-        }
+        }*/
     }
 
     private function getLeagueRule($rules, $league_id) {

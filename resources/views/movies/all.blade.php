@@ -45,8 +45,8 @@
                                             @endif
                                             @endif
                                             <td><a class="btn btn-mini btn-primary" href="{{URL('movies/'.$movie->id.'/edit')}}">Edit</a>
-                                            <a class="btn btn-mini btn-inverse" href="{{URL('movie-add-takings/'.$movie->id)}}">Add Takings</a>
-                                            <a class="btn btn-mini btn-success" href="{{URL('movie-add-media/'.$movie->id)}}">Add Media</a>
+                                            <a class="btn btn-mini btn-inverse" href="{{URL('movies/'.$movie->id.'/takings')}}">Add Takings</a>
+                                            <a class="btn btn-mini btn-success" href="{{URL('movies/'.$movie->id.'/media')}}">Add Media</a>
                                             @if($movie->enabled)
                                             <a class="btn btn-mini btn-danger" href="{{URL('movies/'.$movie->id.'/disable')}}">Disable</a>
                                             @else

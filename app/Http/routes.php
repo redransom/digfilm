@@ -61,8 +61,10 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('profile', ['as'=>'profile', 'uses'=>'WelcomeController@getProfile']);
 
         Route::get('league-show/{id}', ['as'=>'league-show', 'uses'=>'WelcomeController@getLeague']);
-        Route::get('league/{id}/manage', ['as'=>'league-manage', 'uses'=>'LeaguesController@getLeague']);
-        Route::post('league', ['as'=>'league-create', 'uses'=>'WelcomeController@getLeague']);
+        Route::get('manage/{id}', ['as'=>'manage', 'uses'=>'WelcomeController@manageLeague']);
+        /* See if using a new route will fix it - to keep it away from leagues route below */
+        Route::post('league-store', ['as'=>'league-store', 'uses'=>'LeaguesController@store']);
+
         Route::get('roster/{id}', ['as'=>'roster', 'uses'=>'WelcomeController@getRoster']);
         Route::get('choose-movies/{id}', ['as'=>'choose-movies', 'uses'=>'WelcomeController@addMovies']);
         Route::post('select-movies', ['as'=>'select-movies', 'uses'=>'LeaguesController@postMultipleMovies']);
@@ -78,17 +80,26 @@ Route::group(['middleware'=>'auth'], function() {
 
         /* Setting Entrust to ensure permissions are correct */
         Entrust::routeNeedsRole('place-auction-bid', ['Player'], Redirect::to('/'));
-        Entrust::routeNeedsRole('choose-movies', ['Player'], Redirect::to('/'));
+        Entrust::routeNeedsRole('choose-movies*', ['Player'], Redirect::to('/'));
+        Entrust::routeNeedsRole('league-invite*', ['Player'], Redirect::to('/'));
+        Entrust::routeNeedsRole('choose-participants/*', ['Player'], Redirect::to('/'));
         Entrust::routeNeedsRole('dashboard', ['Player'], Redirect::to('/'));
-        //Entrust::routeNeedsRole('leagues/create', ['Player', 'Admin'], Redirect::to('/'));
+        Entrust::routeNeedsRole('manage', ['Player'], Redirect::to('/'));
+        Entrust::routeNeedsRole('league-store', array('Admin', 'Player'), Redirect::to('/'), false);
+        
+        Entrust::routeNeedsRole('leagues', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('admin-dashboard', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('user-disable', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('user-enable', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('users', ['Admin'], Redirect::to('/'));
+        Entrust::routeNeedsRole('users*', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('league-disable', ['Admin'], Redirect::to('/'));
-        Entrust::routeNeedsRole('movies', ['Admin'], Redirect::to('/'));
+        
+        Entrust::routeNeedsRole('movies*', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('contributors', ['Admin'], Redirect::to('/'));
-        Entrust::routeNeedsRole('leagues', ['Admin'], Redirect::to('/'));
+        Entrust::routeNeedsRole('contributors*', ['Admin'], Redirect::to('/'));
+        Entrust::routeNeedsRole('leagues/*', ['Admin'], Redirect::to('/'));
+        Entrust::routeNeedsRole('league/*', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('rulesets*', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('auctions', ['Admin'], Redirect::to('/'));
 
@@ -103,30 +114,29 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('users/{id}/disable', ['as'=>'user-disable', 'uses'=>'UsersController@disable']);
         Route::get('users/{id}/enable', ['as'=>'user-enable', 'uses'=>'UsersController@enable']);
 
+        /* Leagues Routes */
         Route::get('leagues/{id}/disable', ['as'=>'league-disable', 'uses'=>'LeaguesController@disable']);
         Route::get('leagues/{id}/enable', ['as'=>'league-enable', 'uses'=>'LeaguesController@enable']);
         Route::get('leagues/{id}/rules', ['as'=>'league-rules', 'uses'=>'LeaguesController@getRules']);
         Route::post('leagues/{id}/rules', ['as'=>'league-rules', 'uses'=>'LeaguesController@postRules']);
+        Route::get('leagues/{id}/movie', ['as'=>'league-add-movie', 'uses'=>'LeaguesController@addMovie']);
+        Route::post('leagues/{id}/movie', ['as'=>'add-movie', 'uses'=>'LeaguesController@postMovie']);
+        Route::get('leagues/{id}/removemovie', ['as'=>'league-remove-movie', 'uses'=>'LeaguesController@removeMovie']);
+        Route::get('leagues/{id}/player', ['as'=>'league-add-player', 'uses'=>'LeaguesController@addPlayer']);
+        Route::post('leagues/{id}/player', ['as'=>'add-player', 'uses'=>'LeaguesController@postPlayer']);
 
-        Route::get('league-add-movie/{id}', ['as'=>'league-add-movie', 'uses'=>'LeaguesController@addMovie']);
-        Route::post('add-movie/{id}', ['as'=>'add-movie', 'uses'=>'LeaguesController@postMovie']);
-        Route::get('league-remove-movie/{id}', ['as'=>'league-remove-movie', 'uses'=>'LeaguesController@removeMovie']);
-
+        /* all movies routes */
         Route::get('movies/{id}/disable', ['as'=>'movie-disable', 'uses'=>'MoviesController@disable']);
         Route::get('movies/{id}/enable', ['as'=>'movie-enable', 'uses'=>'MoviesController@enable']);
-        Route::get('movie-remove-media/{id}', ['as'=>'movie-remove-media', 'uses'=>'MoviesController@removeMedia']);
+        Route::get('movies/{id}/removemedia', ['as'=>'movie-remove-media', 'uses'=>'MoviesController@removeMedia']);
+        Route::get('movies/{id}/contributor', ['as'=>'movie-add-contributor', 'uses'=>'MoviesController@addContributor']);
+        Route::post('movies/{id}/contributor', ['as'=>'add-contributor', 'uses'=>'MoviesController@postContributor']);
+        Route::get('movies/{id}/takings', ['as'=>'movie-add-takings', 'uses'=>'MoviesController@addTakings']);
+        Route::post('movies/{id}/takings', ['as'=>'add-takings', 'uses'=>'MoviesController@postTakings']);
+        Route::get('movies/{id}/media', ['as'=>'movie-add-media', 'uses'=>'MoviesController@addMedia']);
+        Route::post('movies/{id}/media', ['as'=>'add-media', 'uses'=>'MoviesController@postMedia']);
 
-        Route::get('movie-add-contributor/{id}', ['as'=>'movie-add-contributor', 'uses'=>'MoviesController@addContributor']);
-        Route::post('add-contributor/{id}', ['as'=>'add-contributor', 'uses'=>'MoviesController@postContributor']);
 
-        Route::get('movie-add-takings/{id}', ['as'=>'movie-add-takings', 'uses'=>'MoviesController@addTakings']);
-        Route::post('add-takings/{id}', ['as'=>'add-takings', 'uses'=>'MoviesController@postTakings']);
-
-        Route::get('movie-add-media/{id}', ['as'=>'movie-add-media', 'uses'=>'MoviesController@addMedia']);
-        Route::post('add-media/{id}', ['as'=>'add-media', 'uses'=>'MoviesController@postMedia']);
-
-        Route::get('league-add-player/{id}', ['as'=>'league-add-player', 'uses'=>'LeaguesController@addPlayer']);
-        Route::post('add-player/{id}', ['as'=>'add-player', 'uses'=>'LeaguesController@postPlayer']);
         Route::get('admin-dashboard', ['as' => 'admin-dashboard', 'uses'=>'UsersController@adminDashboard']);
 
         Route::get('auctions/{status?}', ['as'=>'auctions', 'uses'=>'AuctionsController@index']);

@@ -64,7 +64,7 @@
                         @endif
                         @if($players->count() < $league->rule->max_players)
                         <ul class="inline">
-                            <li><a href="{{URL('league-add-player', array('id'=>$league->id))}}">Add Player</a></li>
+                            <li><a href="{{Route('league-add-player', array('id'=>$league->id))}}">Add Player</a></li>
                         </ul>
                         @endif
                         </div>
@@ -117,7 +117,7 @@
                             <p>There are no movies associated with this league presently.</p>
                             @endif
                             <ul class="inline">
-                                <li><a href="{{URL('league-add-movie', array('id'=>$league->id))}}">Add Movie</a></li>
+                                <li><a href="{{Route('league-add-movie', array('id'=>$league->id))}}">Add Movie</a></li>
                             </ul>
                         </div>
                     </div>

@@ -68,7 +68,7 @@
             </section><!--/ .entry-footer-->
 
             <div class="copyright">
-                Copyright © {{date("Y")}}. DigFilm Entertainment. All rights reserved
+                Copyright © {{date("Y")}}. TheNextBigFilm Entertainment. All rights reserved
             </div><!--/ .copyright-->
         
             
