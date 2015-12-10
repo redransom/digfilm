@@ -483,7 +483,7 @@ class LeaguesController extends Controller {
             Flash::success('League rules have been updated.');
         }
 
-        return redirect()->route('league-manage', [$id]);
+        return redirect()->back();
     }
 
     /**
@@ -960,6 +960,9 @@ class LeaguesController extends Controller {
                 $earliest_release_date = strtotime("+1 week", strtotime($league->auction_close_date));
 
                 //randomly populate movies
+                if (is_null($max_bid))
+                    $max_bid = 100;
+                
                 $available_movies = Movie::where('release_at', '>', date("Y-m-d", $earliest_release_date))
                     ->Where(function ($query) use ($max_bid) {
                         $query->where('opening_bid', '<', $max_bid)->orWhereNull('opening_bid');

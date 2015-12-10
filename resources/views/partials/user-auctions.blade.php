@@ -3,7 +3,7 @@
 <p>See a list of movies you can bid on:</p>
 <table class="feature-table dark-gray">
     <thead>
-        <tr><th>No</th><th>Movie</th><th>Release Date</th><th>Opening<br/>Bid</th><th>Current Price /<br/>$ USD</th><th>Place Bid</th><th>Owner</th><th>Time</th><th>Active</th></tr>
+        <tr><th width="5%">No</th><th>Movie</th><th>Release Date</th><th>Opening<br/>Bid</th><th>Current Price /<br/>$ USD</th><th>Place Bid</th><th>Owner</th><th>Time</th></tr>
     </thead>
     <tbody>
     <?php $movieCnt = 1; ?>
@@ -54,11 +54,6 @@
         
         @else
         <td>&nbsp;</td>
-        @endif
-        @if($auction->pivot->ready_for_auction == 1)
-        <td>Yes</td>
-        @else
-        <td>No</td>
         @endif
         </tr>
     @endforeach

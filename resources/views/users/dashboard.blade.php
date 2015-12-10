@@ -26,7 +26,11 @@
             @foreach($authUser->inLeagues()->where('auction_stage', '2')->orderBy('auction_close_date', 'asc')->get() as $league)
             <tr>
                 <td><a class="btn btn-mini btn-danger" href="{{URL('league-show/'.$league->id)}}">{{$league->name}}</a></td>
+                @if(!is_null($league->rule_set))
                 <td>{{$league->rule_set->name}}</td>
+                @else
+                <td>&nbsp;</td>
+                @endif
                 <td>{{count($league->players)}}</td>
                 <td>{{date("jS M Y H:i", strtotime($league->auction_close_date))}}</td>
             </tr>
@@ -51,7 +55,11 @@
             @foreach($authUser->inLeagues()->where('auction_stage', '3')->orderBy('name', 'asc')->get() as $league)
             <tr>
                 <td><a class="btn btn-mini btn-danger" href="{{URL('roster/'.$league->id)}}">{{$league->name}}</a></td>
+                @if(!is_null($league->rule_set))
                 <td>{{$league->rule_set->name}}</td>
+                @else
+                <td>&nbsp;</td>
+                @endif
                 <td>{{count($league->players)}}</td>
                 <td>{{date("jS M Y H:i", strtotime($league->end_date))}}</td>
             </tr>
