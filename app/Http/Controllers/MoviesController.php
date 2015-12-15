@@ -3,6 +3,7 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
+use DB;
 use App\Models\User;
 use App\Models\Movie;
 use App\Models\Contributor;
@@ -360,7 +361,17 @@ class MoviesController extends Controller {
 
 	public function postTakings($id, AddTakingsToMovieRequest $request) {
 		$input = Input::all();
+
+		//if date is not populated use todays date
+		if ($input['takings_at'] == '')
+			$input['takings_at'] = date("Y-m-d");
+
 		$taking = MovieTaking::create( $input );
+
+		//need to run the update on the league roster
+		//$value = ($takings * $auction->pivot->bid_amount) / 100000;
+		//LeagueMovie::where('movies_id', $input['movies_id'])->where('takings_end_date', '>', date("Y-m-d"))->update(['total_gross'=>$input['amount'], 'value_for_money'=>$input['amount']])
+		DB::update(DB::raw("UPDATE league_roster SET total_gross = ".$input['amount'].", value_for_money = ((".$input['amount']." / bid_amount) * 10) WHERE movies_id = ".$input['movies_id']." AND takings_end_date > NOW()"));
 
 		Flash::message('Movie takings added.');		
 		return Redirect::route('movies.show', array($id));

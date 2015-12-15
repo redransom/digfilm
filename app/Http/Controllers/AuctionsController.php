@@ -16,6 +16,7 @@ use App\Models\League;
 use App\Models\LeagueUser;
 use App\Models\LeagueMovie;
 use App\Models\LeagueRule;
+use App\Models\LeagueRoster;
 use Session;
 use Input;
 use Redirect;
@@ -386,9 +387,32 @@ class AuctionsController extends Controller {
                     //stage = 3 / auctions are over
                     $league->auction_stage = 3;
                     $league->save();
+
+                    //copy all rosters across
+                    $this->setRoster($league->id);
                 }
             }
         }
+
+    }
+
+
+    /**
+     * Populate the rosters for a league
+     *
+     * @param  int  $league_id
+     * @return Response
+     */
+    private function setRoster($league_id) 
+    {   
+        $created_at = date("Y-m-d H:i:s");
+        DB::insert(DB::raw("INSERT INTO league_roster
+(leagues_id, users_id, movies_id, bid_amount, takings_end_date, created_at)
+SELECT A.leagues_id, users_id, movies_id, bid_amount, DATE_ADD(M.release_at, INTERVAL LR.movie_takings_duration WEEK), '".$created_at."' 
+FROM auctions A INNER JOIN league_rules LR ON A.leagues_id = LR.leagues_id
+INNER JOIN movies M ON A.movies_id = M.id
+WHERE A.leagues_id = '".$league_id."' AND bid_count > 0"));
+
 
     }
 
@@ -407,8 +431,7 @@ class AuctionsController extends Controller {
             ->whereRaw('round_amount > current_round')
             ->where('round_start_date', '<', date("Y-m-d H:i"))->get();
         $queries = DB::getQueryLog();
-        print_r($queries);
-
+        
         foreach ($leaguesStarted as $league) {
             $rule = $league->rule;
 
