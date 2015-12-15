@@ -15,9 +15,9 @@
                                     <dt>Rating</dt>
                                     <dd>{{$movie->rating}}</dd>
                                     <dt>Budget</dt>
-                                    <dd>${{$movie->budget}} million</dd>
+                                    <dd>${{$movie->budget}}</dd>
                                     <dt>Release Date</dt>
-                                    <dd>{{$movie->release_at}}</dd>
+                                    <dd>{{date("D jS M Y", strtotime($movie->release_at))}}</dd>
                                 </dl>
                                 <ul class="inline">
                                     <li><a href="{{URL('movies/'.$movie->id.'/edit')}}">Edit Movie</a></li>
