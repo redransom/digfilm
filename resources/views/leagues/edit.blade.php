@@ -23,7 +23,7 @@
                 <a class="btn" href="{{URL('league', array('id'=>$league->id))}}">League Details</a>
                 <br/>
                 <br />
-                {!! Form::open(array('route' => array('leagues.update', $league->id), 'class'=>'form-horizontal row-fluid', 'method'=>'PUT')) !!}
+                {!! Form::open(array('route' => array('leagues.update', $league->id), 'class'=>'form-horizontal row-fluid', 'method'=>'PUT', 'files'=>true)) !!}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="control-group">
                         <label class="control-label" for="LeagueName">Name</label>
@@ -70,6 +70,14 @@
                         <div class="controls">
                             {!! Form::text('auction_close_date', $league->auction_close_date, ['class'=>'span8', 'placeholder'=>'YYYY-MM-DD HH:mm:SS']) !!}
                             <span class="help-inline">When does the auction finish?</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="LeagueFileName">Thumbnail</label>
+                        <div class="controls">
+                            {!! Form::file('file_name', null, ['class'=>'span8']) !!}
+                            <span class="help-inline">Leave this when you don't want to change the current image.</span>
                         </div>
                     </div>
 

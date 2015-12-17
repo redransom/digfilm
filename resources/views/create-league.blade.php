@@ -19,13 +19,18 @@
                     <div class="row">
                         <label for="name"><span class="required">*</span>League Name:</label>
                         {!! Form::text('name', null, ['class'=>'span8', 'placeholder'=>'Enter league name here...']) !!}
-                    </div><!--/ row-->
+                    </div>
                     
                     <div class="row">
                         <label for="name"><span class="required">*</span>Start Date/Time:</label>
                         {!! Form::text('auction_start_date', null, ['class'=>'span8', 'placeholder'=>'YYYY-MM-DD HH:II']) !!}
-                    </div><!--/ row-->
-                </div><!--/ textfield-->
+                    </div>
+
+                    <div class="row">
+                        <label for="LeagueFilename">Thumbnail</label>
+                        {!! Form::file('file_name', null, ['class'=>'span8', 'placeholder'=>'Enter filename...']) !!}
+                    </div>
+                </div>
             </fieldset>
     </div><!--/ contact-->
     <div class="clear"></div>

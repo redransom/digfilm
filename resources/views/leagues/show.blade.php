@@ -6,6 +6,12 @@
                             <h3>{{$league->name}}</h3>
                         </div>
                         <div class="module-body">
+                            @if(!is_null($league->file_name))
+                            <div style="float:right; width:150px;">
+                            <img src="{{asset($league->file_name)}}" width="140px">
+                            </div>
+                            @endif
+
                             <dl class="dl-horizontal">
                                 <dt>Owned By</dt>
                                 <dd>{{$league->Owner->name}}</dd>

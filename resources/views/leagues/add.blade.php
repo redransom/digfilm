@@ -26,7 +26,7 @@
                 @endif
 
                 <br />
-                {!! Form::open(array('route' => 'leagues.store', 'class'=>'form-horizontal row-fluid')) !!}
+                {!! Form::open(array('route' => 'leagues.store', 'class'=>'form-horizontal row-fluid', 'files'=>true)) !!}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="control-group">
                         <label class="control-label" for="LeagueName">Name</label>
@@ -81,6 +81,14 @@
                         <div class="controls">
                             {!! Form::select('auto_select', ["Y"=>"Yes", "N" => "No"], null, ['class'=>'span2']) !!}
                             <span class="help-inline">Auto select the movies for population.</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="LeagueFilename">Thumbnail</label>
+                        <div class="controls">
+                            {!! Form::file('file_name', null, ['class'=>'span8', 'placeholder'=>'Enter filename...']) !!}
+                            <span class="help-inline">Thumbnail for the league.</span>
                         </div>
                     </div>
 

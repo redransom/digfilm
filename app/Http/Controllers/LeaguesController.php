@@ -162,6 +162,13 @@ class LeaguesController extends Controller {
             $league->auction_close_date = date("Y-m-d G:i:s", strtotime('+'.$auction_duration.' hours', strtotime($close_date)));
         }
 
+        if ($request->file('file_name') != "") {
+            $imageName = $league->id.str_replace(' ', '_', strtolower($input['name'])) . '.' . $request->file('file_name')->getClientOriginalExtension();
+            $request->file('file_name')->move(base_path() . '/public/images/leagues/', $imageName);
+
+            $league->file_name = "/images/leagues/".$imageName;
+        }
+
         $league->save(); 
 
         $direction = isset($input['source']) ? $input['source'] : "A";
@@ -275,6 +282,14 @@ class LeaguesController extends Controller {
         if ($input['auction_stage'] == '-1')
             $league->auction_stage = null;
 
+        if ($request->file('file_name') != "") {
+            $imageName = $this->generateRandomString().str_replace(' ', '_', strtolower($input['name'])) . '.' . $request->file('file_name')->getClientOriginalExtension();
+            $request->file('file_name')->move(base_path() . '/public/images/leagues/', $imageName);
+
+            $league->file_name = "/images/leagues/".$imageName;
+        }
+
+        var_dump($league);
         $league->save();
 
         if (isset($input['rule_set']) && is_null($league->rule)) {
@@ -315,7 +330,7 @@ class LeaguesController extends Controller {
             $leaguerule->save();
         }
         Flash::message('League has been updated');
-        return redirect()->back();//Redirect::route('leagues.index');
+        return redirect()->back();
     }
 
     /**
@@ -1122,5 +1137,21 @@ class LeaguesController extends Controller {
         League::where('enabled', '0')->where('updated_at', '<', date("Y-m-d G:i", strtotime("-1 day")))->delete();
     /*    $queries = DB::getQueryLog();
         print_r($queries);    */
+    }
+
+    /**
+     * Random string generator for filename
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    private function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 }
