@@ -907,17 +907,26 @@ class LeaguesController extends Controller {
                     //send email to league owner to find more players
                     Log::info('League '.$league->id.' - '.$league->name.' needs more players.');
 
-                    $data = ['ownerName' => $league->owner->fullName(), //(!is_null($league->owner->forenames) ? $league->owner->forenames : $league->owner->name),
-                            'leagueName' => $league->name,
-                            'subject' => 'More Players Needed!'];
+                    if ($league->email_limit < 5 && (strtotime($league->next_email_send) < time() || is_null($league->next_email_send))) {
 
-                    $ownerEmail = $league->owner->email;
-                    Mail::send('emails.players_needed', $data, function($message) use ($ownerEmail)
-                    {
-                        $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
-                        $message->to($ownerEmail);
-                        $message->subject('More Players Needed!');
-                    });
+                        $data = ['ownerName' => $league->owner->fullName(), //(!is_null($league->owner->forenames) ? $league->owner->forenames : $league->owner->name),
+                                'leagueName' => $league->name,
+                                'subject' => 'More Players Needed!'];
+
+                        $ownerEmail = $league->owner->email;
+                        Mail::send('emails.players_needed', $data, function($message) use ($ownerEmail)
+                        {
+                            $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
+                            $message->to($ownerEmail);
+                            $message->subject('More Players Needed!');
+                        });
+                    }
+
+                    //update email req
+                    $league->email_limit = $league->email_limit + 1;
+                    $league->next_email_send = strtotime("+3 hours", strtotime($league->next_email_send));
+
+                    $league->save();
 
                     //TODO: Find more players to see if there are any that can be invited
                     
@@ -1061,17 +1070,28 @@ class LeaguesController extends Controller {
             } elseif ($rules->auto_select != 'Y') {
                 if ($league->movies->count() == 0) {
 
-                    //need to pass in the league details for the owner
-                    $data = ['ownerName' => (!is_null($league->owner->forenames) ? $league->owner->forenames : $league->owner->name),
-                            'leagueName' => $league->name];
+                    //need to check that we haven't overdone it on the movies needed email
+                    if ($league->email_limit < 10 && (strtotime($league->next_email_send) < time() || is_null($league->next_email_send))) {
 
-                    $ownerEmail = $league->owner->email;
-                    Mail::send('emails.movies_needed', $data, function($message) use ($ownerEmail)
-                    {
-                        $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
-                        $message->subject('More movies are needed');
-                        $message->to($ownerEmail);
-                    });
+                        //need to pass in the league details for the owner
+                        $data = ['ownerName' => (!is_null($league->owner->forenames) ? $league->owner->forenames : $league->owner->name),
+                                'leagueName' => $league->name];
+
+                        $ownerEmail = $league->owner->email;
+                        Mail::send('emails.movies_needed', $data, function($message) use ($ownerEmail)
+                        {
+                            $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
+                            $message->subject('More movies are needed');
+                            $message->to($ownerEmail);
+                        });
+
+                        //update email req
+                        $league->email_limit = $league->email_limit + 1;
+                        if ($league->email_limit < 10)
+                            $league->next_email_send = strtotime("+3 hours", strtotime($league->next_email_send));
+
+                        $league->save();
+                    }
                 }
 
             }
@@ -1083,7 +1103,24 @@ class LeaguesController extends Controller {
     }
 
 
+    /**
+     * Close leagues where the start date has passed and the auction stage is not at least 1
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function closeLeaguesWhereStartDatePassed() 
+    {
+        /*DB::connection()->enableQueryLog();*/
+        League::where('enabled', '1')->where('auction_start_date', '<', date("Y-m-d G:i"))
+            ->Where(function ($query) {
+                $query->where('auction_stage', 0)->orWhereNull('auction_stage');
+            })->update(['enabled'=>'0']);
 
 
-
+        //now delete those disabled that have been disabled over a day
+        League::where('enabled', '0')->where('updated_at', '<', date("Y-m-d G:i", strtotime("-1 day")))->delete();
+    /*    $queries = DB::getQueryLog();
+        print_r($queries);    */
+    }
 }

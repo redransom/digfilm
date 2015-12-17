@@ -170,4 +170,4 @@ Route::get('clear-endtime-auctions/Qjr13b0VbElXE8TdmcTc', ['as'=>'clear-endtime-
 Route::get('clear-timeout-auctions/N4KuW01N6cVmQZPTQcxd', ['as'=>'clear-timeout-auctions', 'uses'=>'AuctionsController@clearTimeoutAuctions']);
 Route::get('prep-cleared-auctions/N4KuW01N6cVmQZPTQcxd', ['as'=>'prepare-clear-auctions', 'uses'=>'AuctionsController@prepareClearedAuctions']);
 Route::get('close-league-auctions/NJWKIKWqlVjHfPNyI3cJ', ['as'=>'close-league-auctions', 'uses'=>'AuctionsController@completeLeagues']);
-
+Route::get('close-bad-leagues/H8BFC2Wp87DBA2b683uM', ['as'=>'close-bad-leagues', 'uses'=>'leaguesController@closeLeaguesWhereStartDatePassed']);

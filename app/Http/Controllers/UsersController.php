@@ -407,7 +407,7 @@ class UsersController extends Controller {
         $user->save();
 
         //make sure invites are handled
-        $invites = LeagueInvite::whereEmail($user->email)->get();
+        $invites = LeagueInvite::where('email', $user->email)->where('status', 'I')->get();
         if($invites->count() > 0) {
         	foreach ($invites as $invite) {
         		$lu = new LeagueUser();
