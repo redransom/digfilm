@@ -1140,6 +1140,55 @@ class LeaguesController extends Controller {
     }
 
     /**
+     * End leagues doing the following:
+     1) Close the league - set status to 5
+     2) Disable the league
+     3) Send Confirmation email to determine winner
+     *
+     * @return Response
+     */
+    public function endLeagueWithWinners() 
+    {
+        //get all leagues where league state is < 5 and league close date has passed
+        $leagues = League::where('auction_stage', '<', '5')
+            ->where(function ($query) {
+                $query->where('end_date', '<', date("Y-m-d"))->orWhereNotNull('end_date');
+            })->get();
+
+        //disable the leagues
+        $league_ids = $leagues()->lists('id');
+        League::whereIn('id', $league_ids)->update(['enabled'=>'0', 'auction_stage'=>'5']);
+
+        //work out the winner 
+        foreach ($leagues as $league) {
+            $league_position = "SELECT users_id, sum(ifnull(total_gross, 0)) AS total_gross, sum(ifnull(value_for_money, 0)) AS vfm 
+            FROM league_roster WHERE leagues_id = ".$leagues_id."GROUP BY users_id ORDER BY SUM(total_gross) DESC";
+
+            $placings = LeagueRoster::raw()
+            $winner = LeagueRoster::where('leagues_id', $league->id)->orderBy;
+                       
+
+
+        }
+        
+
+        //send league has ended email
+
+
+        $data = ['ownerName' => (!is_null($league->owner->forenames) ? $league->owner->forenames : $league->owner->name),
+                'leagueName' => $league->name];
+
+        $ownerEmail = $league->owner->email;
+        Mail::send('emails.movies_needed', $data, function($message) use ($ownerEmail)
+        {
+            $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
+            $message->subject('More movies are needed');
+            $message->to($ownerEmail);
+        });
+
+    }    
+
+    /**
      * Random string generator for filename
      *
      * @param  int  $id
