@@ -20,12 +20,14 @@ Route::get('contact', 'WelcomeController@contact');
 Route::get('all-leagues', 'WelcomeController@leagues');
 Route::get('create', 'WelcomeController@create');
 Route::get('movie-knowledge/{id}', 'WelcomeController@movieKnow');
-Route::get('movies-genre/{id}', 'WelcomeController@movieGenre');
+Route::get('movie-genre/{id}', 'WelcomeController@movieGenre');
 Route::get('register-successful', ['as'=>'register-successful', 'uses'=>'WelcomeController@registerSuccessful']);
 Route::get('accept-invite/{id}', ['as'=>'accept-invite', 'uses'=>'LeaguesController@acceptInvite']);
 Route::get('decline-invite/{id}', ['as'=>'decline-invite', 'uses'=>'LeaguesController@declineInvite']);
 Route::get('email-verified', ['as'=>'email-verified', 'uses'=>'WelcomeController@emailVerified']);
-
+Route::get('genres', 'WelcomeController@genres');
+Route::get('newreleases', 'WelcomeController@newreleases');
+Route::get('comingsoon', 'WelcomeController@comingsoon');
 
 // Registration routes...
 Route::get('auth/register', [
@@ -46,14 +48,6 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
-
-
-/*Route::group(['prefix' => 'admin', 'middleware' => ['role:Admin']], function() {
-    Route::get('/', 'UsersController@adminDashboard');
-    Route::get('/manage', ['middleware' => ['permission:manage-admins'], 'uses' => 'AdminController@manageAdmins']); 
-
-});
-*/
 
 Route::group(['middleware'=>'auth'], function() {
 

@@ -1161,13 +1161,9 @@ class LeaguesController extends Controller {
 
         //work out the winner 
         foreach ($leagues as $league) {
-            $league_position = "SELECT users_id, sum(ifnull(total_gross, 0)) AS total_gross, sum(ifnull(value_for_money, 0)) AS vfm 
-            FROM league_roster WHERE leagues_id = ".$leagues_id."GROUP BY users_id ORDER BY SUM(total_gross) DESC";
-
-            $placings = LeagueRoster::raw()
-            $winner = LeagueRoster::where('leagues_id', $league->id)->orderBy;
+            $placings = LeagueRoster::rankings($league->id);
                        
-
+            
 
         }
         
@@ -1175,7 +1171,7 @@ class LeaguesController extends Controller {
         //send league has ended email
 
 
-        $data = ['ownerName' => (!is_null($league->owner->forenames) ? $league->owner->forenames : $league->owner->name),
+        /*$data = ['ownerName' => (!is_null($league->owner->forenames) ? $league->owner->forenames : $league->owner->name),
                 'leagueName' => $league->name];
 
         $ownerEmail = $league->owner->email;
@@ -1184,7 +1180,7 @@ class LeaguesController extends Controller {
             $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
             $message->subject('More movies are needed');
             $message->to($ownerEmail);
-        });
+        });*/
 
     }    
 

@@ -63,6 +63,8 @@
         @endif
     @endif
     <br/>
+
+    @include('partials.user-auction-movies', ['movies'=>$currentLeague->movies()->where('chosen', '0')->get(), 'movieTitle'=>'Remaining Movies'])
     @include('partials.user-league-rules', ['currentLeague'=>$currentLeague, 'leagueUser'=>$currentLeagueUser]) 
 </section>
 

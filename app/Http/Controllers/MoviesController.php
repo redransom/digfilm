@@ -366,11 +366,13 @@ class MoviesController extends Controller {
 		if ($input['takings_at'] == '')
 			$input['takings_at'] = date("Y-m-d");
 
+		//if less than 10,000 then we will multiply by 1million
+		if ($input['amount'] < 10000)
+			$input['amount'] = $input['amount'] * 1000000;
+
 		$taking = MovieTaking::create( $input );
 
 		//need to run the update on the league roster
-		//$value = ($takings * $auction->pivot->bid_amount) / 100000;
-		//LeagueMovie::where('movies_id', $input['movies_id'])->where('takings_end_date', '>', date("Y-m-d"))->update(['total_gross'=>$input['amount'], 'value_for_money'=>$input['amount']])
 		DB::update(DB::raw("UPDATE league_roster SET total_gross = ".$input['amount'].", value_for_money = ((".$input['amount']." / bid_amount) / 100000) WHERE movies_id = ".$input['movies_id']." AND takings_end_date > NOW()"));
 
 		Flash::message('Movie takings added.');		

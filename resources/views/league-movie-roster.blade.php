@@ -11,7 +11,8 @@
    
     <br/>
     @include('partials.user-league-rules', ['currentLeague'=>$currentLeague, 'leagueUser'=>$currentLeagueUser])
- 
+
 </section>
 
 @endsection
+

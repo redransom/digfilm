@@ -79,7 +79,7 @@
                         </dl>
                     </div>
                 </div>
-                @endif
+                
                 <div class="categories widget clearfix">
                     
                     <div class="title-caption">
@@ -97,4 +97,42 @@
                     </dl>
                     </div>
                 </div>
+                @elseif($league->auction_stage == 3)
+                <!-- roster stage -->
+                <div class="categories widget clearfix">
+                    
+                    <div class="title-caption">
+                        <h3>League Rankings</h3>
+                    </div><!--/ .title-caption-->
+                    
+                    <div class="entry-holder">
+                    
+                        @if($rankings->count()> 0)
+                        <table class="feature-table dark-gray">
+                            <tr><th>Pos</th><th>Player</th><th>Gross</th><th>VFM</th></tr>
+                            <?php $pos = 0; ?>
+                        @foreach($rankings->orderBy('total_gross', 'DESC')->get() as $rank)
+                            <tr><td>{{$pos+1}}</td><td>{{get_user_by_id($currentLeague->players, $rank->users_id)->fullName()}}</td>
+                            <td>{{$rank->total_gross}}</td><td>{{$rank->vfm}}</td></tr>
+                        @endforeach
+                        </table>
+                        @endif
+
+                    </div>
+                </div>
+
+                @endif
+
+
                 <!-- ************** - END League Details - ************** -->
+
+<?php
+
+function get_user_by_id($players, $player_id) {
+    foreach ($players as $player) {
+        if ($player->id == $player_id)
+            return $player;
+    }
+}
+
+?>

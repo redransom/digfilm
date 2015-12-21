@@ -2,6 +2,7 @@
 use Auth;
 use App\Models\User;
 use App\Models\League;
+use App\Models\LeagueRoster;
 use App\Models\LeagueUser;
 use App\Models\RuleSet;
 use App\Models\Genre;
@@ -280,12 +281,50 @@ class WelcomeController extends Controller {
 			return redirect('/auth/login');
 
 		$league = League::find($id);
-
+		$rankings = LeagueRoster::rankings($id);
+		
 		$currentLeagueUser = LeagueUser::where('user_id', $authUser->id)->where('league_id', $league->id)->first();
 		return view('league-movie-roster')
 			->with('currentLeague', $league)
+			->with('rankings', $rankings)
 			->with('currentLeagueUser', $currentLeagueUser)
 			->with('authUser', $authUser);	
+	}
+
+	/**
+	 * All new releases in the last month
+	 *
+	 * @return void
+	 */
+	public function newreleases() {
+		$authUser = Auth::user();
+
+		$movies = Movie::where('release_at', '>', date('Y-m-d', strtotime("-4 weeks")))->
+			where('release_at', '<=', date('Y-m-d'))->get();
+
+		return view('newreleases')
+			->with('description', 'Here is a list of all movies have come out in the last 4 weeks.')
+			->with('movies', $movies)
+			->with('title', 'New Releases')
+			->with('authUser', $authUser);		
+	}
+	
+	/**
+	 * All films due to be released in coming month
+	 *
+	 * @return void
+	 */
+	public function comingsoon() {
+		$authUser = Auth::user();
+
+		$movies = Movie::where('release_at', '<', date('Y-m-d', strtotime("+4 weeks")))
+			->where('release_at', '>', date('Y-m-d'))->get();
+
+		return view('comingsoon')
+			->with('movies', $movies)
+			->with('description', 'Here is a list of all movies that are coming out in the next 4 weeks.')
+			->with('title', 'Coming Soon')
+			->with('authUser', $authUser);		
 	}
 
 	/**

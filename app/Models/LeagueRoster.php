@@ -20,11 +20,12 @@ class LeagueRoster extends Model {
         return $this->belongsTo("\App\Models\User", "users_id");
     }
 
-    public function rankings($leagues_id) {
-        $league_position_sql = "SELECT users_id, sum(ifnull(total_gross, 0)) AS total_gross, sum(ifnull(value_for_money, 0)) AS vfm 
-        FROM league_roster WHERE leagues_id = '".$leagues_id."' GROUP BY users_id ORDER BY SUM(total_gross) DESC";
+    public static function rankings($leagues_id) {
 
+        $rankings = LeagueRoster::selectRaw('users_id, sum(ifnull(total_gross, 0)) AS total_gross, sum(ifnull(value_for_money, 0)) AS vfm')
+            ->groupBy('users_id')->where('leagues_id', $leagues_id);
 
-
+        //echo($rankings->toSql());
+        return $rankings;
     }
 }

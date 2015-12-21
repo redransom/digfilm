@@ -9,7 +9,7 @@
                     @if(isset($genres_list))
                     <ul>
                         @foreach($genres_list as $genre)
-                        <li><div><a href="{{URL('movies-genre', [$genre->id])}}">{{$genre->name}}</a><span>({{$genre->movie_count()}})</span></div></li>
+                        <li><div><a href="{{URL('movie-genre', [$genre->id])}}">{{$genre->name}}</a><span>({{$genre->movie_count()}})</span></div></li>
                         @endforeach
                     </ul>
                     @endif

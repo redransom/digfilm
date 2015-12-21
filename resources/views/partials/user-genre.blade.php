@@ -9,23 +9,19 @@
             <ul>
                 <li><a href="{{URL('/all-leagues')}}">Leagues</a></li>
                 <li><a href="{{URL('/create')}}">Create League</a></li>
-                <!--li><a href="#">XBOX 360</a>
+
+                <li><a href="{{URL('/all-leagues')}}">Leagues</a>
                     <ul class="sub-menu">
-                        <li><a href="reviews.html">Reviews</a></li>
-                        <li><a href="previews.html">Previews</a></li>
-                        <li><a href="new-releases.html">New Releases</a></li>
-                        <li><a href="top-games.html">Top Games</a></li>
+                        <li><a href="{{URL('/create')}}">Create New</a></li>
                     </ul>
                 </li>
-                <li><a href="#">PC</a>
+                <li><a href="{{URL('/all-genres')}}">Movies</a>
                     <ul class="sub-menu">
-                        <li><a href="reviews.html">Reviews</a></li>
-                        <li><a href="previews.html">Previews</a></li>
-                        <li><a href="new-releases.html">New Releases</a></li>
-                        <li><a href="top-games.html">Top Games</a></li>
+                        <li><a href="{{URL('/newreleases')}}">New Releases</a></li>
+                        <li><a href="{{URL('/comingsoon')}}">Coming Soon</a></li>
                     </ul>
                 </li>
-                <li><a href="#">PS3</a>
+                <!--li><a href="#">PC</a>
                     <ul class="sub-menu">
                         <li><a href="reviews.html">Reviews</a></li>
                         <li><a href="previews.html">Previews</a></li>
