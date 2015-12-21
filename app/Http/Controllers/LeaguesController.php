@@ -167,7 +167,8 @@ class LeaguesController extends Controller {
             $request->file('file_name')->move(base_path() . '/public/images/leagues/', $imageName);
 
             $league->file_name = "/images/leagues/".$imageName;
-        }
+        } else
+            $league->file_name = null;
 
         $league->save(); 
 

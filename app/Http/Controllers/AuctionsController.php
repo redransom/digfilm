@@ -160,6 +160,7 @@ class AuctionsController extends Controller {
 
         $auction = Auction::find($id);
         $rule = $auction->league->rule;
+        $blind = ($rule->blind_bid == 'Y');
         $input = $request->all();
 
         if($auction->bid_count != 0) {
@@ -172,43 +173,51 @@ class AuctionsController extends Controller {
         }
 
         //add the new bid to the auction
-        Log::info('Bid on auction:'.$auction->id.' by user:'.$authUser->id.' amount:'.$input['bid_amount']);
+        if ($blind)
+            Log::info('Bid on blind auction:'.$auction->id.' by user:'.$authUser->id.' amount:'.$input['bid_amount']);
+        else
+            Log::info('Bid on auction:'.$auction->id.' by user:'.$authUser->id.' amount:'.$input['bid_amount']);
+
         $auction->users_id = $authUser->id;
         $auction->bid_amount = $input['bid_amount'];
 
         //check that the bid isnt the max allowed
-        if($auction->bid_amount == $rule->max_bid) {
+        if(!$blind && $auction->bid_amount == $rule->max_bid) {
             //need to clear auction
             $auction->ready_for_auction = 4;
             Log::info('Closed auction off:'.$auction->id.' by user:'.$authUser->id.' amount:'.$input['bid_amount']);
         }
 
         //add minutes to bid
-        if ($rule->ind_film_countdown != 0) {
-            //$auction->auction_end_time = date("Y-m-d H:i:s", strtotime('+1 hour', strtotime('+'.intval($rule->ind_film_countdown).' minutes', time())));
-            $auction->auction_end_time = date("Y-m-d H:i:s", strtotime('+'.intval($rule->ind_film_countdown).' minutes', time()));
-        } else {
-            //default it to 10 minutes
-            //$auction->auction_end_time = date("Y-m-d H:i:s", strtotime('+1 hour', strtotime('+10 minutes', time())));
-            $auction->auction_end_time = date("Y-m-d H:i:s", strtotime('+10 minutes', time()));
-        }
+        if (!$blind) {
+            if ($rule->ind_film_countdown != 0) {
+                //$auction->auction_end_time = date("Y-m-d H:i:s", strtotime('+1 hour', strtotime('+'.intval($rule->ind_film_countdown).' minutes', time())));
+                $auction->auction_end_time = date("Y-m-d H:i:s", strtotime('+'.intval($rule->ind_film_countdown).' minutes', time()));
+            } else {
+                //default it to 10 minutes
+                //$auction->auction_end_time = date("Y-m-d H:i:s", strtotime('+1 hour', strtotime('+10 minutes', time())));
+                $auction->auction_end_time = date("Y-m-d H:i:s", strtotime('+10 minutes', time()));
+            }
 
-        if($auction->timeout != 0) {
-            //$auction->timeout_date = date("Y-m-d H:i:s", strtotime('+1 hour', strtotime('+'.intval($auction->timeout).' minutes', time())));
-            $auction->timeout_date = date("Y-m-d H:i:s", strtotime('+'.intval($auction->timeout).' minutes', time()));
+            if($auction->timeout != 0) {
+                //$auction->timeout_date = date("Y-m-d H:i:s", strtotime('+1 hour', strtotime('+'.intval($auction->timeout).' minutes', time())));
+                $auction->timeout_date = date("Y-m-d H:i:s", strtotime('+'.intval($auction->timeout).' minutes', time()));
+            }
         }
 
         $auction->bid_count++;
         $auction->save();
 
         //create new auction bid for history purposes
-        $bid = new AuctionBid();
+        AuctionBid::create(['auctions_id'=>$auction->id, 'users_id'=>$auction->users_id, 'movies_id'=>$auction->movies_id, 
+            'bid_amount'=>$auction->bid_amount]);
+/*        $bid = new AuctionBid();
         $bid->auctions_id = $auction->id;
         $bid->users_id = $auction->users_id;
         $bid->movies_id = $auction->movies_id;
         $bid->bid_amount = $auction->bid_amount;
         $bid->save();
-        unset($bid);
+        unset($bid);*/
 
         //remove amount from users balance / need to do a check to see if it overrides a previous users amount and gives it too them back
         Log::info('Reduce balance by user:'.$authUser->id.' amount:'.$input['bid_amount']);
@@ -217,12 +226,13 @@ class AuctionsController extends Controller {
         $leagueUser->save();
         unset($leagueUser);
 
-        if (isset($bid_refund)) {
-            Log::info('Refund user:'.$prev_bid_user.' amount:'.$bid_refund);
-            $leagueUser = LeagueUser::where('league_id', $auction->leagues_id)->where('user_id', $prev_bid_user)->first();
-            $leagueUser->balance += $bid_refund;
-            $leagueUser->save();
-
+        if (!$blind) {
+            if (isset($bid_refund)) {
+                Log::info('Refund user:'.$prev_bid_user.' amount:'.$bid_refund);
+                $leagueUser = LeagueUser::where('league_id', $auction->leagues_id)->where('user_id', $prev_bid_user)->first();
+                $leagueUser->balance += $bid_refund;
+                $leagueUser->save();
+            }
         }
 
         return Redirect::route('league-show', [$auction->leagues_id]);

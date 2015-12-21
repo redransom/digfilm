@@ -14,7 +14,7 @@
     @elseif($currentLeague->auctions()->count() > 0)
     <?php $players = $currentLeague->players->lists('name', 'id'); ?>
 
-    @include('partials.user-auctions', ['currentLeague'=>$currentLeague, 'players'=>$players, 'leagueUser'=>$currentLeagueUser])
+    @include('partials.user-auctions', ['currentLeague'=>$currentLeague, 'players'=>$players, 'leagueUser'=>$currentLeagueUser, 'blind'=>($currentLeague->rule->blind_bid == 'Y')])
 
     @include('partials.user-expired-auctions', ['tableTitle'=>'Films Purchased', 'players'=>$players, 'leagueUser'=>$currentLeagueUser, 'auctions'=>$wonAuctions])
 
