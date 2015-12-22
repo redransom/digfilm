@@ -67,6 +67,7 @@ Route::group(['middleware'=>'auth'], function() {
 
         Route::post('league-invite', ['as'=>'league-invite', 'uses'=>'LeaguesController@postInvitePlayer']);
         Route::get('place-bid/{id}', ['as'=>'place-auction-bid', 'uses'=>'AuctionsController@placeBid']);
+        Route::get('join-league/{id}', ['as'=>'join-league', 'uses'=>'LeaguesController@join']);
 
         Route::post('players/{id}/rules', ['as'=>'player-rules', 'uses'=>'LeaguesController@postPlayerRules']);
 
@@ -80,7 +81,8 @@ Route::group(['middleware'=>'auth'], function() {
         Entrust::routeNeedsRole('dashboard', ['Player'], Redirect::to('/'));
         Entrust::routeNeedsRole('manage', ['Player'], Redirect::to('/'));
         Entrust::routeNeedsRole('league-store', array('Admin', 'Player'), Redirect::to('/'), false);
-        
+        Entrust::routeNeedsRole('join-league', ['Player'], Redirect::to('/'));
+
         Entrust::routeNeedsRole('leagues', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('admin-dashboard', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('user-disable', ['Admin'], Redirect::to('/'));
@@ -144,8 +146,6 @@ Route::group(['middleware'=>'auth'], function() {
         Route::resource('leagues', 'LeaguesController');
         Route::resource('rulesets', 'RuleSetsController');
         Route::resource('auctions', 'AuctionsController');
-
-        Route::get('leagues/{id}/join', 'LeaguesController@join');
 
         Route::get('dashboard', ['as' => 'dashboard', 'uses'=>'UsersController@usersDashboard']);
 

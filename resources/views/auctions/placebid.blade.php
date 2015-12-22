@@ -13,7 +13,7 @@
 
         if ($blind) {
             //if blind bid then there is no starting point due to previous bids
-            $min_bid = 0;
+            $min_bid = $rule->min_bid;
 
         } else {
 

@@ -179,7 +179,10 @@ class AuctionsController extends Controller {
             Log::info('Bid on auction:'.$auction->id.' by user:'.$authUser->id.' amount:'.$input['bid_amount']);
 
         $auction->users_id = $authUser->id;
-        $auction->bid_amount = $input['bid_amount'];
+
+        /* only update the auction bid_amount if its the first bid or if the bid amount is higher than the previous bid */
+        if (is_null($auction->bid_amount) || $input['bid_amount'] > $auction->bid_amount)
+            $auction->bid_amount = $input['bid_amount'];
 
         //check that the bid isnt the max allowed
         if(!$blind && $auction->bid_amount == $rule->max_bid) {
@@ -416,12 +419,31 @@ class AuctionsController extends Controller {
     private function setRoster($league_id) 
     {   
         $created_at = date("Y-m-d H:i:s");
-        DB::insert(DB::raw("INSERT INTO league_roster
-(leagues_id, users_id, movies_id, bid_amount, takings_end_date, created_at)
-SELECT A.leagues_id, users_id, movies_id, bid_amount, DATE_ADD(M.release_at, INTERVAL LR.movie_takings_duration WEEK), '".$created_at."' 
-FROM auctions A INNER JOIN league_rules LR ON A.leagues_id = LR.leagues_id
-INNER JOIN movies M ON A.movies_id = M.id
-WHERE A.leagues_id = '".$league_id."' AND bid_count > 0"));
+
+        $league = League::find($league_id);
+        if ($league->rule->blind_bid == 'N') {
+            DB::insert(DB::raw("INSERT INTO league_roster
+    (leagues_id, users_id, movies_id, bid_amount, takings_end_date, created_at)
+    SELECT A.leagues_id, users_id, movies_id, bid_amount, DATE_ADD(M.release_at, INTERVAL LR.movie_takings_duration WEEK), '".$created_at."' 
+    FROM auctions A INNER JOIN league_rules LR ON A.leagues_id = LR.leagues_id
+    INNER JOIN movies M ON A.movies_id = M.id
+    WHERE A.leagues_id = '".$league_id."' AND bid_count > 0"));
+
+        } else {
+            DB::insert(DB::raw("INSERT INTO league_roster
+    (leagues_id, users_id, movies_id, bid_amount, takings_end_date, created_at)
+    SELECT A.leagues_id, ab.users_id, A.movies_id, A.bid_amount, DATE_ADD(M.release_at, INTERVAL LR.movie_takings_duration WEEK), '".$created_at."' 
+    FROM auctions A 
+        INNER JOIN league_rules LR ON A.leagues_id = LR.leagues_id
+        INNER JOIN movies M ON A.movies_id = M.id 
+        INNER JOIN auction_bids ab ON A.id = ab.auctions_id 
+        INNER JOIN (SELECT min(ab.created_at) as created_at, ab.movies_id, ab.bid_amount FROM auction_bids ab 
+                INNER JOIN auctions a ON ab.auctions_id = a.id and a.bid_amount = ab.bid_amount
+                WHERE a.leagues_id = 36 GROUP BY movies_id, bid_amount) ab2
+                ON ab.created_at = ab2.created_at and ab.movies_id = ab2.movies_id and ab.bid_amount = ab2.bid_amount
+        WHERE A.leagues_id = '".$league_id."'"));
+
+        }
 
 
     }

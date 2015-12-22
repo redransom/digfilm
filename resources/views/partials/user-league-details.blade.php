@@ -70,6 +70,7 @@
                     <div class="entry-holder">
                         <p>In this league you have a balance of <strong>{{number_format($currentLeagueUser->balance, 0)}} USD</strong>.</p>
 
+                        @if(!$blind)
                         <dl>
                         @foreach($authUser->auctions()->where('leagues_id', $currentLeagueUser->league_id)->get() as $movie)
                             <dt><strong>{{$movie->name}}</strong></dt>
@@ -77,9 +78,11 @@
                             
                         @endforeach
                         </dl>
+                        @endif
                     </div>
                 </div>
                 
+                @if(!$blind)
                 <div class="categories widget clearfix">
                     
                     <div class="title-caption">
@@ -97,6 +100,8 @@
                     </dl>
                     </div>
                 </div>
+                @endif
+                
                 @elseif($league->auction_stage == 3)
                 <!-- roster stage -->
                 <div class="categories widget clearfix">

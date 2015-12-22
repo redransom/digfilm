@@ -54,7 +54,7 @@
             @else
 
             <!-- Need to determine if logged in user can bid -->
-            @if($auction->bids()->where('users_id', $authUser->id)->count() > 0)
+            @if($auction->bids()->where('users_id', $authUser->id)->where('auctions_id', $auction->pivot->id)->count() > 0)
         <td>PLACED</td>
             @else
         <td id="bid_link_{{$auction->pivot->id}}"><a href="{{URL('place-bid', [$auction->pivot->id])}}" class="popup">PLACE BID</a></td>

@@ -10,7 +10,7 @@
     @include('partials.user-roster', ['currentLeague'=>$currentLeague, 'leagueUser'=>$currentLeagueUser])
    
     <br/>
-    @include('partials.user-league-rules', ['currentLeague'=>$currentLeague, 'leagueUser'=>$currentLeagueUser])
+    @include('partials.user-league-rules', ['rule'=>$currentLeague->rule, 'leagueUser'=>$currentLeagueUser])
 
 </section>
 

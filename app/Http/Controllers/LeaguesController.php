@@ -179,7 +179,6 @@ class LeaguesController extends Controller {
             $leagueuser = LeagueUser::create( ['user_id'=>$league->users_id, 'league_id'=>$league->id, 'balance'=>100] );
 
             Flash::message('League created.');
-            //return Redirect::route('league', ['id'=>$league->id]);
             return redirect()->route('leagues', [$league->id]);
         } else {
             /* come by customer create league so go to select movies page */
@@ -923,7 +922,7 @@ class LeaguesController extends Controller {
                     //send email to league owner to find more players
                     Log::info('League '.$league->id.' - '.$league->name.' needs more players.');
 
-                    if ($league->email_limit < 5 && (strtotime($league->next_email_send) < time() || is_null($league->next_email_send))) {
+                    if (is_null($league->next_email_send) || ($league->email_limit < 5 && strtotime($league->next_email_send) < time())) {
 
                         $data = ['ownerName' => $league->owner->fullName(), //(!is_null($league->owner->forenames) ? $league->owner->forenames : $league->owner->name),
                                 'leagueName' => $league->name,

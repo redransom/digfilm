@@ -1,7 +1,7 @@
             <!-- ************** - Sidebar - ************** -->              
             <aside id="sidebar">
                 @if(isset($currentLeague))
-                @include('partials.user-league-details', ['currentLeagueUser'=>$currentLeagueUser, 'league'=>$currentLeague])
+                @include('partials.user-league-details', ['currentLeagueUser'=>$currentLeagueUser, 'league'=>$currentLeague, 'blind'=>($currentLeague->rule->blind_bid == 'Y')])
                 @elseif(isset($genres_list))
                 @include('partials.user-sidebar-genres')
                 @endif

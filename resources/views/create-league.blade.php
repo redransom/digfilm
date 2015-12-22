@@ -7,7 +7,7 @@
     </div>
 
     @if(isset($authUser))
-    {!! Form::open(array('route' => 'league-store', 'class'=>'form-horizontal row-fluid', 'id'=>'contactform')) !!}
+    {!! Form::open(array('route' => 'league-store', 'class'=>'form-horizontal row-fluid', 'id'=>'contactform', 'files'=>true)) !!}
     <p>Use the below form to enter the name of the league you wish to create and select the movies to be auctioned for.</p>
     <div id="contact">
         <div id="message"></div>

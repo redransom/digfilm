@@ -5,6 +5,21 @@
     <div class="title-caption-large">
         <h3>Welcome to the "{{$currentLeague->name}}" League</h3>
     </div>
+    @if(!is_null($currentLeague->file_name))
+    <style>
+    .league_image {
+        float: right;
+        width: 175px;
+        padding: 5px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+    }
+    </style>
+    <div class="league_image">
+        <img src="{{asset($currentLeague->file_name)}}" width="150px" />
+    </div>
+    @endif
+
     <h2>Available Auctions</h2>
     @if(is_null($currentLeague->auction_start_date))
     <p>The auction will start soon!</p>
@@ -16,7 +31,11 @@
 
     @include('partials.user-auctions', ['currentLeague'=>$currentLeague, 'players'=>$players, 'leagueUser'=>$currentLeagueUser, 'blind'=>($currentLeague->rule->blind_bid == 'Y')])
 
+    @if($currentLeague->rule->blind_bid == "Y")
+    @include('partials.user-expired-auctions', ['tableTitle'=>'Films Bid For', 'players'=>$players, 'leagueUser'=>$currentLeagueUser, 'auctions'=>$wonAuctions])
+    @else
     @include('partials.user-expired-auctions', ['tableTitle'=>'Films Purchased', 'players'=>$players, 'leagueUser'=>$currentLeagueUser, 'auctions'=>$wonAuctions])
+    @endif
 
     @include('partials.user-expired-auctions', ['tableTitle'=>'Expired Movies', 'players'=>$players, 'leagueUser'=>$currentLeagueUser, 'auctions'=>$expiredAuctions])
 
@@ -61,11 +80,12 @@
             @endforeach
             </ul>
         @endif
-    @endif
+    
     <br/>
-
+    @elseif(!is_null($currentLeague->round_amount))
     @include('partials.user-auction-movies', ['movies'=>$currentLeague->movies()->where('chosen', '0')->get(), 'movieTitle'=>'Remaining Movies'])
-    @include('partials.user-league-rules', ['currentLeague'=>$currentLeague, 'leagueUser'=>$currentLeagueUser]) 
+    @endif
+    @include('partials.user-league-rules', ['rule'=>$currentLeague->rule, 'leagueUser'=>$currentLeagueUser]) 
 </section>
 
 <?php function auctionTimer ($auctionid, $auctionTime, $name='bid_link') { ?>
