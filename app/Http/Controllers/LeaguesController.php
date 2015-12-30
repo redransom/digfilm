@@ -162,7 +162,8 @@ class LeaguesController extends Controller {
             $league->auction_close_date = date("Y-m-d G:i:s", strtotime('+'.$auction_duration.' hours', strtotime($close_date)));
         }
 
-        if ($request->file('file_name') != "") {
+        $file_name = $request->file('file_name');
+        if (!empty($file_name)) {
             $imageName = $league->id.str_replace(' ', '_', strtolower($input['name'])) . '.' . $request->file('file_name')->getClientOriginalExtension();
             $request->file('file_name')->move(base_path() . '/public/images/leagues/', $imageName);
 
@@ -282,14 +283,15 @@ class LeaguesController extends Controller {
         if ($input['auction_stage'] == '-1')
             $league->auction_stage = null;
 
-        if ($request->file('file_name') != "") {
+        $file_name = $request->file('file_name');
+        if (!empty($file_name)) {
             $imageName = $this->generateRandomString().str_replace(' ', '_', strtolower($input['name'])) . '.' . $request->file('file_name')->getClientOriginalExtension();
             $request->file('file_name')->move(base_path() . '/public/images/leagues/', $imageName);
 
             $league->file_name = "/images/leagues/".$imageName;
         }
 
-        var_dump($league);
+        //var_dump($league);
         $league->save();
 
         if (isset($input['rule_set']) && is_null($league->rule)) {
