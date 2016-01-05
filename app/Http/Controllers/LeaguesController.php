@@ -148,7 +148,8 @@ class LeaguesController extends Controller {
             $leaguerule->blind_bid = $ruleset->blind_bid;
             $leaguerule->auction_timeout = $ruleset->auction_timeout;
             $leaguerule->round_duration = $ruleset->round_duration;
-            $leaguerule->denomination = $ruleset->denomination;
+            $leaguerule->min_increment = $ruleset->min_increment;
+            $leaguerule->max_increment = $ruleset->max_increment;
             $leaguerule->movie_takings_duration = $ruleset->movie_takings_duration;
 
             //add league id
@@ -267,6 +268,7 @@ class LeaguesController extends Controller {
         $input = $request->all();
 
         $league->name = $input['name'];
+        $league->description = $input['description'];
         $league->users_id = $input['users_id'];
         
         if($input['auction_start_date'] != '')
@@ -324,7 +326,8 @@ class LeaguesController extends Controller {
             $leaguerule->blind_bid = $ruleset->blind_bid;
             $leaguerule->auction_timeout = $ruleset->auction_timeout;
             $leaguerule->round_duration = $ruleset->round_duration;
-            $leaguerule->denomination = $ruleset->denomination;
+            $leaguerule->min_increment = $ruleset->min_increment;
+            $leaguerule->max_increment = $ruleset->max_increment;
             $leaguerule->movie_takings_duration = $ruleset->movie_takings_duration;
 
             //add league id
@@ -623,6 +626,36 @@ class LeaguesController extends Controller {
     }
 
     /**
+     * Remove player from league
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function removePlayer($id)
+    {
+        //
+        $authUser = Auth::user();
+
+        //ensure permissions are available - should probably check for permissions and not role
+        if ($authUser->hasRole("Admin")) {
+            $lu = LeagueUser::find($id);
+            if (!empty($lu)) {
+                $user = User::find($lu->user_id);
+                $league = League::find($lu->league_id);
+                $message = "User ".$user->name." has been removed from ".$league->name;
+                Flash::message($message);
+
+                $lu->delete();
+            }
+        } else
+            Flash::message("You don\'t have the permissions to complete this task.");
+
+        return redirect()->back();
+    }
+
+
+
+    /**
      * Select Known players to join league
      * TODO: Would be better obviously if the player is invited and it appears in a messages section somewhere
      *
@@ -865,7 +898,8 @@ class LeaguesController extends Controller {
         $leaguerule->blind_bid = $input['blind_bid'];
         $leaguerule->auction_timeout = $input['auction_timeout'];
         $leaguerule->round_duration = $input['round_duration'];
-        $leaguerule->denomination = $input['denomination'];
+        $leaguerule->min_increment = $input['min_increment'];
+        $leaguerule->max_increment = $input['max_increment'];
         $leaguerule->movie_takings_duration = $input['movie_takings_duration'];
         $leaguerule->save();
         

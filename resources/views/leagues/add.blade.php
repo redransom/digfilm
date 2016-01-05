@@ -37,6 +37,14 @@
                     </div>
                     
                     <div class="control-group">
+                        <label class="control-label" for="LeagueName">Description / Slogan</label>
+                        <div class="controls">
+                            {!! Form::textarea('description', null, ['class'=>'span8', 'placeholder'=>'Enter league name here...']) !!}
+                            <span class="help-inline">Give a good description of what this league is or leave it blank.</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
                         <label class="control-label" for="LeagueName">League Owner</label>
                         <div class="controls">
                             {!! Form::select('users_id', $users, null, ['class'=>'span8']) !!}

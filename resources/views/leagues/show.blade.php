@@ -59,7 +59,7 @@
                         @if(!empty($players))
                         <ul class="unstyled">
                         @foreach ($players as $player)
-                            <li><a href="{{URL('users', array('id'=>$player->id))}}">{{$player->fullName()}}</a></li>
+                            <li><a href="{{URL('users', array('id'=>$player->id))}}">{{$player->fullName()}}</a>&nbsp;<a href="{{Route('league-remove-player', array($player->pivot->id))}}">x</a></li>
                         @endforeach
                         </ul>
                         @else

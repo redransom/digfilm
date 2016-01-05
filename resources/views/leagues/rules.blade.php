@@ -59,7 +59,7 @@
                         <label class="control-label" for="LeagueName">Movie Takings Duration</label>
                         <div class="controls">
                             <div class="input-append">
-                                {!! Form::text('movie_takings_duration', $league->rule->movie_takings_duration, ['class'=>'span2', 'placeholder'=>'Default is 8 weeks']) !!}
+                                {!! Form::text('movie_takings_duration', $league->rule->movie_takings_duration, ['class'=>'span4', 'placeholder'=>'Default is 8 weeks']) !!}
                                 <span class="add-on">weeks</span>
                             </div>
                             <span class="help-inline">This can be used to override the standard 2 months that are expected.</span>
@@ -71,7 +71,7 @@
                         <label class="control-label" for="LeagueName">Auction Duration</label>
                         <div class="controls">
                             <div class="input-append">
-                                {!! Form::text('auction_duration', $league->rule->auction_duration, ['class'=>'span2', 'placeholder'=>'Enter auction duration here...']) !!}
+                                {!! Form::text('auction_duration', $league->rule->auction_duration, ['class'=>'span4', 'placeholder'=>'Enter auction duration here...']) !!}
                                 <span class="add-on">hours</span>
                             </div><br/>
                             <span class="help-inline">Total duration of the auction including any rounds.</span>
@@ -82,7 +82,7 @@
                         <label class="control-label" for="LeagueName">Round Duration</label>
                         <div class="controls">
                             <div class="input-append">
-                                {!! Form::text('round_duration', $league->rule->round_duration, ['class'=>'span2', 'placeholder'=>'Enter round duration here...']) !!}
+                                {!! Form::text('round_duration', $league->rule->round_duration, ['class'=>'span4', 'placeholder'=>'Enter round duration here...']) !!}
                                 <span class="add-on">hours</span>
                             </div><br/>
                             <span class="help-inline">This is only beneficial if the quantity of movies is split up.</span>
@@ -93,7 +93,7 @@
                         <label class="control-label" for="LeagueName">Film Countdown</label>
                         <div class="controls">
                             <div class="input-append">
-                                {!! Form::text('ind_film_countdown', $league->rule->ind_film_countdown, ['class'=>'span2', 'placeholder'=>'Enter film countdown here...']) !!}
+                                {!! Form::text('ind_film_countdown', $league->rule->ind_film_countdown, ['class'=>'span4', 'placeholder'=>'Enter film countdown here...']) !!}
                                 <span class="add-on">mins</span>
                             </div><br/>
                             <span class="help-inline">Each film once it appears on the list counts down at the start.</span>
@@ -118,10 +118,12 @@
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label" for="LeagueName">Minimum Denominations</label>
+                        <label class="control-label" for="LeagueName">Min/Max Increment</label>
                         <div class="controls">
-                            {!! Form::text('denomination', $league->rule->denomination, ['class'=>'span2']) !!}
-                            <span class="help-inline">Whats the lowest denomination that can be used? Use 0.1 for 10cents, and 3 for 3 dollars.</span>
+                            {!! Form::text('min_increment', $league->rule->min_increment, ['class'=>'span2']) !!} to 
+                            {!! Form::text('max_increment', $league->rule->max_increment, ['class'=>'span2']) !!}
+                            <span class="help-inline">Whats the lowest increment that can be used? Use 0.1 for 10cents, and 3 for 3 dollars and again
+                            the same for the maximum jump - is it 1-2 dollars or even 10 dollars?</span>
                         </div>
                     </div>
 
@@ -129,7 +131,7 @@
                         <label class="control-label" for="LeagueName">Auction Time-out</label>
                         <div class="controls">
                             <div class="input-append">
-                                {!! Form::text('auction_timeout', $league->rule->auction_timeout, ['class'=>'span2', 'placeholder'=>'Leave empty if no expiry on auctions']) !!}
+                                {!! Form::text('auction_timeout', $league->rule->auction_timeout, ['class'=>'span4', 'placeholder'=>'Leave empty if no expiry on auctions']) !!}
                                 <span class="add-on">mins</span>
                             </div><br/>
                             <span class="help-inline">Put in the number of minutes till this auction is closed off after previous bid. If this is zero then it just waits till end of auction.</span>
@@ -157,7 +159,7 @@
                         <label class="control-label" for="LeagueName">Auction Movie Release</label>
                         <div class="controls">
                             <div class="input-append">
-                                {!! Form::text('auction_movie_release', $league->rule->auction_movie_release, ['class'=>'span2']) !!}
+                                {!! Form::text('auction_movie_release', $league->rule->auction_movie_release, ['class'=>'span4']) !!}
                                 <span class="add-on">number of movies</span>
                             </div><br/>
                             <span class="help-inline">Leave zero for all movies or use a group of movies e.g. 10.</span>

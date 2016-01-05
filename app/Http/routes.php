@@ -118,6 +118,7 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('leagues/{id}/movie', ['as'=>'league-add-movie', 'uses'=>'LeaguesController@addMovie']);
         Route::post('leagues/{id}/movie', ['as'=>'add-movie', 'uses'=>'LeaguesController@postMovie']);
         Route::get('leagues/{id}/removemovie', ['as'=>'league-remove-movie', 'uses'=>'LeaguesController@removeMovie']);
+        Route::get('leagues/{id}/removeplayer', ['as'=>'league-remove-player', 'uses'=>'LeaguesController@removePlayer']);
         Route::get('leagues/{id}/player', ['as'=>'league-add-player', 'uses'=>'LeaguesController@addPlayer']);
         Route::post('leagues/{id}/player', ['as'=>'add-player', 'uses'=>'LeaguesController@postPlayer']);
 

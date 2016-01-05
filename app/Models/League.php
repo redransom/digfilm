@@ -11,15 +11,14 @@ class League extends Model {
      *
      * @var array
      */
-    protected $fillable = ['name', 'users_id', 'enabled', 'auction_stage', 'auction_start_date', 'auction_close_date', 'file_name'];
-
+    protected $fillable = ['name', 'users_id', 'enabled', 'auction_stage', 'auction_start_date', 'auction_close_date', 'file_name', 'description'];
 
     public function owner() {
         return $this->belongsTo("\App\Models\User", "users_id");
     }
 
     public function players() {
-        return $this->belongsToMany("\App\Models\User", "league_users", "league_id", "user_id")->withPivot(['balance']);
+        return $this->belongsToMany("\App\Models\User", "league_users", "league_id", "user_id")->withPivot(['balance', 'id']);
     }
 
     public function movies() {

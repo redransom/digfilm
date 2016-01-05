@@ -138,8 +138,10 @@
                     <div class="control-group">
                         <label class="control-label" for="LeagueName">Minimum Denominations</label>
                         <div class="controls">
-                            {!! Form::text('denomination', null, ['class'=>'span2']) !!}
-                            <span class="help-inline">Whats the lowest denomination that can be used? Use 0.1 for 10cents, and 3 for 3 dollars.</span>
+                            {!! Form::text('min_increment', null, ['class'=>'span2']) !!} to 
+                            {!! Form::text('max_increment', null, ['class'=>'span2']) !!}
+                            <span class="help-inline">Whats the lowest increment that can be used? Use 0.1 for 10cents, and 3 for 3 dollars and again
+                            the same for the maximum jump - is it 1-2 dollars or even 10 dollars?</span>
                         </div>
                     </div>
 
