@@ -12,12 +12,13 @@
                                 <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped  display" width="100%">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
-                                            <th>Name</th>
-                                            <th>Players</th>
-                                            <th>Movies</th>
-                                            <th>Start?</th>
-                                            <th>Owned By</th>
+                                            <th width="4%">ID</th>
+                                            <th width="18%">Name</th>
+                                            <th width="11%">Created</th>
+                                            <th width="4%">Plys</th>
+                                            <th width="4%">Movs</th>
+                                            <th width="11%">Start?</th>
+                                            <th width="7%">Owned By</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -28,14 +29,15 @@
                                         $stage_array = [null=>'Not Ready', '0'=>'Start Set', '1'=>'Movies Chosen', '2'=>'Auctions Live', '3'=>'Rosters'];
                                         ?>
                                         @foreach($leagues as $league)
-                                        <?php if (is_null($league->auction_start_date)) $start = ""; else $start = date("j M Y H:i", strtotime($league->auction_start_date)); ?>
+                                        <?php if (is_null($league->auction_start_date)) $start = ""; else $start = date("j/m/Y g:iA", strtotime($league->auction_start_date)); ?>
                                         @if($stage != $league->auction_stage || $leagueCnt == 1)
-                                            <tr><td colspan='7'>{{$stage_array[$league->auction_stage]}}</td></tr>
+                                            <tr><td colspan='8'>{{$stage_array[$league->auction_stage]}}</td></tr>
                                             <?php $stage = $league->auction_stage; ?>
                                         @endif
                                         <tr class="<?php echo (($leagueCnt++ % 2) == 0) ? "odd" : "even"; ?> user{{$league->id}}">
                                             <td>{{$league->id}}</td>
                                             <td><a href="{{URL('league', array('id'=>$league->id))}}">{{$league->name}}</a></td>
+                                            <td>{{date("j/m/Y g:iA", strtotime($league->created_at))}}</td>
                                             <td>{{count($league->players)}}</td>
                                             <td>{{$league->movies()->count()}}</td>
                                             <td>{{$start}}</td>
