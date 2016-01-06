@@ -5,6 +5,9 @@
     <div class="title-caption-large">
         <h3>Welcome to the "{{$currentLeague->name}}" League</h3>
     </div>
+    @if($currentLeague->description != '')
+    <h4><em>{{$currentLeague->description}}</em></h4>
+    @endif
     @if(!is_null($currentLeague->file_name))
     <style>
     .league_image {

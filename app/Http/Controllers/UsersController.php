@@ -41,7 +41,7 @@ class UsersController extends Controller {
 				->orWhere('surname', 'LIKE', $search_like)->paginate();
 			$search = $input['users-search-text'];
 		} else
-			$users = User::paginate(4);
+			$users = User::paginate(10);
 
 		$roles = Role::all();
 

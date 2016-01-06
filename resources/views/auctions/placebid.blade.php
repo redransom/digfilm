@@ -7,7 +7,8 @@
     <?php
         $min_bid = $rule->min_bid;
         $opening_bid = $auction->movie->opening_bid;
-        $denomination = (!is_null($rule->denomination) && $rule->denomination != 0) ? $rule->denomination : 0.5;
+        $min_increment = (!is_null($rule->min_increment) && $rule->min_increment != 0) ? $rule->min_increment : 0.5;
+        $max_increment = (!is_null($rule->max_increment) && $rule->max_increment != 0) ? $rule->max_increment : 1;
         $bid_amount = $auction->bid_amount;
         $blind = ($rule->blind_bid == 'Y');
 
@@ -19,12 +20,17 @@
 
             if ($bid_amount != 0 && $bid_amount > $rule->min_bid) {
                 //need to include the denomination so that we aren't lower or the same as the previous bid
-                $min_bid = $bid_amount + $denomination;
+                $min_bid = $bid_amount + $min_increment;
             } elseif($bid_amount == 0 && $opening_bid != 0)
                 $min_bid = $opening_bid;
 
         }
-        $max_bid = $rule->max_bid;
+
+        $max_bid = !is_null($rule->max_bid) ? $rule->max_bid : 0;
+        //make sure the max amount bidable is less than the max increment if it is less than the max bid
+        if (($min_bid + $max_increment) < $max_bid)
+            $max_bid = ($min_bid + $max_increment);
+
         //make sure user cant overspend on this league
         if (($max_bid > $leagueUser->balance) || (is_null($max_bid) || $max_bid == 0))
             $max_bid = $leagueUser->balance;

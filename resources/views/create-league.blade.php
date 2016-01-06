@@ -17,12 +17,17 @@
                 <input type="hidden" name="users_id" value="{{$authUser->id}}">
                 <div class="alignleft">
                     <div class="row">
-                        <label for="name"><span class="required">*</span>League Name:</label>
+                        <label for="LeagueName"><span class="required">*</span>League Name:</label>
                         {!! Form::text('name', null, ['class'=>'span8', 'placeholder'=>'Enter league name here...']) !!}
                     </div>
                     
                     <div class="row">
-                        <label for="name"><span class="required">*</span>Start Date/Time:</label>
+                        <label for="LeagueDescription"><span class="required">*</span>League Slogan:</label>
+                        {!! Form::textarea('description', null, ['class'=>'span8', 'placeholder'=>'Enter slogan for your league.', 'rows'=>'2']) !!}
+                    </div>
+
+                    <div class="row">
+                        <label for="LeagueAuctionStartDate"><span class="required">*</span>Start Date/Time:</label>
                         {!! Form::text('auction_start_date', null, ['class'=>'span8', 'placeholder'=>'YYYY-MM-DD HH:II']) !!}
                     </div>
 

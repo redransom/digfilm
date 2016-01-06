@@ -16,6 +16,10 @@
         @endif
     </dl>
 
+    @if($league->description != "")
+    <h4><em>{{$league->description}}</em></h4>
+    @endif 
+
     <div class="sep"></div>
 
     <div class="one-quarter">
