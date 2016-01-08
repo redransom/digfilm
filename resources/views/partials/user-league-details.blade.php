@@ -68,7 +68,7 @@
                     </div><!--/ .title-caption-->
                     
                     <div class="entry-holder">
-                        <p>In this league you have a balance of <strong>{{number_format($currentLeagueUser->balance, 0)}} USD</strong>.</p>
+                        <p>In this league you have a balance of <strong>{{number_format($currentLeagueUser->balance, 2)}} USD</strong>.</p>
 
                         @if(!$blind)
                         <dl>

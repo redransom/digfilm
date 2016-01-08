@@ -42,7 +42,7 @@
         <div class="control-group">
             <label class="control-label" for="AuctionAmount">Amount</label>
             <div class="controls">
-                {!! Form::number('bid_amount', $min_bid, ['class'=>'span8', 'min'=>$min_bid, 'max'=>$max_bid, 'type'=>'number', 'step'=>$denomination, 'required']) !!}
+                {!! Form::number('bid_amount', $min_bid, ['class'=>'span8', 'min'=>$min_bid, 'max'=>$max_bid, 'type'=>'number', 'step'=>$min_increment, 'required']) !!}
             </div>
         </div>
 
