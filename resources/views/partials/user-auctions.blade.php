@@ -1,4 +1,5 @@
 
+{{var_dump($previousBids)}}
 @if($currentLeague->auctions()->where('ready_for_auction', 1)->count() > 0)
 <p>See a list of movies you can bid on:</p>
 <table class="feature-table dark-gray">
@@ -6,8 +7,9 @@
         <tr><th width="5%">No</th><th>Movie</th><th>Release Date</th>
         @if(!$blind) 
         <th>Opening<br/>Bid</th>
+        @endif
         <th>Current Price /<br/>$ USD</th>
-        @endif<th>Place Bid</th>
+        <th>Place Bid</th>
         @if(!$blind)
         <th>Owner</th>
         @endif
@@ -35,6 +37,10 @@
 
         @if(!$blind)
         <td>{{$auction->pivot->bid_amount}}</td>
+        @elseif($blind && isset($previousBids) && isset($previousBids[$auction->pivot->id]))
+        <td>{{$previousBids[$auction->pivot->id]}}</td>
+        @else
+        <td>&nbsp;</td>
         @endif
 
         @if($auction->pivot->ready_for_auction == 1 && strtotime($auction->pivot->auction_end_time) > time())

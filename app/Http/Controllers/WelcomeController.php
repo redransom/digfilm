@@ -2,6 +2,8 @@
 use Auth;
 use App\Models\User;
 use App\Models\League;
+use App\Models\Auction;
+use App\Models\AuctionBid;
 use App\Models\LeagueRoster;
 use App\Models\LeagueUser;
 use App\Models\RuleSet;
@@ -157,6 +159,10 @@ class WelcomeController extends Controller {
 		$wonAuctions = $league->auctions()->where('ready_for_auction', '4')->orderBy('name', 'asc')->get();
 		$expiredAuctions = $league->auctions()->whereIn('ready_for_auction', ['2', '3'])->orderBy('name', 'asc')->get();
 
+		//TODO: get list of bids made by user for this auction
+		$availableAuctions = Auction::where('leagues_id', $id)->lists('id');
+		$previousBids = AuctionBid::where('users_id', $authUser->id)->whereIn('auctions_id', $availableAuctions)->lists('bid_amount', 'auctions_id');
+
 		$leagueUsers = LeagueUser::where('league_id', $league->id)->get();
 		$currentLeagueUser = LeagueUser::where('user_id', $authUser->id)->where('league_id', $league->id)->first();
 		return view('league-show')
@@ -165,6 +171,7 @@ class WelcomeController extends Controller {
 			->with('wonAuctions', $wonAuctions)
 			->with('expiredAuctions', $expiredAuctions)
 			->with('movies', $movies)
+			->with('previous_bids', $previousBids)
 			->with('currentLeagueUser', $currentLeagueUser)
 			->with('authUser', $authUser);	
 	}

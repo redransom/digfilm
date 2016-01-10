@@ -158,7 +158,8 @@ class RuleSetsController extends Controller {
         $ruleset->blind_bid = $input['blind_bid'];
         $ruleset->auction_timeout = $input['auction_timeout'];
         $ruleset->round_duration = $input['round_duration'];
-        $ruleset->denomination = $input['denomination'];
+        $ruleset->min_increment = $input['min_increment'];
+        $ruleset->max_increment = $input['max_increment'];
         $ruleset->movie_takings_duration = $input['movie_takings_duration'];
         
         $ruleset->save();
