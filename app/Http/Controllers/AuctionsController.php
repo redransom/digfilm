@@ -421,6 +421,7 @@ class AuctionsController extends Controller {
         $created_at = date("Y-m-d H:i:s");
 
         $league = League::find($league_id);
+        var_dump($league);
         if ($league->rule->blind_bid == 'N') {
             DB::insert(DB::raw("INSERT INTO league_roster
     (leagues_id, users_id, movies_id, bid_amount, takings_end_date, created_at)
@@ -430,7 +431,7 @@ class AuctionsController extends Controller {
     WHERE A.leagues_id = '".$league_id."' AND bid_count > 0"));
 
         } else {
-            DB::insert(DB::raw("INSERT INTO league_roster
+            $sql = "INSERT INTO league_roster
     (leagues_id, users_id, movies_id, bid_amount, takings_end_date, created_at)
     SELECT A.leagues_id, ab.users_id, A.movies_id, A.bid_amount, DATE_ADD(M.release_at, INTERVAL LR.movie_takings_duration WEEK), '".$created_at."' 
     FROM auctions A 
@@ -439,9 +440,11 @@ class AuctionsController extends Controller {
         INNER JOIN auction_bids ab ON A.id = ab.auctions_id 
         INNER JOIN (SELECT min(ab.created_at) as created_at, ab.movies_id, ab.bid_amount FROM auction_bids ab 
                 INNER JOIN auctions a ON ab.auctions_id = a.id and a.bid_amount = ab.bid_amount
-                WHERE a.leagues_id = 36 GROUP BY movies_id, bid_amount) ab2
+                WHERE a.leagues_id = ".$league_id." GROUP BY movies_id, bid_amount) ab2
                 ON ab.created_at = ab2.created_at and ab.movies_id = ab2.movies_id and ab.bid_amount = ab2.bid_amount
-        WHERE A.leagues_id = '".$league_id."'"));
+        WHERE A.leagues_id = '".$league_id."'";
+        echo $sql;
+            DB::insert(DB::raw($sql));
 
         }
 

@@ -1,5 +1,4 @@
 
-{{var_dump($previousBids)}}
 @if($currentLeague->auctions()->where('ready_for_auction', 1)->count() > 0)
 <p>See a list of movies you can bid on:</p>
 <table class="feature-table dark-gray">
@@ -7,8 +6,10 @@
         <tr><th width="5%">No</th><th>Movie</th><th>Release Date</th>
         @if(!$blind) 
         <th>Opening<br/>Bid</th>
-        @endif
         <th>Current Price /<br/>$ USD</th>
+        @else
+        <th>Your Bid /<br/>$ USD</th>
+        @endif
         <th>Place Bid</th>
         @if(!$blind)
         <th>Owner</th>
@@ -23,7 +24,8 @@
         <a href="{{URL('movie-knowledge', [$auction->id])}}">
         @else
         <a href="{{URL('movie-knowledge', [$auction->slug])}}">
-        @endif{{$auction->name}}</a></td>
+        @endif 
+        {{$auction->name}}</a></td>
 
         <td>{{date("j-M-y", strtotime($auction->release_at))}}</td>
 
@@ -49,9 +51,9 @@
             
             @if($auction->pivot->users_id == $authUser->id)
         <td>PLACED</td>
-            @elseif ($leagueUser->balance > 0 && $auction->pivot->bid_amount < $currentLeague->rule->max_bid)
-        <td id="bid_link_{{$auction->pivot->id}}"><a href="{{URL('place-bid', [$auction->pivot->id])}}" class="popup">PLACE BID</a></td>
-            @elseif($leagueUser->balance > 0 && $auction->pivot->bid_amount >= $currentLeague->rule->max_bid)
+            @elseif ($leagueUser->balance > 0 && (is_null($auction->pivot->bid_amount) || $auction->pivot->bid_amount < $currentLeague->rule->max_bid))
+        <td id="bid_link_{{$auction->pivot->id}}"><a href="{{URL('place-bid', [$auction->pivot->id])}}" class="popup">{{$auction->pivot->bid_amount}} PLACE BID</a></td>
+            @elseif($leagueUser->balance > 0 && (!is_null($auction->pivot->bid_amount) || $auction->pivot->bid_amount >= $currentLeague->rule->max_bid))
         <td>MAX BID</td>
             @else
         <td>NO MONEY</td>
