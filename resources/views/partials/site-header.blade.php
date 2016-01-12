@@ -1,18 +1,24 @@
-<header id="header">
+                <header id="header">
                     <div id="menu-bottom">
                         <!-- <nav id="menu" class="main-menu width-fluid"> -->
                         <nav id="menu" class="main-menu">
                             <div class="blur-before"></div>
-                            <a href="index.html" class="header-logo left"><img src="images/logo.png" class="logo" alt="Revelio" title="" /></a>
+                            <a href="index.html" class="header-logo left"><img src="{{asset('images/BFlogo.png')}}" class="logo" /></a>
                             <a href="#dat-menu" class="datmenu-prompt"><i class="fa fa-bars"></i>Show menu</a>
                             <ul class="load-responsive" rel="Main menu">
-                                <li><a href="blog.html"><span><i class="fa fa-comment"></i><strong>Blog Page</strong></span></a>
+                                <li><a href="/all-leagues"><span><i class="fa fa-calendar-o"></i><strong>Leagues</strong></span></a>
+                                    <ul class="sub-menu">
+                                        <li><a href="{{URL('/all-leagues')}}">All Leagues</a></li>
+                                        <li><a href="{{URL('/create')}}">Create League</a></li>
+                                    </ul>
+                                </li>
+                                <!--li><a href="blog.html"><span><i class="fa fa-comment"></i><strong>Blog Page</strong></span></a>
                                     <ul class="sub-menu">
                                         <li><a href="post.html">Single Post</a></li>
                                         <li><a href="post-left.html">Sidebar on Left side</a></li>
                                         <li><a href="full-width.html">Full Width Page</a></li>
                                     </ul>
-                                </li>
+                                </li-->
                                 <li><a href="calendar.html"><span><i class="fa fa-calendar-o"></i><strong>Schedule</strong></span></a>
                                     <ul class="sub-menu">
                                         <li><a href="calendar.html">Calendar</a></li>
@@ -20,7 +26,7 @@
                                         <li><a href="events-single.html">Event Single</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="shortcodes.html"><span><i class="fa fa-puzzle-piece"></i><strong>Features</strong></span></a>
+                                <!--li><a href="shortcodes.html"><span><i class="fa fa-puzzle-piece"></i><strong>Features</strong></span></a>
                                     <ul class="sub-menu">
                                         <li><a href="shortcodes.html">Shortcodes</a></li>
                                         <li><a href="login.html">Login page</a></li>
@@ -31,8 +37,8 @@
                                         <li><a href="podcasts-single.html">Podcast single</a></li>
                                         <li><a href="404-page.html">404 Page</a></li>
                                     </ul>
-                                </li>
-                                <li><a href="photo-gallery.html"><i class="fa fa-camera-retro"></i><strong>Photo Gallery</strong></a></li>
+                                </li-->
+                                <li><a href="photo-gallery.html"><i class="fa fa-camera-retro"></i><strong>Gallery</strong></a></li>
                                 <li><a href="forum.html"><span><i class="fa fa-comments-o"></i><strong>Forum layout</strong></span></a>
                                     <ul class="sub-menu">
                                         <li><a href="forum.html">Forums layout</a></li>
@@ -51,7 +57,7 @@
                                         <li><a href="user-single-instagram.html">Member Instagram photos</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="contact-us.html"><i class="fa fa-map-marker"></i><strong>Contact us</strong></a></li>
+                                <!--li><a href="contact-us.html"><i class="fa fa-map-marker"></i><strong>Contact us</strong></a></li-->
                                 <!-- <li class="no-icon"><a href="#"><strong>Without icon</strong></a></li> -->
                             </ul>
                         </nav>
