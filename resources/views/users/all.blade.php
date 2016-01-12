@@ -48,7 +48,7 @@
                                             <td>{{$user->description}}</td>
                                             <td>{{(($user->hasRole("Admin")) ? "Admin" : "Player")}}</td>
                                             <td>{{date("d M Y", strtotime($user->created_at))}}</td>
-                                            <td><a class="btn btn-mini btn-primary" href="{{URL('user/'.$user->id.'/edit')}}">Edit</a>
+                                            <td><a class="btn btn-mini btn-primary" href="{{URL('users/'.$user->id.'/edit')}}">Edit</a>
                                                 @if($user->enabled)
                                                 <a class="btn btn-mini btn-danger" href="{{URL('users/'.$user->id.'/disable')}}">Disable</a>
                                                 @else

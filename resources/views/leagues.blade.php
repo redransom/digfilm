@@ -1,10 +1,9 @@
 @extends('layouts.users')
 
 @section('content')
-<section class="entry sbr clearfix">
-    <div class="title-caption-large">
-        <h3>Public Leagues</h3>
-    </div>
+<h2><span>Public Leagues</span></h2>
+<div class="content-padding">
+
     <h4>All leagues available to play for anyone!</h4>
     @if(isset($leagues) && $leagues->count() > 0)
         <?php $league_counter = 0; ?>
@@ -49,5 +48,5 @@
     <p>There are no leagues available presently.</p>
     @endif
 
-</section>
+</div>
 @endsection

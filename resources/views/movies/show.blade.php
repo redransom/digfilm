@@ -11,7 +11,11 @@
                                     <dt>Summary</dt>
                                     <dd>{{$movie->summary}}</dd>
                                     <dt>Genre</dt>
+                                    @if(isset($movie->genre->name))
                                     <dd>{{$movie->genre->name}}</dd>
+                                    @else
+                                    <dd>Not Set</dd>
+                                    @endif
                                     <dt>Rating</dt>
                                     <dd>{{$movie->rating}}</dd>
                                     <dt>Budget</dt>
