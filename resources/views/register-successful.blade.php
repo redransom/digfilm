@@ -1,11 +1,9 @@
-@extends('layouts.users')
+@extends('layouts.site')
 
 @section('content')
-<section class="entry sbr clearfix">
-    <div class="title-caption-large">
-        <h3>Registration Successful!</h3>
-    </div>
-    
-    <p>Thank you for registering - you now need to check your email to click on the verification link to prove your email is correct.</p>
-</section>
+<h2><span>Registration Successful!</span></h2>
+<div class="content-padding">
+        
+</div>
+
 @endsection

@@ -178,6 +178,8 @@ class WelcomeController extends Controller {
 		$currentLeagueUser = LeagueUser::where('user_id', $authUser->id)->where('league_id', $league->id)->first();
 		return view('league-show')
 			->with('currentLeague', $league)
+			->with('page_name', 'league-show')
+			->with('object', $league)
 			->with('leagueUsers', $leagueUsers)
 			->with('wonAuctions', $wonAuctions)
 			->with('expiredAuctions', $expiredAuctions)
@@ -351,7 +353,8 @@ class WelcomeController extends Controller {
 	 * @return void
 	 */
 	public function registerSuccessful() {
-		return view('register-successful');	
+		return view('register-successful')
+			->with('page_name', 'register-successful');	
 	}
 
 	/**
@@ -360,7 +363,8 @@ class WelcomeController extends Controller {
 	 * @return void
 	 */
 	public function emailVerified() {
-		return view('email-completed');	
+		return view('email-completed')
+			->with('page_name', 'email-verified');	
 	}
 
 	/**

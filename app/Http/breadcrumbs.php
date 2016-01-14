@@ -161,13 +161,16 @@ Breadcrumbs::register('auctions', function($breadcrumbs)
 /** 
 Players Breadcrumbs
 */
-/*Breadcrumbs::register('dashboard', function($breadcrumbs)
-{
-    $breadcrumbs->push('Home', route('dashboard'));
-});*/
+
 Breadcrumbs::register('home', function($breadcrumbs)
 {
     $breadcrumbs->push('Home');
+});
+
+Breadcrumbs::register('dashboard', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('Your Dashboard', route('dashboard'));
 });
 
 Breadcrumbs::register('about', function($breadcrumbs)
@@ -200,3 +203,20 @@ Breadcrumbs::register('contact', function($breadcrumbs)
     $breadcrumbs->push('Contact Us', route('contact'));
 });
 
+Breadcrumbs::register('register-successful', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('Register Success', route('register-successful'));
+});
+
+Breadcrumbs::register('email-verified', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('Email Verified', route('email-verified'));
+});
+
+Breadcrumbs::register('league-show', function($breadcrumbs, $object)
+{
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('League Details', route('league-show', [$object->id]));
+});

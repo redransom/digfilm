@@ -1,10 +1,9 @@
-@extends('layouts.users')
+@extends('layouts.site')
 
 @section('content')
-<section class="entry sbr clearfix">
-    <div class="title-caption-large">
-        <h3>Welcome to the "{{$currentLeague->name}}" League</h3>
-    </div>
+<h2><span>Welcome to the "{{$currentLeague->name}}" League</span></h2>
+<div class="content-padding">
+
     @if($currentLeague->description != '')
     <h4><em>{{$currentLeague->description}}</em></h4>
     @endif
@@ -89,7 +88,7 @@
     @include('partials.user-auction-movies', ['movies'=>$currentLeague->movies()->where('chosen', '0')->get(), 'movieTitle'=>'Remaining Movies'])
     @endif
     @include('partials.user-league-rules', ['rule'=>$currentLeague->rule, 'leagueUser'=>$currentLeagueUser]) 
-</section>
+</div>
 
 <?php function auctionTimer ($auctionid, $auctionTime, $name='bid_link') { ?>
     <div id="{{$name}}<?php echo $auctionid; ?>"></div>

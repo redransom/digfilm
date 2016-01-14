@@ -1,43 +1,38 @@
-@extends('layouts.users')
+@extends('layouts.site')
 
 @section('content')
-<section class="entry sbr clearfix">
-    <div class="title-caption-large">
-        <h3>Create Your League</h3>
-    </div>
+<h2><span>Create Your League</span></h2>
+<div class="content-padding">
 
     @if(isset($authUser))
-    {!! Form::open(array('route' => 'league-store', 'class'=>'form-horizontal row-fluid', 'id'=>'contactform', 'files'=>true)) !!}
-    <p>Use the below form to enter the name of the league you wish to create and select the movies to be auctioned for.</p>
-    <div id="contact">
-        <div id="message"></div>
-            <fieldset>
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <input type="hidden" name="source" value="P">
-                <input type="hidden" name="users_id" value="{{$authUser->id}}">
-                <div class="alignleft">
-                    <div class="row">
-                        <label for="LeagueName"><span class="required">*</span>League Name:</label>
-                        {!! Form::text('name', null, ['class'=>'span8', 'placeholder'=>'Enter league name here...']) !!}
-                    </div>
+    <div class="the-form" style="margin-top:40px;">
+    {!! Form::open(array('route' => 'league-store', 'class'=>'form-vertical', 'id'=>'contactform', 'files'=>true)) !!}
+        <p>Use the below form to enter the name of the league you wish to create and select the movies to be auctioned for.</p>
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="source" value="P">
+        <input type="hidden" name="users_id" value="{{$authUser->id}}">
+
+        <p>
+            <label for="LeagueName">League Name:</label>
+            {!! Form::text('name', null, ['class'=>'span8', 'placeholder'=>'Enter league name here...']) !!}
+        </p>
                     
-                    <div class="row">
-                        <label for="LeagueDescription"><span class="required">*</span>League Slogan:</label>
-                        {!! Form::textarea('description', null, ['class'=>'span8', 'placeholder'=>'Enter slogan for your league.', 'rows'=>'2']) !!}
-                    </div>
+        <p>
+            <label for="LeagueDescription">League Slogan:</label>
+            {!! Form::textarea('description', null, ['class'=>'span8', 'placeholder'=>'Enter slogan for your league.', 'rows'=>'2']) !!}
+        </p>
 
-                    <div class="row">
-                        <label for="LeagueAuctionStartDate"><span class="required">*</span>Start Date/Time:</label>
-                        {!! Form::text('auction_start_date', null, ['class'=>'span8', 'placeholder'=>'YYYY-MM-DD HH:II']) !!}
-                    </div>
+        <p>
+            <label for="LeagueAuctionStartDate">Start Date/Time:</label>
+            {!! Form::text('auction_start_date', null, ['class'=>'span8', 'placeholder'=>'YYYY-MM-DD HH:II']) !!}
+        </p>
 
-                    <div class="row">
-                        <label for="LeagueFilename">Thumbnail</label>
-                        {!! Form::file('file_name', null, ['class'=>'span8', 'placeholder'=>'Enter filename...']) !!}
-                    </div>
-                </div>
-            </fieldset>
-    </div><!--/ contact-->
+        <p>
+            <label for="LeagueFilename">Thumbnail:</label>
+            {!! Form::file('file_name', null, ['class'=>'span8', 'placeholder'=>'Enter filename...']) !!}
+        </p>
+
+    </div>
     <div class="clear"></div>
 
     @foreach($rules as $rule)
@@ -60,14 +55,14 @@
         </div><!--/ small-package-->
 
     @endforeach
-    <div class="clear"></div>
-        <input type="submit" class="button green small" id="submit" value="Next Step" />
-    
+    <p class="form-footer">
+        <input type="submit" name="submit" id="submit" value="Next Step" />
+    </p>
     </form>
     @else
     <p>You need to be logged in if you want create a league here for your friends to play in.</p>
     @endif
 
-</section>
+</div>
 
 @endsection

@@ -15,7 +15,7 @@
 						<a href="#" class="strike-tooltip" title="Use Google.com passport"><img src="{{ asset('images/social-icon-google.png') }}" alt="" /></a>
 					</div>
 					<div class="the-form" style="margin-top:40px;">
-						<form class="form-vertical" id="contactform" role="form" method="POST" action="/auth/login">
+						<form class="form-vertical" id="contactform" role="form" method="POST" action="/auth/register">
 							<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 							@if (count($errors) > 0)
@@ -34,7 +34,7 @@
 
 							<p>
 								<label for="forenames">Forenames:<span class="required">*</span></label>
-								<input type="text" name="signup_name" id="signup_name" value="{{ old('forenames') }}" />
+								<input type="text" name="forenames" id="forenames" value="{{ old('forenames') }}" />
 							</p>
 
 							<p>

@@ -1,10 +1,8 @@
-@extends('layouts.users')
+@extends('layouts.site')
 
 @section('content')
-<section class="entry sbr clearfix">
-    <div class="title-caption-large">
-        <h3>Dashboard</h3>
-    </div>
+<h2><span>Dashboard</span></h2>
+<div class="content-padding">
 
     <h1>Hi {{$authUser->forenames}}, Welcome to TheNextBigFilm today.</h1>
 
@@ -147,5 +145,5 @@
     <p>You don't currently own any leagues.</p>
     @endif
 
-</section>    
+</div>    
 @endsection
