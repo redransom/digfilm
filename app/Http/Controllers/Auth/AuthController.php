@@ -43,6 +43,19 @@ class AuthController extends Controller {
 		$this->middleware('guest', ['except' => 'getLogout']);
 	}
 
+	public function getLogin() {
+		return view('auth.login')->with('login', true);
+	}
+	
+	/**
+	 * Show the application registration form.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function getRegister() {
+		return view('auth.register')->with('login', true);
+	}
+
 	public function postLogin(Request $request)
 	{
 		$this->validate($request, [

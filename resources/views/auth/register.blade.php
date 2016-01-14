@@ -1,85 +1,118 @@
-@extends('layouts.users')
+@extends('layouts.site')
 
 @section('content')
-<section class="entry sbr clearfix">
-	<div class="title-caption-large">
-		<h3>Register Here</h3>
-	</div>
+		<div class="signup-panel">
 
-	<style>
-		/* Form style */
-		#contact label {display: block;}
+			<div class="left">
+				<h2><span>Register Here</span></h2>
+				<div class="content-padding">
+					<p class="p-padding">Use the below form to get into the site.</p>
 
-		#contact input[type="submit"][disabled] { background:#888; cursor: default; }
+					<div class="login-passes">
+						<b>Or you can use passports:</b>
+						<a href="#" class="strike-tooltip" title="Use Facebook.com passport"><img src="{{ asset('images/social-icon-facebook.png') }}" alt="" /></a>
+						<a href="#" class="strike-tooltip" title="Use Twitter.com passport"><img src="{{ asset('images/social-icon-twitter.png') }}" alt="" /></a>
+						<a href="#" class="strike-tooltip" title="Use Google.com passport"><img src="{{ asset('images/social-icon-google.png') }}" alt="" /></a>
+					</div>
+					<div class="the-form" style="margin-top:40px;">
+						<form class="form-vertical" id="contactform" role="form" method="POST" action="/auth/login">
+							<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-		#message fieldset { padding:20px; border:1px solid #eee; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; background:#F9FAF5; }
+							@if (count($errors) > 0)
+							<p>
+								@foreach ($errors->all() as $error)
+									<span class="the-error-msg">{{ $error }}</span>
+								@endforeach
+							</p>
+							@endif
 
-		.error_message { display: block; line-height: 22px; background: #FBE3E4 url('../assets/error.gif') no-repeat 10px 6px; padding: 3px 10px 3px 35px; color:#8a1f11;border: 1px solid #FBC2C4; -moz-border-radius:5px; -webkit-border-radius:5px; }
+							<p class="p-padding">We need the following fields to be populated before you can register to the site.</p>
+							<p>
+								<label for="name">Username:<span class="required">*</span></label>
+								<input type="text" name="name" id="name" value="{{ old('name') }}" />
+							</p>
 
-		ul.error_messages { margin: 0 0 0 15px; padding: 0; }
-		ul.error_messages li { height: 22px; line-height: 22px; color:#333; }
+							<p>
+								<label for="forenames">Forenames:<span class="required">*</span></label>
+								<input type="text" name="signup_name" id="signup_name" value="{{ old('forenames') }}" />
+							</p>
 
-		.loader { padding: 0 10px; }
+							<p>
+								<label for="surname">Surname:<span class="required">*</span></label>
+								<input type="text" name="surname" id="surname" value="{{ old('surname') }}" />
+							</p>
 
-		#contact #success_page h1 { background: url('../assets/success.gif') left no-repeat; padding-left:22px; }
+							<p>
+								<label for="email">E-Mail Address:<span class="required">*</span></label>
+								<input type="text" name="email" id="email" value="{{ old('email') }}" />
+							</p>
 
-		acronym { border-bottom:1px dotted #ccc; }
+							<p>
+								<label for="password">Password:<span class="required">*</span></label>
+								<input type="password" name="password" id="password" value="" />
+							</p>
 
-	</style>
-	<div id="contact">
+							<p>
+								<label for="password_confirmation">Confirm Password:<span class="required">*</span></label>
+								<input type="password" name="password_confirmation" id="password_confirmation" value="" />
+							</p>
 
-		@if (count($errors) > 0)
-		<div class="alert alert-danger">
-			<strong>Whoops!</strong> There were some problems with your input.<br><br>
-			<ul>
-				@foreach ($errors->all() as $error)
-					<li>{{ $error }}</li>
-				@endforeach
-			</ul>
-		</div>
-		@endif
-		<p>We need the following fields to be populated before you can register to the site.</p>
+							<p class="form-footer">
+								<input type="submit" name="signup_submit" id="signup_submit" value="Sign up" />
+							</p>
 
-		<form class="form-horizontal" id="contactform" role="form" method="POST" action="/auth/register">
-			<input type="hidden" name="_token" value="{{ csrf_token() }}">
-			<fieldset>
-				<div class="alignleft">
-					<div class="row">
-						<label for="name"><span class="required">*</span>Username:</label>
-						<input type="text" class="form-control" name="name" value="{{ old('name') }}">
-					</div><!--/ row-->
+							<p>
+								<span class="info-msg">If you already have an account please <a href="/auth/login">log in</a> !</span>
+							</p>
 
-					<div class="row">
-						<label for="name"><span class="required">*</span>Forenames:</label>
-						<input type="text" class="form-control" name="forenames" value="{{ old('forenames') }}">
-					</div><!--/ row-->
 
-					<div class="row">
-						<label for="name"><span class="required">*</span>Surname:</label>
-						<input type="text" class="form-control" name="surname" value="{{ old('surname') }}">
-					</div><!--/ row-->					
+						</form>
+					</div>
 
-					<div class="row">
-						<label for="name"><span class="required">*</span>E-Mail Address:</label>
-						<input type="text" class="form-control" name="email" value="{{ old('surname') }}">
-					</div><!--/ row-->	
-
-					<div class="row">
-						<label for="name"><span class="required">*</span>Password:</label>
-						<input type="password" class="form-control" name="password" value="{{ old('surname') }}">
-					</div><!--/ row-->	
-
-					<div class="row">
-						<label for="name"><span class="required">*</span>Confirm Password:</label>
-						<input type="password" class="form-control" name="password_confirmation">
-					</div><!--/ row-->
-
-					<button type="submit" class="button green small">
-						Register
-					</button>
 				</div>
-			</fieldset>
-		</form>
+			</div>
+
+			<div class="right">
+				<h2><span>What is TheNextBigFilm ?</span></h2>
+				<div class="content-padding">
+					
+					<div class="form-split-about">
+						<p class="p-padding">Lorem ipsum dolor sit amet, natum referrentur sea no. Sensibus definitionem necessitatibus id vim, eu ornatus intellegat argumentum nam. Ius modo interpretaris at, alia erat pri te. An euripidis assentior accommodare usu, ut eam fabellas facilisi perpetua. Accumsan scripserit cu mel, ut dolorem adolescens per.</p>
+
+						<ul>
+							<li>
+								<i class="fa fa-picture-o"></i>
+								<b>Id ius facete urbanitas concludaturque mea</b>
+								<p class="p-padding">Ius modo interpretaris at, alia erat pri te. An euripidis assentior accommodare usu, ut eam fabellas facilisi perpetua.</p>
+							</li>
+							
+							<li>
+								<i class="fa fa-trophy"></i>
+								<b>Id ius facete urbanitas concludaturque mea</b>
+								<p class="p-padding">Ius modo interpretaris at, alia erat pri te. An euripidis assentior accommodare usu, ut eam fabellas facilisi perpetua. Accumsan scripserit cu mel, ut dolorem adolescens per.</p>
+							</li>
+
+							<li>
+								<i class="fa fa-microphone"></i>
+								<b>Id ius facete urbanitas concludaturque mea</b>
+								<p class="p-padding">Ius modo interpretaris at, alia erat pri te. An euripidis assentior accommodare usu, ut eam fabellas facilisi perpetua. Accumsan scripserit cu mel, ut dolorem adolescens per.</p>
+							</li>
+							
+							<li>
+								<i class="fa fa-comments"></i>
+								<b>Id ius facete urbanitas concludaturque mea</b>
+								<p class="p-padding">Ius modo interpretaris at, alia erat pri te. An euripidis assentior accommodare usu, ut eam fabellas facilisi perpetua.</p>
+							</li>
+						</ul>
+						
+					</div>
+					
+				</div>
+			</div>
+
+			<div class="clear-float"></div>
+		</div>
+		
 	</div>
 </section>
 @endsection
