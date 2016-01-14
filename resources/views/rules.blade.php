@@ -1,11 +1,8 @@
-@extends('layouts.users')
+@extends('layouts.site')
 
 @section('content')
-<section class="entry sbr clearfix">
-    <div class="title-caption-large">
-        <h3>Rules of the game</h3>
-    </div>
-
+<h2><span>Rules of the game</span></h2>
+<div class="content-padding">
     <ul class="dropspot-list">
     <li><span class="dropspot">01</span>
     <h6>Default balance</h6>
@@ -107,5 +104,8 @@
      Auction could last for a period of 20 days.</p>
     </li>
     </ul>
-</section>
+
+</div>
+
+
 @endsection

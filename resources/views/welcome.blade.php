@@ -1,4 +1,4 @@
-@extends('layouts.front')
+@extends('layouts.site')
 
 @section('content')
 <h2><span>Whats Going On?</span></h2>

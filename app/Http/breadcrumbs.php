@@ -165,3 +165,38 @@ Players Breadcrumbs
 {
     $breadcrumbs->push('Home', route('dashboard'));
 });*/
+Breadcrumbs::register('home', function($breadcrumbs)
+{
+    $breadcrumbs->push('Home');
+});
+
+Breadcrumbs::register('about', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('About', route('about'));
+});
+
+Breadcrumbs::register('rules', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('Rules', route('rules'));
+});
+
+Breadcrumbs::register('terms', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('Terms & Conditions', route('terms'));
+});
+
+Breadcrumbs::register('privacy', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('Privacy Policy', route('privacy'));
+});
+
+Breadcrumbs::register('contact', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('Contact Us', route('contact'));
+});
+

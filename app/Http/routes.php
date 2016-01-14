@@ -12,11 +12,12 @@
 */
 
 Route::get('/', 'WelcomeController@index');
-Route::get('about', 'WelcomeController@about');
-Route::get('rules', 'WelcomeController@rules');
-Route::get('terms', 'WelcomeController@terms');
-Route::get('privacy', 'WelcomeController@privacy');
-Route::get('contact', 'WelcomeController@contact');
+Route::get('about', ['as'=>'about', 'uses'=>'WelcomeController@about']);
+Route::get('rules', ['as'=>'rules', 'uses'=>'WelcomeController@rules']);
+Route::get('terms', ['as'=>'terms', 'uses'=>'WelcomeController@terms']);
+Route::get('privacy', ['as'=>'privacy', 'uses'=>'WelcomeController@privacy']);
+Route::get('contact', ['as'=>'contact', 'uses'=>'WelcomeController@contact']);
+
 Route::get('all-leagues', 'WelcomeController@leagues');
 Route::get('create', 'WelcomeController@create');
 Route::get('movie-knowledge/{id}', 'WelcomeController@movieKnow');

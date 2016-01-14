@@ -76,6 +76,7 @@ class WelcomeController extends Controller {
 			->with('public_count', $public)
 			->with('next_film', $next_film)
 			->with('trailers', $trailers)
+			->with('frontpage', true)
 			->with('opening_bid', $opening_bid)
 			->with('authUser', $authUser);
 	}
@@ -83,30 +84,40 @@ class WelcomeController extends Controller {
 	public function about() {
 		$authUser = Auth::user();
 		return view('about')
+			->with('page_name', 'about')
+			->with('page_title', 'About TheNextBigFilm')
 			->with('authUser', $authUser);	
 	}
 
 	public function rules() {
 		$authUser = Auth::user();
 		return view('rules')
+			->with('page_name', 'rules')
+			->with('page_title', 'How to play')
 			->with('authUser', $authUser);	
 	}
 
 	public function terms() {
 		$authUser = Auth::user();
 		return view('terms')
+			->with('page_name', 'terms')
+			->with('page_title', 'Terms & Conditions')
 			->with('authUser', $authUser);	
 	}
 
 	public function contact() {
 		$authUser = Auth::user();
 		return view('contact')
+			->with('page_name', 'contact')
+			->with('page_title', 'How to get in touch')
 			->with('authUser', $authUser);	
 	}
 
 	public function privacy() {
 		$authUser = Auth::user();
 		return view('privacy')
+			->with('page_name', 'privacy')
+			->with('page_title', 'Your Privacy')
 			->with('authUser', $authUser);	
 	}
 

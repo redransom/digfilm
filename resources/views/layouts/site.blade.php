@@ -25,6 +25,7 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
         <style>
+            @if(isset($frontpage))
             #featured-img-1 {
                 background-image: url({{ asset('/images/photos/image-1.jpg') }});
             }
@@ -37,7 +38,7 @@
             #featured-img-4 {
                 background-image: url({{ asset('/images/photos/image-4.jpg') }});
             }
-
+            @endif
             /* Man content & sidebar top lne, default #256193 */
             #sidebar .panel,
             #main-box #main {
@@ -99,7 +100,11 @@
             }
         </style>
     </head>
+    @if(isset($frontpage))
     <body class="has-top-menu">
+    @else
+    <body class="no-slider">
+    @endif
 
         @include('partials.site-slider-images')
         <!-- BEGIN #top-layer -->
@@ -108,13 +113,7 @@
             
             <div class="wrapper">
 
-                    <ul class="right">
-                        <li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#" target="_blank"><i class="fa fa-youtube-play"></i></a></li>
-                        <li><a href="#" target="_blank"><i class="fa fa-twitch"></i></a></li>
-                        <li><a href="#" target="_blank"><i class="fa fa-steam"></i></a></li>
-                    </ul>
+                    @include('partials.site-social')
                     @include('partials.site-top-menu')
                 </div>
             </div>
@@ -122,8 +121,12 @@
             <section id="content">
                 @include('partials.site-header')
     
+                @if(isset($login))
+                <div id="main-box" class="full-width">
+                @else
                 <div id="main-box">
-                    
+                @endif
+
                     <div id="main">
         
                         @if (Session::has('flash_notification.message'))
@@ -390,9 +393,13 @@
         <script type='text/javascript' src='{{ asset('/jscript/iscroll.js') }}'></script>
         <script type='text/javascript' src='{{ asset('/jscript/dat-menu.js') }}'></script>
         <script type='text/javascript'>
+            @if(isset($frontpage))
             var strike_featCount = 4;
             var strike_autostart = true;
             var strike_autoTime = 7000;
+            @else
+            var strike_autostart = false;
+            @endif
         </script>
         <script type='text/javascript' src='jscript/theme-script.js'></script>
     </body>

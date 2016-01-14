@@ -1,9 +1,8 @@
-@extends('layouts.users')
+@extends('layouts.site')
 
 @section('content')
-<section class="entry sbr clearfix">
-    <div class="title-caption-large">
-        <h3>Terms &amp; Conditions</h3>
-    </div>
-</section>
+<h2><span>Terms &amp; Conditions</span></h2>
+<div class="content-padding">
+
+</div>
 @endsection

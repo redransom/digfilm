@@ -62,6 +62,8 @@
                             </ul>
                         </nav>
                     </div>
+
+                    @if(isset($frontpage))
                     <div id="slider">
                         <div id="slider-info">
                             <div class="padding-box">
@@ -110,4 +112,19 @@
                             </a>
                         </div>
                     </div>
+
+                    @else
+                    <div class="wrapper">
+                        <div class="header-breadcrumbs">
+                            @if(isset($page_title))
+                            <h2 class="right">{{$page_title}}</h2>
+                            @endif
+                            @if(isset($page_name) && !isset($object))
+                                {!! Breadcrumbs::render($page_name) !!}
+                            @elseif(isset($page_name) && isset($object))
+                                {!! Breadcrumbs::render($page_name, $object) !!}
+                            @endif
+                        </div>
+                    </div>
+                    @endif
                 </header>
