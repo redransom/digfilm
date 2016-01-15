@@ -120,9 +120,13 @@
             </div>
 
             <section id="content">
+                @if(isset($padding))
+                @include('partials.site-header', ['extrapadding'=>$padding])
+                @else
                 @include('partials.site-header')
-    
-                @if(isset($login))
+                @endif
+
+                @if(isset($fullwidth))
                 <div id="main-box" class="full-width">
                 @else
                 <div id="main-box">
@@ -145,7 +149,7 @@
 
                     </div>
 
-                    @if(!isset($login))
+                    @if(!isset($fullwidth))
                     @include('partials.site-sidebar')
                     @endif
                     <div class="clear-float"></div>
@@ -172,7 +176,7 @@
             var strike_autostart = false;
             @endif
         </script>
-        <script type='text/javascript' src='jscript/theme-script.js'></script>
+        <script type='text/javascript' src='{{ asset('/jscript/theme-script.js') }}'></script>
     </body>
 </html>
 

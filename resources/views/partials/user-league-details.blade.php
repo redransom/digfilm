@@ -1,10 +1,7 @@
  
                 <!-- ************** - Categories - ************** -->   
-                <div class="categories widget clearfix">
-                    
-                    <div class="title-caption">
-                        <h3>League Details</h3>
-                    </div><!--/ .title-caption-->
+                <div class="panel">
+                    <h2>League Details</h2>
                     
                     <div class="entry-holder">
 

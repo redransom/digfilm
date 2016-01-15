@@ -1,12 +1,10 @@
-@extends('layouts.users')
+@extends('layouts.site')
 
 @section('content')
-<section class="entry sbr clearfix">
-    <div class="title-caption-large">
-        <h3>Your Profile</h3>
-    </div>
-        
-    <div id="contact">
+<div class="signup-panel">
+    <div class="left">
+        <h2><span>Your Profile</span></h2>
+        <div class="content-padding">     
         <p>Please use the below form to change your contact details and password.</p>
             @if (count($errors) > 0)
         @foreach ($errors->all() as $error)
@@ -81,6 +79,7 @@
                 </div>
             </div>
         </form>
+        </div>
     </div>
-</section>
+</div>
 @endsection

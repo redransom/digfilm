@@ -15,7 +15,7 @@
                             <div class="d-articles">
                                 <div class="item">
                                     <div class="item-header">
-                                        <a href="post.html"><img src="images/photos/image-96.jpg" alt="" /></a>
+                                        <a href="post.html"><img src="{{asset('/images/photos/image-96.jpg') }}" alt="" /></a>
                                     </div>
                                     <div class="item-content">
                                         <h4><a href="post.html">Fermentum hac consectetur</a></h4>
@@ -24,7 +24,7 @@
                                 </div>
                                 <div class="item">
                                     <div class="item-header">
-                                        <a href="post.html"><img src="images/photos/image-97.jpg" alt="" /></a>
+                                        <a href="post.html"><img src="{{asset('/images/photos/image-97.jpg') }}" alt="" /></a>
                                     </div>
                                     <div class="item-content">
                                         <h4><a href="post.html">Fermentum hac consectetur</a></h4>
@@ -33,7 +33,7 @@
                                 </div>
                                 <div class="item">
                                     <div class="item-header">
-                                        <a href="post.html"><img src="images/photos/image-98.jpg" alt="" /></a>
+                                        <a href="post.html"><img src="{{asset('/images/photos/image-98.jpg') }}" alt="" /></a>
                                     </div>
                                     <div class="item-content">
                                         <h4><a href="post.html">Fermentum hac consectetur</a></h4>
@@ -55,12 +55,12 @@
                                 <h4>What do we stand for ?</h4>
                                 <p>Soleat aperiam ex pri, at pericula constituam efficiantu per, voluptaria intellegam eu nec. Duo modus homero vivendum an, facete timeam ne eum.</p>
 
-                                <a href="mailto:revelio@oursite.com" class="icon-line">
-                                    <i class="fa fa-comment"></i><span>revelio@oursite.com</span>
+                                <a href="mailto:contact@thenextbigfilm.com" class="icon-line">
+                                    <i class="fa fa-comment"></i><span>contact@thenextbigfilm.com</span>
                                 </a>
             
                                 <span class="icon-line">
-                                    <i class="fa fa-map-marker"></i><span>949 West Grassland Drive, UT 84003</span>
+                                    <i class="fa fa-map-marker"></i><span>Yorkshire, England</span>
                                 </span>
             
                             </div>

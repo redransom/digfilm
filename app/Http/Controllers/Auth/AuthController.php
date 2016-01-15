@@ -44,16 +44,16 @@ class AuthController extends Controller {
 	}
 
 	public function getLogin() {
-		return view('auth.login')->with('login', true);
+		return view('auth.login')->with('fullwidth', true);
 	}
-	
+
 	/**
 	 * Show the application registration form.
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
 	public function getRegister() {
-		return view('auth.register')->with('login', true);
+		return view('auth.register')->with('fullwidth', true);
 	}
 
 	public function postLogin(Request $request)

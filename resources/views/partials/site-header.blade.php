@@ -1,4 +1,8 @@
+                @if(isset($extrapadding))
+                <header id="header" class="needpadding">
+                @else
                 <header id="header">
+                @endif
                     <div id="menu-bottom">
                         <!-- <nav id="menu" class="main-menu width-fluid"> -->
                         <nav id="menu" class="main-menu">
@@ -12,6 +16,12 @@
                                         <li><a href="{{URL('/create')}}">Create League</a></li>
                                     </ul>
                                 </li>
+                                <li><a href="/all-movies"><span><i class="fa fa-comments-o"></i><strong>Movies</strong></span></a>
+                                    <ul class="sub-menu">
+                                        <li><a href="/newreleases">New Releases</a></li>
+                                        <li><a href="/comingsoon">Coming Soon</a></li>
+                                    </ul>
+                                </li>
                                 <!--li><a href="blog.html"><span><i class="fa fa-comment"></i><strong>Blog Page</strong></span></a>
                                     <ul class="sub-menu">
                                         <li><a href="post.html">Single Post</a></li>
@@ -19,13 +29,13 @@
                                         <li><a href="full-width.html">Full Width Page</a></li>
                                     </ul>
                                 </li-->
-                                <li><a href="calendar.html"><span><i class="fa fa-calendar-o"></i><strong>Schedule</strong></span></a>
+                                <!--li><a href="calendar.html"><span><i class="fa fa-calendar-o"></i><strong>Schedule</strong></span></a>
                                     <ul class="sub-menu">
                                         <li><a href="calendar.html">Calendar</a></li>
                                         <li><a href="events.html">Events List</a></li>
                                         <li><a href="events-single.html">Event Single</a></li>
                                     </ul>
-                                </li>
+                                </li-->
                                 <!--li><a href="shortcodes.html"><span><i class="fa fa-puzzle-piece"></i><strong>Features</strong></span></a>
                                     <ul class="sub-menu">
                                         <li><a href="shortcodes.html">Shortcodes</a></li>
@@ -38,7 +48,7 @@
                                         <li><a href="404-page.html">404 Page</a></li>
                                     </ul>
                                 </li-->
-                                <li><a href="photo-gallery.html"><i class="fa fa-camera-retro"></i><strong>Gallery</strong></a></li>
+                                <!--li><a href="photo-gallery.html"><i class="fa fa-camera-retro"></i><strong>Gallery</strong></a></li>
                                 <li><a href="forum.html"><span><i class="fa fa-comments-o"></i><strong>Forum layout</strong></span></a>
                                     <ul class="sub-menu">
                                         <li><a href="forum.html">Forums layout</a></li>
@@ -56,7 +66,7 @@
                                         <li><a href="user-single-friends.html">Member friends list</a></li>
                                         <li><a href="user-single-instagram.html">Member Instagram photos</a></li>
                                     </ul>
-                                </li>
+                                </li-->
                                 <!--li><a href="contact-us.html"><i class="fa fa-map-marker"></i><strong>Contact us</strong></a></li-->
                                 <!-- <li class="no-icon"><a href="#"><strong>Without icon</strong></a></li> -->
                             </ul>
@@ -93,22 +103,22 @@
                             <a href="javascript: featSelect(1);" id="featSelect-1" class="featured-select this-active">
                                 <span class="w-bar" id="feat-countdown-bar-1">.</span>
                                 <span class="w-coin" id="feat-countdown-1">0</span>
-                                <img src="images/photos/image-5.jpg" alt="" title="" />
+                                <img src="{{asset('images/photos/image-5.jpg') }}" alt="" title="" />
                             </a>
                             <a href="javascript: featSelect(2);" id="featSelect-2" class="featured-select">
                                 <span class="w-bar" id="feat-countdown-bar-2">.</span>
                                 <span class="w-coin" id="feat-countdown-2">0</span>
-                                <img src="images/photos/image-6.jpg" alt="" title="" />
+                                <img src="{{asset('images/photos/image-6.jpg') }}" alt="" title="" />
                             </a>
                             <a href="javascript: featSelect(3);" id="featSelect-3" class="featured-select">
                                 <span class="w-bar" id="feat-countdown-bar-3">.</span>
                                 <span class="w-coin" id="feat-countdown-3">0</span>
-                                <img src="images/photos/image-7.jpg" alt="" title="" />
+                                <img src="{{asset('images/photos/image-7.jpg') }}" alt="" title="" />
                             </a>
                             <a href="javascript: featSelect(4);" id="featSelect-4" class="featured-select">
                                 <span class="w-bar" id="feat-countdown-bar-4">.</span>
                                 <span class="w-coin" id="feat-countdown-4">0</span>
-                                <img src="images/photos/image-8.jpg" alt="" title="" />
+                                <img src="{{asset('images/photos/image-8.jpg') }}" alt="" title="" />
                             </a>
                         </div>
                     </div>

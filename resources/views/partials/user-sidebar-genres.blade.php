@@ -1,17 +1,17 @@
  
-                <!-- ************** - Categories - ************** -->   
-                <div class="categories widget clearfix">
-                    
-                    <div class="title-caption">
-                        <h3>Movie Genres</h3>
-                    </div><!--/ .title-caption-->
-                    
-                    @if(isset($genres_list))
-                    <ul>
-                        @foreach($genres_list as $genre)
-                        <li><div><a href="{{URL('movie-genre', [$genre->id])}}">{{$genre->name}}</a><span>({{$genre->movie_count()}})</span></div></li>
-                        @endforeach
-                    </ul>
-                    @endif
-                </div><!--/ .categories-->
-                <!-- ************** - END Categories - ************** -->
+                <!-- BEGIN .panel -->
+                <div class="panel">
+                    <h2>Movie Genres</h2>
+                    <div class="panel-content">
+
+                        <div class="tagcloud">
+                            @if(isset($genres_list))
+                                @foreach($genres_list as $genre)
+                                <a href="{{URL('movie-genre', [$genre->id])}}">{{$genre->name}} ({{$genre->movie_count()}})</a>
+                                @endforeach
+                            @endif
+                        </div>
+                        
+                    </div>
+                <!-- END .panel -->
+                </div>

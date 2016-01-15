@@ -16,8 +16,17 @@
                         <!-- END .panel -->
                         </div>
                         
+                        @if(isset($currentLeague))
+                        @include('partials.user-league-details', ['currentLeagueUser'=>$currentLeagueUser, 'league'=>$currentLeague, 'blind'=>($currentLeague->rule->blind_bid == 'Y')])
+                        @elseif(isset($genres_list))
+                        @include('partials.user-sidebar-genres')
+                        @endif
+                        
                         <!-- BEGIN .panel -->
                         <div class="panel">
+                            
+                            
+
                             <h2>Upcoming Events</h2>
                             <div class="top-right"><a href="#">View all</a></div>
                             <div class="panel-content">
@@ -25,7 +34,7 @@
                                 <div class="panel-games-lobby">
                                     <ol>
                                         <li>
-                                            <div class="lobby-block" style="background:url(images/photos/image-38.jpg) no-repeat center;">
+                                            <div class="lobby-block" style="background:url({{asset('/images/photos/image-38.jpg') }}) no-repeat center;">
                                                 <span class="caption">Rualisque ex pri delenit</span>
                                                 <div class="join-button">
                                                     <a href="#">View event page</a>
@@ -39,7 +48,7 @@
                                         </li>
 
                                         <li>
-                                            <div class="lobby-block" style="background:url(images/photos/image-37.jpg) no-repeat center;">
+                                            <div class="lobby-block" style="background:url({{asset('/images/photos/image-37.jpg') }}) no-repeat center;">
                                                 <span class="caption">Cu eam causae appetere inciderint</span>
                                                 <div class="join-button">
                                                     <a href="#">View event page</a>
@@ -67,7 +76,7 @@
                                 <div class="d-articles">
                                     <div class="item">
                                         <div class="item-header">
-                                            <a href="#"><img src="images/photos/image-95.jpg" alt="" /></a>
+                                            <a href="#"><img src="{{asset('/images/photos/image-95.jpg') }}" alt="" /></a>
                                         </div>
                                         <div class="item-content">
                                             <h4><a href="post.html">Fermentum hac consectetur</a></h4>
@@ -76,7 +85,7 @@
                                     </div>
                                     <div class="item">
                                         <div class="item-header">
-                                            <a href="post.html"><img src="images/photos/image-96.jpg" alt="" /></a>
+                                            <a href="post.html"><img src="{{asset('/images/photos/image-96.jpg') }}" alt="" /></a>
                                         </div>
                                         <div class="item-content">
                                             <h4><a href="post.html">Fermentum hac consectetur</a></h4>
@@ -85,7 +94,7 @@
                                     </div>
                                     <div class="item">
                                         <div class="item-header">
-                                            <a href="post.html"><img src="images/photos/image-97.jpg" alt="" /></a>
+                                            <a href="post.html"><img src="{{asset('/images/photos/image-97.jpg') }}" alt="" /></a>
                                         </div>              
                                         <div class="item-content">
                                             <h4><a href="post.html">Fermentum hac consectetur</a></h4>
@@ -94,7 +103,7 @@
                                     </div>
                                     <div class="item">
                                         <div class="item-header">
-                                            <a href="post.html"><img src="images/photos/image-98.jpg" alt="" /></a>
+                                            <a href="post.html"><img src="{{asset('/images/photos/image-98.jpg') }}" alt="" /></a>
                                         </div>              
                                         <div class="item-content">
                                             <h4><a href="post.html">Fermentum hac consectetur</a></h4>
@@ -103,7 +112,7 @@
                                     </div>
                                     <div class="item">
                                         <div class="item-header">
-                                            <a href="#"><img src="images/photos/image-99.jpg" alt="" /></a>
+                                            <a href="#"><img src="{{asset('/images/photos/image-99.jpg') }}" alt="" /></a>
                                         </div>              
                                         <div class="item-content">
                                             <h4><a href="post.html">Fermentum hac consectetur</a></h4>
@@ -128,10 +137,10 @@
                                 </div>
                                 
                                 <div class="panel-duel">
-                                    <div class="panel-duel-block" style="background:url(images/photos/image-30.jpg) no-repeat center;">
+                                    <div class="panel-duel-block" style="background:url({{asset('/images/photos/image-30.jpg') }}) no-repeat center;">
                                         <span class="caption">Tempor delenit</span>
                                     </div>
-                                    <div class="panel-duel-block" style="background:url(images/photos/image-31.jpg) no-repeat center;">
+                                    <div class="panel-duel-block" style="background:url({{asset('/images/photos/image-31.jpg') }}) no-repeat center;">
                                         <span class="caption">Pro ne harum postea</span>
                                     </div>
                                     <div class="duel-versus"></div>

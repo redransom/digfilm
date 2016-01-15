@@ -1,4 +1,4 @@
-@extends('layouts.users')
+@extends('layouts.site')
 
 @section('content')
 <h2><span>Public Leagues</span></h2>

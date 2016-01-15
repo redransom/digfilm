@@ -6,7 +6,7 @@
                         
     <div class="scroller_wrap">
         <div class="scroller_block">
-            <ul style="width:1980px">
+            <ul>
                 <li>
                     <a href="{{URL('all-leagues')}}"><img class="small-custom-frame" src="{{asset('/images/publicleagues.png')}}" width="222" height="137" alt="" /></a>
                     <div class="scroll-caption">
@@ -45,55 +45,41 @@
         </div><!--/ .sroller_block-->
     </div><!--/ .scroller_wrap-->
     
-
-    <!-- ************** - END UI Scroller - ************** -->
-    
-    
 </div><!--/ .content-container-->
 
-
+<h2><span>New Trailers</span></h2>
 <div class="content-padding">
+       
+    <div class="release">
+        <div class="gamelist">
+            <ul class="clearfix">
+                @foreach($trailers as $item)
+                <?php                      
+                    $base_url = "";              
+                    if ($item->type =='T' && str_contains($item->url, "youtu.be")) {
+                        $url = $item->url;
 
-
-    <!-- ************** - Content - ************** -->
-    
-    <div id="content">
-        
-        <div class="title-caption-large">
-            <h3>New Trailers</h3>
-        </div><!--/ .title-caption-large-->
-        
-        <div class="release">
-            <div class="gamelist">
-                <ul class="clearfix">
-                    @foreach($trailers as $item)
-                    <?php                      
-                        $base_url = "";              
-                        if ($item->type =='T' && str_contains($item->url, "youtu.be")) {
-                            $url = $item->url;
-
-                            //only use youtube currently
-                            $path = parse_url($url, PHP_URL_PATH);
-                            $base_url = "http://www.youtube.com/embed".$path;
-                        }
-                    ?>
-                    <li>
-                        <a href="{{URL('movie-knowledge', ['id'=>$item->movies_id])}}">
-                            <iframe width="313" height="220" src="{{$base_url}}" frameborder="0" allowfullscreen></iframe>
-                        </a>
-                        <div class="caption">
-                            <span class="date">{{date("d-M-Y h:i A", strtotime($item->created_at))}}Thursday </span>
-                            <h5 class="title"><a href="{{URL('movie-knowledge', ['id'=>$item->movie->slug])}}">{{$item->movie->name}}</a></h5>
-                            <div class="description">{{$item->description}}</div>
-                            
-                        </div><!--/ .caption-->                            
-                        <div class="clear"></div>
-                    </li>
-                    @endforeach
-                </ul>
-            </div>
+                        //only use youtube currently
+                        $path = parse_url($url, PHP_URL_PATH);
+                        $base_url = "http://www.youtube.com/embed".$path;
+                    }
+                ?>
+                <li>
+                    <a href="{{URL('movie-knowledge', ['id'=>$item->movies_id])}}">
+                        <iframe width="313" height="220" src="{{$base_url}}" frameborder="0" allowfullscreen></iframe>
+                    </a>
+                    <div class="caption">
+                        <span class="date">{{date("d-M-Y h:i A", strtotime($item->created_at))}}Thursday </span>
+                        <h5 class="title"><a href="{{URL('movie-knowledge', ['id'=>$item->movie->slug])}}">{{$item->movie->name}}</a></h5>
+                        <div class="description">{{$item->description}}</div>
+                        
+                    </div><!--/ .caption-->                            
+                    <div class="clear"></div>
+                </li>
+                @endforeach
+            </ul>
         </div>
     </div>
-           @include('partials.user-sidebar')
-        </div>
+</div>
+           
 @endsection

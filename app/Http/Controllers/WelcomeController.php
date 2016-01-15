@@ -271,6 +271,8 @@ class WelcomeController extends Controller {
 
 		return view('movie-know')
 			->with('authUser', $authUser)
+			->with('fullwidth', true)
+			->with('padding', true)
 			->with('movie', $movie);	
 
 	}
