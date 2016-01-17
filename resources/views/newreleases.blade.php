@@ -1,15 +1,11 @@
-@extends('layouts.users')
+@extends('layouts.site')
 
 @section('content')
-<div class="title-caption-large">
-    <h3>{{$title}}</h3>
-</div><!--/ .title-caption-large-->
-                
-                
-<!-- ************** - Posts - ************** -->
-<section id="page">
+<h2><span>{{$title}}</span></h2>
+<div class="content-padding">
+
     <h4>{{$description}}</h4>
-    @include('partials.user-movies', ['movies'=>$movies])  
-        
-</section>
+
+    @include('partials.site-movies', ['movies'=>$movies])      
+</div>      
 @endsection

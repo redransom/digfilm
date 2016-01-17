@@ -21,6 +21,24 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('/css/responsive.css') }}" media="screen" />
         <link rel="stylesheet" type="text/css" href="{{ asset('/css/rr-style.css') }}" media="screen" />
         <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Oswald:300,400,700|Source+Sans+Pro:300,400,600,700&amp;subset=latin,latin-ext" />
+
+
+        <script type='text/javascript' src='{{ asset('/jscript/jquery-1.11.2.min.js') }}'></script>
+        <script type='text/javascript' src='{{ asset('/jscript/modernizr.custom.50878.js') }}'></script>
+        <script type='text/javascript' src='{{ asset('/jscript/iscroll.js') }}'></script>
+        <script type='text/javascript' src='{{ asset('/jscript/dat-menu.js') }}'></script>
+        <script type='text/javascript'>
+            @if(isset($frontpage))
+            var strike_featCount = 4;
+            var strike_autostart = true;
+            var strike_autoTime = 7000;
+            @else
+            var strike_autostart = false;
+            @endif
+        </script>
+        <script type='text/javascript' src='{{ asset('/jscript/theme-script.js') }}'></script>
+        <script type='text/javascript' src='{{ asset('/jscript/jquery.raty.min.js') }}'></script>
+
         <!--[if lt IE 9 ]>
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -163,20 +181,6 @@
         
         @include('partials.site-footer')
 
-        <script type='text/javascript' src='{{ asset('/jscript/jquery-1.11.2.min.js') }}'></script>
-        <script type='text/javascript' src='{{ asset('/jscript/modernizr.custom.50878.js') }}'></script>
-        <script type='text/javascript' src='{{ asset('/jscript/iscroll.js') }}'></script>
-        <script type='text/javascript' src='{{ asset('/jscript/dat-menu.js') }}'></script>
-        <script type='text/javascript'>
-            @if(isset($frontpage))
-            var strike_featCount = 4;
-            var strike_autostart = true;
-            var strike_autoTime = 7000;
-            @else
-            var strike_autostart = false;
-            @endif
-        </script>
-        <script type='text/javascript' src='{{ asset('/jscript/theme-script.js') }}'></script>
     </body>
 </html>
 
