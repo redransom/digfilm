@@ -80,6 +80,7 @@
                                         <li><a href="{{route('prepare-clear-auctions')}}" target="_blank"><i class="icon-group"></i> 5c) End Auctions</a></li>
                                         <li><a href="{{route('close-league-auctions')}}" target="_blank"><i class="icon-group"></i> 6) Close League Auctions</a></li>
                                         <li><a href="{{route('close-bad-leagues')}}" target="_blank"><i class="icon-group"></i> 7) Disable Old Leagues</a></li>
+                                        <li><a href="{{route('end-leagues')}}" target="_blank"><i class="icon-group"></i> 7) End Leagues</a></li>
                                     </ul>
                                 </li>                                
                             </ul>

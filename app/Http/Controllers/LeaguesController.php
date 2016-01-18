@@ -11,6 +11,7 @@ use App\Models\Movie;
 use App\Models\LeagueUser;
 use App\Models\LeagueMovie;
 use App\Models\LeagueInvite;
+use App\Models\LeagueRoster;
 use App\Models\Role;
 use App\Models\RuleSet;
 use App\Models\Auction;
@@ -1163,14 +1164,14 @@ class LeaguesController extends Controller {
     public function closeLeaguesWhereStartDatePassed() 
     {
         /*DB::connection()->enableQueryLog();*/
-        League::where('enabled', '1')->where('auction_start_date', '<', date("Y-m-d G:i"))
+        League::where('enabled', '1')->where('auction_start_date', '<', date("Y-m-d H:i"))
             ->Where(function ($query) {
                 $query->where('auction_stage', 0)->orWhereNull('auction_stage');
             })->update(['enabled'=>'0']);
 
 
         //now delete those disabled that have been disabled over a day
-        League::where('enabled', '0')->where('updated_at', '<', date("Y-m-d G:i", strtotime("-1 day")))->delete();
+        League::where('enabled', '0')->where('updated_at', '<', date("Y-m-d H:i", strtotime("-1 day")))->delete();
     /*    $queries = DB::getQueryLog();
         print_r($queries);    */
     }
@@ -1185,39 +1186,77 @@ class LeaguesController extends Controller {
      */
     public function endLeagueWithWinners() 
     {
+        //DB::connection()->enableQueryLog();
         //get all leagues where league state is < 5 and league close date has passed
-        $leagues = League::where('auction_stage', '<', '5')
-            ->where(function ($query) {
-                $query->where('end_date', '<', date("Y-m-d"))->orWhereNotNull('end_date');
-            })->get();
-
-        //disable the leagues
-        $league_ids = $leagues()->lists('id');
-        League::whereIn('id', $league_ids)->update(['enabled'=>'0', 'auction_stage'=>'5']);
-
+        $leagues = League::where('auction_stage', '<', '5')->whereNotNull('end_date')->where('end_date', '<', date("Y-m-d H:i"))->where('enabled', '1')->get();
+        /*$queries = DB::getQueryLog();
+        print_r($queries);    */
         //work out the winner 
-        foreach ($leagues as $league) {
-            $placings = LeagueRoster::rankings($league->id);
-                       
-            
+        if ($leagues->count() > 0) {
+            foreach ($leagues as $league) {
+                $placings = LeagueRoster::rankings($league->id)->orderBy('total_gross', 'DESC')->get();
 
+                echo "Reviewing ".$league->name." league<br/>";
+                //work out total balance won
+                $winnerChosen = false;
+                $playerCount = $league->players()->count();
+                //TODO: Move this to league balance
+                $leagueValue = $playerCount * 100;
+                $newPlayerBalance = 0;
+
+                foreach ($placings as $placing) {
+                    if (!$winnerChosen) {
+                        //winners details
+                        $winner = User::find($placing->users_id);
+                        $newPlayerBalance = (is_null($winner->balance) ? 0 : $winner->balance) + $leagueValue;
+
+                        echo "Winner chosen as <strong>".$winner->fullName()."</strong> to win ".$newPlayerBalance."<br/>";
+
+                        //we should have the top placing user
+                        $data = ['winnerName' => $winner->fullName(),
+                                'leagueName' => $league->name,
+                                'leagueValue' => $leagueValue,
+                                'playerBalance' => $newPlayerBalance,
+                                'subject' => 'You have won the league!'];
+
+                        $winnerEmail = $winner->email;
+                        Mail::send('emails.league_winner', $data, function($message) use ($winnerEmail)
+                        {
+                            $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
+                            $message->subject('You have won the league!');
+                            $message->to($winnerEmail);
+                        });
+                    
+                        //lets update the winners balance
+                        User::where('id', $winner->id)->update(['balance'=>$newPlayerBalance]);
+
+                        $winnerChosen = true;
+                    } else {
+                        // loser emails
+                        $loser = User::find($placing->users_id);
+                        $data = ['loserName' => $loser->fullName(),
+                                'leagueName' => $league->name,
+                                'subject' => 'You are unlucky this time!'];
+
+                        echo "Loser is chosen as <strong>".$loser->fullName()."</strong><br/>";
+                        $loserEmail = $loser->email;
+                        Mail::send('emails.league_loser', $data, function($message) use ($loserEmail)
+                        {
+                            $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
+                            $message->subject('You are unlucky this time!');
+                            $message->to($loserEmail);
+                        });
+
+                    }
+
+                }
+
+                //disable the league
+                League::where('id', $league->id)->update(['enabled'=>'0', 'auction_stage'=>'5']);
+            }   
+        } else {
+            echo "No leagues found for ending.";
         }
-        
-
-        //send league has ended email
-
-
-        /*$data = ['ownerName' => (!is_null($league->owner->forenames) ? $league->owner->forenames : $league->owner->name),
-                'leagueName' => $league->name];
-
-        $ownerEmail = $league->owner->email;
-        Mail::send('emails.movies_needed', $data, function($message) use ($ownerEmail)
-        {
-            $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
-            $message->subject('More movies are needed');
-            $message->to($ownerEmail);
-        });*/
-
     }    
 
     /**
