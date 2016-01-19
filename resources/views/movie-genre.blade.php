@@ -1,13 +1,8 @@
-@extends('layouts.users')
+@extends('layouts.site')
 
 @section('content')
-<div class="title-caption-large">
-    <h3>Movies in the {{$genre->name}} Genre</h3>
-</div><!--/ .title-caption-large-->
-                
-                
-<!-- ************** - Posts - ************** -->
-<section id="page">
+<h2><span>Movies in the {{$genre->name}} Genre</span></h2>
+<div class="content-padding">
     
     @foreach($genre->movies as $movie)
     <article class="post-item clearfix">
@@ -45,5 +40,5 @@
     </article><!--/ .post-item-->
     @endforeach    
     
-</section>
+</div>
 @endsection

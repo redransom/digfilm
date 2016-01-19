@@ -18,7 +18,9 @@
             <a href="{{URL('movie-knowledge', $movie->id)}}">{{$movie->name}}</a>
             @endif</h3>
             <strong class="post-a"><i class="fa fa-clock-o"></i><strong>{{date("j M Y", strtotime($movie->release_at))}}</strong></strong>
+            @if(isset($movie->genre))
             <strong class="post-a"><i class="fa fa-map-marker"></i><strong>Genre: {{$movie->genre->name}}</strong></strong>
+            @endif
             <span id="rating_{{$movie->id}}"></span><!--/ .star-->
         </div>
         <div class="item-bottom">
