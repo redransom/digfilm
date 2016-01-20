@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Auth;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\RoleUser;
 use App\Models\Auction;
 use App\Models\LeagueInvite;
 use App\Models\LeagueUser;
@@ -25,7 +26,7 @@ class UsersController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index($type = '')
 	{
 		$authUser = Auth::user();
 		if (!isset($authUser))
@@ -40,7 +41,13 @@ class UsersController extends Controller {
 				->orWhere('forenames', 'LIKE', $search_like)
 				->orWhere('surname', 'LIKE', $search_like)->paginate();
 			$search = $input['users-search-text'];
-		} else
+		} elseif ($type != '') {
+			$role = Role::where('name', $type)->first();
+			
+			$user_role = RoleUser::where('role_id', $role->id)->lists('user_id');
+			
+			$users = User::whereIn('id', $user_role)->paginate();
+		} else 
 			$users = User::paginate(10);
 
 		$roles = Role::all();
@@ -352,10 +359,11 @@ class UsersController extends Controller {
 				$user->enabled = false;
 				$user->save();
 			}
-			return Redirect::route('users.index');
-		}
-        Flash::message('You don\'t have the permissions to complete this task.');
-        return Redirect::route('users.index');
+			
+		} else 
+        	Flash::message('You don\'t have the permissions to complete this task.');
+
+        return redirect()->back();
 	}
 
 	/**
@@ -379,10 +387,10 @@ class UsersController extends Controller {
 				$user->enabled = true;
 				$user->save();
 			}
-			return Redirect::route('users.index');
-		}
-        Flash::message('You don\'t have the permissions to complete this task.');
-        return Redirect::route('users.index');
+			
+		} else 
+        	Flash::message('You don\'t have the permissions to complete this task.');
+        return redirect()->back();
 	}
 
 	/**

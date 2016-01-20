@@ -95,7 +95,7 @@ class LeaguesController extends Controller {
         $role = Role::where('name', 'Player')->first();
         $user_ids = DB::table('role_user')->where('role_id', $role->id)->lists('user_id');
 
-        return User::whereIn('id', $user_ids)->where('enabled', '1')->lists('name', 'id');
+        return User::whereIn('id', $user_ids)->where('enabled', '1')->orderBy('name', 'asc')->lists('name', 'id');
     }
 
     /**

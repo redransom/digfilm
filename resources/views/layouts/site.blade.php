@@ -38,6 +38,7 @@
         </script>
         <script type='text/javascript' src='{{ asset('/jscript/theme-script.js') }}'></script>
         <script type='text/javascript' src='{{ asset('/jscript/jquery.raty.min.js') }}'></script>
+        <script type='text/javascript' src='{{ asset('/jscript/jquery.countdown.js') }}'></script>
 
         <!--[if lt IE 9 ]>
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>

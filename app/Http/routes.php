@@ -108,6 +108,7 @@ Route::group(['middleware'=>'auth'], function() {
         Route::put('movies-admin-search', ['as'=>'movies-admin-search', 'uses'=>'MoviesController@index']);
         Route::put('users-admin-search', ['as'=>'users-admin-search', 'uses'=>'UsersController@index']);
 
+        Route::get('users/{type}', ['as'=>'users', 'uses'=>'UsersController@index']);
         Route::get('users/{id}/disable', ['as'=>'user-disable', 'uses'=>'UsersController@disable']);
         Route::get('users/{id}/enable', ['as'=>'user-enable', 'uses'=>'UsersController@enable']);
 

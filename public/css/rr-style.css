@@ -29,7 +29,7 @@ table.feature-table thead tr {
         color:#000;
         text-align:left;
         font-weight:100;
-        font-size: 1.25em;
+        font-size: 1em;
         background: #f0f0f0;
         background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f0f0f0));
         background: -moz-linear-gradient(top,  #fff,  #f0f0f0);

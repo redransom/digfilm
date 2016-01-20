@@ -17,12 +17,9 @@
                                 </div>
                                 </form>
                                 <div class="btn-group pull-right" data-toggle="buttons-radio">
-                                    <button type="button" class="btn">
-                                        All</button>
-                                    <button type="button" class="btn">
-                                        Admin</button>
-                                    <button type="button" class="btn">
-                                        Player</button>
+                                    <a class="btn" href="{{URL('users')}}">All</a>
+                                    <a class="btn" href="{{URL('users/Admin')}}">Admin</a>
+                                    <a class="btn" href="{{URL('users/Player')}}">Player</a>
                                 </div>
                             </div>
                             @if(isset($users) && !empty($users))
@@ -33,9 +30,10 @@
                                         <tr>
                                             <th width="5%">ID</th>
                                             <th width="15%">Name</th>
+                                            <th width="15%">Email</th>
                                             <th>Desc</th>
                                             <th width="9%">Role</th>
-                                            <th width="12%">Created</th>
+                                            <th width="13%">Created</th>
                                             <th width="20%">Actions</th>
                                         </tr>
                                     </thead>
@@ -45,6 +43,7 @@
                                         <tr class="<?php echo (($userCnt++ % 2) == 0) ? "odd" : "even"; ?> user{{$user->id}}">
                                             <td>{{$user->id}}</td>
                                             <td><a href="{{URL('users', array('id'=>$user->id))}}">{{$user->name}}</a></td>
+                                            <td>{{$user->email}}</td>
                                             <td>{{$user->description}}</td>
                                             <td>{{(($user->hasRole("Admin")) ? "Admin" : "Player")}}</td>
                                             <td>{{date("d M Y", strtotime($user->created_at))}}</td>
