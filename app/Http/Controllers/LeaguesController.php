@@ -12,6 +12,7 @@ use App\Models\LeagueUser;
 use App\Models\LeagueMovie;
 use App\Models\LeagueInvite;
 use App\Models\LeagueRoster;
+use App\Models\LeagueMessage;
 use App\Models\Role;
 use App\Models\RuleSet;
 use App\Models\Auction;
@@ -1258,6 +1259,22 @@ class LeaguesController extends Controller {
             echo "No leagues found for ending.";
         }
     }    
+
+    /**
+     * Add message to league for chat
+     *
+     * @return Response
+     */
+    public function addMessage(\App\Http\Requests\CreateLeagueMessageRequest $request) {
+        $authUser = Auth::user();
+        if (!isset($authUser))
+            return redirect('/auth/login');
+        
+        $input = Input::all();
+        $message = LeagueMessage::create( $input );
+        var_dump($message);
+        //return redirect()->back();        
+    }
 
     /**
      * Random string generator for filename

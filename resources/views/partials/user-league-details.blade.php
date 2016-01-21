@@ -3,7 +3,7 @@
                 <div class="panel">
                     <h2>League Details</h2>
                     
-                    <div class="entry-holder">
+                    <div class="panel-content">
 
                         <!-- First check -->
                         @if($league->auction_stage == 2) 
@@ -58,13 +58,10 @@
                 </div>
 
                 @if($league->auction_stage < 3)
-                <div class="categories widget clearfix">
+                <div class="panel">
+                    <h2>Your details</h2>
                     
-                    <div class="title-caption">
-                        <h3>Your details</h3>
-                    </div><!--/ .title-caption-->
-                    
-                    <div class="entry-holder">
+                    <div class="panel-content">
                         <p>In this league you have a balance of <strong>{{number_format($currentLeagueUser->balance, 2)}} USD</strong>.</p>
 
                         @if(!$blind)
@@ -80,35 +77,28 @@
                 </div>
                 
                 @if(!$blind)
-                <div class="categories widget clearfix">
+                <div class="panel">
+                    <h2>Competitor details</h2>
                     
-                    <div class="title-caption">
-                        <h3>Competitor details</h3>
-                    </div><!--/ .title-caption-->
-                    
-                    <div class="entry-holder">
-                    <dl>
-                    @foreach($league->players as $player)
-                        @if($player->id != $authUser->id)
-                        <dt><strong>{{$player->name}}</strong></dt>
-                        <dd>Has the balance: <strong>{{number_format($player->pivot->balance, 0)}} USD</strong>.</dd>
-                        @endif
-                    @endforeach
-                    </dl>
+                    <div class="panel-content">
+                        <dl>
+                        @foreach($league->players as $player)
+                            @if($player->id != $authUser->id)
+                            <dt><strong>{{$player->name}}</strong></dt>
+                            <dd>Has the balance: <strong>{{number_format($player->pivot->balance, 0)}} USD</strong>.</dd>
+                            @endif
+                        @endforeach
+                        </dl>
                     </div>
                 </div>
                 @endif
                 
                 @elseif($league->auction_stage == 3)
                 <!-- roster stage -->
-                <div class="categories widget clearfix">
+                <div class="panel">
+                    <h2>League Rankings</h2>
                     
-                    <div class="title-caption">
-                        <h3>League Rankings</h3>
-                    </div><!--/ .title-caption-->
-                    
-                    <div class="entry-holder">
-                    
+                    <div class="panel-content">
                         @if($rankings->count()> 0)
                         <table class="feature-table dark-gray">
                             <tr><th>Pos</th><th>Player</th><th>Gross</th><th>VFM</th></tr>
@@ -125,7 +115,49 @@
 
                 @endif
 
+                <div class="panel">
+                    <h2>League Chat</h2>
+                    
+                    <div class="panel-content">
+                        @if($league->messages->count() > 0)
+                        <div class="d-articles">
+                            @foreach($league->messages()->orderBy('created_at', 'ASC')->limit(3)->get() as $message)
+                            <div class="item">
+                                <div class="item-header">
+                                    <a href="{{URL('profile', ['id'=>$message->owner->id])}}">
+                                    @if($message->owner->thumbnail != "")
+                                    <img src="{{asset($message->owner->thumbnail)}}" alt="" />
+                                    @else
+                                    <img src="{{asset('images/photos/image-95.jpg')}}" alt="" />
+                                    @endif
+                                    </a>
+                                </div>
+                                <div class="item-content">
+                                    <p>{{$message->message}}</p>
+                                    <h5>{{$message->owner->fullName()}} said {{date("d M Y h:iA", strtotime($message->created_at))}}</h5>
+                                </div>
+                            </div>
+                            @endforeach
 
+                        </div>
+                        @endif
+                        <div class="reply-textarea">
+                            <form action="{{Route('add-message', ['id'=>$league->id])}}" method="post">
+                                <input type="hidden" name="leagues_id" value="{{$league->id}}" />
+                                <input type="hidden" name="owners_id" value="{{$authUser->id}}" />
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <div class="respond-textarea">
+                                    <div class="textarea-wrapper strike-wysiwyg-enable" rel="wys-current">
+                                        <textarea name="message"></textarea>
+                                    </div>
+                                </div>
+                                <div class="respond-submit">
+                                    <input type="submit" name="send" value="Send">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 <!-- ************** - END League Details - ************** -->
 
 <?php

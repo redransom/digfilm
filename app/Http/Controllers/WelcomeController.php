@@ -6,6 +6,7 @@ use App\Models\Auction;
 use App\Models\AuctionBid;
 use App\Models\LeagueRoster;
 use App\Models\LeagueUser;
+use App\Models\LeagueMessage;
 use App\Models\RuleSet;
 use App\Models\Genre;
 use App\Models\Movie;

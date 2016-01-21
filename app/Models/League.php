@@ -41,6 +41,10 @@ class League extends Model {
         return $this->belongsTo("\App\Models\RuleSet", "rule_sets_id");
     }
 
+    public function messages() {
+        return $this->hasMany("\App\Models\LeagueMessage", 'leagues_id', 'id');
+    }
+
     /**
      * Model function to determine if a user can register with a league
      * Need to make sure that they are not owners of a league and also not in the league users table.
