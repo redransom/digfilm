@@ -11,6 +11,7 @@ use App\Models\RuleSet;
 use App\Models\Genre;
 use App\Models\Movie;
 use App\Models\MovieMedia;
+use App\Models\SiteContent;
 
 class WelcomeController extends Controller {
 
@@ -84,7 +85,12 @@ class WelcomeController extends Controller {
 
 	public function about() {
 		$authUser = Auth::user();
+
+		//get content
+		$content = SiteContent::where('section', 'ABT')->first();
+
 		return view('about')
+			->with('content', $content)
 			->with('page_name', 'about')
 			->with('page_title', 'About TheNextBigFilm')
 			->with('authUser', $authUser);	

@@ -92,6 +92,18 @@ Breadcrumbs::register('contributor-show', function($breadcrumbs, $contributor)
     $breadcrumbs->push('Contributor Details', route('contributors.show', $contributor->id));
 });
 
+Breadcrumbs::register('sitecontents', function($breadcrumbs)
+{
+    $breadcrumbs->parent('admin-dashboard');
+    $breadcrumbs->push('Content', route('sitecontent.index'));
+});
+
+Breadcrumbs::register('sitecontent-add', function($breadcrumbs)
+{
+    $breadcrumbs->parent('sitecontents');
+    $breadcrumbs->push('Add Site Content');
+});
+
 Breadcrumbs::register('leagues', function($breadcrumbs)
 {
     $breadcrumbs->parent('admin-dashboard');

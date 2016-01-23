@@ -63,6 +63,7 @@ class LeaguesController extends Controller {
         return View("leagues.all")
             ->with('leagues', $leagues)
             ->with('authUser', $authUser)
+            ->with('use_graph', true)
             ->with('page_name', 'leagues')
             ->with('paginate', $paginate)
             ->with('instructions', 'All Leagues registered in the site.')

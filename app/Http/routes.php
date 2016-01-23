@@ -144,7 +144,9 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('create-league', ['as'=>'league-create', 'uses'=>'LeaguesController@create']);
         Route::get('league/{id}', ['as'=>'leagues', 'uses'=>'LeaguesController@show']);
 
+        Route::get('sitecontent/create/{type}', ['as'=>'sitecontent-create', 'uses'=>'SiteContentsController@create']);
         Route::resource('users', 'UsersController');
+        Route::resource('sitecontent', 'SiteContentsController');
         Route::resource('movies', 'MoviesController');
         Route::resource('contributors', 'ContributorsController');
         Route::resource('leagues', 'LeaguesController');
