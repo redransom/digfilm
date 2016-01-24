@@ -104,6 +104,12 @@ Breadcrumbs::register('sitecontent-add', function($breadcrumbs)
     $breadcrumbs->push('Add Site Content');
 });
 
+Breadcrumbs::register('sitecontent-edit', function($breadcrumbs, $sitecontent)
+{
+    $breadcrumbs->parent('sitecontents');
+    $breadcrumbs->push('Site Content Details', route('sitecontent.edit', $sitecontent->id));
+});
+
 Breadcrumbs::register('leagues', function($breadcrumbs)
 {
     $breadcrumbs->parent('admin-dashboard');

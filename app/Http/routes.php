@@ -145,6 +145,8 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('league/{id}', ['as'=>'leagues', 'uses'=>'LeaguesController@show']);
 
         Route::get('sitecontent/create/{type}', ['as'=>'sitecontent-create', 'uses'=>'SiteContentsController@create']);
+        Route::post('sitecontent-update', ['as'=>'sitecontent-update', 'uses'=>'LeaguesController@update']);
+
         Route::resource('users', 'UsersController');
         Route::resource('sitecontent', 'SiteContentsController');
         Route::resource('movies', 'MoviesController');

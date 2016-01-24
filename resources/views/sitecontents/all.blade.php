@@ -39,7 +39,7 @@
                     <td>{{date("j/m/Y g:iA", strtotime($content->created_at))}}</td>
                     <td class="center"><a href="{{URL('users/'.$content->owner->id)}}">{{$content->owner->name}}</a></td>
                     <td>
-                    <a class="btn btn-mini btn-primary" href="{{URL('sitecontents/'.$content->id.'/edit')}}">Edit</a>
+                    <a class="btn btn-mini btn-primary" href="{{URL('sitecontent/'.$content->id.'/edit')}}">Edit</a>
 
                     {!! Form::open(array('route' => array('sitecontent.destroy', $content->id), 'method' => 'delete', 'style'=>'display:inline')) !!}
                         <button type="submit" class="btn btn-danger btn-mini">Delete</button>

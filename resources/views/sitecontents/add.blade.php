@@ -1,6 +1,34 @@
 @extends('layouts.admin')
 
 @section('content')
+<script src='//cdn.tinymce.com/4/tinymce.min.js'></script>
+<script>
+tinymce.init({
+  selector: '#summary',
+  height: 100,
+  toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+  content_css: [
+    '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
+    '//www.tinymce.com/css/codepen.min.css'
+  ]
+});
+</script>
+<script>
+tinymce.init({
+  selector: '#body',
+  height: 300,
+  plugins: [
+    'advlist autolink lists link image charmap print preview anchor',
+    'searchreplace visualblocks code fullscreen',
+    'insertdatetime media table contextmenu paste code'
+  ],
+  toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+  content_css: [
+    '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
+    '//www.tinymce.com/css/codepen.min.css'
+  ]
+});
+</script>
 <div class="content">
 
     <div class="module">
@@ -43,7 +71,7 @@
                     <div class="control-group">
                         <label class="control-label" for="SiteContentSummary">Summary</label>
                         <div class="controls">
-                            {!! Form::textarea('summary', null, ['class'=>'span8', 'placeholder'=>'Brief description of content...']) !!}
+                            {!! Form::textarea('summary', null, ['class'=>'span8', 'placeholder'=>'Brief description of content...', 'id'=>'summary']) !!}
                         </div>
                     </div>
                     @endif
@@ -51,7 +79,7 @@
                     <div class="control-group">
                         <label class="control-label" for="SiteContentBody">Body</label>
                         <div class="controls">
-                            {!! Form::textarea('body', null, ['class'=>'span8', 'placeholder'=>'WYSIWYG here...']) !!}
+                            {!! Form::textarea('body', null, ['class'=>'span8', 'placeholder'=>'WYSIWYG here...', 'id'=>'body']) !!}
                         </div>
                     </div>
 

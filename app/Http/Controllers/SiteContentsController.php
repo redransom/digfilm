@@ -137,15 +137,25 @@ class SiteContentsController extends Controller {
             return redirect('/auth/login');
 
         $sitecontent = SiteContent::find($id);
-        $title = "Edit SiteContent";
+        $title = "Edit Content for ".$sitecontent->title;
+
+        $sections = $this->get_sections();
 
         return View("sitecontents.edit")
+            ->with('content', $sitecontent)
+            ->with('authUser', $authUser)
+            ->with('sections', $sections)
+            ->with('page_name', 'sitecontent-edit')
+            ->with('object', $sitecontent)
+            ->with('title', $title);
+
+/*        return View("sitecontents.edit")
             ->with('authUser', $authUser)
             ->with('sitecontent', $sitecontent)
             ->with('object', $sitecontent)
             ->with('page_name', 'sitecontent-edit')
             ->with('title', $title);
-    }
+*/    }
 
     /**
      * Update the specified resource in storage.
@@ -159,19 +169,33 @@ class SiteContentsController extends Controller {
         $sitecontent = SiteContent::find($id);
         $input = $request->all();
 
-        $sitecontent->first_name = $input['first_name'];
-        $sitecontent->surname = $input['surname'];
+        $sitecontent->section = $input['section'];
+        $sitecontent->title = $input['title'];
+        if ($sitecontent->type == 'N')
+            $sitecontent->summary = $input['summary'];
+
+        $sitecontent->body = $input['body'];
 
         if ($request->file('thumbnail') != "") {
-            $imageName = $sitecontent->id.str_replace(' ', '_', strtolower($input['first_name'])) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
+            $imageName = $sitecontent->id.'thumb_'.str_replace(' ', '_', strtolower(str_slug($input['title']))) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
             $request->file('thumbnail')->move(base_path() . '/public/images/sitecontents/', $imageName);
 
             $sitecontent->thumbnail = "/images/sitecontents/".$imageName;
+            $sitecontent->save();
         }
 
+        if ($request->file('main_image') != "") {
+            $imageName = $sitecontent->id.'main_'.str_replace(' ', '_', strtolower(str_slug($input['title']))) . '.' . $request->file('main_image')->getClientOriginalExtension();
+            $request->file('main_image')->move(base_path() . '/public/images/sitecontents/', $imageName);
+
+            $sitecontent->main_image = "/images/sitecontents/".$imageName;
+            $sitecontent->save();
+        }
+
+        Flash::message($sitecontent->title.' content has been updated!');
         $sitecontent->save();
 
-        return Redirect::route('sitecontents.index');
+        return Redirect::route('sitecontent.index');
     }
 
     /**
