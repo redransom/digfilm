@@ -50,7 +50,7 @@
                         @if(isset($authUser))
                         <li><a href="{{URL('auth/logout')}}">Logout</a></li>
                         <li><a href="/dashboard">My Dashboard</a></li>
-                        <li><a href="/profile">My Profile</a></li>
+                        <li><a href="/edit-profile">My Profile</a></li>
 
                         @else
                         <li><a href="{{URL('auth/login')}}">Login</a></li>

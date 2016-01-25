@@ -53,7 +53,8 @@ Route::controllers([
 Route::group(['middleware'=>'auth'], function() {
 
         /* Player routes */
-        Route::get('profile', ['as'=>'profile', 'uses'=>'WelcomeController@getProfile']);
+        Route::get('profile/{name}', ['as'=>'profile', 'uses'=>'WelcomeController@getProfile']);
+        Route::get('edit-profile', ['as'=>'edit-profile', 'uses'=>'WelcomeController@getEditUser']);
 
         Route::get('league-show/{id}', ['as'=>'league-show', 'uses'=>'WelcomeController@getLeague']);
         Route::get('manage/{id}', ['as'=>'manage', 'uses'=>'WelcomeController@manageLeague']);

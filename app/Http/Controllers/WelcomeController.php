@@ -259,10 +259,22 @@ class WelcomeController extends Controller {
 			->with('authUser', $authUser);	
 	}
 
-	public function getProfile() {
+	public function getProfile($username) {
 		$authUser = Auth::user();
 
+		$user = User::where('name', $username)->get();
+
 		return view('profile')
+			->with('fullwidth', true)
+			->with('authUser', $authUser)
+			->with('user', $user);	
+	}
+
+	public function getEditUser() {
+		$authUser = Auth::user();
+
+		return view('edit-profile')
+			->with('fullwidth', false)
 			->with('authUser', $authUser)
 			->with('user', $authUser);	
 	}
