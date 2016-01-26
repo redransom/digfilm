@@ -97,8 +97,10 @@ class WelcomeController extends Controller {
 	}
 
 	public function rules() {
+		$content = SiteContent::where('section', 'RUL')->first();
 		$authUser = Auth::user();
 		return view('rules')
+			->with('content', $content)
 			->with('page_name', 'rules')
 			->with('page_title', 'How to play')
 			->with('authUser', $authUser);	
@@ -106,7 +108,10 @@ class WelcomeController extends Controller {
 
 	public function terms() {
 		$authUser = Auth::user();
+		$content = SiteContent::where('section', 'TER')->first();
+
 		return view('terms')
+			->with('content', $content)
 			->with('page_name', 'terms')
 			->with('page_title', 'Terms & Conditions')
 			->with('authUser', $authUser);	
@@ -122,7 +127,9 @@ class WelcomeController extends Controller {
 
 	public function privacy() {
 		$authUser = Auth::user();
+		$content = SiteContent::where('section', 'PRI')->first();
 		return view('privacy')
+			->with('content', $content)
 			->with('page_name', 'privacy')
 			->with('page_title', 'Your Privacy')
 			->with('authUser', $authUser);	

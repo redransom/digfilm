@@ -66,15 +66,15 @@
 <div id="main" itemscope="" itemtype="http://data-vocabulary.org/Review">
     <div class="game-info-left">
         @if($movie->firstImage())
-        <img itemprop="image" src="{{asset($movie->firstImage()->file_name)}}" class="game-poster" alt="" />
+        <img itemprop="image" src="{{ asset($movie->firstImage()->file_name) }}" class="game-poster" alt="" />
         @else
         <img itemprop="image" src="{{ asset('images/posters/2351232-tomb_raider.jpg') }}" class="game-poster" alt="" />
         @endif
         <div class="game-info-details">
-            <div class="game-info-buttons">
+            <!--div class="game-info-buttons">
                 <a href="#" class="defbutton green"><i class="fa fa-bell"></i>Follow Film</a>
                 <a href="games-single-video-single.html" class="defbutton"><i class="fa fa-film"></i>View Trailer</a>
-            </div>
+            </div-->
             <div class="game-info-rating">
                 <h3>TheNextBigFilm Review</h3>
                 <hr />
@@ -82,7 +82,7 @@
                 <div class="rating-stars">
                     <div class="rating-stars-inner" style="width: 90%;"></div>
                 </div>
-                <a href="post.html" class="defbutton"><i class="fa fa-file-text-o"></i>Read Review</a>
+                <!--a href="post.html" class="defbutton"><i class="fa fa-file-text-o"></i>Read Review</a-->
             </div>
             <!--div class="game-info-buttons">
                 <a href="games-single-shop.html" class="defbutton"><i class="fa fa-shopping-cart"></i>Buy game starting from <span class="pricetag">55 &euro;</span></a>
@@ -159,6 +159,12 @@
                 <div class="clear-float"></div>
             <!-- END .photo-blocks -->
             </div>
+
+            @if($movie->bids()->count() > 0)
+                {{$movie->bids()->select(DB::raw('count(*) as bid_count, bid_amount'))->groupby('bid_amount')->orderBy('bid_amount')->toSql()}}
+                {{var_dump($movie->bids()->select(DB::raw('count(*) as bid_count, bid_amount'))->groupby('bid_amount')->orderBy('bid_amount')->lists('bid_amount', 'bid_count'))}}
+                
+            @endif
         </div>
 
         <!--h2><span>Follows this game (202)</span></h2>

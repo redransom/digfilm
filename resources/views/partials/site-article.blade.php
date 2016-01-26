@@ -17,10 +17,10 @@
 
         <div class="article-content">
             @if(!is_null($content->summary))
-            {{$content->summary}}
+            {!! $content->summary !!}
             <div class="breaking-line"></div>
             @endif
-            {{$content->body}}
+            {!! $content->body !!}
 
         </div>
     </div>
