@@ -159,13 +159,87 @@
                 <div class="clear-float"></div>
             <!-- END .photo-blocks -->
             </div>
-
-            @if($movie->bids()->count() > 0)
-                {{$movie->bids()->select(DB::raw('count(*) as bid_count, bid_amount'))->groupby('bid_amount')->orderBy('bid_amount')->toSql()}}
-                {{var_dump($movie->bids()->select(DB::raw('count(*) as bid_count, bid_amount'))->groupby('bid_amount')->orderBy('bid_amount')->lists('bid_amount', 'bid_count'))}}
-                
-            @endif
         </div>
+            @if($movie->bids()->count() > 0 && isset($authUser))
+
+        <h2><span>Stats</span></h2>
+        <div class="content-padding">
+                <canvas id="myLineChart" width="400" height="400"></canvas>
+                <script src="{{ asset('jscript/Chart.min.js') }}"></script>
+
+                <script type="text/javascript">
+                    var ctx = document.getElementById("myLineChart").getContext("2d"),
+                        data = {
+                            labels: ["January", "February", "March", "April", "May", "June", "July"],
+                            datasets: [
+                                {
+                                    label: "My First dataset",
+                                    fillColor: "rgba(220,220,220,0.2)",
+                                    strokeColor: "rgba(220,220,220,1)",
+                                    pointColor: "rgba(220,220,220,1)",
+                                    pointStrokeColor: "#fff",
+                                    pointHighlightFill: "#fff",
+                                    pointHighlightStroke: "rgba(220,220,220,1)",
+                                    data: [65, 59, 80, 81, 56, 55, 40]
+                                }
+                            ]
+                        },
+                        options = {
+
+                            ///Boolean - Whether grid lines are shown across the chart
+                            scaleShowGridLines : true,
+
+                            //String - Colour of the grid lines
+                            scaleGridLineColor : "rgba(0,0,0,.05)",
+
+                            //Number - Width of the grid lines
+                            scaleGridLineWidth : 1,
+
+                            //Boolean - Whether to show horizontal lines (except X axis)
+                            scaleShowHorizontalLines: true,
+
+                            //Boolean - Whether to show vertical lines (except Y axis)
+                            scaleShowVerticalLines: true,
+
+                            //Boolean - Whether the line is curved between points
+                            bezierCurve : true,
+
+                            //Number - Tension of the bezier curve between points
+                            bezierCurveTension : 0.4,
+
+                            //Boolean - Whether to show a dot for each point
+                            pointDot : true,
+
+                            //Number - Radius of each point dot in pixels
+                            pointDotRadius : 4,
+
+                            //Number - Pixel width of point dot stroke
+                            pointDotStrokeWidth : 1,
+
+                            //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+                            pointHitDetectionRadius : 20,
+
+                            //Boolean - Whether to show a stroke for datasets
+                            datasetStroke : true,
+
+                            //Number - Pixel width of dataset stroke
+                            datasetStrokeWidth : 2,
+
+                            //Boolean - Whether to fill the dataset with a colour
+                            datasetFill : true,
+
+                            //String - A legend template
+                            legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+
+                        };
+
+                    var myLineChart = new Chart(ctx).Line(data, options);
+
+
+                </script>
+              
+        </div>
+        @endif
 
         <!--h2><span>Follows this game (202)</span></h2>
         <div class="content-padding">

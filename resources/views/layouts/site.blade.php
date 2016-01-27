@@ -47,16 +47,16 @@
         <style>
             @if(isset($frontpage))
             #featured-img-1 {
-                background-image: url({{ asset('/images/photos/image-1.jpg') }});
+                background-image: url({{ asset('/images/photos/slide1-batman.jpg') }});
             }
             #featured-img-2 {
-                background-image: url({{ asset('/images/photos/image-2.jpg') }});
+                background-image: url({{ asset('/images/photos/slide2-kung-fu-panda-3.jpg') }});
             }
             #featured-img-3 {
-                background-image: url({{ asset('/images/photos/image-3.jpg') }});
+                background-image: url({{ asset('/images/photos/slide3-findind-dory.jpg') }});
             }
             #featured-img-4 {
-                background-image: url({{ asset('/images/photos/image-4.jpg') }});
+                background-image: url({{ asset('/images/photos/slide4-ghostbusters.jpg') }});
             }
             @endif
             /* Man content & sidebar top lne, default #256193 */

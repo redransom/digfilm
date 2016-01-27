@@ -295,6 +295,8 @@ class WelcomeController extends Controller {
 			$movie = Movie::where('slug', $id)->first();
 		}
 
+		//$movie->bids()->select(DB::raw('count(*) as bid_count, bid_amount'))->groupby('bid_amount')->orderBy('bid_amount')->toSql()
+		//var_dump($movie->bids()->select(DB::raw('count(*) as bid_count, bid_amount'))->groupby('bid_amount')->orderBy('bid_amount')->lists('bid_amount', 'bid_count'))
 		return view('movie-know')
 			->with('authUser', $authUser)
 			->with('fullwidth', true)
