@@ -135,4 +135,14 @@ class AuthController extends Controller {
 		return Redirect::route('register-successful');
 		//return redirect($this->redirectPath());
 	}
+
+	/**
+	 * Show the application reset form.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function getReset() {
+		return view('auth.register')->with('fullwidth', true);
+	}
+
 }

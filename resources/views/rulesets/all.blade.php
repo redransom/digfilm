@@ -25,7 +25,8 @@
                                         <?php $ruleCnt = 1; ?>
                                         @foreach($rulesets as $ruleset)
                                         <tr class="<?php echo (($ruleCnt++ % 2) == 0) ? "odd" : "even"; ?> rating{{$ruleset->id}}">
-                                            <td><a href="{{URL('rulesets', array('id'=>$ruleset->id))}}">{{$ruleset->name}}</a></td>
+                                            <!--td><a href="{{URL('rulesets', array('id'=>$ruleset->id))}}">{{$ruleset->name}}</a></td-->
+                                            <td>{{$ruleset->name}}</td>
                                             <td>{{$ruleset->description}}</td>
                                             <td>{{(($ruleset->admin_only == 'Y') ? "Yes" : "No")}}</td>
                                             <td><a class="btn btn-mini btn-primary" href="{{URL('rulesets/'.$ruleset->id.'/edit')}}">Edit</a>

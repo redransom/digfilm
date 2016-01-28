@@ -8,12 +8,12 @@
 				<div class="content-padding">
 					<p class="p-padding">Use the below form to get into the site.</p>
 
-					<div class="login-passes">
+					<!--div class="login-passes">
 						<b>Or you can use passports:</b>
 						<a href="#" class="strike-tooltip" title="Use Facebook.com passport"><img src="{{ asset('images/social-icon-facebook.png') }}" alt="" /></a>
 						<a href="#" class="strike-tooltip" title="Use Twitter.com passport"><img src="{{ asset('images/social-icon-twitter.png') }}" alt="" /></a>
 						<a href="#" class="strike-tooltip" title="Use Google.com passport"><img src="{{ asset('images/social-icon-google.png') }}" alt="" /></a>
-					</div>
+					</div-->
 
 					<div class="the-form" style="margin-top:40px;">
 						<form class="form-vertical" id="contactform" role="form" method="POST" action="/auth/login">
@@ -49,7 +49,7 @@
 							</p>
 
 							<p style="margin-top:40px;">
-								<span class="info-msg">If you don't have an account, <a href="signup.html">sign up</a> !<br /><br />If lost password <a href="signup-password.html">click here</a> and we will help you to reset !</span>
+								<span class="info-msg">If you don't have an account, <a href="{{URL('/auth/register')}}">sign up</a> !<br /><br />If lost password <a href="{{URL('auth/reset')}}">click here</a> and we will help you to reset !</span>
 							</p>
 
 						</form>

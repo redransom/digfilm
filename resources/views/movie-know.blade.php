@@ -93,10 +93,12 @@
                     <span>Release Date</span>
                     <strong itemprop="datePublished" content="2013-03-05">{{date("l, jS F Y", strtotime($movie->release_at))}}</strong>
                 </div>
+                @if(isset($movie->genre))
                 <div>
                     <span>Genre</span>
                     <strong itemprop="applicationCategory"><a href="games.html">{{$movie->genre->name}}</a></strong>
                 </div>
+                @endif
                 <meta itemprop="reviewer" content="Datcouch.com">
             </div>
             <!--div class="pegi">

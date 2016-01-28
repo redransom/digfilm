@@ -36,6 +36,10 @@ Route::get('auth/register', [
   'uses' => 'Auth\AuthController@getRegister'
 ]);
 Route::post('auth/register', 'Auth\AuthController@postRegister');
+Route::get('auth/reset', [
+  'as' => 'reset', 
+  'uses' => 'Auth\AuthController@getReset'
+]);
 
 /*
 Need to check for login

@@ -6,45 +6,7 @@
                 
                 <div class="footer-content">
 
-                    <!-- BEGIN .panel -->
-                    <div class="panel">
-                        <h2>Popular Articles</h2>
-                        <div class="top-right"><a href="#">View all</a></div>
-                        <div class="panel-content">
-                            
-                            <div class="d-articles">
-                                <div class="item">
-                                    <div class="item-header">
-                                        <a href="post.html"><img src="{{asset('/images/photos/image-96.jpg') }}" alt="" /></a>
-                                    </div>
-                                    <div class="item-content">
-                                        <h4><a href="post.html">Fermentum hac consectetur</a></h4>
-                                        <p>Sagittis ut eleifend taciti eleifend, mauris primis...</p>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="item-header">
-                                        <a href="post.html"><img src="{{asset('/images/photos/image-97.jpg') }}" alt="" /></a>
-                                    </div>
-                                    <div class="item-content">
-                                        <h4><a href="post.html">Fermentum hac consectetur</a></h4>
-                                        <p>Sagittis ut eleifend taciti eleifend, mauris primis...</p>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="item-header">
-                                        <a href="post.html"><img src="{{asset('/images/photos/image-98.jpg') }}" alt="" /></a>
-                                    </div>
-                                    <div class="item-content">
-                                        <h4><a href="post.html">Fermentum hac consectetur</a></h4>
-                                        <p>Sagittis ut eleifend taciti eleifend, mauris primis...</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                        </div>
-                    <!-- END .panel -->
-                    </div>
+                    
                         
                     <!-- BEGIN .panel -->
                     <div class="panel">
@@ -53,7 +15,7 @@
                             
                             <div>
                                 <h4>What do we stand for ?</h4>
-                                <p>Soleat aperiam ex pri, at pericula constituam efficiantu per, voluptaria intellegam eu nec. Duo modus homero vivendum an, facete timeam ne eum.</p>
+                                <p>TODO: Byron - we need some content for this!</p>
 
                                 <a href="mailto:contact@thenextbigfilm.com" class="icon-line">
                                     <i class="fa fa-comment"></i><span>contact@thenextbigfilm.com</span>
@@ -69,18 +31,7 @@
                     <!-- END .panel -->
                     </div>
                     
-                    <!-- BEGIN .panel -->
-                    <div class="panel">
-                        <h2>Tag Cloud</h2>
-                        <div class="panel-content">
-                            
-                            <div class="tagcloud">
-                                <a href="#">sapien</a><a href="#">scelerisque</a><a href="#">sed</a><a href="#">sem</a><a href="#">senectus</a><a href="#">sit</a><a href="#">sodales</a><a href="#">sollicitudin</a><a href="#">tellus</a><a href="#">tempus</a><a href="#">tincidunt</a><a href="#">tristique</a><a href="#">ullamcorper</a><a href="#">urna</a><a href="#">ut</a><a href="#">varius</a><a href="#">vel</a><a href="#">vivamus</a><a href="#">viverra</a><a href="#">volutpat</a>
-                            </div>
-                            
-                        </div>
-                    <!-- END .panel -->
-                    </div>
+                    @include('partials.site-footer-genres')
 
                 </div>
 

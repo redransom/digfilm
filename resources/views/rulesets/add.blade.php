@@ -77,7 +77,7 @@
                         <label class="control-label" for="LeagueName">Movie Takings Duration</label>
                         <div class="controls">
                             <div class="input-append">
-                                {!! Form::text('movie_takings_duration', null, ['class'=>'span2', 'placeholder'=>'8']) !!}
+                                {!! Form::text('movie_takings_duration', null, ['class'=>'span4', 'placeholder'=>'8']) !!}
                                 <span class="add-on">weeks</span>
                             </div><br/>
                             <span class="help-inline">This can be used to override the standard 2 months that are expected.</span>
@@ -89,7 +89,7 @@
                         <label class="control-label" for="LeagueName">Auction Duration</label>
                         <div class="controls">
                             <div class="input-append">
-                                {!! Form::text('auction_duration', null, ['class'=>'span2', 'placeholder'=>'8']) !!}
+                                {!! Form::text('auction_duration', null, ['class'=>'span4', 'placeholder'=>'8']) !!}
                                 <span class="add-on">hours</span>
                             </div><br/>
                             <span class="help-inline">Total duration of the auction including any rounds.</span>
@@ -100,7 +100,7 @@
                         <label class="control-label" for="LeagueName">Round Duration</label>
                         <div class="controls">
                             <div class="input-append">
-                                {!! Form::text('round_duration', null, ['class'=>'span2', 'placeholder'=>'0']) !!}
+                                {!! Form::text('round_duration', null, ['class'=>'span4', 'placeholder'=>'0']) !!}
                                 <span class="add-on">hours</span>
                             </div><br/>
                             <span class="help-inline">This is only beneficial if the quantity of movies is split up.</span>
@@ -111,7 +111,7 @@
                         <label class="control-label" for="LeagueName">Film Countdown</label>
                         <div class="controls">
                             <div class="input-append">
-                                {!! Form::text('ind_film_countdown', null, ['class'=>'span2', 'placeholder'=>'10']) !!}
+                                {!! Form::text('ind_film_countdown', null, ['class'=>'span4', 'placeholder'=>'10']) !!}
                                 <span class="add-on">mins</span>
                             </div><br/>
                             <span class="help-inline">Each film once it appears on the list counts down at the start.</span>
@@ -149,7 +149,7 @@
                         <label class="control-label" for="LeagueName">Auction Time-out</label>
                         <div class="controls">
                             <div class="input-append">
-                                {!! Form::text('auction_timeout', null, ['class'=>'span2', 'placeholder'=>'0']) !!}
+                                {!! Form::text('auction_timeout', null, ['class'=>'span4', 'placeholder'=>'0']) !!}
                                 <span class="add-on">mins</span>
                             </div><br/>
                         <span class="help-inline">Put in the number of minutes till this auction is closed off after previous bid. If this is zero then it just waits till end of auction.</span>
@@ -177,7 +177,7 @@
                         <label class="control-label" for="LeagueName">Auction Movie Release</label>
                         <div class="controls">
                             <div class="input-append">
-                                {!! Form::text('auction_movie_release', null, ['class'=>'span2', 'placeholder'=>'0']) !!}
+                                {!! Form::text('auction_movie_release', null, ['class'=>'span4', 'placeholder'=>'0']) !!}
                                 <span class="add-on">number of movies</span>
                             </div><br/>
                             <span class="help-inline">Leave zero for all movies or use a group of movies e.g. 10.</span>

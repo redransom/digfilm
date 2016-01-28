@@ -206,7 +206,21 @@ class SiteContentsController extends Controller {
      */
     public function destroy($id)
     {
-        //
+        $authUser = Auth::user();
+
+        //ensure permissions are available - should probably check for permissions and not role
+        if ($authUser->hasRole("Admin")) {
+            $content = SiteContent::find($id);
+            $message = "";
+            if (!empty($content)) {
+                $message = "Content " .$content->title. " has been removed.";
+                $content->delete();
+            }
+        } else 
+            $message = 'You don\'t have the permissions to complete this task.';
+
+        Flash::message($message);
+        return Redirect::route('sitecontent.index');
     }
 
 }

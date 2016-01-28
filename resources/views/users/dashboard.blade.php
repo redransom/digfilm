@@ -73,7 +73,7 @@
             <tr> 
                 <th width="49%">Name</th> 
                 <th width="15%">Players</th>
-                <th width="18%">Started?</th>
+                <th width="18%">Start?</th>
                 <th width="18%">Ends?</th>
             </tr>
         </thead>
@@ -87,12 +87,12 @@
                 @endif
                 <td>{{count($league->players)}}</td>
                 @if(!is_null($league->auction_start_date))
-                <td>{{date("jS M Y", strtotime($league->auction_start_date))}}</td>
+                <td>{{date("jS M Y g:iA", strtotime($league->auction_start_date))}}</td>
                  @else
                 <td>&nbsp;</td>
                 @endif
                 @if(!is_null($league->auction_close_date))
-                <td>{{date("jS M Y", strtotime($league->auction_close_date))}}</td>
+                <td>{{date("jS M Y g:iA", strtotime($league->auction_close_date))}}</td>
                 @else
                 <td>--</td>
                 @endif

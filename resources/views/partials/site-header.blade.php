@@ -7,7 +7,7 @@
                         <!-- <nav id="menu" class="main-menu width-fluid"> -->
                         <nav id="menu" class="main-menu">
                             <div class="blur-before"></div>
-                            <a href="index.html" class="header-logo left"><img src="{{asset('images/BFlogo.png')}}" class="logo" /></a>
+                            <a href="/" class="header-logo left"><img src="{{asset('images/BFlogo.png')}}" class="logo" /></a>
                             <a href="#dat-menu" class="datmenu-prompt"><i class="fa fa-bars"></i>Show menu</a>
                             <ul class="load-responsive" rel="Main menu">
                                 <li><a href="/all-leagues"><span><i class="fa fa-calendar-o"></i><strong>Leagues</strong></span></a>
