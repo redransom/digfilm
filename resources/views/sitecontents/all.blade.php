@@ -24,8 +24,9 @@
             <thead>
                 <tr>
                     <th width="4%">ID</th>
-                    <th width="50%">Title</th>
+                    <th width="45%">Title</th>
                     <th width="11%">Created</th>
+                    <th width="11%">Type /<br/>Section</th>
                     <th width="7%">Owned By</th>
                     <th>Actions</th>
                 </tr>
@@ -37,6 +38,13 @@
                     <td>{{$content->id}}</td>
                     <td><a href="{{URL('sitecontents', array('id'=>$content->id))}}">{{$content->title}}</a></td>
                     <td>{{date("j/m/Y g:iA", strtotime($content->created_at))}}</td>
+                    <td>@if($content->type == 'N')
+                    News
+                    @elseif($content->type == 'C')
+                    {{$sections[$content->section]}}
+                    @else
+                    Front
+                    @endif</td>
                     <td class="center"><a href="{{URL('users/'.$content->owner->id)}}">{{$content->owner->name}}</a></td>
                     <td>
                     <a class="btn btn-mini btn-primary" href="{{URL('sitecontent/'.$content->id.'/edit')}}">Edit</a>

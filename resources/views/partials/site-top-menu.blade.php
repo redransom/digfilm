@@ -54,6 +54,6 @@
 
                         @else
                         <li><a href="{{URL('auth/login')}}">Login</a></li>
-                        <li><a href="/auth/register">Create an account</a></li>
+                        <!--li><a href="/auth/register">Create an account</a></li-->
                         @endif
                     </ul>

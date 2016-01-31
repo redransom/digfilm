@@ -2,6 +2,7 @@
 
 use Illuminate\Support\ServiceProvider;
 use App\Models\Genre;
+use App\Models\SiteContent;
 use App\Models\Movie;
 use App\Models\Auction;
 use Auth;
@@ -44,9 +45,13 @@ class AppServiceProvider extends ServiceProvider {
 
 		*/
 
+		//top 3 news articles
+		$news_articles = SiteContent::where('type', 'N')->orderBy('created_at', 'DESC')->limit(3)->get();
+
 		$genres = Genre::all();
 
 		$data = ['genres_list'=> $genres,
+				'news_articles' => $news_articles,
 				'new_movies'=> $new_movies,
 				'released_movies'=> $released_movies,
 				'top_auctions'=> $top_auctions];

@@ -33,7 +33,13 @@ tinymce.init({
 
     <div class="module">
         <div class="module-head">
-            <h3>Add Content</h3>
+            @if($type == 'N')
+            <h3>Add News Content</h3>
+            @elseif($type == 'C')
+            <h3>Add Page Content</h3>
+            @else
+            <h3>Add Front Slider</h3>
+            @endif
         </div>
         <div class="module-body">
 
@@ -51,6 +57,8 @@ tinymce.init({
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="owners_id" value="{{ $authUser->id }}">
                     <input type="hidden" name="type" value="{{ $type }}">
+
+                    @if($type == 'C')
                     <div class="control-group">
                         <label class="control-label" for="SiteContentSection">Section / Page</label>
                         <div class="controls">
@@ -58,6 +66,9 @@ tinymce.init({
                             <span class="help-inline">Select page that is to added (you can only add one Page Content for each page except the news/blog pages).</span>
                         </div>
                     </div>
+                    @else
+                    <input type="hidden" name="section" value="NEW">
+                    @endif
 
                     <div class="control-group">
                         <label class="control-label" for="SiteContentTitle">Title</label>
@@ -67,7 +78,7 @@ tinymce.init({
                         </div>
                     </div>
 
-                    @if($type == 'N')
+                    @if($type == 'N' || $type == 'F')
                     <div class="control-group">
                         <label class="control-label" for="SiteContentSummary">Summary</label>
                         <div class="controls">
@@ -76,19 +87,27 @@ tinymce.init({
                     </div>
                     @endif
 
+                    @if($type != 'F')
                     <div class="control-group">
                         <label class="control-label" for="SiteContentBody">Body</label>
                         <div class="controls">
                             {!! Form::textarea('body', null, ['class'=>'span8', 'placeholder'=>'WYSIWYG here...', 'id'=>'body']) !!}
                         </div>
                     </div>
+                    @else
+                    <input type="hidden" name="body" value="NOT NEEDED">
+                    @endif
 
-                    @if($type == 'N')
+                    @if($type == 'N' || $type == 'F')
                     <div class="control-group">
                         <label class="control-label" for="SiteContentThumbnail">Thumbnail</label>
                         <div class="controls">
                             {!! Form::file('thumbnail', null, ['class'=>'span8']) !!}
+                            @if($type == 'F')
+                            <span class="help-inline">The size of this image needs to be 75px by 45px or else it will be squashed.</span>
+                            @else
                             <span class="help-inline">For use in lists.</span>
+                            @endif
                         </div>
                     </div>
                     @endif
@@ -97,7 +116,11 @@ tinymce.init({
                         <label class="control-label" for="SiteContentMainImage">Main Image</label>
                         <div class="controls">
                             {!! Form::file('main_image', null, ['class'=>'span8']) !!}
+                            @if($type == 'F')
+                            <span class="help-inline">The size of this image needs to be 1000px by 440px or else it will be squashed.</span>
+                            @else
                             <span class="help-inline">Main image for article if available.</span>
+                            @endif
                         </div>
                     </div>
 

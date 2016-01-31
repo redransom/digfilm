@@ -21,7 +21,10 @@ Route::get('contact', ['as'=>'contact', 'uses'=>'WelcomeController@contact']);
 Route::get('all-leagues', 'WelcomeController@leagues');
 Route::get('create', 'WelcomeController@create');
 Route::get('movie-knowledge/{id}', 'WelcomeController@movieKnow');
+Route::get('all-movies', ['as'=>'all-movies', 'uses'=>'WelcomeController@movies']);
 Route::get('movie-genre/{id}', 'WelcomeController@movieGenre');
+Route::get('news-detail/{id}', ['as'=>'news-detail', 'uses'=>'WelcomeController@newsDetail']);
+
 Route::get('register-successful', ['as'=>'register-successful', 'uses'=>'WelcomeController@registerSuccessful']);
 Route::get('accept-invite/{id}', ['as'=>'accept-invite', 'uses'=>'LeaguesController@acceptInvite']);
 Route::get('decline-invite/{id}', ['as'=>'decline-invite', 'uses'=>'LeaguesController@declineInvite']);

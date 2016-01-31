@@ -12,5 +12,8 @@ class SiteContent extends Model {
         return $this->belongsTo("\App\Models\User", "owners_id");
     }
 
+    public function link() {
+        return ((!is_null($this->slug) && $this->slug != "") ? $this->slug : $this->id);
+    }
 
 }

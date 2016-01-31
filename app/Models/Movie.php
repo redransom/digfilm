@@ -27,6 +27,10 @@ class Movie extends Model {
         return $this->media->where('type' ,'I')->first();
     }
 
+    public function images() {
+        return $this->media->where('type', 'I');
+    }
+
     public function genre() {
         return $this->belongsTo("\App\Models\Genre", 'genres_id');
     }
@@ -38,4 +42,9 @@ class Movie extends Model {
     public function bids() {
         return $this->hasMany("\App\Models\AuctionBid", 'movies_id', 'id');
     }
+
+    public function link() {
+        return ((!is_null($this->slug) && $this->slug != "") ? $this->slug : $this->id);
+    }
+
 }

@@ -57,7 +57,9 @@ class WelcomeController extends Controller {
                 $query->where('opening_bid', '<', $max_bid)->orWhereNull('opening_bid');
             })->lists('id');
 
-*/      
+*/      //get front slider images
+		$slider = SiteContent::where('type', 'F')->get();
+
 		if (isset($authUser)) {
 			$public = League::availableLeagues($authUser)->count();
 		} else 
@@ -75,6 +77,7 @@ class WelcomeController extends Controller {
         $trailers = MovieMedia::where('type', 'T')->orderBy('created_at', 'DESC')->limit(4)->get();
 
 		return view('welcome')
+			->with('slider', $slider)
 			->with('public_count', $public)
 			->with('next_film', $next_film)
 			->with('trailers', $trailers)
@@ -162,6 +165,10 @@ class WelcomeController extends Controller {
 			return redirect('/auth/login');
 
 		$league = League::find($id);
+
+		//dont show leagues that have been disabled.
+		if ($league->enabled == 0)
+			return redirect('/');
 
 		if ($league->auction_stage == '3') {
 			//redirect to the roster page
@@ -295,6 +302,27 @@ class WelcomeController extends Controller {
 			$movie = Movie::where('slug', $id)->first();
 		}
 
+		if (isset($authUser->id)) {
+			//get movie stats
+			//list of all bids in last 30 days
+			//TODO: Move all of this to the model
+			$last_month = date("Y-m-d", strtotime("-30 days"));
+			$sql = "SELECT COUNT(movies_id) AS no_of_bids, DAYOFMONTH(created_at) AS day_no FROM `auction_bids` ";
+			$sql .= "WHERE `movies_id` = '".$movie->id."' AND created_at >= '".$last_month."' GROUP BY DAYOFMONTH(created_at), ";
+			$sql .= "DAY(created_at) ORDER BY DAY(created_at)";
+			
+/*			$no_of_bids = AuctionBid::selectRaw('COUNT(movies_id) AS no_of_bids, DAYOFMONTH(created_at) AS day_no')
+            	->groupBy('DAYOFMONTH(created_at)')->groupBy('DAY(created_at)')
+            	->where('movies_id', $movie->id)->where('created_at', '>=', $last_month)->orderBy('DAY(created_at)')->get();
+*/
+
+			//list of bid value in last 30 days
+			$sql = "SELECT bid_amount, COUNT(bid_amount) FROM `auction_bids` WHERE `movies_id` = '".$movie->id;
+			$sql .= "' AND created_at >= '".$last_month."' GROUP BY bid_amount ORDER BY bid_amount";
+			echo $sql;
+		}
+
+
 		//$movie->bids()->select(DB::raw('count(*) as bid_count, bid_amount'))->groupby('bid_amount')->orderBy('bid_amount')->toSql()
 		//var_dump($movie->bids()->select(DB::raw('count(*) as bid_count, bid_amount'))->groupby('bid_amount')->orderBy('bid_amount')->lists('bid_amount', 'bid_count'))
 		return view('movie-know')
@@ -309,11 +337,11 @@ class WelcomeController extends Controller {
 		$authUser = Auth::user();
 
 		$genre = Genre::find($id);
-/*		if (is_null($movie)) {
+		if (is_null($genre)) {
 			//try for the slug
-			$movie = Movie::where('slug', $id)->first();
+			$genre = Genre::where('slug', $id)->first();
 		}
-*/
+
 		return view('movie-genre')
 			->with('authUser', $authUser)
 			->with('genre', $genre);	
@@ -340,6 +368,25 @@ class WelcomeController extends Controller {
 			->with('currentLeagueUser', $currentLeagueUser)
 			->with('authUser', $authUser);	
 	}
+
+	/**
+	 * All new releases in the last month
+	 *
+	 * @return void
+	 */
+	public function movies() {
+		$authUser = Auth::user();
+
+		$movies = Movie::where('enabled', '1')->get();
+
+		return view('all-movies')
+			->with('page_name', 'movies')
+			->with('page_title', 'The Next Big Film Database')
+			->with('movies', $movies)
+			->with('title', 'All Our Movies')
+			->with('authUser', $authUser);		
+	}
+
 
 	/**
 	 * All new releases in the last month
@@ -374,6 +421,29 @@ class WelcomeController extends Controller {
 			->with('movies', $movies)
 			->with('description', 'Here is a list of all movies that are coming out in the next 4 weeks.')
 			->with('title', 'Coming Soon')
+			->with('authUser', $authUser);		
+	}
+
+	/**
+	 * News article detail
+	 *
+	 * @return void
+	 */
+	public function newsDetail($id) {
+		$authUser = Auth::user();
+
+		$content = SiteContent::find($id);
+		if (is_null($content)) {
+			//try for the slug
+			$content = SiteContent::where('slug', $id)->first();
+		}
+
+		return view('news-article')
+			->with('page_name', 'news')
+			->with('object', $content)
+			->with('page_title', '')
+			->with('content', $content)
+			->with('title', 'News')
 			->with('authUser', $authUser);		
 	}
 

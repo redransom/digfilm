@@ -238,3 +238,15 @@ Breadcrumbs::register('league-show', function($breadcrumbs, $object)
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push('League Details', route('league-show', [$object->id]));
 });
+
+Breadcrumbs::register('news', function($breadcrumbs, $object)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('News', route('news-detail', [$object->id]));
+});
+
+Breadcrumbs::register('movies', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('Movies', route('all-movies'));
+});

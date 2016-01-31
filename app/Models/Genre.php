@@ -17,4 +17,8 @@ class Genre extends Model {
         return $this->movies()->count();
     }
 
+    public function link() {
+        return ((!is_null($this->slug) && $this->slug != "") ? $this->slug : $this->id);
+    }
+
 }

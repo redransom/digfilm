@@ -29,11 +29,13 @@ class SiteContentsController extends Controller {
             return redirect('/auth/login');
 
         $sitecontents = SiteContent::paginate(10);
+        $sections = $this->get_sections();
 
         return View("sitecontents.all")
             ->with('sitecontents', $sitecontents)
             ->with('authUser', $authUser)
             ->with('page_name', 'sitecontents')
+            ->with('sections', $sections)
             ->with('instructions', 'All Site Content')
             ->with('title', 'Content');
     }
@@ -49,7 +51,9 @@ class SiteContentsController extends Controller {
         if (!isset($authUser))
             return redirect('/auth/login');
 
-        $sections = $this->get_sections();
+        $sections = null;
+        if ($type == 'C')
+            $sections = $this->get_sections();
 
         return View("sitecontents.add")
             ->with('authUser', $authUser)
@@ -78,6 +82,7 @@ class SiteContentsController extends Controller {
         //      
         $input = Input::all();
         $sitecontent = SiteContent::create( $input );
+        $sitecontent->slug = str_slug($sitecontent->title, "-");
 
         if ($request->file('thumbnail') != "") {
             $imageName = $sitecontent->id.'thumb_'.str_replace(' ', '_', strtolower(str_slug($input['title']))) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
@@ -139,7 +144,9 @@ class SiteContentsController extends Controller {
         $sitecontent = SiteContent::find($id);
         $title = "Edit Content for ".$sitecontent->title;
 
-        $sections = $this->get_sections();
+        $sections = null;
+        if ($sitecontent->type == 'C')
+            $sections = $this->get_sections();
 
         return View("sitecontents.edit")
             ->with('content', $sitecontent)
@@ -148,14 +155,7 @@ class SiteContentsController extends Controller {
             ->with('page_name', 'sitecontent-edit')
             ->with('object', $sitecontent)
             ->with('title', $title);
-
-/*        return View("sitecontents.edit")
-            ->with('authUser', $authUser)
-            ->with('sitecontent', $sitecontent)
-            ->with('object', $sitecontent)
-            ->with('page_name', 'sitecontent-edit')
-            ->with('title', $title);
-*/    }
+    }
 
     /**
      * Update the specified resource in storage.
@@ -171,6 +171,8 @@ class SiteContentsController extends Controller {
 
         $sitecontent->section = $input['section'];
         $sitecontent->title = $input['title'];
+        $sitecontent->slug = str_slug($sitecontent->title, "-");
+        
         if ($sitecontent->type == 'N')
             $sitecontent->summary = $input['summary'];
 

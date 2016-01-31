@@ -73,12 +73,24 @@
                         </nav>
                     </div>
 
-                    @if(isset($frontpage))
+                    @if(isset($slider))
                     <div id="slider">
                         <div id="slider-info">
                             <div class="padding-box">
                                 <ul>
+                                    <?php $sliderNo = 1; ?>
+                                    @foreach ($slider as $slide)
+                                    @if($sliderNo == 1)
                                     <li>
+                                    @else
+                                    <li class="dis">
+                                    @endif
+                                        <h2>{{$slide->title}}</h2>
+                                        {!! $slide->summary !!}
+                                    </li>
+                                    <?php $sliderNo++; ?>
+                                    @endforeach
+                                    <!--li class="dis">
                                         <h2><a href="post.html">Lorem ipsum dolor sit amet, ne nec suas graece</a></h2>
                                         <p>Liber alterum mentitum ea vel, cu debet harum altera vim. Te velit voluptaria qui. Cu has ipsum vitae torquatos, at modus congue delicata duo adversarium...</p>
                                         <a href="post.html" class="read-more-r">Read this article</a>
@@ -92,20 +104,19 @@
                                         <h2><a href="post.html">Lorem ipsum dolor sit amet, ne nec suas graece</a></h2>
                                         <p>Liber alterum mentitum ea vel, cu debet harum altera vim. Te velit voluptaria qui. Cu has ipsum vitae torquatos, at modus congue delicata duo adversarium...</p>
                                         <a href="post.html" class="read-more-r">Read this article</a>
-                                    </li>
-                                    <li class="dis">
-                                        <h2><a href="post.html">Lorem ipsum dolor sit amet, ne nec suas graece</a></h2>
-                                        <p>Liber alterum mentitum ea vel, cu debet harum altera vim. Te velit voluptaria qui. Cu has ipsum vitae torquatos, at modus congue delicata duo adversarium...</p>
-                                        <a href="post.html" class="read-more-r">Read this article</a>
-                                    </li>
+                                    </li-->
                                 </ul>
                             </div>
-                            <a href="javascript: featSelect(1);" id="featSelect-1" class="featured-select this-active">
-                                <span class="w-bar" id="feat-countdown-bar-1">.</span>
-                                <span class="w-coin" id="feat-countdown-1">0</span>
-                                <img src="{{asset('images/photos/image-5.jpg') }}" alt="" title="" />
+
+                            <?php $slideNo = 1; ?>
+                            @foreach ($slider as $slide)
+                            <a href="javascript: featSelect({{$slideNo}});" id="featSelect-{{$slideNo}}" class="featured-select<?php echo (($slideNo == 1) ? " this-active" : ""); ?>">
+                                <span class="w-bar" id="feat-countdown-bar-{{$slideNo}}">.</span>
+                                <span class="w-coin" id="feat-countdown-{{$slideNo++}}">0</span>
+                                <img src="{{asset($slide->thumbnail) }}" alt="" title="" />
                             </a>
-                            <a href="javascript: featSelect(2);" id="featSelect-2" class="featured-select">
+                            @endforeach
+                            <!--a href="javascript: featSelect(2);" id="featSelect-2" class="featured-select">
                                 <span class="w-bar" id="feat-countdown-bar-2">.</span>
                                 <span class="w-coin" id="feat-countdown-2">0</span>
                                 <img src="{{asset('images/photos/image-6.jpg') }}" alt="" title="" />
@@ -119,7 +130,7 @@
                                 <span class="w-bar" id="feat-countdown-bar-4">.</span>
                                 <span class="w-coin" id="feat-countdown-4">0</span>
                                 <img src="{{asset('images/photos/image-8.jpg') }}" alt="" title="" />
-                            </a>
+                            </a-->
                         </div>
                     </div>
 

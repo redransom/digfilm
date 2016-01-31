@@ -1,10 +1,10 @@
 @extends('layouts.site')
 
 @section('content')
-<h2><span>Movies in the {{$genre->name}} Genre</span></h2>
+<h2><span>All Movies in The Next Big Film database</span></h2>
 <div class="content-padding">
     
-    @foreach($genre->movies as $movie)
+    @foreach($movies as $movie)
     <article class="post-item clearfix">
         
         <section class="post-thumb">

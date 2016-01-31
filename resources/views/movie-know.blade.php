@@ -101,20 +101,6 @@
                 @endif
                 <meta itemprop="reviewer" content="Datcouch.com">
             </div>
-            <!--div class="pegi">
-                <img src="images/pegi/pegi-18.gif" class="pegi-age left strike-tooltip" title="Recomended 18+" alt="" />
-                <div class="pegi-desc">
-                    <img src="images/pegi/bad-language.gif" class="pegi-tool strike-tooltip" title="Bad language" alt="" />
-                    <img src="images/pegi/discrimination.gif" class="pegi-tool pegi-disabled" alt="" />
-                    <img src="images/pegi/drugs.gif" class="pegi-tool pegi-disabled" alt="" />
-                    <img src="images/pegi/fear.gif" class="pegi-tool pegi-disabled" alt="" />
-                    <img src="images/pegi/gambling.gif" class="pegi-tool pegi-disabled" alt="" />
-                    <img src="images/pegi/online.gif" class="pegi-tool strike-tooltip" title="Multiplater" alt="" />
-                    <img src="images/pegi/sex.gif" class="pegi-tool pegi-disabled" alt="" />
-                    <img src="images/pegi/violence.gif" class="pegi-tool strike-tooltip" title="Violence" alt="" />
-                </div>
-                <div class="clear-float"></div>
-            </div-->
         </div>
     </div>
     <div class="game-info-right">
@@ -123,18 +109,9 @@
         <div class="game-menu" style="border-bottom: 5px solid #921913;">
             <div class="game-overlay-info">
                 <h1 itemprop="itemreviewed">{{$movie->name}}</h1>
-                <!--span>
-                    <a href="games.html">PlayStation 2</a>
-                    <a href="games.html">PlayStation 3</a>
-                    <a href="games.html">PlayStation 4</a>
-                    <a href="games.html">Xbox</a>
-                    <a href="games.html">Xbox 360</a>
-                    <a href="games.html">Xbox One</a>
-                    <a href="games.html">Nintendo Wii</a>
-                </span-->
             </div>
             <ul>
-                <li class="active" style="background-color: #921913;"><a href="games-single.html"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;Information</a></li>
+                <li class="active" style="background-color: #921913;"><a href="#info"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;Information</a></li>
                 <!--li><a href="games-single-news.html"><i class="fa fa-comments"></i>&nbsp;&nbsp;News</a></li-->
                 <!--li><a href="games-single-video.html"><i class="fa fa-film"></i>&nbsp;&nbsp;Video (3)</a></li>
                 <li><a href="photo-gallery-single.html"><i class="fa fa-camera-retro"></i>&nbsp;&nbsp;Photos (18)</a></li-->
@@ -142,28 +119,31 @@
         <!-- END .game-menu -->
         </div>
 
-        <h2><span>Synopsis</span></h2>        
+        <h2><span name='info'>Synopsis</span></h2>        
         <div class="content-padding">
         {{$movie->summary}}
 
         </div>
+        @if($movie->images()->count() > 0)
         <h2><span>Media</span></h2>
         <div class="content-padding">
             <!-- BEGIN .photo-blocks -->
             <div class="photo-blocks">
                 <ul>
-                    <li><a href="photo-gallery-single.html" class="article-image-out"><span class="image-comments"><span>101</span></span><span class="article-image"><img src="{{asset('images/photos/image-41.jpg') }}" width="128" height="128" alt="" title="" /></span></a></li>
-                    <li><a href="photo-gallery-single.html" class="article-image-out"><span class="image-comments inactive"><span>23</span></span><span class="article-image"><img src="{{asset('images/photos/image-42.jpg') }}" width="128" height="128" alt="" title="" /></span></a></li>
-                    <li><a href="photo-gallery-single.html" class="article-image-out"><span class="image-comments"><span>6</span></span><span class="article-image"><img src="{{asset('images/photos/image-43.jpg') }}" width="128" height="128" alt="" title="" /></span></a></li>
-                    <li><a href="photo-gallery-single.html" class="article-image-out"><span class="image-comments"><span>12</span></span><span class="article-image"><img src="{{asset('images/photos/image-44.jpg') }}" width="128" height="128" alt="" title="" /></span></a></li>
-                    <li><a href="photo-gallery-single.html" class="article-image-out"><span class="image-comments inactive"><span>0</span></span><span class="article-image"><img src="{{asset('images/photos/image-45.jpg') }}" width="128" height="128" alt="" title="" /></span></a></li>
+                    @foreach($movie->images() as $image)
+                    <li>
+                        <a href="#" class="article-image-out">
+                        <span class="article-image"><img src="{{asset($image->file_name) }}" width="128" height="128" alt="" title="" /></span></a>
+                        </li>
+                    @endforeach
                 </ul>
                 <div class="clear-float"></div>
             <!-- END .photo-blocks -->
             </div>
         </div>
-            @if($movie->bids()->count() > 0 && isset($authUser))
+        @endif
 
+        @if($movie->bids()->count() > 0 && isset($authUser))
         <h2><span>Stats</span></h2>
         <div class="content-padding">
                 <canvas id="myLineChart" width="400" height="400"></canvas>

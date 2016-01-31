@@ -6,7 +6,7 @@
                 
                 <div class="footer-content">
 
-                    
+                    @include('partials.site-footer-articles')                
                         
                     <!-- BEGIN .panel -->
                     <div class="panel">

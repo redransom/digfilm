@@ -45,19 +45,13 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
         <style>
-            @if(isset($frontpage))
-            #featured-img-1 {
-                background-image: url({{ asset('/images/photos/slide1-batman.jpg') }});
+            @if(isset($slider))
+            <?php $slideNo = 1; ?>
+            @foreach($slider as $slide)
+            #featured-img-{{$slideNo++}} {
+                background-image: url({{ asset($slide->main_image) }});
             }
-            #featured-img-2 {
-                background-image: url({{ asset('/images/photos/slide2-kung-fu-panda-3.jpg') }});
-            }
-            #featured-img-3 {
-                background-image: url({{ asset('/images/photos/slide3-findind-dory.jpg') }});
-            }
-            #featured-img-4 {
-                background-image: url({{ asset('/images/photos/slide4-ghostbusters.jpg') }});
-            }
+            @endforeach
             @endif
             /* Man content & sidebar top lne, default #256193 */
             #sidebar .panel,

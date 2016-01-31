@@ -51,6 +51,7 @@ tinymce.init({
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="owners_id" value="{{ $authUser->id }}">
                     <input type="hidden" name="type" value="{{ $content->type }}">
+                    @if($content->type == 'C')
                     <div class="control-group">
                         <label class="control-label" for="SiteContentSection">Section / Page</label>
                         <div class="controls">
@@ -58,7 +59,9 @@ tinymce.init({
                             <span class="help-inline">Select page that is to added (you can only add one Page Content for each page except the news/blog pages).</span>
                         </div>
                     </div>
-
+                    @else
+                    <input type="hidden" name="section" value="{{ $content->section }}">
+                    @endif
                     <div class="control-group">
                         <label class="control-label" for="SiteContentTitle">Title</label>
                         <div class="controls">
@@ -87,6 +90,9 @@ tinymce.init({
                     <div class="control-group">
                         <label class="control-label" for="SiteContentThumbnail">Thumbnail</label>
                         <div class="controls">
+                            @if(!is_null($content->thumbnail))
+                            <img src="{{asset($content->thumbnail)}}" width="100px"/>
+                            @endif
                             {!! Form::file('thumbnail', null, ['class'=>'span8']) !!}
                             <span class="help-inline">For use in lists.</span>
                         </div>
@@ -96,6 +102,9 @@ tinymce.init({
                     <div class="control-group">
                         <label class="control-label" for="SiteContentMainImage">Main Image</label>
                         <div class="controls">
+                            @if(!is_null($content->main_image))
+                            <img src="{{asset($content->main_image)}}" width="100px"/>
+                            @endif
                             {!! Form::file('main_image', null, ['class'=>'span8']) !!}
                             <span class="help-inline">Main image for article if available.</span>
                         </div>

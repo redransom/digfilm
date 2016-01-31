@@ -64,6 +64,7 @@
                                     <ul id="toggleContent" class="collapse unstyled">
                                         <li><a href="{{URL('sitecontent')}}"><i class="icon-save"></i>List</a></li>
                                         <li><a href="{{URL('sitecontent/create/C')}}"><i class="icon-save"></i>Add Page Content</a></li>
+                                        <li><a href="{{URL('sitecontent/create/F')}}"><i class="icon-save"></i>Add Front Slider</a></li>
                                         <li><a href="{{URL('sitecontent/create/N')}}"><i class="icon-save"></i>Add News/Blog</a></li>
                                     </ul>
                                 </li>                                
