@@ -24,6 +24,10 @@ class RuleSetTableSeeder extends Seeder {
                      'max_movies' => 100, 'min_players' => 10, 'max_players' => 15, 'min_bid' => 0.5, 'randomizer'=> 'Y', 'auction_movie_release'=>'Group 10', 
                      'start_time'=>'18:00:00', 'close_time'=>'18:00:00')
                 );
+        RuleSet::create(
+                array('name' => 'Blind Auction', 'description'=>'Blind auction', 'auction_duration'=>4, 'ind_film_countdown'=>15, 'min_movies'=>50, 
+                     'max_movies'=>80, 'max_players'=>10, 'min_bid' => 0.5, 'max_bid'=> 5, 'start_time'=>'18:00:00', 'close_time'=>'22:00:00')
+                );
     }
 
 }
