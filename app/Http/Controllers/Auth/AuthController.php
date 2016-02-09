@@ -70,7 +70,7 @@ class AuthController extends Controller {
 			$authUser = $this->auth->user();
 
 			$role_users = \App\Models\RoleUser::where('user_id', $authUser->id)->get();
-
+			$roles = array();
 			foreach ($role_users as $ru) {
 				$role = Role::where('id', $ru->role_id)->first();
 				$roles[] = $role->name;
