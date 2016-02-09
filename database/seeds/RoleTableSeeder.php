@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\RoleUser;
+
 class RoleTableSeeder extends Seeder {
 
     public function run()
@@ -24,8 +25,12 @@ class RoleTableSeeder extends Seeder {
         $kinsley2015 = User::where('name', 'Kinsley2015')->first();
 
         RoleUser::create(
-                array('user_id'=>$kinsley->id, 'role_id'=> $admin->id),
-                array('user_id'=>$byron->id, 'role_id'=> $admin->id),
+                array('user_id'=>$kinsley->id, 'role_id'=> $admin->id)
+                );
+        RoleUser::create(
+                array('user_id'=>$byron->id, 'role_id'=> $admin->id)
+                );
+        RoleUser::create(
                 array('user_id'=>$kinsley2015->id, 'role_id'=> $player->id)
                 );
     }
