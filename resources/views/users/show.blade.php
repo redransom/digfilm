@@ -20,20 +20,21 @@
                                             {{$user->description}}
                                             @endif
                                         </p>
-                                        <div class="profile-details muted">
+                                        <!--div class="profile-details muted">
                                             <a href="#" class="btn"><i class="icon-plus shaded"></i>Send Friend Request </a>
                                             <a href="#" class="btn"><i class="icon-envelope-alt shaded"></i>Send message </a>
-                                        </div>
+                                        </div-->
                                     </div>
                                 </div>
                                 <ul class="profile-tab nav nav-tabs">
                                     <li class="active"><a href="#activity" data-toggle="tab">Feed</a></li>
-                                    <li><a href="#friends" data-toggle="tab">Friends</a></li>
-                                    <li><a href="#leagues" data-toggle="tab">Leagues</a></li>
+                                    <!--li><a href="#friends" data-toggle="tab">Friends</a></li>
+                                    <li><a href="#leagues" data-toggle="tab">Leagues</a></li-->
                                 </ul>
                                 <div class="profile-tab-content tab-content">
                                     <div class="tab-pane fade active in" id="activity">
                                         <div class="stream-list">
+                                            
                                             <div class="media stream">
                                                 <a href="#" class="media-avatar medium pull-left">
                                                     <img src="images/user.png">
@@ -182,13 +183,13 @@
                                                 </div>
                                             </div>
                                             <!--/.media .stream-->
-                                            <div class="media stream load-more">
+                                            <!--div class="media stream load-more">
                                                 <a href="#"><i class="icon-refresh shaded"></i>Load more... </a>
-                                            </div>
+                                            </div-->
                                         </div>
                                         <!--/.stream-list-->
                                     </div>
-                                    <div class="tab-pane fade" id="friends">
+                                    <!--div class="tab-pane fade" id="friends">
                                         <div class="module-option clearfix">
                                             <form>
                                             <div class="input-append pull-left">
@@ -253,7 +254,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--/.row-fluid-->
+                                           
                                             <br />
                                             <div class="pagination pagination-centered">
                                                 <ul>
@@ -266,8 +267,8 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="leagues">
+                                    </div-->
+                                    <!--div class="tab-pane fade" id="leagues">
                                         <div class="module-option clearfix">
                                             <form>
                                             <div class="input-append pull-left">
@@ -332,7 +333,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--/.row-fluid-->
                                             <br />
                                             <div class="pagination pagination-centered">
                                                 @if(!empty($user->leagues))
@@ -340,7 +340,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                    </div>
+                                    </div-->
                                 </div>
                             </div>
                             <!--/.module-body-->

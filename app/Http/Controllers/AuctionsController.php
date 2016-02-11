@@ -313,22 +313,12 @@ class AuctionsController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function clearEndTimeAuctions() 
+    public function clearEndTimeAuctions($currentTime) 
     {
-        $currentTime = date("Y-m-d H:i:s"); 
-        Log::info("Current Time to clear out: ".$currentTime);
+        //$currentTime = date("Y-m-d H:i:s"); 
+        //Log::info("Current Time to clear out: ".$currentTime);
         $affected = Auction::where('ready_for_auction', '1')->where('auction_end_time', '<', $currentTime)->update(['ready_for_auction'=>'2']);
-        Log::info("Auction End Time Cleared: ".$affected.' auctions');
-        /*$auctionsToClear = Auction::where('ready_for_auction', '1')->where('auction_end_time', '<', $currentTime)->get();
-
-        if ($auctionsToClear->count() > 0) {
-            foreach ($auctionsToClear as $auction) {
-                Log::info("Auction End Time Cleared: ".$auction->id);
-                $auction->ready_for_auction = 2; //finished
-                $auction->save();
-            }    
-        }*/
-
+        Log::info("Auction End Time ".$currentTime. " Cleared: ".$affected.' auctions');
     }
 
     /**
@@ -337,21 +327,12 @@ class AuctionsController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function clearTimeoutAuctions() 
+    public function clearTimeoutAuctions($currentTime) 
     {    
-        $currentTime = date("Y-m-d H:i:s");
-        Log::info("Current Time to clear time out: ".$currentTime);
+        //$currentTime = date("Y-m-d H:i:s");
+        //Log::info("Current Time to clear time out: ".$currentTime);
         $affected = Auction::where('ready_for_auction', '1')->where('timeout_date', '<', $currentTime)->update(['ready_for_auction'=>'2']);
-        Log::info("Auction Time Out Cleared: ".$affected.' auctions');
-/*        $auctionsToClear = Auction::where('ready_for_auction', '1')->where('timeout_date', '<', $currentTime)->get();
-
-        if ($auctionsToClear->count() > 0) {
-            foreach ($auctionsToClear as $auction) {
-                Log::info("Auction End Time Out Cleared: ".$auction->id);
-                $auction->ready_for_auction = 2; //finished
-                $auction->save();
-            }    
-        }*/
+        Log::info("Auction Time Out ".$currentTime." Cleared: ".$affected.' auctions');
     }
 
     private function getLeagueRule($rules, $league_id) {
@@ -370,6 +351,9 @@ class AuctionsController extends Controller {
      */
     public function prepareClearedAuctions() 
     {    
+        $currentTime = date("Y-m-d H:i:s"); 
+        $this->clearEndTimeAuctions($currentTime);
+        $this->clearTimeoutAuctions($currentTime);
         Auction::where('ready_for_auction', '2')->where('bid_count', '0')->update(['ready_for_auction'=>3]);
         Auction::where('ready_for_auction', '2')->where('bid_count', '>', '0')->update(['ready_for_auction'=>4]);
     }
@@ -421,7 +405,7 @@ class AuctionsController extends Controller {
         $created_at = date("Y-m-d H:i:s");
 
         $league = League::find($league_id);
-        var_dump($league);
+
         if ($league->rule->blind_bid == 'N') {
             DB::insert(DB::raw("INSERT INTO league_roster
     (leagues_id, users_id, movies_id, bid_amount, takings_end_date, created_at)
@@ -443,7 +427,7 @@ class AuctionsController extends Controller {
                 WHERE a.leagues_id = ".$league_id." GROUP BY movies_id, bid_amount) ab2
                 ON ab.created_at = ab2.created_at and ab.movies_id = ab2.movies_id and ab.bid_amount = ab2.bid_amount
         WHERE A.leagues_id = '".$league_id."'";
-        echo $sql;
+
             DB::insert(DB::raw($sql));
 
         }

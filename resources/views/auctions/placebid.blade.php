@@ -35,8 +35,9 @@
         if (($max_bid > $leagueUser->balance) || (is_null($max_bid) || $max_bid == 0))
             $max_bid = $leagueUser->balance;
     ?>
+    <p>Your available balance is: <strong>{{number_format($leagueUser->balance, 2)}}</strong>.</p>
     <p>Bid on <strong>{{$auction->movie->name}}</strong>.</p>
-    <p>You may bid between <strong>{{$min_bid}}USD</strong> and <strong>{{$max_bid}}USD</strong>.</p>
+    <p>You may bid between <strong>{{number_format($min_bid, 2)}}USD</strong> and <strong>{{number_format($max_bid, 2)}}USD</strong>.</p>
     {!! Form::open(array('route' => array('auctions.update', $auction->id), 'class'=>'form-horizontal row-fluid', 'method'=>'PUT')) !!}
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class="control-group">

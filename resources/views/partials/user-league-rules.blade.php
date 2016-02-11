@@ -14,12 +14,27 @@
                 @if($rule->round_duration != 0)
                 <br/>Round: {{$rule->round_duration}} hours 
                 @endif
-                <br/>Movies countdown: {{$rule->ind_film_countdown}} mins</td>
+                @if($rule->blind_bid != 'Y')
+                <br/>Movies countdown: {{$rule->ind_film_countdown}} mins
+                <br/>Timeout: {{$rule->auction_timeout}} mins
+                @endif
+                </td>
             </tr>
+            @if($rule->blind_bid != 'Y')
             <tr>
                 <td>Bids</td>
                 <td>Min: {{$rule->min_bid}} Max: {{$rule->max_bid}}</td>
             </tr>
+            <tr>
+                <td>Increment</td>
+                <td>Min: {{number_format($rule->min_increment, 2)}} Max: {{number_format($rule->max_increment, 2)}}</td>
+            </tr>
+            @else
+            <tr>
+                <td>Blind</td>
+                <td>Yes</td>
+            </tr>
+            @endif
             <tr>
                 <td>Selection</td>
                 <td>Random: {{($rule->randomizer == "Y") ? "Yes" : "No"}} <br/>Auto-Select: {{($rule->auto_select == 'Y') ? "Yes" : "No"}} 
@@ -28,11 +43,7 @@
                 @endif</td>
             </tr>
             <tr>
-                <td>Blind</td>
-                <td>{{$rule->blind_bid == "Y" ? "Yes" : "No"}}</td>
-            </tr>
-            <tr>
                 <td>Misc</td>
-                <td>Timeout: {{$rule->auction_timeout}} mins <br/>Denomination: {{$rule->denomination}} <br/>Movie Takings: {{$rule->movie_takings_duration}} weeks</td>
+                <td>Movie Takings: {{$rule->movie_takings_duration}} weeks</td>
             </tr>
         </table>

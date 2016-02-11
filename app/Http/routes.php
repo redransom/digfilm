@@ -95,6 +95,7 @@ Route::group(['middleware'=>'auth'], function() {
 
         Entrust::routeNeedsRole('leagues', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('admin-dashboard', ['Admin'], Redirect::to('/'));
+        Entrust::routeNeedsRole('user', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('user-disable', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('user-enable', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('users', ['Admin'], Redirect::to('/'));
@@ -117,6 +118,7 @@ Route::group(['middleware'=>'auth'], function() {
         Route::put('movies-admin-search', ['as'=>'movies-admin-search', 'uses'=>'MoviesController@index']);
         Route::put('users-admin-search', ['as'=>'users-admin-search', 'uses'=>'UsersController@index']);
 
+        Route::get('user/{id}', ['as'=>'user', 'uses'=>'UsersController@show']);
         Route::get('users/{type}', ['as'=>'users', 'uses'=>'UsersController@index']);
         Route::get('users/{id}/disable', ['as'=>'user-disable', 'uses'=>'UsersController@disable']);
         Route::get('users/{id}/enable', ['as'=>'user-enable', 'uses'=>'UsersController@enable']);

@@ -120,8 +120,8 @@
                     <div class="control-group">
                         <label class="control-label" for="LeagueName">Min/Max Increment</label>
                         <div class="controls">
-                            {!! Form::text('min_increment', $league->rule->min_increment, ['class'=>'span2']) !!} to 
-                            {!! Form::text('max_increment', $league->rule->max_increment, ['class'=>'span2']) !!}
+                            {!! Form::text('min_increment', $league->rule->min_increment, ['class'=>'span4']) !!} to 
+                            {!! Form::text('max_increment', $league->rule->max_increment, ['class'=>'span4']) !!}
                             <span class="help-inline">Whats the lowest increment that can be used? Use 0.1 for 10cents, and 3 for 3 dollars and again
                             the same for the maximum jump - is it 1-2 dollars or even 10 dollars?</span>
                         </div>

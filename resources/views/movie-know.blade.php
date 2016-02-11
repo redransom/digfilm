@@ -146,11 +146,17 @@
         @if($movie->bids()->count() > 0 && isset($authUser))
         <h2><span>Stats</span></h2>
         <div class="content-padding">
-                <canvas id="myLineChart" width="400" height="400"></canvas>
+                <!-- canvas id="myLineChart" width="400" height="400"></canvas-->
                 <script src="{{ asset('jscript/Chart.min.js') }}"></script>
 
+                <canvas id="lcNoOfBids" width="400" height="400"></canvas>
+
+
+                <canvas id="lcLast30" width="400" height="400"></canvas>
+
+
                 <script type="text/javascript">
-                    var ctx = document.getElementById("myLineChart").getContext("2d"),
+                    var /*ctx = document.getElementById("myLineChart").getContext("2d"),
                         data = {
                             labels: ["January", "February", "March", "April", "May", "June", "July"],
                             datasets: [
@@ -165,7 +171,7 @@
                                     data: [65, 59, 80, 81, 56, 55, 40]
                                 }
                             ]
-                        },
+                        },*/
                         options = {
 
                             ///Boolean - Whether grid lines are shown across the chart
@@ -215,9 +221,47 @@
 
                         };
 
-                    var myLineChart = new Chart(ctx).Line(data, options);
+                    //var myLineChart = new Chart(ctx).Line(data, options);
 
+                    var ctx2 = document.getElementById("lcNoOfBids").getContext("2d"),
+                        data2 = {
+                            labels: [{{join($days, ",")}}],
+                            datasets: [
+                                {
+                                    label: "No Of Bids",
+                                    fillColor: "rgba(220,220,220,0.2)",
+                                    strokeColor: "rgba(220,220,220,1)",
+                                    pointColor: "rgba(220,220,220,1)",
+                                    pointStrokeColor: "#fff",
+                                    pointHighlightFill: "#fff",
+                                    pointHighlightStroke: "rgba(220,220,220,1)",
 
+                                    data: [{{join($no_of_bids, ",")}}]
+                                }
+                            ]
+                        };
+
+                    var noOfBids = new Chart(ctx2).Line(data2, options);
+
+                    var ctx3 = document.getElementById("lcLast30").getContext("2d"),
+                        data3 = {
+                            labels: [{{join($bid_groups['totals'], ",")}}],
+                            datasets: [
+                                {
+                                    label: "Last 30 bids",
+                                    fillColor: "rgba(220,220,220,0.2)",
+                                    strokeColor: "rgba(220,220,220,1)",
+                                    pointColor: "rgba(220,220,220,1)",
+                                    pointStrokeColor: "#fff",
+                                    pointHighlightFill: "#fff",
+                                    pointHighlightStroke: "rgba(220,220,220,1)",
+
+                                    data: [{{join($bid_groups['amount'], ",")}}]
+                                }
+                            ]
+                        };
+
+                    var last30Bids = new Chart(ctx3).Line(data3, options);
                 </script>
               
         </div>

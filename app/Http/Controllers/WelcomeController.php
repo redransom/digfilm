@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 use Auth;
+use DB;
 use App\Models\User;
 use App\Models\League;
 use App\Models\Auction;
@@ -302,6 +303,11 @@ class WelcomeController extends Controller {
 			$movie = Movie::where('slug', $id)->first();
 		}
 
+		$no_of_bids = array();
+		$last_30 = array();
+		$days = array();
+		$bid_groups = array();
+
 		if (isset($authUser->id)) {
 			//get movie stats
 			//list of all bids in last 30 days
@@ -310,25 +316,48 @@ class WelcomeController extends Controller {
 			$sql = "SELECT COUNT(movies_id) AS no_of_bids, DAYOFMONTH(created_at) AS day_no FROM `auction_bids` ";
 			$sql .= "WHERE `movies_id` = '".$movie->id."' AND created_at >= '".$last_month."' GROUP BY DAYOFMONTH(created_at), ";
 			$sql .= "DAY(created_at) ORDER BY DAY(created_at)";
-			
-/*			$no_of_bids = AuctionBid::selectRaw('COUNT(movies_id) AS no_of_bids, DAYOFMONTH(created_at) AS day_no')
-            	->groupBy('DAYOFMONTH(created_at)')->groupBy('DAY(created_at)')
-            	->where('movies_id', $movie->id)->where('created_at', '>=', $last_month)->orderBy('DAY(created_at)')->get();
-*/
+
+			$no_of_bids_data = DB::select(DB::raw($sql));
+
+			for($i=1; $i<31; $i++)
+				$days[] = $i;
+
+			//get the data points
+			foreach($days as $day_no) {
+				$added = false;
+				foreach ($no_of_bids_data as $bid) {
+					if ($bid->day_no == $day_no) {
+						$no_of_bids[$day_no] = $bid->no_of_bids;	
+						$added = true;
+						break;
+					}
+				}
+
+				if (!$added)
+					$no_of_bids[$day_no] = 0;
+			}
 
 			//list of bid value in last 30 days
-			$sql = "SELECT bid_amount, COUNT(bid_amount) FROM `auction_bids` WHERE `movies_id` = '".$movie->id;
+			$sql = "SELECT bid_amount, COUNT(bid_amount) as no_of_bids FROM `auction_bids` WHERE `movies_id` = '".$movie->id;
 			$sql .= "' AND created_at >= '".$last_month."' GROUP BY bid_amount ORDER BY bid_amount";
-			echo $sql;
+			$last_30_data = DB::select(DB::raw($sql));
+
+
+			foreach($last_30_data as $bid) {
+				$bid_groups['amount'][] = $bid->bid_amount;
+				$bid_groups['totals'][] = $bid->no_of_bids;
+			}
+
 		}
 
-
-		//$movie->bids()->select(DB::raw('count(*) as bid_count, bid_amount'))->groupby('bid_amount')->orderBy('bid_amount')->toSql()
-		//var_dump($movie->bids()->select(DB::raw('count(*) as bid_count, bid_amount'))->groupby('bid_amount')->orderBy('bid_amount')->lists('bid_amount', 'bid_count'))
 		return view('movie-know')
 			->with('authUser', $authUser)
 			->with('fullwidth', true)
 			->with('padding', true)
+			->with('no_of_bids', $no_of_bids)
+			->with('bid_groups', $bid_groups)
+			->with('days', $days)
+			->with('last_30', $last_30)
 			->with('movie', $movie);	
 
 	}
