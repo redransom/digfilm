@@ -5,7 +5,7 @@
     <thead>
         <tr>
         <th>&nbsp;</th><th>Movie</th><th>Release Date</th>
-        <th>Your Bid /<br/>$ USD</th>
+        <th>Your Bid</th>
         <th>Place Bid</th>
         </tr>
     </thead>

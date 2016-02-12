@@ -239,6 +239,12 @@ Breadcrumbs::register('league-show', function($breadcrumbs, $object)
     $breadcrumbs->push('League Details', route('league-show', [$object->id]));
 });
 
+Breadcrumbs::register('roster', function($breadcrumbs, $object)
+{
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Roster for '.$object->name, route('roster', [$object->id]));
+});
+
 Breadcrumbs::register('news', function($breadcrumbs, $object)
 {
     $breadcrumbs->parent('home');

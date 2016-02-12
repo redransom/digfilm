@@ -15,11 +15,11 @@
 
                         <!--li><a href="#">
                             Sign Up
-                        </a></li-->
+                        </a></li>
 
                         <li><a href="#">
                             Forgot your password?
-                        </a></li>
+                        </a></li-->
                     </ul>
                 </div><!-- /.nav-collapse -->
             </div>

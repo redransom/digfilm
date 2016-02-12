@@ -393,6 +393,8 @@ class WelcomeController extends Controller {
 		$currentLeagueUser = LeagueUser::where('user_id', $authUser->id)->where('league_id', $league->id)->first();
 		return view('league-movie-roster')
 			->with('currentLeague', $league)
+			->with('page_name', 'roster')
+			->with('object', $league)
 			->with('rankings', $rankings)
 			->with('currentLeagueUser', $currentLeagueUser)
 			->with('authUser', $authUser);	

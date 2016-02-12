@@ -146,33 +146,13 @@
         @if($movie->bids()->count() > 0 && isset($authUser))
         <h2><span>Stats</span></h2>
         <div class="content-padding">
-                <!-- canvas id="myLineChart" width="400" height="400"></canvas-->
                 <script src="{{ asset('jscript/Chart.min.js') }}"></script>
 
-                <canvas id="lcNoOfBids" width="400" height="400"></canvas>
-
-
-                <canvas id="lcLast30" width="400" height="400"></canvas>
-
+                <canvas id="lcNoOfBids" width="250" height="200"></canvas>
+                <canvas id="lcLast30" width="250" height="200"></canvas>
 
                 <script type="text/javascript">
-                    var /*ctx = document.getElementById("myLineChart").getContext("2d"),
-                        data = {
-                            labels: ["January", "February", "March", "April", "May", "June", "July"],
-                            datasets: [
-                                {
-                                    label: "My First dataset",
-                                    fillColor: "rgba(220,220,220,0.2)",
-                                    strokeColor: "rgba(220,220,220,1)",
-                                    pointColor: "rgba(220,220,220,1)",
-                                    pointStrokeColor: "#fff",
-                                    pointHighlightFill: "#fff",
-                                    pointHighlightStroke: "rgba(220,220,220,1)",
-                                    data: [65, 59, 80, 81, 56, 55, 40]
-                                }
-                            ]
-                        },*/
-                        options = {
+                    var options = {
 
                             ///Boolean - Whether grid lines are shown across the chart
                             scaleShowGridLines : true,
@@ -220,8 +200,6 @@
                             legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
 
                         };
-
-                    //var myLineChart = new Chart(ctx).Line(data, options);
 
                     var ctx2 = document.getElementById("lcNoOfBids").getContext("2d"),
                         data2 = {

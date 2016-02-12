@@ -27,7 +27,7 @@
         </tr>
     @endforeach
         <?php $vfm = ($total_gross / $bid) / 100000;?>
-        <tr><td colspan="2">Totals</td><td align="right"><strong>${{$bid}}</strong></td>
+        <tr><td colspan="2">Totals</td><td align="right"><strong>${{number_format($bid, 2)}}</strong></td>
         <td align="right"><strong>${{number_format($total_gross, 0, ".", ",")}}</strong></td><td align="right"><strong>{{number_format($vfm, 2)}}</strong></td></tr>        
     </tbody>
 </table>
