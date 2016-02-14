@@ -23,7 +23,7 @@
         <tbody>
             @foreach($authUser->inLeagues()->where('auction_stage', '2')->orderBy('auction_close_date', 'asc')->get() as $league)
             <tr>
-                <td><a class="btn btn-mini btn-danger" href="{{URL('league-show/'.$league->id)}}">{{$league->name}}</a></td>
+                <td><a class="btn btn-mini btn-danger" href="{{URL('league-play/'.$league->id)}}">{{$league->name}}</a></td>
                 @if(!is_null($league->rule_set))
                 <td>{{$league->rule_set->name}}</td>
                 @else

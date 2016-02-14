@@ -1,117 +1,189 @@
 @extends('layouts.site')
 
 @section('content')
-<h2><span>Welcome to the "{{$currentLeague->name}}" League</span></h2>
-<div class="content-padding">
+<style>
+/* Man content & sidebar top lne, default #256193 */
+            #sidebar .panel,
+            #main-box #main {
+                border-top: 5px solid #256193;
+            }
 
-    @if($currentLeague->description != '')
-    <h4><em>{{$currentLeague->description}}</em></h4>
-    @endif
-    @if(!is_null($currentLeague->file_name))
-    <style>
-    .league_image {
-        float: right;
-        width: 175px;
-        padding: 5px;
-        background-color: #fff;
-        border: 1px solid #ddd;
-    }
-    </style>
-    <div class="league_image">
-        <img src="{{asset($currentLeague->file_name)}}" width="150px" />
-    </div>
-    @endif
+            /* Slider colors, default #256193 */
+            a.featured-select,
+            #slider-info .padding-box ul li:before,
+            .home-article.right ul li a:hover {
+                background-color: #256193;
+            }
 
-    <h2>Available Auctions</h2>
-    @if(is_null($currentLeague->auction_start_date))
-    <p>The auction will start soon!</p>
+            /* Button color, default #256193 */
+            .panel-duel-voting .panel-duel-vote a {
+                background-color: #256193;
+            }
 
-    @elseif(strtotime($currentLeague->auction_start_date) > time())
-    <p>The auction will start on the <strong>{{date("jS F Y g:iA", strtotime($currentLeague->auction_start_date))}}</strong>.</p>
-    @elseif($currentLeague->auctions()->count() > 0)
-    <?php $players = $currentLeague->players->lists('name', 'id'); ?>
+            /* Menu background color, default #000 */
+            #menu-bottom.blurred #menu > .blur-before:after {
+                background-color: #000;
+            }
 
-    @if($currentLeague->rule->blind_bid != 'Y')
+            /* Top menu background, default #0D0D0D */
+            #header-top {
+                background: #0D0D0D;
+            }
 
-    @include('partials.user-auctions', ['currentLeague'=>$currentLeague, 'players'=>$players, 'leagueUser'=>$currentLeagueUser, 'blind'=>($currentLeague->rule->blind_bid == 'Y'), 'previousBids'=>$previous_bids])
+            /* Sidebar panel titles color, default #333333 */
+            #sidebar .panel > h2 {
+                color: #333333;
+            }
 
-    @include('partials.user-expired-auctions', ['tableTitle'=>'Films Purchased', 'players'=>$players, 'leagueUser'=>$currentLeagueUser, 'auctions'=>$wonAuctions])
+            /* Main titles color, default #353535 */
+            #main h2 span {
+                color: #353535;
+            }
 
-    @else
+            /* Selection color, default #256193 */
+            ::selection {
+                background: #256193;
+            }
 
-    @include('partials.site-blind-auction', ['currentLeague'=>$currentLeague, 'players'=>$players, 'leagueUser'=>$currentLeagueUser, 'previousBids'=>$previous_bids])
+            /* Links hover color, default #256193 */
+            .article-icons a:hover,
+            a:hover {
+                color: #256193;
+            }
 
-    @include('partials.user-expired-auctions', ['tableTitle'=>'Films Bid For', 'players'=>$players, 'leagueUser'=>$currentLeagueUser, 'auctions'=>$wonAuctions])
+            /* Image hover background, default #256193 */
+            .article-image-out,
+            .article-image {
+                background: #256193;
+            }
 
-    @endif
+            /* Image hover icons color, default #256193 */
+            span.article-image span .fa {
+                color: #256193;
+            }
 
-    @include('partials.user-expired-auctions', ['tableTitle'=>'Expired Movies', 'players'=>$players, 'leagueUser'=>$currentLeagueUser, 'auctions'=>$expiredAuctions])
-
-    @else
-    <p>The auction is almost ready!</p>
-    @endif
-
-    @if(is_null($currentLeague->auction_start_date) || (strtotime($currentLeague->auction_start_date) > time())) 
-    <h2>Players</h2>
-    <p>Who you are competing against.</p>
-    @if($currentLeague->players->count())
-    <ul>
-        @foreach($currentLeague->players as $player)
-        <li>{{$player->name}}</li>
-        @endforeach
-    </ul>
-    @endif
-    
-    <br/>
-    <h2>Movies</h2>
-    <p>This is a list of all movies that are to be played for in this league.</p>
-        @if($currentLeague->movies->count() > 0)
-
-            <?php $movieCnt = 0; ?>
-            <ul id="movie-badge" class="clearfix">
-            @foreach($movies as $movie)
-                @if(($movieCnt % 4) == 0 && $movieCnt != 0)
-                <li class="last">
-                @else
-                <li>
-                @endif
-                
-                @if($movie->firstImage())
-                    <img src="{{$movie->firstImage()->file_name}}" alt="{{$movie->firstImage()->description}}" width="100px"/>
-                @endif
-                <a href="{{URL('movie-knowledge', [$movie->id])}}">{{$movie->name}}</a>
-                @if($movie->opening_bid != 0)
-                <br/>Opening Bid: <strong>${{$movie->opening_bid}}</strong>
-                @endif
-                </li>
-                <?php $movieCnt++;?>
-            @endforeach
-            </ul>
+</style>
+<div id="main" itemscope="" itemtype="http://data-vocabulary.org/Review">
+    <div class="game-info-left">
+        @if(!is_null($currentLeague->file_name))
+        <img itemprop="image" src="{{asset($currentLeague->file_name)}}" class="game-poster" alt="" />
+        @else
+        <img itemprop="image" src="{{asset('/images/TNBF.jpg')}}" class="game-poster" alt="" />
         @endif
-    
-    <br/>
-    @elseif(!is_null($currentLeague->round_amount))
-    @include('partials.user-auction-movies', ['movies'=>$currentLeague->movies()->where('chosen', '0')->get(), 'movieTitle'=>'Remaining Movies'])
-    @endif
-    @include('partials.user-league-rules', ['rule'=>$currentLeague->rule, 'leagueUser'=>$currentLeagueUser]) 
+        <div class="game-info-details">
+            <!--div class="game-info-buttons">
+                <a href="#" class="defbutton green"><i class="fa fa-bell"></i>Follow Film</a>
+                <a href="games-single-video-single.html" class="defbutton"><i class="fa fa-film"></i>View Trailer</a>
+            </div-->
+            <div class="game-info-rating">
+                <h3>League Information</h3>
+                <hr />
+                <!--a href="post.html" class="defbutton"><i class="fa fa-file-text-o"></i>Read Review</a-->
+            </div>
+            <!--div class="game-info-buttons">
+                <a href="games-single-shop.html" class="defbutton"><i class="fa fa-shopping-cart"></i>Buy game starting from <span class="pricetag">55 &euro;</span></a>
+                <a href="#" class="defbutton"><i class="fa fa-gamepad"></i>I have played</a>
+            </div-->
+            <div class="game-info-graph">
+                <div>
+                    <span>Started</span>
+                    <strong itemprop="datePublished" content="{{$currentLeague->auction_start_date}}">{{date("l, jS F Y", strtotime($currentLeague->auction_start_date))}}</strong>
+                </div>
+                @if(isset($currentLeague->rule_set->name))
+                <div>
+                    <span>Rules</span>
+                    <strong itemprop="applicationCategory"><a href="games.html">{{$currentLeague->rule_set->name}}</a></strong>
+                </div>
+                @endif
+            </div>
+        </div>
+    </div>
+    <div class="game-info-right">
+
+        <!-- BEGIN .game-menu -->
+        <div class="game-menu" style="border-bottom: 5px solid #921913;">
+            <div class="game-overlay-info">
+                <h1 itemprop="itemreviewed">{{$currentLeague->name}}</h1>
+            </div>
+            <ul>
+                <li class="active" style="background-color: #921913;"><a href="#info"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;Information</a></li>
+                <!--li><a href="games-single-news.html"><i class="fa fa-comments"></i>&nbsp;&nbsp;News</a></li-->
+                <!--li><a href="games-single-video.html"><i class="fa fa-film"></i>&nbsp;&nbsp;Video (3)</a></li>
+                <li><a href="photo-gallery-single.html"><i class="fa fa-camera-retro"></i>&nbsp;&nbsp;Photos (18)</a></li-->
+            </ul>
+        <!-- END .game-menu -->
+        </div>
+
+        <h2><span name='info'>Description</span></h2>        
+        <div class="content-padding">
+        {{$currentLeague->description}}
+        </div>
+
+        <div class="clear-float"></div>
+        <h2>Stats</h2>
+
+        <h3><span>League Pot Size</span></h3>
+        @if($currentLeague->players()->count() > 0)
+        <p><strong>{{$currentLeague->players()->count() * 100}} USD</strong></p>
+        @endif
+
+
+        <h3><span>Players</span></h3>
+        <p>
+        The following <strong>{{$currentLeague->players()->count()}}</strong> players are in the league:
+        </p>
+
+        @if($currentLeague->players()->count() > 0)
+
+        <div class="content-padding">
+            <!-- BEGIN .photo-blocks -->
+            <div class="photo-blocks">
+                <ul>
+                    @foreach($currentLeague->players as $player)
+                    <li>
+                        <!--a href="#" class="article-image-out"-->
+                        @if(!is_null($player->thumbnail))
+                        <span class="article-image"><img src="{{asset($player->file_name) }}" width="128" height="128" alt="" title="" /></span><!--/a-->
+                        @else
+                        <span class="article-image"><img src="{{asset('/images/TNBF.jpg') }}" width="128" height="128" alt="" title="" /></span><!--/a-->
+                        @endif
+                        <span>{{$player->fullName()}}</span>
+
+                        </li>
+                    @endforeach
+                </ul>
+                <div class="clear-float"></div>
+            <!-- END .photo-blocks -->
+            </div>
+        </div>
+        @endif
+
+        @if($currentLeague->auction_stage == 3)
+
+        <h3>League Revenue</h3>
+        <ul>
+            <li>Total League Revenue: <strong>{{$currentLeague->rosters()->sum('total_gross')/1000000}}m USD</strong></li>
+            <li>Top two films on revenue: 
+                <ul>
+                    @foreach($currentLeague->rosters()->orderBy('total_gross', 'DESC')->limit(2)->get() as $rev)
+                    <li>{{$rev->movie->name}} <strong>{{$rev->total_gross/1000000}}m USD</strong></li>
+                    @endforeach
+                </ul>
+            </li>
+        </ul>
+        <br/>
+
+        <h3>Current Rankings</h3>
+        <div class="content-padding">
+
+        </div>
+
+
+        @endif
+    </div>
+
 </div>
 
-<?php function auctionTimer ($auctionid, $auctionTime, $name='bid_link') { ?>
-    <div id="{{$name}}<?php echo $auctionid; ?>"></div>
-    <script type="text/javascript">
-      $('#{{$name}}<?php echo $auctionid; ?>').countdown('<?php echo $auctionTime; ?>', function(event) {
-        <?php 
-        //if auction finish time - current time is over an hour then show the hour not just the minute
-        if (strtotime($auctionTime) - time() > 3600) { ?>
-        $(this).html(event.strftime('%-H:%-M:%S'));
-        <?php } else { ?>
-        $(this).html(event.strftime('%-M:%S'));
-        <?php } ?>
-        if(event.elapsed) {
-            $('#{{$name}}_{{$auctionid}}').val = "ENDED";
-        }
-      });
-    </script>
-<?php } ?>
-
+<div class="clear-float"></div>
 @endsection
+

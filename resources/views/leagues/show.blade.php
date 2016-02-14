@@ -56,19 +56,20 @@
                         </div>
 
                         <div class="module-body">
-                        @if(!empty($players))
+                        @if($league->players()->count() > 0)
                         <ul class="unstyled">
-                        @foreach ($players as $player)
+                        @foreach ($league->players as $player)
+
                             <li><a href="{{URL('users', array('id'=>$player->id))}}">{{$player->fullName()}}</a>&nbsp;<a href="{{Route('league-remove-player', array($player->pivot->id))}}">x</a></li>
                         @endforeach
                         </ul>
                         @else
                         <p>The league has no players currently. </p>
                         @endif
-                        @if($players->count() < $league->rule->min_players)
+                        @if($league->players()->count() < $league->rule->min_players)
                         <p><strong>More players are needed for this league before it can go live.</strong></p>
                         @endif
-                        @if($players->count() < $league->rule->max_players)
+                        @if($league->players()->count() < $league->rule->max_players)
                         <ul class="inline">
                             <li><a href="{{Route('league-add-player', array('id'=>$league->id))}}">Add Player</a></li>
                         </ul>

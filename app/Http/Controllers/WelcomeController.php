@@ -156,11 +156,11 @@ class WelcomeController extends Controller {
 	}
 
 	/**
-	 * Show league details
+	 * Show league for playing
 	 *
 	 * @return void
 	 */
-	public function getLeague($id) {
+	public function getLeaguePlay($id) {
 		$authUser = Auth::user();
 		if (!isset($authUser))
 			return redirect('/auth/login');
@@ -198,7 +198,7 @@ class WelcomeController extends Controller {
 
 		$leagueUsers = LeagueUser::where('league_id', $league->id)->get();
 		$currentLeagueUser = LeagueUser::where('user_id', $authUser->id)->where('league_id', $league->id)->first();
-		return view('league-show')
+		return view('league-play')
 			->with('currentLeague', $league)
 			->with('page_name', 'league-show')
 			->with('object', $league)
@@ -210,6 +210,73 @@ class WelcomeController extends Controller {
 			->with('currentLeagueUser', $currentLeagueUser)
 			->with('authUser', $authUser);	
 	}
+
+	/**
+	 * Show league for viewing
+	 *
+	 * @return void
+	 */
+	public function getLeague($id) {
+		$authUser = Auth::user();
+		if (!isset($authUser))
+			return redirect('/auth/login');
+
+		$league = League::find($id);
+
+		//dont show leagues that have been disabled.
+		if ($league->enabled == 0)
+			return redirect('/');
+
+		/*
+		Need to find the league pot size (based on balances)
+		Player count
+		Total league revenue i.e. box office revenue of all movies in league (if at that stage)
+		Top two movies in league on revenue
+		Highest paid film
+		Highest bid (same as above?)
+		Ranking table
+		*/
+
+
+		$movies = array();
+		if ($league->movies()->count() > 0) {
+			$movies_attached = $league->movies()->get();
+
+			$movie_ids = array();
+			foreach($movies_attached as $attach) {
+				$movie_ids[] = $attach->id;
+			}
+
+			$movies = Movie::whereIn('id', $movie_ids)->orderBy('name', 'asc')->get();
+		}
+
+		//work out auctions
+		$wonAuctions = $league->auctions()->where('ready_for_auction', '4')->orderBy('name', 'asc')->get();
+		$expiredAuctions = $league->auctions()->whereIn('ready_for_auction', ['2', '3'])->orderBy('name', 'asc')->get();
+
+		//TODO: get list of bids made by user for this auction
+		$availableAuctions = Auction::where('leagues_id', $id)->lists('id');
+		$previousBids = AuctionBid::where('users_id', $authUser->id)->whereIn('auctions_id', $availableAuctions)->lists('bid_amount', 'auctions_id');
+
+		$leagueUsers = LeagueUser::where('league_id', $league->id)->get();
+		$currentLeagueUser = LeagueUser::where('user_id', $authUser->id)->
+					where('league_id', $league->id)->first();
+
+		return view('league-show')
+			->with('currentLeague', $league)
+			->with('page_name', 'league-show')
+			->with('padding', true)
+			->with('object', $league)
+			->with('fullwidth', true)
+			->with('leagueUsers', $leagueUsers)
+			->with('wonAuctions', $wonAuctions)
+			->with('expiredAuctions', $expiredAuctions)
+			->with('movies', $movies)
+			->with('previous_bids', $previousBids)
+			->with('currentLeagueUser', $currentLeagueUser)
+			->with('authUser', $authUser);	
+	}
+
 
 	/**
 	 * Create a league (if signed in)

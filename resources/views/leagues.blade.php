@@ -13,7 +13,8 @@
             </thead>
             <tbody>
                 @foreach($leagues as $league)
-                <tr<?php echo (($league_counter % 2) == 1) ? " class='odd'" : ""; ?>><td>{{$league->name}}</td>
+                <tr<?php echo (($league_counter % 2) == 1) ? " class='odd'" : ""; ?>>
+                <td><a href="{{URL('league-show', ['id'=>$league->id])}}">{{$league->name}}</a></td>
                 @if($league->rule)
                 <td>{{count($league->players)}} / {{$league->rule->min_players}} / {{$league->rule->max_players}}</td>
                 @else

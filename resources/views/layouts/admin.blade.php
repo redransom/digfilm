@@ -27,7 +27,7 @@
     <script src="{{ asset('/admin/scripts/flot/jquery.flot.resize.js') }}" type="text/javascript"></script>
 
     <script src="{{ asset('/admin/scripts/datatables/jquery.dataTables.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('/admin/scripts/common.js') }}" type="text/javascript"></script>
+    <!--script src="{{ asset('/admin/scripts/common.js') }}" type="text/javascript"></script-->
     @endif
     @if(isset($show_stars))
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -37,17 +37,6 @@
     <script type="text/javascript" src="{{ asset('/admin/scripts/jquery.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/admin/scripts/jquery.datetimepicker.min.js') }}"></script>
 
-    @if(isset($use_graph))
-    <script>
-        $(document).ready(function() {
-            $('.datatable-1').dataTable();
-            /*$('.dataTables_paginate').addClass("btn-group datatable-pagination");
-            $('.dataTables_paginate > a').wrapInner('<span />');
-            $('.dataTables_paginate > a:first-child').append('<i class="icon-chevron-left shaded"></i>');
-            $('.dataTables_paginate > a:last-child').append('<i class="icon-chevron-right shaded"></i>');*/
-        } );
-    </script>
-    @endif
 </head>
 <body>
     <!-- NAVBAR GOES HERE -->

@@ -64,6 +64,7 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('edit-profile', ['as'=>'edit-profile', 'uses'=>'WelcomeController@getEditUser']);
 
         Route::get('league-show/{id}', ['as'=>'league-show', 'uses'=>'WelcomeController@getLeague']);
+        Route::get('league-play/{id}', ['as'=>'league-play', 'uses'=>'WelcomeController@getLeaguePlay']);
         Route::get('manage/{id}', ['as'=>'manage', 'uses'=>'WelcomeController@manageLeague']);
         /* See if using a new route will fix it - to keep it away from leagues route below */
         Route::post('league-store', ['as'=>'league-store', 'uses'=>'LeaguesController@store']);
