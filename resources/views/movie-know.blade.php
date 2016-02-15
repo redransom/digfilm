@@ -200,7 +200,7 @@
                             legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
 
                         };
-
+                    @if(isset($no_of_bids))
                     var ctx2 = document.getElementById("lcNoOfBids").getContext("2d"),
                         data2 = {
                             labels: [{{join($days, ",")}}],
@@ -220,7 +220,8 @@
                         };
 
                     var noOfBids = new Chart(ctx2).Line(data2, options);
-
+                    @endif
+                    @if(isset($bid_groups['totals']))
                     var ctx3 = document.getElementById("lcLast30").getContext("2d"),
                         data3 = {
                             labels: [{{join($bid_groups['totals'], ",")}}],
@@ -240,6 +241,7 @@
                         };
 
                     var last30Bids = new Chart(ctx3).Line(data3, options);
+                    @endif
                 </script>
               
         </div>

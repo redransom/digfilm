@@ -142,8 +142,8 @@
                     @foreach($currentLeague->players as $player)
                     <li>
                         <!--a href="#" class="article-image-out"-->
-                        @if(!is_null($player->thumbnail))
-                        <span class="article-image"><img src="{{asset($player->file_name) }}" width="128" height="128" alt="" title="" /></span><!--/a-->
+                        @if(!is_null($player->thumbnail) || $player->thumbnail != '')
+                        <span class="article-image"><img src="{{asset($player->thumbnail) }}" width="128" height="128" alt="" title="" /></span><!--/a-->
                         @else
                         <span class="article-image"><img src="{{asset('/images/TNBF.jpg') }}" width="128" height="128" alt="" title="" /></span><!--/a-->
                         @endif
