@@ -88,6 +88,8 @@
                 <div>
                     <span>Started</span>
                     <strong itemprop="datePublished" content="{{$currentLeague->auction_start_date}}">{{date("l, jS F Y", strtotime($currentLeague->auction_start_date))}}</strong>
+                    <span>Ends</span>
+                    <strong itemprop="datePublished" content="{{$currentLeague->end_date}}">{{date("l, jS F Y", strtotime($currentLeague->end_date))}}</strong>
                 </div>
                 @if(isset($currentLeague->rule_set->name))
                 <div>
@@ -162,11 +164,11 @@
 
         <h3>League Revenue</h3>
         <ul>
-            <li>Total League Revenue: <strong>{{$currentLeague->rosters()->sum('total_gross')/1000000}}m USD</strong></li>
+            <li>Total League Revenue: <strong>{{number_format($currentLeague->rosters()->sum('total_gross')/1000000, 2)}}m USD</strong></li>
             <li>Top two films on revenue: 
                 <ul>
                     @foreach($currentLeague->rosters()->orderBy('total_gross', 'DESC')->limit(2)->get() as $rev)
-                    <li>{{$rev->movie->name}} <strong>{{$rev->total_gross/1000000}}m USD</strong></li>
+                    <li>{{$rev->movie->name}} <strong>{{number_format($rev->total_gross/1000000, 2)}}m USD</strong></li>
                     @endforeach
                 </ul>
             </li>
@@ -175,7 +177,16 @@
 
         <h3>Current Rankings</h3>
         <div class="content-padding">
-
+            @if($rankings->count()> 0)
+            <table class="feature-table dark-gray">
+                <tr><th>Pos</th><th>Player</th><th>Gross</th><th>VFM</th></tr>
+                <?php $pos = 0; ?>
+            @foreach($rankings->orderBy('total_gross', 'DESC')->get() as $rank)
+                <tr><td>{{$pos+1}}</td><td>{{get_user_by_id($currentLeague->players, $rank->users_id)->fullName()}}</td>
+                <td>{{number_format($rank->total_gross/1000000, 2)}}m USD</td><td>{{$rank->vfm}}</td></tr>
+            @endforeach
+            </table>
+            @endif
         </div>
 
 
@@ -187,3 +198,13 @@
 <div class="clear-float"></div>
 @endsection
 
+<?php
+
+function get_user_by_id($players, $player_id) {
+    foreach ($players as $player) {
+        if ($player->id == $player_id)
+            return $player;
+    }
+}
+
+?>

@@ -233,6 +233,18 @@ Breadcrumbs::register('email-verified', function($breadcrumbs)
     $breadcrumbs->push('Email Verified', route('email-verified'));
 });
 
+Breadcrumbs::register('all-leagues', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');        
+    $breadcrumbs->push('All Public Leagues');
+});
+
+Breadcrumbs::register('all-leagues-loggedin', function($breadcrumbs)
+{
+    $breadcrumbs->parent('dashboard');        
+    $breadcrumbs->push('All Public Leagues');
+});
+
 Breadcrumbs::register('league-show', function($breadcrumbs, $object)
 {
     $breadcrumbs->parent('dashboard');

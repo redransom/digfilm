@@ -143,14 +143,17 @@ class WelcomeController extends Controller {
 		$authUser = Auth::user();
 
 		if (!isset($authUser))
+			//ensure auction stage is less than 4 as this means the league has ended
 			$leagues = League::where('type', 'U')->where('enabled', 1)
 	        	->Where(function ($query) {
-	        		$query->whereNull('auction_stage')->orWhere('auction_stage', '<', '2');
+	        		$query->whereNull('auction_stage')->orWhere('auction_stage', '<', '4');
 	        	})->get();
 		else
 			$leagues = League::availableLeagues($authUser->id);
 
 		return view('leagues')
+			->with('page_name', (is_null($authUser) ? 'all-leagues' : 'all-leagues-loggedin'))
+			->with('object', $authUser)
 			->with('leagues', $leagues)
 			->with('authUser', $authUser);	
 	}
@@ -236,27 +239,11 @@ class WelcomeController extends Controller {
 		Highest bid (same as above?)
 		Ranking table
 		*/
+		$rankings = array();
+		if ($league->auction_stage == 3)
+			$rankings = LeagueRoster::rankings($league->id);
 
-
-		$movies = array();
-		if ($league->movies()->count() > 0) {
-			$movies_attached = $league->movies()->get();
-
-			$movie_ids = array();
-			foreach($movies_attached as $attach) {
-				$movie_ids[] = $attach->id;
-			}
-
-			$movies = Movie::whereIn('id', $movie_ids)->orderBy('name', 'asc')->get();
-		}
-
-		//work out auctions
-		$wonAuctions = $league->auctions()->where('ready_for_auction', '4')->orderBy('name', 'asc')->get();
-		$expiredAuctions = $league->auctions()->whereIn('ready_for_auction', ['2', '3'])->orderBy('name', 'asc')->get();
-
-		//TODO: get list of bids made by user for this auction
-		$availableAuctions = Auction::where('leagues_id', $id)->lists('id');
-		$previousBids = AuctionBid::where('users_id', $authUser->id)->whereIn('auctions_id', $availableAuctions)->lists('bid_amount', 'auctions_id');
+		//$rankings = $league->rosters->rankings();
 
 		$leagueUsers = LeagueUser::where('league_id', $league->id)->get();
 		$currentLeagueUser = LeagueUser::where('user_id', $authUser->id)->
@@ -266,13 +253,10 @@ class WelcomeController extends Controller {
 			->with('currentLeague', $league)
 			->with('page_name', 'league-show')
 			->with('padding', true)
+			->with('rankings', $rankings)
 			->with('object', $league)
 			->with('fullwidth', true)
 			->with('leagueUsers', $leagueUsers)
-			->with('wonAuctions', $wonAuctions)
-			->with('expiredAuctions', $expiredAuctions)
-			->with('movies', $movies)
-			->with('previous_bids', $previousBids)
 			->with('currentLeagueUser', $currentLeagueUser)
 			->with('authUser', $authUser);	
 	}

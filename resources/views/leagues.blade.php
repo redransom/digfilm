@@ -23,14 +23,14 @@
                 <td>{{$league->owner->name}}</td>
                 <td>{{((!empty($league->rule) && $league->rule->league_type == 'R') ? "Private" : "Public")}}</td>
                 <td>{{date("jS M Y", strtotime($league->auction_start_date))}}<br/>
-                at {{date("h:iA", strtotime($league->auction_start_date))}}</td>
+                at {{date("g:iA", strtotime($league->auction_start_date))}}</td>
                 <td>
-                @if(isset($authUser) && isset($league->rule) && $league->type =='U')
+                @if(!is_null($authUser) && time() < strtotime($league->auction_start_date))
                 <a class="button small dark" href="{{URL('join-league/'.$league->id)}}">Join</a>
-                @elseif(isset($authUser) && isset($league->rule) && $league->rule->league_type =='R')
-                <a class="button small dark" title="This league is invite only">Invite Only</a>
+                @elseif(!is_null($authUser) && time() >= strtotime($league->auction_start_date))
+                <a class="button small" style="background-color: #519623;" title="This league has started!">Started</a>
                 @else
-                <a class="button small red" title="You need to be logged in to join a league">Join</a>
+                <a class="button small" style="background-color: #B1221C;" title="You need to be logged in to join a league">Join</a>
                 @endif
                 </td>
                 </tr>
