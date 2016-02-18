@@ -239,6 +239,9 @@ class WelcomeController extends Controller {
 		Highest bid (same as above?)
 		Ranking table
 		*/
+		if ($league->auction_stage > 1 && $league->rosters()->count() > 0)
+			var_dump($league->rosters()->max('bid_amount'));
+
 		$rankings = array();
 		if ($league->auction_stage == 3)
 			$rankings = LeagueRoster::rankings($league->id);
