@@ -16,15 +16,16 @@
                         <!-- END .panel -->
                         </div>
                         
+                        @if(isset($authUser) && !is_null($authUser))
+                        @include('partials.site-user-details')
+                        @endif
+
                         @if(isset($currentLeague))
                         @include('partials.site-league-details', ['currentLeagueUser'=>$currentLeagueUser, 'league'=>$currentLeague, 'blind'=>($currentLeague->rule->blind_bid == 'Y')])
                         @elseif(isset($genres_list))
                         @include('partials.user-sidebar-genres')
                         @endif
-                        
-
-
-                        
+                                               
 
                     <!-- END #sidebar -->
                     </div>

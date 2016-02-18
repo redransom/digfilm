@@ -59,41 +59,12 @@
 			</div>
 
 			<div class="right">
-				<h2><span>What is TheNextBigFilm ?</span></h2>
+				@if(isset($content))
+				<h2><span>{{$content->title}}</span></h2>
 				<div class="content-padding">
-					
-					<div class="form-split-about">
-						<p class="p-padding">Lorem ipsum dolor sit amet, natum referrentur sea no. Sensibus definitionem necessitatibus id vim, eu ornatus intellegat argumentum nam. Ius modo interpretaris at, alia erat pri te. An euripidis assentior accommodare usu, ut eam fabellas facilisi perpetua. Accumsan scripserit cu mel, ut dolorem adolescens per.</p>
-
-						<ul>
-							<li>
-								<i class="fa fa-picture-o"></i>
-								<b>Id ius facete urbanitas concludaturque mea</b>
-								<p class="p-padding">Ius modo interpretaris at, alia erat pri te. An euripidis assentior accommodare usu, ut eam fabellas facilisi perpetua.</p>
-							</li>
-							
-							<li>
-								<i class="fa fa-trophy"></i>
-								<b>Id ius facete urbanitas concludaturque mea</b>
-								<p class="p-padding">Ius modo interpretaris at, alia erat pri te. An euripidis assentior accommodare usu, ut eam fabellas facilisi perpetua. Accumsan scripserit cu mel, ut dolorem adolescens per.</p>
-							</li>
-
-							<li>
-								<i class="fa fa-microphone"></i>
-								<b>Id ius facete urbanitas concludaturque mea</b>
-								<p class="p-padding">Ius modo interpretaris at, alia erat pri te. An euripidis assentior accommodare usu, ut eam fabellas facilisi perpetua. Accumsan scripserit cu mel, ut dolorem adolescens per.</p>
-							</li>
-							
-							<li>
-								<i class="fa fa-comments"></i>
-								<b>Id ius facete urbanitas concludaturque mea</b>
-								<p class="p-padding">Ius modo interpretaris at, alia erat pri te. An euripidis assentior accommodare usu, ut eam fabellas facilisi perpetua.</p>
-							</li>
-						</ul>
-						
-					</div>
-					
+				{!! $content->body !!}
 				</div>
+				@endif
 			</div>
 
 			<div class="clear-float"></div>

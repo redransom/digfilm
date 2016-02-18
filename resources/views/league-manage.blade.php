@@ -1,11 +1,9 @@
-@extends('layouts.users')
+@extends('layouts.site')
 
 @section('content')
-<section class="entry sbr clearfix">
-    <div class="title-caption-large">
-        <h3>{{$league->name}}</h3>
-    </div>
 
+<h2><span>{{$league->name}}</span></h2>
+<div class="content-padding">
 
     <dl class="dl-horizontal">
         <dt>Auction Status</dt>
@@ -38,7 +36,6 @@
     </div>
 
     <div class="one-quarter last">
-        <h4>Rules</h4>
         @if($league->auction_stage == 0)
         {!! Form::open(array('route' => array('player-rules', $league->id), 'class'=>'form-horizontal row-fluid', 'method'=>'POST')) !!}
         <fieldset>
@@ -79,43 +76,9 @@
         </table>
         @else
 
-        <table class="feature-table dark-gray">
-            <tr>
-                <td>Players</td>
-                <td>Min: {{$league->rule->min_players}} Max: {{$league->rule->max_players}}</td>
-            </tr>
-            <tr>
-                <td>Movies</td>
-                <td>Min: {{$league->rule->min_movies}} Max: {{$league->rule->max_movies}}</td>
-            </tr>
-            <tr>
-                <td>Start/End</td>
-                <td>Start Time: {{$league->rule->start_time}} End Time: {{$league->rule->end_time}}</td>
-            </tr>
-            <tr>
-                <td>Durations</td>
-                <td>Auction: {{$league->rule->auction_duration}} hours <br/>Round: {{$league->rule->round_duration}} hours <br/>Movies: {{$league->rule->ind_film_countdown}} mins</td>
-            </tr>
-            <tr>
-                <td>Bids</td>
-                <td>Min: {{$league->rule->min_bid}} Max: {{$league->rule->max_bid}}</td>
-            </tr>
-            <tr>
-                <td>Selection</td>
-                <td>Random: {{($league->rule->randomizer == "Y") ? "Yes" : "No"}} <br/>Auto-Select: {{($league->rule->auto_select == 'Y') ? "Yes" : "No"}} 
-                @if(!is_null($league->rule->auction_movie_release))
-                <br/>Grouped: {{$league->rule->auction_movie_release}}
-                @endif</td>
-            </tr>
-            <tr>
-                <td>Blind</td>
-                <td>{{$league->rule->blind_bid == "Y" ? "Yes" : "No"}}</td>
-            </tr>
-            <tr>
-                <td>Misc</td>
-                <td>Timeout: {{$league->rule->auction_timeout}} mins <br/>Denomination: {{$league->rule->denomination}} <br/>Movie Takings: {{$league->rule->movie_takings_duration}} weeks</td>
-            </tr>
-        </table>
+        @include('partials.user-league-rules', ['rule'=>$league->rule, 'leagueUser'=>$authUser]) 
+
+        
     @endif
 
     </div>
@@ -132,5 +95,5 @@
     @else
     <p>There are no movies associated with this league presently.</p>
     @endif
-</section>
+</div>
 @endsection

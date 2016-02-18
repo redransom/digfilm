@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\SiteContent;
 use Mail;
 use Input;
 use Flash;
@@ -44,7 +45,9 @@ class AuthController extends Controller {
 	}
 
 	public function getLogin() {
-		return view('auth.login')->with('fullwidth', true);
+		$content = SiteContent::where('section', 'LOG')->first();
+
+		return view('auth.login')->with('fullwidth', true)->with('content', $content);
 	}
 
 	/**

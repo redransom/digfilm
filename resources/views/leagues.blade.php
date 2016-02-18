@@ -9,7 +9,8 @@
         <?php $league_counter = 0; ?>
         <table class="feature-table dark-gray">
             <thead>
-                <tr><th>Name</th><th>Players</th><th>Owner</th><th>Type</th><th>Closes?</th><th>&nbsp;</th></tr>
+                <tr><th>Name</th><th>Players</th><th>Owner</th><th>Type</th>
+                <th>Stage</th><th>Closes?</th><th>&nbsp;</th></tr>
             </thead>
             <tbody>
                 @foreach($leagues as $league)
@@ -21,7 +22,8 @@
                 <td>{{count($league->players)}}</td>
                 @endif
                 <td>{{$league->owner->name}}</td>
-                <td>{{((!empty($league->rule) && $league->rule->league_type == 'R') ? "Private" : "Public")}}</td>
+                <td>{{(($league->type == 'R') ? "Private" : "Public")}}</td>
+                <td>{{$league->stage()}}</td>
                 <td>{{date("jS M Y", strtotime($league->auction_start_date))}}<br/>
                 at {{date("g:iA", strtotime($league->auction_start_date))}}</td>
                 <td>

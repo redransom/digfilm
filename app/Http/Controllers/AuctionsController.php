@@ -238,7 +238,7 @@ class AuctionsController extends Controller {
             }
         }
 
-        return Redirect::route('league-show', [$auction->leagues_id]);
+        return Redirect::route('league-play', [$auction->leagues_id]);
     }
 
     /**

@@ -69,7 +69,8 @@ class SiteContentsController extends Controller {
                 'TER' => 'Terms & Conditions',
                 'RUL' => 'Rules',
                 'PRI' => 'Privacy',
-                'CON' => 'Contact'];
+                'CON' => 'Contact',
+                'LOG' => 'Login'];
     }
 
     /**

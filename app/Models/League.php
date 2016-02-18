@@ -61,4 +61,20 @@ class League extends Model {
                 })->whereNotIn('id', $leagueUsers)->get();
         return $leagues;
     }
+
+    public function stage() {
+        $stage = "";
+        if (is_null($this->auction_stage))
+            $stage = "Awaiting Players";
+        elseif ($this->auction_stage == 0)
+            $stage = "Ready to start";
+        elseif ($this->auction_stage == 1)
+            $stage = "In Play";
+        elseif ($this->auction_stage == 2)
+            $stage = "Roster Time!";
+        else
+            $stage = "Game Over";
+
+        return $stage;
+    }
 }
