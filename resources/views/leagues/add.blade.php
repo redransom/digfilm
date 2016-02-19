@@ -3,12 +3,14 @@
 @section('content')
 <div class="content">
 <script>
-   /* $(document).ready(function(){
-        $('#startdate').datetimepicker({
-            formatTime:'H:i',
-            formatDate:'Y-m-d'
-        });
-    });*/
+$(function() {
+    $('#auction_start_date').datetimepicker({
+        format: 'Y-m-d H:i'
+    });
+    $('#auction_end_date').datetimepicker({
+        format: 'Y-m-d H:i'
+    });
+});    
 </script>
     <div class="module">
         <div class="module-head">
@@ -55,7 +57,7 @@
                     <div class="control-group">
                         <label class="control-label" for="LeagueName">Rule Set</label>
                         <div class="controls">
-                            {!! Form::select('rule_set', $sets, null, ['class'=>'span8']) !!}
+                            {!! Form::select('rule_sets_id', $sets, null, ['class'=>'span8']) !!}
                             <span class="help-inline">Which default options to use?</span>
                         </div>
                     </div>
@@ -71,7 +73,7 @@
                     <div class="control-group">
                         <label class="control-label" for="LeagueStartDate">Start Date</label>
                         <div class="controls">
-                            {!! Form::text('auction_start_date', null, ['class'=>'span8', 'placeholder'=>'YYYY-MM-DD HH:mm:SS', 'id'=>'startdate']) !!}
+                            {!! Form::text('auction_start_date', null, ['class'=>'span8', 'placeholder'=>'YYYY-MM-DD HH:mm:SS', 'id'=>'auction_start_date']) !!}
                             <span class="help-inline">When does the auction start?</span>
                         </div>
                     </div>
@@ -79,7 +81,7 @@
                     <div class="control-group">
                         <label class="control-label" for="LeagueCloseDate">Close Date</label>
                         <div class="controls">
-                            {!! Form::text('auction_close_date', null, ['class'=>'span8', 'placeholder'=>'YYYY-MM-DD HH:mm:SS']) !!}
+                            {!! Form::text('auction_close_date', null, ['class'=>'span8', 'placeholder'=>'YYYY-MM-DD HH:mm:SS', 'id'=>'auction_end_date']) !!}
                             <span class="help-inline">When does the auction finish?</span>
                         </div>
                     </div>

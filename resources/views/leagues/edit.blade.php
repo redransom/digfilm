@@ -1,6 +1,16 @@
 @extends('layouts.admin')
 
 @section('content')
+<script>
+$(function() {
+    $('#auction_start_date').datetimepicker({
+        format: 'Y-m-d H:i'
+    });
+    $('#auction_end_date').datetimepicker({
+        format: 'Y-m-d H:i'
+    });
+});    
+</script>
 <div class="content">
 
     <div class="module">
@@ -60,7 +70,7 @@
                     <div class="control-group">
                         <label class="control-label" for="LeagueRuleSet">Rule Set</label>
                         <div class="controls">
-                            {!! Form::select('rule_set', [null=>'Please Select'] + $sets, null, ['class'=>'span8']) !!}
+                            {!! Form::select('rule_sets_id', [null=>'Please Select'] + $sets, null, ['class'=>'span8']) !!}
                             <span class="help-inline">Which default options to use?</span>
                         </div>
                     </div>
@@ -68,7 +78,7 @@
                     <div class="control-group">
                         <label class="control-label" for="LeagueStartDate">Start Date</label>
                         <div class="controls">
-                            {!! Form::text('auction_start_date', $league->auction_start_date, ['class'=>'span8', 'placeholder'=>'YYYY-MM-DD HH:mm:SS']) !!}
+                            {!! Form::text('auction_start_date', $league->auction_start_date, ['class'=>'span8', 'placeholder'=>'YYYY-MM-DD HH:mm:SS', 'id'=>'auction_start_date']) !!}
                             <span class="help-inline">When does the auction start?</span>
                         </div>
                     </div>
@@ -76,7 +86,7 @@
                     <div class="control-group">
                         <label class="control-label" for="LeagueCloseDate">Close Date</label>
                         <div class="controls">
-                            {!! Form::text('auction_close_date', $league->auction_close_date, ['class'=>'span8', 'placeholder'=>'YYYY-MM-DD HH:mm:SS']) !!}
+                            {!! Form::text('auction_close_date', $league->auction_close_date, ['class'=>'span8', 'placeholder'=>'YYYY-MM-DD HH:mm:SS', 'id'=>'auction_end_date']) !!}
                             <span class="help-inline">When does the auction finish?</span>
                         </div>
                     </div>

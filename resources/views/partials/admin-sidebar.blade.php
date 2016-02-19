@@ -18,7 +18,7 @@
                                 </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right"></i>Users </a>
                                     <ul id="toggleUsers" class="collapse unstyled">
                                         <li><a href="{{URL('users')}}"><i class="icon-user"></i>List</a></li>
-                                        <li><a href="{{URL('users/create')}}"><i class="icon-user"></i>Add New</a></li>
+                                        <li><a href="{{Route('user-create')}}"><i class="icon-user"></i>Add New</a></li>
                                     </ul>
                                 </li>
 
@@ -84,8 +84,6 @@
                                         <li><a href="{{route('notify-auctions')}}" target="_blank"><i class="icon-group"></i> 2) Load Auction Movies</a></li>
                                         <li><a href="{{route('phase1-auctions')}}" target="_blank"><i class="icon-group"></i> 3) Run Auctions</a></li>
                                         <li><a href="{{route('load-movies')}}" target="_blank"><i class="icon-group"></i> 4) Load Next Movies</a></li>
-                                        <li><a href="{{route('clear-endtime-auctions')}}" target="_blank"><i class="icon-group"></i> 5a) Clear End Time Auctions</a></li>
-                                        <li><a href="{{route('clear-timeout-auctions')}}" target="_blank"><i class="icon-group"></i> 5b) Clear Time out Auctions</a></li>
                                         <li><a href="{{route('prepare-clear-auctions')}}" target="_blank"><i class="icon-group"></i> 5c) End Auctions</a></li>
                                         <li><a href="{{route('close-league-auctions')}}" target="_blank"><i class="icon-group"></i> 6) Close League Auctions</a></li>
                                         <li><a href="{{route('close-bad-leagues')}}" target="_blank"><i class="icon-group"></i> 7) Disable Old Leagues</a></li>

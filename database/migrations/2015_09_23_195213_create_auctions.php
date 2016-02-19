@@ -20,7 +20,7 @@ class CreateAuctions extends Migration {
 			$table->foreign('leagues_id')->references('id')->on('leagues')->onDelete('cascade');
 			$table->integer('movies_id')->unsigned()->default(0);
 			$table->foreign('movies_id')->references('id')->on('movies')->onDelete('cascade');
-			$table->integer('users_id')->unsigned()->default(0);
+			$table->integer('users_id')->unsigned()->nullable();
 			$table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
 			$table->decimal('bid_amount', 5, 2)->nullable();
 			$table->time('auction_start_time')->nullable();

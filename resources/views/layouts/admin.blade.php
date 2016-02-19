@@ -34,8 +34,20 @@
     <script src="{{ asset('/admin/scripts/star-rating.min.js') }}" type="text/javascript"></script>
     @endif
 
+
+
+
+    <link rel="stylesheet" type="text/css" href="/jquery.datetimepicker.css"/ >
+    <link type="text/css" href="jquery.datetimepicker.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+   
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <!--script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="jquery.datetimepicker.js"></script-->
     <script type="text/javascript" src="{{ asset('/admin/scripts/jquery.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('/admin/scripts/jquery.datetimepicker.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/admin/scripts/jquery.datetimepicker.js') }}"></script>
 
 </head>
 <body>

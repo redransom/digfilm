@@ -114,11 +114,11 @@ class LeaguesController extends Controller {
         $input = Input::all();
         $league = League::create( $input );
 
-        if (!isset($input['rule_set'])) {
+        if (!isset($input['rule_sets_id'])) {
             //if no rule set is provided - just create a blank rule set
             $ruleset = RuleSet::first();
         } else {
-            $ruleset = RuleSet::find($input['rule_set']);
+            $ruleset = RuleSet::find($input['rule_sets_id']);
         }
 
         //add rule set for future reference
@@ -282,8 +282,8 @@ class LeaguesController extends Controller {
             $league->auction_stage = $input['auction_stage'];
 
         //add rule set for future reference
-        if ($input['rule_set'] != '')
-            $league->rule_sets_id = $input['rule_set'];
+        if ($input['rule_sets_id'] != '')
+            $league->rule_sets_id = $input['rule_sets_id'];
 
         if ($input['auction_stage'] == '-1')
             $league->auction_stage = null;

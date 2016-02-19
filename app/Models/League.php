@@ -11,7 +11,7 @@ class League extends Model {
      *
      * @var array
      */
-    protected $fillable = ['name', 'users_id', 'enabled', 'auction_stage', 'auction_start_date', 'auction_close_date', 'file_name', 'description'];
+    protected $fillable = ['name', 'users_id', 'enabled', 'auction_stage', 'auction_start_date', 'auction_close_date', 'file_name', 'description', 'rule_sets_id'];
 
     public function owner() {
         return $this->belongsTo("\App\Models\User", "users_id");
