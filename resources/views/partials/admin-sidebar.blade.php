@@ -84,7 +84,7 @@
                                         <li><a href="{{route('notify-auctions')}}" target="_blank"><i class="icon-group"></i> 2) Load Auction Movies</a></li>
                                         <li><a href="{{route('phase1-auctions')}}" target="_blank"><i class="icon-group"></i> 3) Run Auctions</a></li>
                                         <li><a href="{{route('load-movies')}}" target="_blank"><i class="icon-group"></i> 4) Load Next Movies</a></li>
-                                        <li><a href="{{route('prepare-clear-auctions')}}" target="_blank"><i class="icon-group"></i> 5c) End Auctions</a></li>
+                                        <li><a href="{{route('prepare-clear-auctions')}}" target="_blank"><i class="icon-group"></i> 5) End Auctions</a></li>
                                         <li><a href="{{route('close-league-auctions')}}" target="_blank"><i class="icon-group"></i> 6) Close League Auctions</a></li>
                                         <li><a href="{{route('close-bad-leagues')}}" target="_blank"><i class="icon-group"></i> 7) Disable Old Leagues</a></li>
                                         <li><a href="{{route('end-leagues')}}" target="_blank"><i class="icon-group"></i> 7) End Leagues</a></li>

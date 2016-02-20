@@ -75,6 +75,7 @@ tinymce.init({
                         <div class="controls">
                             {!! Form::text('title', null, ['class'=>'span8', 'placeholder'=>'Heading for content']) !!}
                             <span class="help-inline">Minimum 3 Characters.</span>
+                            <span class="help-inline">SEO: Used in link of all search engines.</
                         </div>
                     </div>
 
@@ -121,6 +122,22 @@ tinymce.init({
                             @else
                             <span class="help-inline">Main image for article if available.</span>
                             @endif
+                        </div>
+                    </div>
+
+                    <h4>SEO</h4>
+                    <div class="control-group">
+                        <label class="control-label" for="SiteContentTitle">Keywords</label>
+                        <div class="controls">
+                            {!! Form::text('meta_keywords', null, ['class'=>'span8', 'placeholder'=>'Keywords', 'maxlength'=>70]) !!}
+                            <span class="help-inline">Not hugely relevant - only Yahoo uses this now - 70 chars.</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="SiteContentTitle">Description</label>
+                        <div class="controls">
+                            {!! Form::text('meta_description', null, ['class'=>'span8', 'placeholder'=>'Heading for content', 'maxlength'=>155]) !!}
+                            <span class="help-inline">Used in most searches - max of 155 chars normally.</span>
                         </div>
                     </div>
 

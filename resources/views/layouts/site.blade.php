@@ -2,11 +2,13 @@
 <html lang = "en">
     <head>
         <meta charset="utf-8" />
-        <title>TheNextBigFilm | Homepage</title>
+        <title>TheNextBigFilm | {{$title}}</title>
         <meta content="IE=edge" http-equiv="X-UA-Compatible" />
         <meta content="width=device-width, initial-scale=1" name="viewport" />
-        <meta name="description" content="" />
-        <meta name="keywords" content="" />
+        @if(isset($meta) && !empty($meta))
+        <meta name="description" content="{{$meta['meta_description']}}" />
+        <meta name="keywords" content="{{$meta['meta_keywords']}}" />
+        @endif
         <meta property="og:type" content="TheNextBigFilm" />
         <meta property="og:title" content="TheNextBigFilm Movies | Homepage" />
         <meta property="og:image" content="" />
@@ -148,8 +150,10 @@
                     <div id="main">
         
                         @if (Session::has('flash_notification.message'))
-                        <div class="{{Session::get('flash_notification.level')}} custom-box-wrap">
-                            <p>{{ Session::get('flash_notification.message') }}</p>
+                        <div class="info-message">
+                            <a href="#" class="close-info"><i class="fa fa-times"></i></a>
+                            <p><strong>Information: </strong>
+                            {{ Session::get('flash_notification.message') }}</p>
                         </div><!--/ info-->
                         @endif
                         <!-- <div class="content-padding">

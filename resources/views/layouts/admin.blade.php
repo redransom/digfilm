@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TheNextBigFilm - {{$title}}</title>
+    <meta name="robots" content="noindex, nofollow" />
     <link type="text/css" href="{{ asset('/admin/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link type="text/css" href="{{ asset('/admin/bootstrap/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
     <link type="text/css" href="{{ asset('/admin/css/theme.css') }}" rel="stylesheet">

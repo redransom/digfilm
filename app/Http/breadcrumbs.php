@@ -257,6 +257,12 @@ Breadcrumbs::register('roster', function($breadcrumbs, $object)
     $breadcrumbs->push('Roster for '.$object->name, route('roster', [$object->id]));
 });
 
+Breadcrumbs::register('manage-league', function($breadcrumbs, $object)
+{
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Manage '.$object->name, route('manage', [$object->id]));
+});
+
 Breadcrumbs::register('news', function($breadcrumbs, $object)
 {
     $breadcrumbs->parent('home');
@@ -267,4 +273,10 @@ Breadcrumbs::register('movies', function($breadcrumbs)
 {
     $breadcrumbs->parent('home');
     $breadcrumbs->push('Movies', route('all-movies'));
+});
+
+Breadcrumbs::register('edit-profile', function($breadcrumbs, $object)
+{
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Your Profile Details', route('edit-profile'));
 });

@@ -84,7 +84,8 @@ class WelcomeController extends Controller {
 			->with('trailers', $trailers)
 			->with('frontpage', true)
 			->with('opening_bid', $opening_bid)
-			->with('authUser', $authUser);
+			->with('authUser', $authUser)
+			->with('title', 'Welcome to TheNextBigFilm');
 	}
 
 	public function about() {
@@ -96,17 +97,20 @@ class WelcomeController extends Controller {
 		return view('about')
 			->with('content', $content)
 			->with('page_name', 'about')
-			->with('page_title', 'About TheNextBigFilm')
+			->with('meta', $this->memeta($content))
+			->with('title', (!is_null($content) ? $content->title : ''))
 			->with('authUser', $authUser);	
 	}
 
 	public function rules() {
 		$content = SiteContent::where('section', 'RUL')->first();
+
 		$authUser = Auth::user();
 		return view('rules')
 			->with('content', $content)
 			->with('page_name', 'rules')
-			->with('page_title', 'How to play')
+			->with('meta', $this->get_meta($content))
+			->with('title', (!is_null($content) ? $content->title : ''))
 			->with('authUser', $authUser);	
 	}
 
@@ -117,25 +121,42 @@ class WelcomeController extends Controller {
 		return view('terms')
 			->with('content', $content)
 			->with('page_name', 'terms')
-			->with('page_title', 'Terms & Conditions')
+			->with('meta', $this->get_meta($content))
+			->with('title', (!is_null($content) ? $content->title : ''))
 			->with('authUser', $authUser);	
 	}
 
 	public function contact() {
 		$authUser = Auth::user();
+		$content = SiteContent::where('section', 'CON')->first();
+
 		return view('contact')
 			->with('page_name', 'contact')
-			->with('page_title', 'How to get in touch')
+			->with('meta', $this->get_meta($content))
+			->with('title', (!is_null($content) ? $content->title : ''))
 			->with('authUser', $authUser);	
+	}
+
+	private function get_meta($content) {
+		$meta = array();
+		if(!is_null($content)) {
+			if ($content->meta_keywords != '')
+				$meta['meta_keywords'] = $content->meta_keywords;
+			if ($content->meta_description != '')
+				$meta['meta_description'] = $content->meta_description;
+		}
+		return $meta;
 	}
 
 	public function privacy() {
 		$authUser = Auth::user();
 		$content = SiteContent::where('section', 'PRI')->first();
+
 		return view('privacy')
 			->with('content', $content)
 			->with('page_name', 'privacy')
-			->with('page_title', 'Your Privacy')
+			->with('meta', $this->get_meta($content))
+			->with('title', (!is_null($content) ? $content->title : ''))
 			->with('authUser', $authUser);	
 	}
 
@@ -155,7 +176,8 @@ class WelcomeController extends Controller {
 			->with('page_name', (is_null($authUser) ? 'all-leagues' : 'all-leagues-loggedin'))
 			->with('object', $authUser)
 			->with('leagues', $leagues)
-			->with('authUser', $authUser);	
+			->with('authUser', $authUser)
+			->with('title', 'Public Leagues to Join');	
 	}
 
 	/**
@@ -211,7 +233,8 @@ class WelcomeController extends Controller {
 			->with('movies', $movies)
 			->with('previous_bids', $previousBids)
 			->with('currentLeagueUser', $currentLeagueUser)
-			->with('authUser', $authUser);	
+			->with('authUser', $authUser)
+			->with('title', 'Play League');	
 	}
 
 	/**
@@ -221,8 +244,8 @@ class WelcomeController extends Controller {
 	 */
 	public function getLeague($id) {
 		$authUser = Auth::user();
-		if (!isset($authUser))
-			return redirect('/auth/login');
+		/*if (!isset($authUser))
+			return redirect('/auth/login');*/
 
 		$league = League::find($id);
 
@@ -239,8 +262,11 @@ class WelcomeController extends Controller {
 		Highest bid (same as above?)
 		Ranking table
 		*/
-		if ($league->auction_stage > 1 && $league->rosters()->count() > 0)
-			var_dump($league->rosters()->max('bid_amount'));
+		$highest_bid = null;
+		if ($league->auction_stage > 1 && $league->rosters()->count() > 0) {
+			$max_bid = $league->rosters()->max('bid_amount');
+			$highest_bid = $league->rosters()->where('bid_amount', $max_bid)->first();
+		}
 
 		$rankings = array();
 		if ($league->auction_stage == 3)
@@ -249,19 +275,24 @@ class WelcomeController extends Controller {
 		//$rankings = $league->rosters->rankings();
 
 		$leagueUsers = LeagueUser::where('league_id', $league->id)->get();
-		$currentLeagueUser = LeagueUser::where('user_id', $authUser->id)->
+		if (!is_null($authUser))
+			$currentLeagueUser = LeagueUser::where('user_id', $authUser->id)->
 					where('league_id', $league->id)->first();
+		else
+			$currentLeagueUser = null;
 
 		return view('league-show')
 			->with('currentLeague', $league)
 			->with('page_name', 'league-show')
 			->with('padding', true)
 			->with('rankings', $rankings)
+			->with('highest_bid', $highest_bid)
 			->with('object', $league)
 			->with('fullwidth', true)
 			->with('leagueUsers', $leagueUsers)
 			->with('currentLeagueUser', $currentLeagueUser)
-			->with('authUser', $authUser);	
+			->with('authUser', $authUser)
+			->with('title', 'League Details');	
 	}
 
 
@@ -276,7 +307,8 @@ class WelcomeController extends Controller {
 
 		return view('create-league')
 			->with('rules', $rules)
-			->with('authUser', $authUser);	
+			->with('authUser', $authUser)
+			->with('title', 'Create League');	
 	}
 
 	/**
@@ -293,7 +325,8 @@ class WelcomeController extends Controller {
 		return view('choose-movie')
 			->with('league', $league)
 			->with('movies', $movies)
-			->with('authUser', $authUser);	
+			->with('authUser', $authUser)
+			->with('title', 'Add Movies to your league');	
 	}
 
 	/**
@@ -325,7 +358,8 @@ class WelcomeController extends Controller {
 		return view('choose-participants')
 			->with('league', $league)
 			->with('users', $users)
-			->with('authUser', $authUser);	
+			->with('authUser', $authUser)
+			->with('title', 'Choose who you want to play with');	
 	}
 
 	public function getProfile($username) {
@@ -336,16 +370,24 @@ class WelcomeController extends Controller {
 		return view('profile')
 			->with('fullwidth', true)
 			->with('authUser', $authUser)
-			->with('user', $user);	
+			->with('meta', $this->get_meta($content))
+			->with('user', $user)
+			->with('title', $user->fullName().'\'s Profile');	
 	}
 
 	public function getEditUser() {
 		$authUser = Auth::user();
 
+		$content = SiteContent::where('section', 'PRO')->first();
+
 		return view('edit-profile')
 			->with('fullwidth', false)
+			->with('content', $content)
 			->with('authUser', $authUser)
-			->with('user', $authUser);	
+			->with('page_name', 'edit-profile')
+			->with('object', $authUser)
+			->with('user', $authUser)
+			->with('title', 'Your Profile');	
 	}
 
 	public function movieKnow($id) {
@@ -412,7 +454,8 @@ class WelcomeController extends Controller {
 			->with('bid_groups', $bid_groups)
 			->with('days', $days)
 			->with('last_30', $last_30)
-			->with('movie', $movie);	
+			->with('movie', $movie)
+			->with('title', 'The movie knowledge for '.$movie->name);	
 
 	}
 
@@ -427,8 +470,8 @@ class WelcomeController extends Controller {
 
 		return view('movie-genre')
 			->with('authUser', $authUser)
-			->with('genre', $genre);	
-
+			->with('genre', $genre)
+			->with('title', 'Movies in the '.$genre->name.' Genre');	
 	}
 
 	/**
@@ -451,7 +494,8 @@ class WelcomeController extends Controller {
 			->with('object', $league)
 			->with('rankings', $rankings)
 			->with('currentLeagueUser', $currentLeagueUser)
-			->with('authUser', $authUser);	
+			->with('authUser', $authUser)
+			->with('title', 'Roster for '.$league->name);	
 	}
 
 	/**
@@ -487,7 +531,7 @@ class WelcomeController extends Controller {
 		return view('newreleases')
 			->with('description', 'Here is a list of all movies have come out in the last 4 weeks.')
 			->with('movies', $movies)
-			->with('title', 'New Releases')
+			->with('title', 'New Releases in last 4 weeks')
 			->with('authUser', $authUser);		
 	}
 	
@@ -528,7 +572,7 @@ class WelcomeController extends Controller {
 			->with('object', $content)
 			->with('page_title', '')
 			->with('content', $content)
-			->with('title', 'News')
+			->with('title', $content->name)
 			->with('authUser', $authUser);		
 	}
 
@@ -539,7 +583,8 @@ class WelcomeController extends Controller {
 	 */
 	public function registerSuccessful() {
 		return view('register-successful')
-			->with('page_name', 'register-successful');	
+			->with('page_name', 'register-successful')
+			->with('title', 'You have registered successfully.');	
 	}
 
 	/**
@@ -549,7 +594,8 @@ class WelcomeController extends Controller {
 	 */
 	public function emailVerified() {
 		return view('email-completed')
-			->with('page_name', 'email-verified');	
+			->with('page_name', 'email-verified')
+			->with('title', 'Your email address has been verified!');	
 	}
 
 	/**
@@ -572,6 +618,9 @@ class WelcomeController extends Controller {
 */
         return view('league-manage')
             ->with('league', $league)
-            ->with('authUser', $authUser);  
+            ->with('page_name', 'manage-league')
+            ->with('object', $league)
+            ->with('authUser', $authUser)
+			->with('title', 'Manage your league here');  
     }
 }

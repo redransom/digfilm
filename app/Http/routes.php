@@ -32,6 +32,7 @@ Route::get('email-verified', ['as'=>'email-verified', 'uses'=>'WelcomeController
 Route::get('genres', 'WelcomeController@genres');
 Route::get('newreleases', 'WelcomeController@newreleases');
 Route::get('comingsoon', 'WelcomeController@comingsoon');
+Route::get('league-show/{id}', ['as'=>'league-show', 'uses'=>'WelcomeController@getLeague']);
 
 // Registration routes...
 Route::get('auth/register', [
@@ -57,13 +58,15 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 ]);
 
+
+
 Route::group(['middleware'=>'auth'], function() {
 
         /* Player routes */
         Route::get('profile/{name}', ['as'=>'profile', 'uses'=>'WelcomeController@getProfile']);
         Route::get('edit-profile', ['as'=>'edit-profile', 'uses'=>'WelcomeController@getEditUser']);
+        Route::put('update-profile/{id}', ['as'=>'update-profile', 'uses'=>'UsersController@update']);
 
-        Route::get('league-show/{id}', ['as'=>'league-show', 'uses'=>'WelcomeController@getLeague']);
         Route::get('league-play/{id}', ['as'=>'league-play', 'uses'=>'WelcomeController@getLeaguePlay']);
         Route::get('manage/{id}', ['as'=>'manage', 'uses'=>'WelcomeController@manageLeague']);
         /* See if using a new route will fix it - to keep it away from leagues route below */
@@ -86,6 +89,7 @@ Route::group(['middleware'=>'auth'], function() {
 
         /* Setting Entrust to ensure permissions are correct */
         Entrust::routeNeedsRole('place-auction-bid', ['Player'], Redirect::to('/'));
+        //Entrust::routeNeedsRole('update-profile*', ['Player'], Redirect::to('/'));
         Entrust::routeNeedsRole('choose-movies*', ['Player'], Redirect::to('/'));
         Entrust::routeNeedsRole('league-invite*', ['Player'], Redirect::to('/'));
         Entrust::routeNeedsRole('choose-participants/*', ['Player'], Redirect::to('/'));
@@ -180,9 +184,9 @@ Route::get('start-auctions/5Htzx6V6nud998R353kz', ['as'=>'league-auctions', 'use
 Route::get('notify-auctions/63zdE1TnIWUQ444PHPNa', ['as'=>'notify-auctions', 'uses'=>'LeaguesController@preparePlayersForAuctions']);
 Route::get('phase1-run-auctions/bf2Kc6hOuU7CO948h60s', ['as'=>'phase1-auctions', 'uses'=>'AuctionsController@executeAuctions']);
 Route::get('phase2-run-auctions/RBbgCtpSeTsKzM0UgoCg', ['as'=>'load-movies', 'uses'=>'AuctionsController@loadNextMovies']);
-Route::get('clear-endtime-auctions/Qjr13b0VbElXE8TdmcTc', ['as'=>'clear-endtime-auctions', 'uses'=>'AuctionsController@clearEndTimeAuctions']);
+/*Route::get('clear-endtime-auctions/Qjr13b0VbElXE8TdmcTc', ['as'=>'clear-endtime-auctions', 'uses'=>'AuctionsController@clearEndTimeAuctions']);
 Route::get('clear-timeout-auctions/N4KuW01N6cVmQZPTQcxd', ['as'=>'clear-timeout-auctions', 'uses'=>'AuctionsController@clearTimeoutAuctions']);
-Route::get('prep-cleared-auctions/N4KuW01N6cVmQZPTQcxd', ['as'=>'prepare-clear-auctions', 'uses'=>'AuctionsController@prepareClearedAuctions']);
+*/Route::get('prep-cleared-auctions/N4KuW01N6cVmQZPTQcxd', ['as'=>'prepare-clear-auctions', 'uses'=>'AuctionsController@prepareClearedAuctions']);
 Route::get('close-league-auctions/NJWKIKWqlVjHfPNyI3cJ', ['as'=>'close-league-auctions', 'uses'=>'AuctionsController@completeLeagues']);
 Route::get('close-bad-leagues/H8BFC2Wp87DBA2b683uM', ['as'=>'close-bad-leagues', 'uses'=>'LeaguesController@closeLeaguesWhereStartDatePassed']);
 Route::get('end-leagues/55su3532IWH0968114eG', ['as'=>'end-leagues', 'uses'=>'LeaguesController@endLeagueWithWinners']);

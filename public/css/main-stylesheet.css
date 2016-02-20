@@ -3935,6 +3935,7 @@ body .photo-galleries > .item .photos-related-games a {
 
 #main .the-form textarea,
 #main input[type=text],
+#main input[type=file],
 #main select,
 #main input[type=password] {
 	background: #fff;

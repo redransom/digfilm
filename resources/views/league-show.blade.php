@@ -166,12 +166,13 @@
         <ul>
             <li>Total League Revenue: <strong>{{number_format($currentLeague->rosters()->sum('total_gross')/1000000, 2)}}m USD</strong></li>
             <li>Top two films on revenue: 
-                <ul>
+                <ol>
                     @foreach($currentLeague->rosters()->orderBy('total_gross', 'DESC')->limit(2)->get() as $rev)
                     <li>{{$rev->movie->name}} <strong>{{number_format($rev->total_gross/1000000, 2)}}m USD</strong></li>
                     @endforeach
-                </ul>
+                </ol>
             </li>
+            <li>Highest Bid <strong>{{number_format($highest_bid->bid_amount, 2)}} USD </strong> for <strong><a href="{{URL('movie-knowledge', $highest_bid->movie->link())}}">{{$highest_bid->movie->name}}</a></strong></li>
         </ul>
         <br/>
 

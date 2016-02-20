@@ -5,6 +5,7 @@
         <title>TheNextBigFilm | {{$pageTitle}}</title>
         <meta content="IE=edge" http-equiv="X-UA-Compatible" />
         <meta content="width=device-width, initial-scale=1" name="viewport" />
+        <meta name="robots" content="noindex, nofollow" />
         @if(isset($meta))
         <meta name="description" content="{{$meta['description']}}" />
         <meta name="keywords" content="{{$meta['keywords']}}" />

@@ -4,19 +4,17 @@
 
 <h2><span>{{$league->name}}</span></h2>
 <div class="content-padding">
-
-    <dl class="dl-horizontal">
-        <dt>Auction Status</dt>
-        @if(!is_null($league->auction))
-        <dd></dd>
-        @else
-        <dd>Auction hasn't started.</dd>
-        @endif
-    </dl>
-
     @if($league->description != "")
     <h4><em>{{$league->description}}</em></h4>
     @endif 
+
+    <h3>Auction Status</h3>
+    <p>@if($league->auctions()->count() > 0)
+        Auction is under way!
+        @else
+        Auction hasn't started.
+        @endif
+    </p>
 
     <div class="sep"></div>
 
@@ -28,7 +26,7 @@
         @endforeach
         </ul>
 
-        @if($league->players->count() < $league->rule->max_players)
+        @if($league->players->count() < $league->rule->max_players && $league->auction_stage == 0)
         <br/>
         <a href="{{URL('select-participants', array('id'=>$league->id))}}" class="button green small">Add more players</a></li>
         

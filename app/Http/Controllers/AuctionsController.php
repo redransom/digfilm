@@ -335,12 +335,12 @@ class AuctionsController extends Controller {
         Log::info("Auction Time Out ".$currentTime." Cleared: ".$affected.' auctions');
     }
 
-    private function getLeagueRule($rules, $league_id) {
+/*    private function getLeagueRule($rules, $league_id) {
         foreach ($rules as $rule) {
             if ($rule->league_id == $league_id)
                 return $rule;
         }
-    }
+    }*/
 
     /**
      * Set auction codes to 3 when the auction is closed and the auction has not been bidded on
@@ -367,8 +367,17 @@ class AuctionsController extends Controller {
      */
     public function completeLeagues() 
     {    
+        //clear out auctions that have completed nevermind if the auctions are still due to go on
+        $currentTime = date("Y-m-d H:i:s"); 
+        $leagues = League::where('auction_stage', 2)->where('auction_close_date', '<', $currentTime)->get();
+        foreach($leagues as $league) {
+            $league->auction_stage = 3;
+            $league->save();
+
+            $this->setRoster($league->id);
+        }
     
-        //look for leagues where the auction_stage = 2
+        //look for leagues where the auction_stage = 2 and have got past the above
         $leagues = League::where('auction_stage', 2)->get();
 
         //loop through leagues
@@ -390,6 +399,7 @@ class AuctionsController extends Controller {
                 }
             }
         }
+
 
     }
 

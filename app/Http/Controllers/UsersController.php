@@ -250,7 +250,7 @@ class UsersController extends Controller {
 
 		if (isset($input['update_from']) && $input['update_from'] == 'P') {
 			Flash::message('Profile updated!');
-			return Redirect::route('profile');
+			return Redirect::route('edit-profile');
 		} else {
 			Flash::message('User updated!');
 			return Redirect::route('users.index');
@@ -335,7 +335,7 @@ class UsersController extends Controller {
 			->with('use_graph', true)
 			->with('authUser', $authUser)
 			->with('page_name', 'dashboard')
-			->with('title', 'Welcome to the TheNextBigFilm adminstration system Dashboard');
+			->with('title', 'Welcome to your dashboard');
 	}
 
 	/**

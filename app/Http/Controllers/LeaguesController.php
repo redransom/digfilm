@@ -1201,6 +1201,7 @@ class LeaguesController extends Controller {
                 echo "Reviewing ".$league->name." league<br/>";
                 //work out total balance won
                 $winnerChosen = false;
+                $winner = null;
                 $playerCount = $league->players()->count();
                 //TODO: Move this to league balance
                 $leagueValue = $playerCount * 100;
@@ -1248,13 +1249,11 @@ class LeaguesController extends Controller {
                             $message->subject('You are unlucky this time!');
                             $message->to($loserEmail);
                         });
-
                     }
-
                 }
 
                 //disable the league
-                League::where('id', $league->id)->update(['enabled'=>'0', 'auction_stage'=>'5']);
+                League::where('id', $league->id)->update(['enabled'=>'0', 'auction_stage'=>'5', 'winners_id'=>$winner->id]);
             }   
         } else {
             echo "No leagues found for ending.";

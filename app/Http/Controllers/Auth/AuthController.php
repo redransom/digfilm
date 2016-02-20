@@ -46,8 +46,23 @@ class AuthController extends Controller {
 
 	public function getLogin() {
 		$content = SiteContent::where('section', 'LOG')->first();
+		
+		return view('auth.login')
+			->with('fullwidth', true)
+			->with('content', $content)
+			->with('meta', $this->get_meta($content))
+			->with('title', 'Login to TheNextBigFilm');
+	}
 
-		return view('auth.login')->with('fullwidth', true)->with('content', $content);
+	private function get_meta($content) {
+		$meta = array();
+		if(!is_null($content)) {
+			if ($content->meta_keywords != '')
+				$meta['meta_keywords'] = $content->meta_keywords;
+			if ($content->meta_description != '')
+				$meta['meta_description'] = $content->meta_description;
+		}
+		return $meta;
 	}
 
 	/**
@@ -56,7 +71,12 @@ class AuthController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function getRegister() {
-		return view('auth.register')->with('fullwidth', true);
+		$content = SiteContent::where('section', 'REG')->first();
+		return view('auth.register')
+			->with('fullwidth', true)
+			->with('content', $content)
+			->with('meta', $this->get_meta($content))
+			->with('title', 'Register with TheNextBigFilm');
 	}
 
 	public function postLogin(Request $request)

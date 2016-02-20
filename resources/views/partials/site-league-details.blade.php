@@ -58,7 +58,7 @@
 
                         @elseif($league->auction_stage == 3)
                         <h3>League Closes: </h3>
-                        <strong>{{date("j M Y g:iA", strtotime($league->end_date))}}</strong>
+                        <p>At: <strong>{{date("j M Y g:iA", strtotime($league->end_date))}}</strong></p>
                         @endif 
 
                     </div>

@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 class Movie extends Model {
 
     //
-    protected $fillable = array('name', 'summary', 'genres_id', 'rating', 'budget', 'enabled', 'release_at', 'availability', 'slug', 'opening_bid');
+    protected $fillable = array('name', 'summary', 'genres_id', 'rating', 'budget', 'enabled', 'release_at', 'availability', 'slug', 'opening_bid', 'meta_keywords', 'meta_description');
 
     public function contributors() {
         return $this->belongsToMany("\App\Models\Contributor", "movies_contributors", "movies_id", "contributors_id")->withPivot('contributor_types_id');
