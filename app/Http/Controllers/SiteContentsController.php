@@ -93,7 +93,6 @@ class SiteContentsController extends Controller {
             $request->file('thumbnail')->move(base_path() . '/public/images/sitecontents/', $imageName);
 
             $sitecontent->thumbnail = "/images/sitecontents/".$imageName;
-            $sitecontent->save();
         }
 
         if ($request->file('main_image') != "") {
@@ -101,8 +100,8 @@ class SiteContentsController extends Controller {
             $request->file('main_image')->move(base_path() . '/public/images/sitecontents/', $imageName);
 
             $sitecontent->main_image = "/images/sitecontents/".$imageName;
-            $sitecontent->save();
         }
+        $sitecontent->save();
 
         Flash::message('Content created.');
         return Redirect::route('sitecontent.index');
