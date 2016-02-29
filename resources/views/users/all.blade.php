@@ -42,16 +42,16 @@
                                         @foreach($users as $user)
                                         <tr class="<?php echo (($userCnt++ % 2) == 0) ? "odd" : "even"; ?> user{{$user->id}}">
                                             <td>{{$user->id}}</td>
-                                            <td><a href="{{URL('users', array('id'=>$user->id))}}">{{$user->name}}</a></td>
+                                            <td><a href="{{URL('user', array('id'=>$user->id))}}">{{$user->name}}</a></td>
                                             <td>{{$user->email}}</td>
                                             <td>{{$user->description}}</td>
                                             <td>{{(($user->hasRole("Admin")) ? "Admin" : "Player")}}</td>
                                             <td>{{date("d M Y", strtotime($user->created_at))}}</td>
-                                            <td><a class="btn btn-mini btn-primary" href="{{URL('users/'.$user->id.'/edit')}}">Edit</a>
+                                            <td><a class="btn btn-mini btn-primary" href="{{URL('user/'.$user->id.'/edit')}}">Edit</a>
                                                 @if($user->enabled)
-                                                <a class="btn btn-mini btn-danger" href="{{URL('users/'.$user->id.'/disable')}}">Disable</a>
+                                                <a class="btn btn-mini btn-danger" href="{{URL('user/'.$user->id.'/disable')}}">Disable</a>
                                                 @else
-                                                <a class="btn btn-mini btn-info" href="{{URL('users/'.$user->id.'/enable')}}">Enable</a>
+                                                <a class="btn btn-mini btn-info" href="{{URL('user/'.$user->id.'/enable')}}">Enable</a>
                                                 @endif
                                             </td>
                                         </tr>

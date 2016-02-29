@@ -132,6 +132,8 @@ Route::group(['middleware'=>'auth'], function() {
         /* Leagues Routes */
         Route::get('leagues/{status?}/{col?}/{order?}', ['as'=>'league-disable', 'uses'=>'LeaguesController@index']);
         Route::get('league/{id}', ['as'=>'leagues', 'uses'=>'LeaguesController@show']);
+        Route::get('league/{id}/edit', ['as'=>'leagues', 'uses'=>'LeaguesController@edit']);
+        Route::post('league/{id}/edit', ['as'=>'leagues', 'uses'=>'LeaguesController@update']);
         Route::get('league/{id}/disable', ['as'=>'league-disable', 'uses'=>'LeaguesController@disable']);
         Route::get('league/{id}/enable', ['as'=>'league-enable', 'uses'=>'LeaguesController@enable']);
         Route::get('league/{id}/rules', ['as'=>'league-rules', 'uses'=>'LeaguesController@getRules']);
@@ -142,6 +144,13 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('league/{id}/removeplayer', ['as'=>'league-remove-player', 'uses'=>'LeaguesController@removePlayer']);
         Route::get('league/{id}/player', ['as'=>'league-add-player', 'uses'=>'LeaguesController@addPlayer']);
         Route::post('league/{id}/player', ['as'=>'add-player', 'uses'=>'LeaguesController@postPlayer']);
+
+        /* User Routes */
+        Route::get('user/{id}', ['as'=>'user', 'uses'=>'UsersController@show']);
+        Route::get('user/{id}/edit', ['as'=>'user-edit', 'uses'=>'UsersController@edit']);
+        Route::post('user/{id}/edit', ['as'=>'user-edit', 'uses'=>'UsersController@update']);
+        Route::get('user/{id}/disable', ['as'=>'user-disable', 'uses'=>'usersController@disable']);
+        Route::get('user/{id}/enable', ['as'=>'user-enable', 'uses'=>'UsersController@enable']);
 
         /* all movies routes */
         Route::get('movies/{id}/disable', ['as'=>'movie-disable', 'uses'=>'MoviesController@disable']);

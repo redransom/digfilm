@@ -43,9 +43,9 @@
                                 <dd>{{date("j M Y g:iA", strtotime($league->round_start_date))}}</dd>
                                 @endif
                             </dl>
-                            <a class="btn" href="{{route('leagues.edit', [$league->id])}}">Edit League</a>
+                            <a class="btn" href="{{URL('league/'.$league->id.'/edit')}}">Edit League</a>
                             &nbsp;
-                            <a class="btn" href="{{URL('leagues/'.$league->id.'/rules')}}">Edit Rules</a>
+                            <a class="btn" href="{{URL('league/'.$league->id.'/rules')}}">Edit Rules</a>
                             
                         </div>
                     </div>

@@ -1019,7 +1019,7 @@ class LeaguesController extends Controller {
 
                 //TODO: Make this option as a rule maybe?
                 $earliest_release_date = strtotime("+1 week", strtotime($league->auction_close_date));
-
+                
                 //randomly populate movies
                 if (is_null($max_bid))
                     $max_bid = 100;
@@ -1066,7 +1066,7 @@ class LeaguesController extends Controller {
 
                 //need to make sure we have enough movies
                 $chosen_movies = array();
-
+                
                 for($movie_no = 0; $movie_no<$min_movies; $movie_no++) {
                     $random_pos = rand(0, ($available_movie_count - 1));
 
