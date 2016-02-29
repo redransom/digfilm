@@ -3,18 +3,25 @@
 <p>See a list of movies you can bid on:</p>
 <table class="feature-table dark-gray">
     <thead>
-        <tr><th>&nbsp;</th><th>Movie</th><th>Release Date</th>
+        <tr><th>&nbsp;</th>
+        <th><a href="{{Route('league-play', ['id' => $currentLeague->id, 'col'=>'name', 'order'=> (($order == 'asc') ? 'desc' : 'asc')])}}">Movie</a></th>
+        <th><a href="{{Route('league-play', ['id' => $currentLeague->id, 'col'=>'release_at', 'order'=> (($order == 'asc') ? 'desc' : 'asc')])}}">Release Date</a></th>
         <th>Opening<br/>Bid</th>
         <th>Current Price /<br/>$ USD</th>
         <th>Place Bid</th>
         <th>Owner</th>
-        <th>Time</th>
+        <th><a href="{{Route('league-play', ['id' => $currentLeague->id, 'col'=>'auction_end_time', 'order'=> (($order == 'asc') ? 'desc' : 'asc')])}}">Time</a></th>
     </thead>
     <tbody>
     <?php $movieCnt = 1; ?>
-    @foreach($currentLeague->auctions()->where('ready_for_auction', 1)->orderBy('name', 'asc')->get() as $auction)
-        <tr><td>{{($movieCnt++)}}</td><td>
-        <a href="{{URL('movie-knowledge', [$auction->link()])}}">{{$auction->name}}</a></td>
+    @foreach($currentLeague->auctions()->where('ready_for_auction', 1)->orderBy($col, $order)->get() as $auction)
+        <tr>
+        @if(!is_null($auction->firstImage()))
+        <td><img src='{{asset($auction->firstImage()->file_name)}}' width="100px"/></td>
+        @else
+        <td>&nbsp;</td>
+        @endif
+        <td><a href="{{URL('movie-knowledge', [$auction->link()])}}">{{$auction->name}}</a></td>
         <td>{{date("j-M-y", strtotime($auction->release_at))}}</td>
 
         @if(is_null($auction->pivot->initial_bid))

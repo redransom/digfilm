@@ -185,7 +185,7 @@ class WelcomeController extends Controller {
 	 *
 	 * @return void
 	 */
-	public function getLeaguePlay($id) {
+	public function getLeaguePlay($id, $col="name", $order = "asc") {
 		$authUser = Auth::user();
 		if (!isset($authUser))
 			return redirect('/auth/login');
@@ -227,6 +227,8 @@ class WelcomeController extends Controller {
 			->with('currentLeague', $league)
 			->with('page_name', 'league-show')
 			->with('object', $league)
+			->with('order', $order)
+			->with('col', $col)
 			->with('leagueUsers', $leagueUsers)
 			->with('wonAuctions', $wonAuctions)
 			->with('expiredAuctions', $expiredAuctions)

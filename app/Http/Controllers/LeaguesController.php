@@ -35,7 +35,7 @@ class LeaguesController extends Controller {
      *
      * @return Response
      */
-    public function index($status = null)
+    public function index($status = 100, $col = 'name', $order = 'asc')
     {
         $authUser = Auth::user();
         if (!isset($authUser))
@@ -43,19 +43,14 @@ class LeaguesController extends Controller {
 
         //$leagues = League::all();
         $paginate = true;
-        if (is_null($status))
-            $leagues = League::orderBy('auction_stage', 'asc')->orderBy('created_at', 'desc')->paginate(10);
+
+        if ($status == 100)
+            $leagues = League::orderBy('auction_stage', 'asc')->orderBy('created_at', $order)->paginate(10);
         else {
             if($status == 0)
-                $leagues = League::whereNull('auction_stage')->orderBy('auction_stage', 'asc')->orderBy('created_at', 'desc')->get();
-            elseif($status == 1)
-                $leagues = League::where('auction_stage', '0')->orderBy('auction_stage', 'asc')->orderBy('created_at', 'desc')->get();
-            elseif($status == 2)
-                $leagues = League::where('auction_stage', '1')->orderBy('auction_stage', 'asc')->orderBy('created_at', 'desc')->get();
-            elseif($status == 3)
-                $leagues = League::where('auction_stage', '2')->orderBy('auction_stage', 'asc')->orderBy('created_at', 'desc')->get();
-            elseif($status == 4)
-                $leagues = League::where('auction_stage', '3')->orderBy('auction_stage', 'asc')->orderBy('created_at', 'desc')->get();
+                $leagues = League::whereNull('auction_stage')->orderBy('created_at', $order)->get();
+            else
+                $leagues = League::where('auction_stage', ($status - 1))->orderBy('created_at', $order)->orderBy('created_at', 'desc')->get();
 
             $paginate = false;
         }
@@ -64,6 +59,9 @@ class LeaguesController extends Controller {
             ->with('leagues', $leagues)
             ->with('authUser', $authUser)
             ->with('use_graph', true)
+            ->with('order', $order)
+            ->with('col', $col)
+            ->with('status', $status)
             ->with('page_name', 'leagues')
             ->with('paginate', $paginate)
             ->with('instructions', 'All Leagues registered in the site.')

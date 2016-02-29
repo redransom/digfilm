@@ -33,7 +33,7 @@
 
     @if($currentLeague->rule->blind_bid != 'Y')
 
-    @include('partials.user-auctions', ['currentLeague'=>$currentLeague, 'players'=>$players, 'leagueUser'=>$currentLeagueUser, 'blind'=>($currentLeague->rule->blind_bid == 'Y'), 'previousBids'=>$previous_bids])
+    @include('partials.user-auctions', ['currentLeague'=>$currentLeague, 'players'=>$players, 'leagueUser'=>$currentLeagueUser, 'blind'=>false, 'previousBids'=>$previous_bids])
 
     @include('partials.user-expired-auctions', ['tableTitle'=>'Films Purchased', 'players'=>$players, 'leagueUser'=>$currentLeagueUser, 'auctions'=>$wonAuctions])
 

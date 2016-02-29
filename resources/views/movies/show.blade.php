@@ -101,7 +101,7 @@
                                 <thead><th>Amount</th><th>Country</th><th>Date</th></thead>
                                 <tbody>
                                 @foreach($movie->Takings as $taking)
-                                    <tr><td>{{intval($taking->amount)}}M</td><td>{{$taking->country}}</td><td>{{$taking->takings_at}}</td></tr>
+                                    <tr><td>{{intval($taking->amount) / 1000000}}M</td><td>{{$taking->country}}</td><td>{{$taking->takings_at}}</td></tr>
                                 @endforeach
                                 </tbody>
                                 </table>
