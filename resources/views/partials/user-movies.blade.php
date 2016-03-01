@@ -13,11 +13,7 @@
         <section class="post-entry">
             <div class="post-date">{{date("l, jS F Y", strtotime($movie->release_at))}}</div><!--/ .post-date-->
             <div class="post-title">
-                @if(!is_null($movie->slug) && $movie->slug != "")
-                <h5><a href="{{URL('movie-knowledge', $movie->slug)}}">{{$movie->name}}</a></h5>
-                @else
-                <h5><a href="{{URL('movie-knowledge', $movie->id)}}">{{$movie->name}}</a></h5>
-                @endif
+                <h5><a href="{{URL('movie-knowledge', $movie->link())}}">{{$movie->name}}</a></h5>
             </div><!--/ .post-title-->
             <div class="description">
                 {{$movie->summary}}

@@ -128,7 +128,7 @@ Breadcrumbs::register('league-edit', function($breadcrumbs, $league)
     $breadcrumbs->push('Edit League', route('leagues.edit', $league->id));
 });
 
-Breadcrumbs::register('league-show', function($breadcrumbs, $league)
+Breadcrumbs::register('league-details', function($breadcrumbs, $league)
 {
     $breadcrumbs->parent('leagues');
     $breadcrumbs->push('League Details', route('leagues.show', $league->id));

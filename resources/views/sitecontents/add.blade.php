@@ -75,7 +75,7 @@ tinymce.init({
                         <div class="controls">
                             {!! Form::text('title', null, ['class'=>'span8', 'placeholder'=>'Heading for content']) !!}
                             <span class="help-inline">Minimum 3 Characters.</span>
-                            <span class="help-inline">SEO: Used in link of all search engines.</
+                            <span class="help-inline">SEO: Used in link of all search engines.</span>
                         </div>
                     </div>
 
@@ -98,6 +98,15 @@ tinymce.init({
                     @else
                     <input type="hidden" name="body" value="NOT NEEDED">
                     @endif
+
+                    <div class="control-group">
+                        <label class="control-label" for="SiteContentTitle">Link/URL</label>
+                        <div class="controls">
+                            {!! Form::text('link_url', null, ['class'=>'span8', 'placeholder'=>'Link or URL']) !!}
+                            <span class="help-inline">Link to page within site or external.</span>
+                            <span class="help-inline">Don't include the domain for internal pages.</span>
+                        </div>
+                    </div>
 
                     @if($type == 'N' || $type == 'F')
                     <div class="control-group">

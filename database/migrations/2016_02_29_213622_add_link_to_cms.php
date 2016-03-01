@@ -12,7 +12,10 @@ class AddLinkToCms extends Migration {
 	 */
 	public function up()
 	{
-		//
+		Schema::table('site_content', function(Blueprint $table)
+		{
+			$table->string('link_url', 500)->nullable();
+		});
 	}
 
 	/**
@@ -22,7 +25,10 @@ class AddLinkToCms extends Migration {
 	 */
 	public function down()
 	{
-		//
+		Schema::table('site_content', function(Blueprint $table)
+		{
+			$table->dropColumn('link_url');
+		});
 	}
 
 }

@@ -182,7 +182,7 @@ class LeaguesController extends Controller {
             $leagueuser = LeagueUser::create( ['user_id'=>$league->users_id, 'league_id'=>$league->id, 'balance'=>100] );
 
             Flash::message('League created.');
-            return redirect()->route('leagues', [$league->id]);
+            return redirect()->route('league', [$league->id]);
         } else {
             /* come by customer create league so go to select movies page */
             //user comes from admin - get league owner and add as a league player
@@ -216,6 +216,7 @@ class LeaguesController extends Controller {
             return redirect('/auth/login');
 
         $league = League::find($id);
+        var_dump($league);
         $title = "League ".$league->name." details";
         $players = $league->Players;
 
@@ -224,7 +225,7 @@ class LeaguesController extends Controller {
             ->with('league', $league)
             ->with('players', $players)
             ->with('object', $league)
-            ->with('page_name', 'league-show')
+            ->with('page_name', 'league-details')
             ->with('title', $title);
 
     }
@@ -466,7 +467,7 @@ class LeaguesController extends Controller {
             Flash::message('Player already exists in this league.');
         }
 
-        return redirect()->route('leagues', [$id]);
+        return redirect()->route('league', [$id]);
     }
 
     /**
@@ -998,8 +999,7 @@ class LeaguesController extends Controller {
      */
     public function preparePlayersForAuctions() 
     {
-        
-        //DB::connection()->enableQueryLog();
+        /*DB::connection()->enableQueryLog();*/
         $leaguesToNotify = League::whereNotNull('auction_start_date')
             ->where('auction_start_date', '>', date("Y-m-d H:i:s"))
             ->where('enabled', '1')->where('auction_stage', '0')->get();
@@ -1026,16 +1026,15 @@ class LeaguesController extends Controller {
                 
                 $available_movies = Movie::where('release_at', '>', date("Y-m-d", $earliest_release_date))
                     ->Where(function ($query) use ($max_bid) {
-                        $query->where('opening_bid', '<', $max_bid)->orWhereNull('opening_bid');
+                        $query->where('opening_bid', '<=', $max_bid)->orWhereNull('opening_bid');
                     })->lists('id');
 
                 $available_movie_count = count($available_movies);
                 
                 //clear out movies if some already there
                 LeagueMovie::where('leagues_id', $league->id)->delete();
-
-                /*$queries = DB::getQueryLog();
-                print_r($queries);*/
+/*  $queries = DB::getQueryLog();
+                print_r($queries);  */             
 
                 Log::info("Movie Check - Available: ".count($available_movies)." Min Required: ".$min_movies);
 

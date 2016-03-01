@@ -52,4 +52,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	public function fullName() {
 		return (is_null($this->forenames) ? $this->name : $this->forenames." ".$this->surname);
 	}
+
+	public function winTotal() {
+		return $this->hasMany("\App\Models\League", "winners_id")->count();
+	}
 }

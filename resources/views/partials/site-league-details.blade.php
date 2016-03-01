@@ -8,7 +8,8 @@
                         <h3>League Type: {{$league->rule_set->name}}</h3>
 
                         @if($league->auction_stage >= 2 && $league->auction_stage < 5)
-                        <h3>League Started: {{date("jS M Y g:iA", strtotime($league->auction_start_date))}}</h3>
+                        <h3>Auction Started: {{date("jS M Y g:iA", strtotime($league->auction_start_date))}}</h3>
+                        <h3>Auction Close: {{date("jS M Y g:iA", strtotime($league->auction_close_date))}}</h3>
                         @endif
 
                         <!-- First check -->

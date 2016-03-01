@@ -36,7 +36,7 @@
                 @foreach($sitecontents as $content)
                 <tr class="<?php echo (($contentCnt++ % 2) == 0) ? "odd" : "even"; ?> content{{$content->id}}">
                     <td>{{$content->id}}</td>
-                    <td><a href="{{URL('sitecontents', array('id'=>$content->id))}}">{{$content->title}}</a></td>
+                    <td>{{$content->title}}</td>
                     <td>{{date("j/m/Y g:iA", strtotime($content->created_at))}}</td>
                     <td>@if($content->type == 'N')
                     News

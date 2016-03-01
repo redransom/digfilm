@@ -10,12 +10,12 @@
         <meta name="keywords" content="{{$meta['meta_keywords']}}" />
         @endif
         <meta property="og:type" content="TheNextBigFilm" />
-        <meta property="og:title" content="TheNextBigFilm Movies | Homepage" />
+        <meta property="og:title" content="TheNextBigFilm Movies | {{$title}}" />
         <meta property="og:image" content="" />
         <meta property="og:description" content="" />
         <meta property="og:url" content="http://www.thenextbigfilm.com" />
         <meta property="og:site_name" content="TheNextBigFilm | Homepage" />
-        <link rel="shortcut icon" type="image/png" href="images/favicon.png" />
+        <link rel="shortcut icon" type="image/png" href="{{ asset('images/favicon.png') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('/css/reset.css') }}" media="screen" />
         <link rel="stylesheet" type="text/css" href="{{ asset('/css/font-awesome.min.css') }}" media="screen" />
         <link rel="stylesheet" type="text/css" href="{{ asset('/css/dat-menu.css') }}" media="screen" />

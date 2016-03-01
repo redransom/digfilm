@@ -131,9 +131,9 @@ Route::group(['middleware'=>'auth'], function() {
 
         /* Leagues Routes */
         Route::get('leagues/{status?}/{col?}/{order?}', ['as'=>'league-disable', 'uses'=>'LeaguesController@index']);
-        Route::get('league/{id}', ['as'=>'leagues', 'uses'=>'LeaguesController@show']);
-        Route::get('league/{id}/edit', ['as'=>'leagues', 'uses'=>'LeaguesController@edit']);
-        Route::post('league/{id}/edit', ['as'=>'leagues', 'uses'=>'LeaguesController@update']);
+        Route::get('league/{id}', ['as'=>'league', 'uses'=>'LeaguesController@show']);
+        Route::get('league/{id}/edit', ['as'=>'league-edit', 'uses'=>'LeaguesController@edit']);
+        Route::post('league/{id}/edit', ['as'=>'league-edit', 'uses'=>'LeaguesController@update']);
         Route::get('league/{id}/disable', ['as'=>'league-disable', 'uses'=>'LeaguesController@disable']);
         Route::get('league/{id}/enable', ['as'=>'league-enable', 'uses'=>'LeaguesController@enable']);
         Route::get('league/{id}/rules', ['as'=>'league-rules', 'uses'=>'LeaguesController@getRules']);

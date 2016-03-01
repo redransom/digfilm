@@ -9,7 +9,11 @@
 						<h3>Leagues in?</h3>
 						<p>You are currently in <strong>{{$authUser->leagues()->where('enabled', '1')->count()}}</strong> leagues.</p>
 						<h3>Won Leagues</h3>
-						<p>You have won <strong>0</strong> leagues so far!</p>
+						<p>You have won <strong>{{$authUser->winTotal()}}</strong> leagues so far!</p>
+						@if(!is_null($authUser->thumbnail)) 
+						<h3>Profile Image</h3>
+						<img src="{{asset($authUser->thumbnail)}}" alt="Player Mugshot" width="135px" height="200px"/>
+						@endif
                     </div>
 
                 </div>

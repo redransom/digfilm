@@ -8,7 +8,7 @@
         <div class="scroller_block">
             <ul>
                 <li>
-                    <a href="{{URL('all-leagues')}}"><img class="small-custom-frame" src="{{asset('/images/publicleagues.png')}}" width="222" height="137" alt="" /></a>
+                    <a href="{{URL('all-leagues')}}"><h3>Public Leagues</h3></a>
                     <div class="scroll-caption">
                         <span>Public Leagues</span>
                         <h6><a href="{{URL('all-leagues')}}">There are <strong>{{$public_count}}</strong> public leagues!</a></h6>
@@ -16,7 +16,7 @@
                 </li>
                 @if(!is_null($opening_bid))
                 <li>
-                    <a href="{{URL('movie-knowledge', ['id'=>$opening_bid->id])}}"><img class="small-custom-frame" src="images/temp/temp_img_2.jpg" width="222" height="137" alt="" /></a>
+                    <a href="{{URL('movie-knowledge', ['id'=>$opening_bid->id])}}"><h3>Opening Bid</h3></a>
                     <div class="scroll-caption">
                         <span>Opening Bid</span>
                         <h6><a href="{{URL('movie-knowledge', ['id'=>$opening_bid->id])}}">Include this film at <strong>&dollar;{{$opening_bid->opening_bid}}</strong></a></h6>
@@ -27,8 +27,7 @@
                 @endif
                 @if(!is_null($next_film))
                 <li>
-                    <a href="{{URL('movie-knowledge', ['id'=>$next_film->id])}}"><img class="small-custom-frame" src="{{asset('/images/countdown.png')}}" width="222" height="137" alt="" />
-                    </a>
+                    <a href="{{URL('movie-knowledge', ['id'=>$next_film->id])}}"><h3>Next Film</h3></a>
                     <div class="scroll-caption">
                         <span>Next Film Released</span>
                         <h6><a href="{{URL('movie-knowledge', ['id'=>$next_film->id])}}">{{$next_film->name}}</a></h6>

@@ -42,10 +42,10 @@ class MoviesController extends Controller {
 		$input = Input::all();
 		$search = "";
 		if (isset($input['movies-search-text'])) {
-			$movies = Movie::where('name', 'LIKE', '%'.$input['movies-search-text'].'%')->paginate();
+			$movies = Movie::where('name', 'LIKE', '%'.$input['movies-search-text'].'%')->orderBy('release_at', 'asc')->paginate();
 			$search = $input['movies-search-text'];
 		} else
-			$movies = Movie::paginate(10);
+			$movies = Movie::orderBy('release_at', 'asc')->paginate(10);
 
 		return View("movies.all")
 			->with('movies', $movies)

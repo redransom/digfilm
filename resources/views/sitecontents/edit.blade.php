@@ -70,7 +70,7 @@ tinymce.init({
                         </div>
                     </div>
 
-                    @if($content->type == 'N')
+                    @if($content->type == 'N' || $content->type == 'F')
                     <div class="control-group">
                         <label class="control-label" for="SiteContentSummary">Summary</label>
                         <div class="controls">
@@ -79,14 +79,27 @@ tinymce.init({
                     </div>
                     @endif
 
+                    @if($content->type != 'F')
                     <div class="control-group">
                         <label class="control-label" for="SiteContentBody">Body</label>
                         <div class="controls">
                             {!! Form::textarea('body', $content->body, ['class'=>'span8', 'placeholder'=>'WYSIWYG here...', 'id'=>'body']) !!}
                         </div>
                     </div>
+                    @else
+                    <input type="hidden" name="body" value="{{ $content->body }}">
+                    @endif
 
-                    @if($content->type == 'N')
+                    <div class="control-group">
+                        <label class="control-label" for="SiteContentTitle">Link/URL</label>
+                        <div class="controls">
+                            {!! Form::text('link_url', $content->link_url, ['class'=>'span8', 'placeholder'=>'Link or URL']) !!}
+                            <span class="help-inline">Link to page within site or external.</span>
+                            <span class="help-inline">Don't include the domain for internal pages.</span>
+                        </div>
+                    </div>
+
+                    @if($content->type == 'N' || $content->type == 'F')
                     <div class="control-group">
                         <label class="control-label" for="SiteContentThumbnail">Thumbnail</label>
                         <div class="controls">
