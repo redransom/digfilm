@@ -97,7 +97,7 @@ class WelcomeController extends Controller {
 		return view('about')
 			->with('content', $content)
 			->with('page_name', 'about')
-			->with('meta', $this->memeta($content))
+			->with('meta', $this->get_meta($content))
 			->with('title', (!is_null($content) ? $content->title : ''))
 			->with('authUser', $authUser);	
 	}
