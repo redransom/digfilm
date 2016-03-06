@@ -269,7 +269,7 @@ Breadcrumbs::register('news', function($breadcrumbs, $object)
     $breadcrumbs->push('News', route('news-detail', [$object->id]));
 });
 
-Breadcrumbs::register('movies', function($breadcrumbs)
+Breadcrumbs::register('all-movies', function($breadcrumbs)
 {
     $breadcrumbs->parent('home');
     $breadcrumbs->push('Movies', route('all-movies'));

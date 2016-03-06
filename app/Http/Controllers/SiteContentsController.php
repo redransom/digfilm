@@ -181,7 +181,7 @@ class SiteContentsController extends Controller {
         if ($input['meta_description'])
             $sitecontent->meta_description = $input['meta_description'];
         
-        if ($sitecontent->type == 'N')
+        if ($sitecontent->type == 'N' || $sitecontent->type == 'F')
             $sitecontent->summary = $input['summary'];
 
         $sitecontent->body = $input['body'];

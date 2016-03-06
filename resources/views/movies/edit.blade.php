@@ -2,6 +2,16 @@
 
 @section('content')
 <div class="content">
+<script>
+$(function() {
+    $('#release_at').datetimepicker({
+        format: 'Y-m-d'
+    });
+    $('#takings_close_date').datetimepicker({
+        format: 'Y-m-d'
+    });
+});    
+</script>
 
     <div class="module">
         <div class="module-head">
@@ -54,7 +64,7 @@
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label" for="MovieGenre">Rating</label>
+                        <label class="control-label" for="MovieGenre">PEGI Rating</label>
                         <div class="controls">
                             {!! Form::select('ratings[]', $ratings, $movie->ratings()->lists('ratings_id'), ['class'=>'span4', 'multiple'=>'multiple']) !!}
                             <span class="help-inline"></span>
@@ -64,7 +74,7 @@
                     <div class="control-group">
                         <label class="control-label" for="MovieRating">Score (out of 5)</label>
                         <div class="controls">
-                            {!! Form::text('rating', $movie->rating, ['class'=>'span4 rating', 'min'=>'1', 'max'=>'5']) !!}
+                            {!! Form::text('rating', $movie->rating, ['class'=>'span2 rating', 'min'=>'1', 'max'=>'5']) !!}
                             <span class="help-inline">From 1 to 5</span>
                         </div>
                     </div>
@@ -82,7 +92,7 @@
                     <div class="control-group">
                         <label class="control-label" for="MovieReleaseDate">Release Date</label>
                         <div class="controls">
-                            {!! Form::date('release_at', $movie->release_at, ['class'=>'span4']) !!}
+                            {!! Form::date('release_at', $movie->release_at, ['class'=>'span4', 'id'=>'release_at']) !!}
                             <span class="help-inline">Date film is released</span>
                         </div>
                     </div>
@@ -90,7 +100,7 @@
                     <div class="control-group">
                         <label class="control-label" for="MovieTakingsCloseDate">Takings Close Date</label>
                         <div class="controls">
-                            {!! Form::date('takings_close_date', $movie->takings_close_date, ['class'=>'span4']) !!}
+                            {!! Form::date('takings_close_date', $movie->takings_close_date, ['class'=>'span4', 'id'=>'takings_close_date']) !!}
                             <span class="help-inline">Date takings stop being compiled</span>
                         </div>
                     </div>

@@ -2,7 +2,13 @@
 
 @section('content')
 <div class="content">
-
+<script>
+$(function() {
+    $('#release_at').datetimepicker({
+        format: 'Y-m-d'
+    });
+});    
+</script>
     <div class="module">
         <div class="module-head">
             <h3>Add Movie</h3>
@@ -48,13 +54,13 @@
                     <div class="control-group">
                         <label class="control-label" for="MovieGenre">Genre</label>
                         <div class="controls">
-                            {!! Form::select('genres_id', $genres, null, ['class'=>'span8']) !!}
+                            {!! Form::select('genres_id', $genres, null, ['class'=>'span4']) !!}
                             <span class="help-inline">Choose from genre list</span>
                         </div>
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label" for="MovieGenre">Rating</label>
+                        <label class="control-label" for="MovieGenre">PEGI Rating</label>
                         <div class="controls">
                             {!! Form::select('ratings[]', $ratings, null, ['class'=>'span4', 'multiple'=>'multiple']) !!}
                             <span class="help-inline"></span>
@@ -64,7 +70,7 @@
                     <div class="control-group">
                         <label class="control-label" for="MovieRating">Rating</label>
                         <div class="controls">
-                            {!! Form::text('rating', null, ['class'=>'span8 rating', 'min'=>'1', 'max'=>'5']) !!}
+                            {!! Form::text('rating', null, ['class'=>'span2 rating', 'min'=>'1', 'max'=>'5']) !!}
                             <span class="help-inline">Enter 1 to 5</span>
                         </div>
                     </div>
@@ -72,7 +78,7 @@
                     <div class="control-group">
                         <label class="control-label" for="MovieBudget">Budget</label>
                         <div class="controls">
-                            <span class="add-on">$</span>{!! Form::text('budget', null, ['class'=>'span8', 'placeholder'=>'0']) !!}
+                            <span class="add-on">$</span>{!! Form::text('budget', null, ['class'=>'span4', 'placeholder'=>'0']) !!}
                             <span class="help-inline">This is in millions</span>
                         </div>
                     </div>
@@ -80,7 +86,7 @@
                     <div class="control-group">
                         <label class="control-label" for="MovieReleaseDate">Release Date</label>
                         <div class="controls">
-                            {!! Form::date('release_at', null, ['class'=>'span8']) !!}
+                            {!! Form::date('release_at', null, ['class'=>'span4', 'id'=>'release_at']) !!}
                             <span class="help-inline">Date film is released</span>
                         </div>
                     </div>

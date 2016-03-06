@@ -24,8 +24,9 @@
             <thead>
                 <tr>
                     <th width="4%">ID</th>
-                    <th width="45%">Title</th>
-                    <th width="11%">Created</th>
+                    <th width="35%">Title</th>
+                    <th width="12%">Created</th>
+                    <th width="12%">Modified</th>
                     <th width="11%">Type /<br/>Section</th>
                     <th width="7%">Owned By</th>
                     <th>Actions</th>
@@ -38,6 +39,7 @@
                     <td>{{$content->id}}</td>
                     <td>{{$content->title}}</td>
                     <td>{{date("j/m/Y g:iA", strtotime($content->created_at))}}</td>
+                    <td>{{date("j/m/Y g:iA", strtotime($content->updated_at))}}</td>
                     <td>@if($content->type == 'N')
                     News
                     @elseif($content->type == 'C')
