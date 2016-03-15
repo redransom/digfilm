@@ -62,7 +62,7 @@
                                 <li><a class="collapsed" data-toggle="collapse" href="#toggleContent"><i class="menu-icon icon-save">
                                 </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right"></i>Content</a>
                                     <ul id="toggleContent" class="collapse unstyled">
-                                        <li><a href="{{URL('sitecontent')}}"><i class="icon-save"></i>List</a></li>
+                                        <li><a href="{{URL('sitecontents')}}"><i class="icon-save"></i>List</a></li>
                                         <li><a href="{{URL('sitecontent/create/C')}}"><i class="icon-save"></i>Add Page Content</a></li>
                                         <li><a href="{{URL('sitecontent/create/F')}}"><i class="icon-save"></i>Add Front Slider</a></li>
                                         <li><a href="{{URL('sitecontent/create/N')}}"><i class="icon-save"></i>Add News/Blog</a></li>

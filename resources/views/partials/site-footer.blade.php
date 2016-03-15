@@ -13,9 +13,10 @@
                         <h2>Contact Information</h2>
                         <div class="panel-content">
                             
+                            @if(isset($contact_footer))
                             <div>
-                                <h4>What do we stand for ?</h4>
-                                <p>TODO: Byron - we need some content for this!</p>
+                                <h4>{{$contact_footer->title}}</h4>
+                                <p>{!! $contact_footer->body !!}</p>
 
                                 <a href="mailto:contact@thenextbigfilm.com" class="icon-line">
                                     <i class="fa fa-comment"></i><span>contact@thenextbigfilm.com</span>
@@ -26,7 +27,7 @@
                                 </span>
             
                             </div>
-                            
+                            @endif
                         </div>
                     <!-- END .panel -->
                     </div>

@@ -33,7 +33,7 @@ tinymce.init({
 
     <div class="module">
         <div class="module-head">
-            <h3>Add Content</h3>
+            <h3>Edit Content</h3>
         </div>
         <div class="module-body">
 
@@ -90,6 +90,7 @@ tinymce.init({
                     <input type="hidden" name="body" value="{{ $content->body }}">
                     @endif
 
+                    @if($content->type == 'F')
                     <div class="control-group">
                         <label class="control-label" for="SiteContentTitle">Link/URL</label>
                         <div class="controls">
@@ -98,6 +99,7 @@ tinymce.init({
                             <span class="help-inline">Don't include the domain for internal pages.</span>
                         </div>
                     </div>
+                    @endif
 
                     @if($content->type == 'N' || $content->type == 'F')
                     <div class="control-group">
@@ -107,7 +109,11 @@ tinymce.init({
                             <img src="{{asset($content->thumbnail)}}" width="100px"/>
                             @endif
                             {!! Form::file('thumbnail', null, ['class'=>'span8']) !!}
-                            <span class="help-inline">For use in lists.</span>
+                            @if($content->type == 'F')
+                            <span class="help-inline">The size of this image needs to be 75px by 45px or else it will be squashed.</span>
+                            @else
+                            <span class="help-inline">For use in lists. The size of this image needs to be 60px by 45px or else it will be squashed.</span>
+                            @endif
                         </div>
                     </div>
                     @endif
@@ -119,10 +125,15 @@ tinymce.init({
                             <img src="{{asset($content->main_image)}}" width="100px"/>
                             @endif
                             {!! Form::file('main_image', null, ['class'=>'span8']) !!}
-                            <span class="help-inline">Main image for article if available.</span>
+                            @if($content->type == 'F')
+                            <span class="help-inline">The size of this image needs to be 1207px by 440px or else it will be squashed.</span>
+                            @else
+                            <span class="help-inline">The size of this image needs to be 644px by 300px.</span>
+                            @endif
                         </div>
                     </div>
 
+                    @if($content->type != 'F')
                     <h4>SEO</h4>
                     <div class="control-group">
                         <label class="control-label" for="SiteContentTitle">Keywords</label>
@@ -134,11 +145,12 @@ tinymce.init({
                     <div class="control-group">
                         <label class="control-label" for="SiteContentTitle">Description</label>
                         <div class="controls">
-                            {!! Form::text('meta_description', $content->meta_description, ['class'=>'span8', 'placeholder'=>'Heading for content', 'maxlength'=>155]) !!}
+                            {!! Form::text('meta_description', $content->meta_description, ['class'=>'span8', 'placeholder'=>'Meta description', 'maxlength'=>155]) !!}
                             <span class="help-inline">Used in most searches - max of 155 chars normally.</span>
                         </div>
                     </div>
-
+                    @endif
+                    
                     <div class="control-group">
                         <div class="controls">
                             <button type="submit" class="btn btn-primary pull-right">Save Content</button>

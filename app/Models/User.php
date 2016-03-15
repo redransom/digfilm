@@ -42,7 +42,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	}
 
 	public function inLeagues() {
-		return $this->belongsToMany("\App\Models\League", "league_users", "user_id", "league_id")->withPivot('id');
+		return $this->belongsToMany("\App\Models\League", "league_users", "user_id", "league_id")->where('enabled', '1')->withPivot('id');
 	}
 
 	public function auctions() {
@@ -54,6 +54,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	}
 
 	public function winTotal() {
-		return $this->hasMany("\App\Models\League", "winners_id")->count();
+		return $this->hasMany("\App\Models\League", "winners_id")->where('enabled', '0')->count();
 	}
 }

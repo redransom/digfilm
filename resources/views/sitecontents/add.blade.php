@@ -99,6 +99,7 @@ tinymce.init({
                     <input type="hidden" name="body" value="NOT NEEDED">
                     @endif
 
+                    @if($type == 'F')
                     <div class="control-group">
                         <label class="control-label" for="SiteContentTitle">Link/URL</label>
                         <div class="controls">
@@ -107,6 +108,7 @@ tinymce.init({
                             <span class="help-inline">Don't include the domain for internal pages.</span>
                         </div>
                     </div>
+                    @endif
 
                     @if($type == 'N' || $type == 'F')
                     <div class="control-group">
@@ -116,7 +118,7 @@ tinymce.init({
                             @if($type == 'F')
                             <span class="help-inline">The size of this image needs to be 75px by 45px or else it will be squashed.</span>
                             @else
-                            <span class="help-inline">For use in lists.</span>
+                            <span class="help-inline">For use in lists. The size of this image needs to be 60px by 45px or else it will be squashed.</span>
                             @endif
                         </div>
                     </div>
@@ -127,13 +129,14 @@ tinymce.init({
                         <div class="controls">
                             {!! Form::file('main_image', null, ['class'=>'span8']) !!}
                             @if($type == 'F')
-                            <span class="help-inline">The size of this image needs to be 1000px by 440px or else it will be squashed.</span>
+                            <span class="help-inline">The size of this image needs to be 1207px by 440px or else it will be squashed.</span>
                             @else
-                            <span class="help-inline">Main image for article if available.</span>
+                            <span class="help-inline">The size of this image needs to be 644px by 300px.</span>
                             @endif
                         </div>
                     </div>
 
+                    @if($type != 'F')
                     <h4>SEO</h4>
                     <div class="control-group">
                         <label class="control-label" for="SiteContentTitle">Keywords</label>
@@ -145,11 +148,12 @@ tinymce.init({
                     <div class="control-group">
                         <label class="control-label" for="SiteContentTitle">Description</label>
                         <div class="controls">
-                            {!! Form::text('meta_description', null, ['class'=>'span8', 'placeholder'=>'Heading for content', 'maxlength'=>155]) !!}
+                            {!! Form::text('meta_description', null, ['class'=>'span8', 'placeholder'=>'Meta description', 'maxlength'=>155]) !!}
                             <span class="help-inline">Used in most searches - max of 155 chars normally.</span>
                         </div>
                     </div>
-
+                    @endif
+                    
                     <div class="control-group">
                         <div class="controls">
                             <button type="submit" class="btn btn-primary pull-right">Add Content</button>

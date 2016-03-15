@@ -22,13 +22,25 @@ class SiteContentsController extends Controller {
      *
      * @return Response
      */
-    public function index()
+    public function index($type = '')
     {
         $authUser = Auth::user();
         if (!isset($authUser))
             return redirect('/auth/login');
 
-        $sitecontents = SiteContent::paginate(10);
+        if ($type == '') {
+            $sitecontents = SiteContent::paginate(10);
+            $title = 'Site Content';
+        }
+        else {
+            $sitecontents = SiteContent::where('type', $type)->paginate(10);
+            if ($type == 'F')
+                $title = 'Front Page Slider Content';
+            elseif ($type == 'C')
+                $title = 'Page Content';
+            elseif ($type == 'N')
+                $title = 'News/Blog Content';                
+        }
         $sections = $this->get_sections();
 
         return View("sitecontents.all")
@@ -36,8 +48,7 @@ class SiteContentsController extends Controller {
             ->with('authUser', $authUser)
             ->with('page_name', 'sitecontents')
             ->with('sections', $sections)
-            ->with('instructions', 'All Site Content')
-            ->with('title', 'Content');
+            ->with('title', 'All '.$title);
     }
 
     /**
@@ -51,21 +62,30 @@ class SiteContentsController extends Controller {
         if (!isset($authUser))
             return redirect('/auth/login');
 
-        $sections = null;
-        if ($type == 'C')
+        $sections = $new_sections = null;
+        if ($type == 'C') {
             $sections = $this->get_sections();
+
+            $current_sections = SiteContent::where('type', 'C')->lists('section');
+            $new_sections = array();
+            foreach($sections as $available_section_key => $available_section_label)
+                if (!in_array($available_section_key, $current_sections))
+                    $new_sections[$available_section_key] = $available_section_label;
+        }
+
 
         return View("sitecontents.add")
             ->with('authUser', $authUser)
             ->with('type', $type)
-            ->with('sections', $sections)
+            ->with('sections', $new_sections)
             ->with('page_name', 'sitecontent-add')
             ->with('instructions', 'Add page content or news/blog articles.')
             ->with('title', 'Add SiteContent');
     }
 
     private function get_sections() {
-        return ['ABT' => 'About Us', 
+        return ['HOM'=> 'Home Page',
+                'ABT' => 'About Us', 
                 'TER' => 'Terms & Conditions',
                 'RUL' => 'Rules',
                 'PRI' => 'Privacy',
@@ -230,7 +250,61 @@ class SiteContentsController extends Controller {
             $message = 'You don\'t have the permissions to complete this task.';
 
         Flash::message($message);
-        return Redirect::route('sitecontent.index');
+        return redirect()->back();
+    }
+
+    /**
+     * Disable the site content
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function disable($id)
+    {
+        //
+        $authUser = Auth::user();
+
+        //ensure permissions are available - should probably check for permissions and not role
+        if ($authUser->hasRole("Admin")) {
+            $content = SiteContent::find($id);
+            $message = "";
+            if (!empty($content)) {
+                $message = "Content " .$content->title. " has been disabled.";
+                Flash::message($message);
+                $content->enabled = false;
+                $content->save();
+            }
+        } else 
+            Flash::message('You don\'t have the permissions to complete this task.');
+
+        return redirect()->back();
+    }
+
+    /**
+     * Enable the site content
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function enable($id)
+    {
+        //
+        $authUser = Auth::user();
+
+        //ensure permissions are available - should probably check for permissions and not role
+        if ($authUser->hasRole("Admin")) {
+            $content = SiteContent::find($id);
+            $message = "";
+            if (!empty($content)) {
+                $message = "Content " .$content->title. " has been enabled.";
+                Flash::message($message);
+                $content->enabled = true;
+                $content->save();
+            }
+        } else 
+            Flash::message('You don\'t have the permissions to complete this task.');
+
+        return redirect()->back();
     }
 
 }

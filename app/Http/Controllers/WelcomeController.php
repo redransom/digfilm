@@ -1,6 +1,10 @@
 <?php namespace App\Http\Controllers;
 use Auth;
 use DB;
+use Input;
+use Mail;
+use Flash;
+use Redirect;
 use App\Models\User;
 use App\Models\League;
 use App\Models\Auction;
@@ -60,6 +64,7 @@ class WelcomeController extends Controller {
 
 */      //get front slider images
 		$slider = SiteContent::where('type', 'F')->get();
+		$content = SiteContent::section('HOM');
 
 		if (isset($authUser)) {
 			$public = League::availableLeagues($authUser)->count();
@@ -69,8 +74,6 @@ class WelcomeController extends Controller {
 	        		$query->whereNull('auction_stage')->orWhere('auction_stage', '<', '2');
 	        	})->count();
 
-
-
         $opening_bid = Movie::where('opening_bid_date', '<=', date("Y-m-d"))->whereNotNull('opening_bid_date')->
         	where('opening_bid', '>', 0)->orderBy('updated_at', 'DESC')->first();
 
@@ -79,21 +82,22 @@ class WelcomeController extends Controller {
 
 		return view('welcome')
 			->with('slider', $slider)
+			->with('content', $content)
 			->with('public_count', $public)
 			->with('next_film', $next_film)
 			->with('trailers', $trailers)
 			->with('frontpage', true)
 			->with('opening_bid', $opening_bid)
 			->with('authUser', $authUser)
-			->with('title', 'Welcome to TheNextBigFilm');
+			->with('meta', $this->get_meta($content))
+			->with('title', (!is_null($content) ? $content->title : 'Welcome to TheNextBigFilm'));
 	}
 
 	public function about() {
 		$authUser = Auth::user();
 
 		//get content
-		$content = SiteContent::where('section', 'ABT')->first();
-
+		$content = SiteContent::section('ABT');
 		return view('about')
 			->with('content', $content)
 			->with('page_name', 'about')
@@ -103,7 +107,7 @@ class WelcomeController extends Controller {
 	}
 
 	public function rules() {
-		$content = SiteContent::where('section', 'RUL')->first();
+		$content = SiteContent::section('RUL');
 
 		$authUser = Auth::user();
 		return view('rules')
@@ -116,7 +120,7 @@ class WelcomeController extends Controller {
 
 	public function terms() {
 		$authUser = Auth::user();
-		$content = SiteContent::where('section', 'TER')->first();
+		$content = SiteContent::section('TER');
 
 		return view('terms')
 			->with('content', $content)
@@ -126,12 +130,37 @@ class WelcomeController extends Controller {
 			->with('authUser', $authUser);	
 	}
 
+	/**
+	 * Take post details and compile an email / need to avoid spam somehow
+	 *
+	 * @return void
+	 */
+	public function postContact() {
+		$input = Input::all();
+
+		$data = ['contact_name'=>$input['name'], 
+				'contact_email'=>$input['email'],
+				'contact_reason'=>$input['reason'],
+				'contact_message'=>$input['message'],
+				'subject'=>'Contact from website'];
+
+		Mail::send('emails.contact', $data, function($message) {
+            $message->to(env('CONTACT_EMAIL'), env('CONTACT_NAME'))
+                ->subject('Verify your email address');
+        });
+		Flash::success('Thank you for your message - we will get in touch soon!');
+		return Redirect::route('contact');
+
+	}
+
 	public function contact() {
 		$authUser = Auth::user();
-		$content = SiteContent::where('section', 'CON')->first();
+		$content = SiteContent::section('CON');
 
 		return view('contact')
 			->with('page_name', 'contact')
+			->with('content', $content)
+			->with('fullwidth', true)
 			->with('meta', $this->get_meta($content))
 			->with('title', (!is_null($content) ? $content->title : ''))
 			->with('authUser', $authUser);	
@@ -150,7 +179,7 @@ class WelcomeController extends Controller {
 
 	public function privacy() {
 		$authUser = Auth::user();
-		$content = SiteContent::where('section', 'PRI')->first();
+		$content = SiteContent::section('PRI');
 
 		return view('privacy')
 			->with('content', $content)
@@ -193,8 +222,10 @@ class WelcomeController extends Controller {
 		$league = League::find($id);
 
 		//dont show leagues that have been disabled.
-		if ($league->enabled == 0)
-			return redirect('/');
+		if ($league->enabled == 0) {
+			Flash::message('League '.$league->name.' has been closed unexpectedly - we are sorry for any inconvienence.');
+			return redirect('dashboard');
+		}
 
 		if ($league->auction_stage == '3') {
 			//redirect to the roster page
@@ -379,8 +410,7 @@ class WelcomeController extends Controller {
 
 	public function getEditUser() {
 		$authUser = Auth::user();
-
-		$content = SiteContent::where('section', 'PRO')->first();
+		$content = SiteContent::section('PRO');
 
 		return view('edit-profile')
 			->with('fullwidth', false)

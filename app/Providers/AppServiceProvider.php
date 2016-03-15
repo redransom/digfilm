@@ -46,13 +46,16 @@ class AppServiceProvider extends ServiceProvider {
 		*/
 
 		//top 3 news articles
-		$news_articles = SiteContent::where('type', 'N')->orderBy('created_at', 'DESC')->limit(3)->get();
+		$news_articles = SiteContent::articles();
 
 		$genres = Genre::all();
+
+		$contact_footer = SiteContent::section('COF');
 
 		$data = ['genres_list'=> $genres,
 				'news_articles' => $news_articles,
 				'new_movies'=> $new_movies,
+				'contact_footer' => $contact_footer,
 				'released_movies'=> $released_movies,
 				'top_auctions'=> $top_auctions];
 

@@ -3,20 +3,16 @@
 @section('content')
 <div class="module">
     <div class="module-head">
-        <h3>
-            All Site Content</h3>
+        <h3>{{$title}}</h3>
     </div>
-    <!--div class="module-option clearfix">
-        <form>
-        <div class="input-append pull-left">
-            <input type="text" class="span3" placeholder="Filter by name...">
-            <button type="submit" class="btn">
-                <i class="icon-search"></i>
-            </button>
+    <div class="module-option clearfix">
+        <div class="btn-group pull-right" data-toggle="buttons-radio">
+            <a class="btn" href="{{URL('sitecontents')}}">All</a>
+            <a class="btn" href="{{URL('sitecontents/C')}}">Page</a>
+            <a class="btn" href="{{URL('sitecontents/F')}}">Front</a>
+            <a class="btn" href="{{URL('sitecontents/N')}}">News</a>
         </div>
-        </form>
-    </div-->
-    <div class="module-body">
+    </div>
     @if($sitecontents->count() > 0)
     <div class="module-body table">
 
@@ -24,7 +20,7 @@
             <thead>
                 <tr>
                     <th width="4%">ID</th>
-                    <th width="35%">Title</th>
+                    <th width="30%">Title</th>
                     <th width="12%">Created</th>
                     <th width="12%">Modified</th>
                     <th width="11%">Type /<br/>Section</th>
@@ -51,23 +47,31 @@
                     <td>
                     <a class="btn btn-mini btn-primary" href="{{URL('sitecontent/'.$content->id.'/edit')}}">Edit</a>
 
+                    @if($content->enabled)
+                    <a class="btn btn-mini btn-danger" href="{{URL('sitecontent/'.$content->id.'/disable')}}">Disable</a>
+                    @else
+                    <a class="btn btn-mini btn-info" href="{{URL('sitecontent/'.$content->id.'/enable')}}">Enable</a>
+                    @endif
+
+                    @if(!$content->enabled)
                     {!! Form::open(array('route' => array('sitecontent.destroy', $content->id), 'method' => 'delete', 'style'=>'display:inline')) !!}
                         <button type="submit" class="btn btn-danger btn-mini">Delete</button>
                     {!! Form::close() !!}
+                    @endif
                     </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
+        <div class="pagination pagination-centered">
+            <?php echo $sitecontents->render(); ?>
+        </div>
     </div>
     @else
     <div class="module-body">
     <p>There is no content currently.</p>
     </div>
     @endif
-    <div class="pagination pagination-centered">
-        <?php echo $sitecontents->render(); ?>
-    </div>
 </div>
     
 @endsection

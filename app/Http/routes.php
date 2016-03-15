@@ -17,6 +17,7 @@ Route::get('rules', ['as'=>'rules', 'uses'=>'WelcomeController@rules']);
 Route::get('terms', ['as'=>'terms', 'uses'=>'WelcomeController@terms']);
 Route::get('privacy', ['as'=>'privacy', 'uses'=>'WelcomeController@privacy']);
 Route::get('contact', ['as'=>'contact', 'uses'=>'WelcomeController@contact']);
+Route::post('contact', ['as'=>'contact', 'uses'=>'WelcomeController@postContact']);
 
 Route::get('all-leagues', 'WelcomeController@leagues');
 Route::get('create', 'WelcomeController@create');
@@ -105,6 +106,8 @@ Route::group(['middleware'=>'auth'], function() {
         Entrust::routeNeedsRole('user-enable', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('users', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('users*', ['Admin'], Redirect::to('/'));
+        Entrust::routeNeedsRole('sitecontent', ['Admin'], Redirect::to('/'));
+        Entrust::routeNeedsRole('sitecontents*', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('league-disable', ['Admin'], Redirect::to('/'));
         
         Entrust::routeNeedsRole('movies*', ['Admin'], Redirect::to('/'));
@@ -123,12 +126,11 @@ Route::group(['middleware'=>'auth'], function() {
         Route::put('movies-admin-search', ['as'=>'movies-admin-search', 'uses'=>'MoviesController@index']);
         Route::put('users-admin-search', ['as'=>'users-admin-search', 'uses'=>'UsersController@index']);
 
-        Route::get('user/{id}', ['as'=>'user', 'uses'=>'UsersController@show']);
-        Route::get('user', ['as'=>'user-create', 'uses'=>'UsersController@create']);
-        Route::get('users/{type}', ['as'=>'users', 'uses'=>'UsersController@index']);
-        Route::get('users/{id}/disable', ['as'=>'user-disable', 'uses'=>'UsersController@disable']);
+/*        Route::get('user/{id}', ['as'=>'user', 'uses'=>'UsersController@show']);
+*/
+/*        Route::get('users/{id}/disable', ['as'=>'user-disable', 'uses'=>'UsersController@disable']);
         Route::get('users/{id}/enable', ['as'=>'user-enable', 'uses'=>'UsersController@enable']);
-
+*/
         /* Leagues Routes */
         Route::get('leagues/{status?}/{col?}/{order?}', ['as'=>'league-disable', 'uses'=>'LeaguesController@index']);
         Route::get('league/{id}', ['as'=>'league', 'uses'=>'LeaguesController@show']);
@@ -146,6 +148,8 @@ Route::group(['middleware'=>'auth'], function() {
         Route::post('league/{id}/player', ['as'=>'add-player', 'uses'=>'LeaguesController@postPlayer']);
 
         /* User Routes */
+        Route::get('user', ['as'=>'user-create', 'uses'=>'UsersController@create']);
+        Route::get('users/{type}', ['as'=>'users', 'uses'=>'UsersController@index']);
         Route::get('user/{id}', ['as'=>'user', 'uses'=>'UsersController@show']);
         Route::get('user/{id}/edit', ['as'=>'user-edit', 'uses'=>'UsersController@edit']);
         Route::post('user/{id}/edit', ['as'=>'user-edit', 'uses'=>'UsersController@update']);
@@ -163,6 +167,13 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('movies/{id}/media', ['as'=>'movie-add-media', 'uses'=>'MoviesController@addMedia']);
         Route::post('movies/{id}/media', ['as'=>'add-media', 'uses'=>'MoviesController@postMedia']);
 
+        /* all sitecontent routes */
+//        Route::get('sitecontent', ['as'=>'user-create', 'uses'=>'SiteContentsController@create']);
+        Route::get('sitecontents/{type?}', ['as'=>'sitecontents', 'uses'=>'SiteContentsController@index']);
+        Route::get('sitecontent/create/{type}', ['as'=>'sitecontent-create', 'uses'=>'SiteContentsController@create']);
+        Route::post('sitecontent-update', ['as'=>'sitecontent-update', 'uses'=>'LeaguesController@update']);
+        Route::get('sitecontent/{id}/disable', ['as'=>'content-disable', 'uses'=>'SiteContentsController@disable']);
+        Route::get('sitecontent/{id}/enable', ['as'=>'content-enable', 'uses'=>'SiteContentsController@enable']);
 
         Route::get('admin-dashboard', ['as' => 'admin-dashboard', 'uses'=>'UsersController@adminDashboard']);
 
@@ -170,8 +181,6 @@ Route::group(['middleware'=>'auth'], function() {
         //Route::get('leagues/{status?}', ['as'=>'leagues', 'uses'=>'LeaguesController@index']);
         Route::get('create-league', ['as'=>'league-create', 'uses'=>'LeaguesController@create']);
 
-        Route::get('sitecontent/create/{type}', ['as'=>'sitecontent-create', 'uses'=>'SiteContentsController@create']);
-        Route::post('sitecontent-update', ['as'=>'sitecontent-update', 'uses'=>'LeaguesController@update']);
 
         Route::resource('users', 'UsersController');
         Route::resource('sitecontent', 'SiteContentsController');
