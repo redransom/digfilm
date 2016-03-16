@@ -25,6 +25,7 @@ Route::get('movie-knowledge/{id}', 'WelcomeController@movieKnow');
 Route::get('all-movies', ['as'=>'all-movies', 'uses'=>'WelcomeController@movies']);
 Route::get('movie-genre/{id}', 'WelcomeController@movieGenre');
 Route::get('news-detail/{id}', ['as'=>'news-detail', 'uses'=>'WelcomeController@newsDetail']);
+Route::get('news', ['as'=>'news', 'uses'=>'WelcomeController@newsArticles']);
 
 Route::get('register-successful', ['as'=>'register-successful', 'uses'=>'WelcomeController@registerSuccessful']);
 Route::get('accept-invite/{id}', ['as'=>'accept-invite', 'uses'=>'LeaguesController@acceptInvite']);

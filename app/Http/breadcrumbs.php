@@ -269,6 +269,12 @@ Breadcrumbs::register('news', function($breadcrumbs, $object)
     $breadcrumbs->push('News', route('news-detail', [$object->id]));
 });
 
+Breadcrumbs::register('news-articles', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('News', route('news'));
+});
+
 Breadcrumbs::register('all-movies', function($breadcrumbs)
 {
     $breadcrumbs->parent('home');

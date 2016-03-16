@@ -609,6 +609,24 @@ class WelcomeController extends Controller {
 	}
 
 	/**
+	 * News article detail
+	 *
+	 * @return void
+	 */
+	public function newsArticles() {
+		$authUser = Auth::user();
+
+		$articles = SiteContent::articles(10);
+
+		return view('news')
+			->with('page_name', 'news-articles')
+			->with('page_title', 'News Articles')
+			->with('articles', $articles)
+			->with('title', 'News Articles')
+			->with('authUser', $authUser);
+	}
+
+	/**
 	 * Made it in registering!
 	 *
 	 * @return void
