@@ -21,6 +21,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('/css/dat-menu.css') }}" media="screen" />
         <link rel="stylesheet" type="text/css" href="{{ asset('/css/main-stylesheet.css') }}" media="screen" />
         <link rel="stylesheet" type="text/css" href="{{ asset('/css/responsive.css') }}" media="screen" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('/css/plugins.css')}}" media="screen" />
         <link rel="stylesheet" type="text/css" href="{{ asset('/css/rr-style.css') }}" media="screen" />
         <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Oswald:300,400,700|Source+Sans+Pro:300,400,600,700&amp;subset=latin,latin-ext" />
 
@@ -29,6 +30,7 @@
         <script type='text/javascript' src='{{ asset('/jscript/modernizr.custom.50878.js') }}'></script>
         <script type='text/javascript' src='{{ asset('/jscript/iscroll.js') }}'></script>
         <script type='text/javascript' src='{{ asset('/jscript/dat-menu.js') }}'></script>
+        <script type='text/javascript' src='{{ asset('/jscript/plugins.js')}}'></script>
         <script type='text/javascript'>
             @if(isset($frontpage))
             var strike_featCount = 4;
@@ -127,10 +129,11 @@
         <div id="top-layer">
             <div id="header-top">
             
-            <div class="wrapper">
+                <div class="wrapper">
 
-                    @include('partials.site-social')
+                    <!-- @include('partials.site-social') -->
                     @include('partials.site-top-menu')
+                    @include('partials.site-search')
                 </div>
             </div>
 

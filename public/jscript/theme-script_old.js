@@ -63,24 +63,6 @@ var thetop = parseInt((jQuery(window).height()/2)-50);
 	setTimeout(function(){resizeSidebar()}, 200);
 
 	jQuery(document).ready(function() {
-        /* Owl Carousel - #Owl-Movies */
-        $('#owl-movies').owlCarousel({
-        	items: 1,
-        	itemsDesktop: [1199,1],
-        	itemsDesktopSmall: [979,1],
-        	itemsTablet: [768,1]
-        });
-
-        /* jQuery Match Heights */
-        $('.league-btn').matchHeight();
-        $('.league-js').matchHeight();
-        $('.event-list img').matchHeight();
-        $('.event-list h3').matchHeight();
-
-        $('.selectdropdown').change(function() {
-        	window.location.href=$(this).val();
-        });
-         
 		jQuery(".accordion .accordion-tab > a").click(function () {
 			var thisel = jQuery(this).parent();
 			if(!thisel.hasClass("active")){

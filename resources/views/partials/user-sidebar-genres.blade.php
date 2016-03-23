@@ -1,16 +1,18 @@
  
                 <!-- BEGIN .panel -->
                 <div class="panel">
-                    <h2>Movie Genres</h2>
+                    <h2><span>Movie Genres</span></h2>
                     <div class="panel-content">
 
-                        <div class="tagcloud">
+                        <select class="selectdropdown">
                             @if(isset($genres_list))
                                 @foreach($genres_list as $genre)
-                                <a href="{{URL('movie-genre', [$genre->link()])}}">{{$genre->name}} ({{$genre->movie_count()}})</a>
+                                <option value="{{URL('movie-genre', [$genre->link()])}}" selected>{{$genre->name}} ({{$genre->movie_count()}})</option>
                                 @endforeach
                             @endif
-                        </div>
+                        </select>
+
+                        
                         
                     </div>
                 <!-- END .panel -->

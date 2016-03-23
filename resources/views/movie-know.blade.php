@@ -90,8 +90,12 @@
             </div-->
             <div class="game-info-graph">
                 <div>
-                    <span>Release Date</span>
+                    <span>Release Date:</span>
                     <strong itemprop="datePublished" content="2013-03-05">{{date("l, jS F Y", strtotime($movie->release_at))}}</strong>
+                </div>
+                <div>
+                    <span>Opening Bid:</span>
+                    <strong>£0.20</strong>
                 </div>
                 @if(isset($movie->genre))
                 <div>
@@ -106,28 +110,64 @@
     <div class="game-info-right">
 
         <!-- BEGIN .game-menu -->
-        <div class="game-menu" style="border-bottom: 5px solid #921913;">
+        <div class="game-menu">
             <div class="game-overlay-info">
                 <h1 itemprop="itemreviewed">{{$movie->name}}</h1>
+                <p> {{$movie->summary}}</p>
             </div>
-            <ul>
+            <!--ul>
                 <li class="active" style="background-color: #921913;"><a href="#info"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;Information</a></li>
                 <!--li><a href="games-single-news.html"><i class="fa fa-comments"></i>&nbsp;&nbsp;News</a></li-->
                 <!--li><a href="games-single-video.html"><i class="fa fa-film"></i>&nbsp;&nbsp;Video (3)</a></li>
                 <li><a href="photo-gallery-single.html"><i class="fa fa-camera-retro"></i>&nbsp;&nbsp;Photos (18)</a></li-->
-            </ul>
+            <!--/ul-->
         <!-- END .game-menu -->
         </div>
 
-        <h2><span name='info'>Synopsis</span></h2>        
+        <!--h2><span name='info'>Synopsis</span></h2>        
         <div class="content-padding">
         {{$movie->summary}}
 
+        </div-->
+        <div class="vid-contain">
+            <img src="{{asset('images/youtube-holder.jpg')}}" alt="Youtube Placeholder"/>
         </div>
+        <h2><span>Media</span></h2>
+        <div class="content-padding">
+            <div class="row">
+                <div class="one-fifth">
+                    <img src="{{asset('images/photos/image-41.jpg')}}" alt="Placeholder Image" />
+                </div>
+                <div class="one-fifth">
+                    <img src="{{asset('images/photos/image-41.jpg')}}" alt="Placeholder Image" />
+                </div>
+                <div class="one-fifth">
+                    <img src="{{asset('images/photos/image-41.jpg')}}" alt="Placeholder Image" />
+                </div>
+                <div class="one-fifth">
+                    <img src="{{asset('images/photos/image-41.jpg')}}" alt="Placeholder Image" />
+                </div>
+                <div class="one-fifth">
+                    <img src="{{asset('images/photos/image-41.jpg')}}" alt="Placeholder Image" />
+                </div>
+            </div>
+        </div>
+
+        <h2><span>Stats</span></h2>
+        <div class="content-padding">
+            <div class="row">
+                <div class="one-half">
+                    <img src="{{asset('images/stats-image.jpg')}}" alt="Placeholder Stats Image" />
+                </div>
+                <div class="one-half">
+                    <img src="{{asset('images/stats-image.jpg')}}" alt="Placeholder Stats Image" />
+                </div>
+            </div>
+        </div>
+        <!--
         @if($movie->images()->count() > 0)
         <h2><span>Media</span></h2>
         <div class="content-padding">
-            <!-- BEGIN .photo-blocks -->
             <div class="photo-blocks">
                 <ul>
                     @foreach($movie->images() as $image)
@@ -138,10 +178,9 @@
                     @endforeach
                 </ul>
                 <div class="clear-float"></div>
-            <!-- END .photo-blocks -->
             </div>
         </div>
-        @endif
+        @endif -->
 
         @if($movie->bids()->count() > 0 && isset($authUser))
         <h2><span>Stats</span></h2>

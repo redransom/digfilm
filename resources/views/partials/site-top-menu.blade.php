@@ -1,4 +1,4 @@
-                    <ul class="load-responsive" rel="Top menu">
+                    <ul class="load-responsive right" rel="Top menu">
 
         
                         <li><a href="/">Home</a></li>

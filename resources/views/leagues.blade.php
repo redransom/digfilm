@@ -4,7 +4,7 @@
 <h2><span>Public Leagues</span></h2>
 <div class="content-padding">
 
-    <h4>All leagues available to play for anyone!</h4>
+    <!--h4>All leagues available to play for anyone!</h4>
     @if(isset($leagues) && $leagues->count() > 0)
         <?php $league_counter = 0; ?>
         <table class="feature-table dark-gray">
@@ -48,6 +48,79 @@
     @else
     <p>There are no leagues available presently.</p>
     @endif
+    -->
 
+<div class="one-half small--one-whole">
+    <div class="league-container league-item">
+        <img src="{{asset('/images/league-1.jpg')}}" alt="Test Admin League">
+        <div class="league-info">
+            <div class="row">
+                <span class="title">Name:</span><p>Test Admin League</p>
+            </div>
+            <div class="row">
+                <span class="title">Players:</span><p>1</p>
+            </div>
+            <div class="row">
+                <span class="title">Min:</span><p>4</p>
+            </div>
+            <div class="row">
+                <span class="title">Max:</span><p>6</p>
+            </div>
+            <div class="row">
+                <span class="title">Closes:</span><p>8th Nov 2012 - 12pm</p>
+            </div>
+            <a href="#" class="btn">Join Now</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="one-half small--one-whole">
+    <div class="league-container league-item">
+        <img src="{{asset('/images/league-1.jpg')}}" alt="Test Admin League">
+        <div class="league-info">
+            <div class="row">
+                <span class="title">Name:</span><p>Test Admin League</p>
+            </div>
+            <div class="row">
+                <span class="title">Players:</span><p>1</p>
+            </div>
+            <div class="row">
+                <span class="title">Min:</span><p>4</p>
+            </div>
+            <div class="row">
+                <span class="title">Max:</span><p>6</p>
+            </div>
+            <div class="row">
+                <span class="title">Closes:</span><p>8th Nov 2012 - 12pm</p>
+            </div>
+            <a href="#" class="btn">Join Now</a>
+        </div>
+    </div>
+</div>
+
+<div class="one-half small--one-whole">
+    <div class="league-container league-item">
+        <img src="{{asset('/images/league-1.jpg')}}" alt="Test Admin League">
+        <div class="league-info">
+            <div class="row">
+                <span class="title">Name:</span><p>Test Admin League</p>
+            </div>
+            <div class="row">
+                <span class="title">Players:</span><p>1</p>
+            </div>
+            <div class="row">
+                <span class="title">Min:</span><p>4</p>
+            </div>
+            <div class="row">
+                <span class="title">Max:</span><p>6</p>
+            </div>
+            <div class="row">
+                <span class="title">Closes:</span><p>8th Nov 2012 - 12pm</p>
+            </div>
+            <a href="#" class="btn">Join Now</a>
+        </div>
+    </div>
+</div>
 </div>
 @endsection

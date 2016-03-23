@@ -12,7 +12,6 @@
         -moz-border-radius:6px;
         border-radius:6px;
         background:#fff;
-        font-size: 0.9em;
     }
 
 table.feature-table thead tr {
@@ -393,4 +392,776 @@ table.feature-table thead tr {
         border-radius: .15em;
         font-size: 1em;
     }
-    
+
+/* SP Additions */
+
+/*------------- 
+  Red
+-------------*/
+
+.article-icons a:hover, a:hover {
+    color: #5d1d1e;
+}
+#sidebar .panel > h2, #main h2 span {
+  color: #5d1d1e !important;
+  background: #1a1a1a;
+  background: url(/images/content-title-bg.png) #1a1a1a repeat-x left center;
+}
+
+h5.title a:hover {
+    color: #5d1d1e !important;
+}
+
+#submit {
+    background: #BF1C29;
+    padding: 5px 10px;
+    border: none;
+    box-shadow: none;
+    text-shadow: none;
+    color: #fff;
+}
+
+#submit:hover {
+    background: #5d1d1e;
+}
+
+.socialize .s-yt {
+    background: #5d1d1e;
+}
+
+.owl-theme .owl-controls .owl-page span {
+    background: #5d1d1e;
+}
+
+.private .league-btn:hover {
+    background: #5d1d1e;
+}
+
+.private {
+    color: #7c2c2c;
+}
+
+.private .league-btn {
+    background: #7c2c2c;
+}
+
+#main .promo-content .price {
+    font-size: 2em;
+    text-align: right;
+    font-weight: 600;
+    font-family: 'Oswald', sans-serif;
+    color: #7c2c2c;
+}
+
+
+.highlight {
+    color: #BF1C29;
+}
+
+.event-container .countdown {
+    font-size: 1.5em;
+    font-weight: 600;
+    color: #5d1d1e;
+}
+
+.league-item .btn:hover {
+    background: #1a1a1a;
+    border-color: #7c2c2c;
+}
+
+.game-info-graph > div strong:hover {
+    color: #7c2c2c;
+}
+
+#submit.submit-btn {
+    background: #5d2121 ;
+    width: 86%;
+    text-transform: uppercase;
+    border-radius: 2px;
+    padding: 1em;
+    font-family: 'Open Sans', sans-serif;
+}
+
+#submit.submit-btn:hover {
+    background: #7c2c2c;
+}
+/*------------- 
+  Green
+-------------*/
+
+/* Social Share Green */
+.socialize .s-sh {
+    background: #2d6e44;
+}
+
+.league-btn {
+    background: #00a14b;
+    width: 59%;
+    padding: 5% 19%;
+    border-radius: .3em;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+    font-size: .9em;
+}
+
+.league-btn:hover, .public .league-btn:hover {
+    background: #277042;
+    color: #fff;
+}
+
+.public {
+    color: #00a14b;
+}
+
+.public .league-btn {
+    background: #00a14b;
+}
+
+.league-item .btn {
+    border: 2px solid #FF4D49;
+    width: 90%;
+    color: #fff;
+    text-align: center;
+    background: #000;
+    padding: .5em;
+    font-size: .9em;
+    clear: both;
+    display: block;
+}
+
+/*------------- 
+  Grey
+-------------*/
+
+#sidebar .panel > h2 span, #main h2 span {
+  background: #1a1a1a;
+  padding: .5em;
+}
+
+#main-box{
+    background: #110f10;
+}
+
+#sidebar .panel .panel-content, #main-box #sidebar, #main-box.full-width #main, #main-box #main {
+  background: #1A1A1A;
+}
+
+.league-container {
+    background: #222;
+    overflow: hidden;
+    padding: 1em;
+}
+.league-left, .league-right, .league-left-inner, .league-right-inner  {
+    margin: 0 auto;
+    background: #222;
+}
+
+.event-container:nth-child(odd) {
+    background-color: #222222 ;
+}
+
+.event-container:nth-child(even){
+    background-color: #1a1a1a;
+}
+
+/* Light Grey */
+#main p, .contact-address, label {
+    color: #9c9c9c;
+    font-size: 0.9em;
+}
+
+.caption span, h4, .dropspot, h6 {
+     color: #9c9c9c;
+}
+
+.league-left-inner  {
+    width: 49%;
+    border-right: 1px solid #9c9c9c;
+}
+
+.league-table, .league-btn-container {
+    width: 90%;
+    margin: 0 auto;
+    border-top: 2px solid #9c9c9c;
+    border-bottom: 2px solid #9c9c9c;
+    padding: 1em 0;
+    overflow: visible;
+}
+
+.league-left-inner .table-row {
+    border-bottom: 1px dotted #9c9c9c;
+}
+
+.table-row {
+    clear: both;
+    border-bottom: 1px dotted #9c9c9c;
+    overflow: hidden;
+}
+
+.event-container p {
+    color: #9c9c9c;
+    font-weight: 200;
+}
+
+.panel p {
+    color: #9c9c9c;
+}
+
+.title {
+    color: #9c9c9c;
+    font-weight: 600;
+}
+
+/*------------- 
+  Blue
+-------------*/
+.main-menu ul li:hover > a span i.fa, .main-menu ul li:hover > a {
+  color: #0598c4 !important;
+}
+
+.info-btn:hover {
+    background: #2d456f;
+    color: #fff;
+}
+
+
+/*------------- 
+  White
+-------------*/
+a {
+    color: #fff;
+}
+
+#main h2 .pagination-item.current {
+    color: #fff !important;
+    text-decoration: underline;
+    font-size: 16px;
+}
+
+h5.title a {
+    color: #fff;
+}
+
+#search {
+    background: #FFF;
+    border: none;
+    max-height: 5px;
+}
+
+.owl-theme .owl-controls .owl-page.active span {
+    background: #fff;
+}
+
+.league-container .league-left-inner h3 {
+    color: #fff;
+    text-transform: none;
+    font-weight: normal;
+    width: 90%;
+    margin: 0 auto;
+    padding-bottom: 1em;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.info-btn {
+    color: #FFF;
+    text-transform: uppercase;
+    background: #345182;
+    text-align: center;
+    border-radius: .3em;
+    width: 100%;
+    padding: .5em 1.35em;
+}
+
+.private .league-btn, .public .league-btn {
+    color: #fff;
+    text-transform: lowercase;
+    padding: 2%;
+    border-radius: 0.2em
+}
+
+.promo-content {
+    position: absolute;
+    right: 5%;
+    top: 5%;
+    background: #fff;
+    padding: 1em;
+}
+
+.one-quarter h3, #main .one-quarter h3 a  {
+    color: #fff;
+    text-transform: capitalize;
+    font-weight: 400;
+    font-size: 1em;
+}
+
+.selectdropdown {
+    background: #fff;
+    width: 100%;
+    height: 2em;
+    border-radius: 0 !important;
+}
+
+#main .league-item p {
+    color: #fff;
+    font-size: .8em;
+}
+
+.game-info-left .game-poster {
+    border: 4px solid #fff;
+}
+
+#main .the-form textarea, #main input[type=text], #main select, #main input[type=password], #comments, #main .the-form textarea:focus, #main input[type=text]:focus, #main select:focus, #main input[type=password]:focus {
+    background: #fff;
+    box-shadow: 0; 
+    border: 0;
+    width: 80%;
+}
+/*--------------
+ Black 
+--------------*/
+#sidebar .panel, #main-box #main {
+  border-top: 5px solid #000000 !important;
+}
+
+/*---------------------------------
+  General Styles - No Colours
+----------------------------------*/
+
+body {    
+  background: url(../images/page-bg.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+#top-layer {
+    background: transparent;
+}
+
+img {
+    max-width: 100%;
+}
+
+#main h2.pagination {
+    text-align: center !important;
+    font-size: 16px;
+}
+
+#main h2 .pagination-item:hover {
+    text-decoration: underline;
+}
+
+h5.title {
+    text-align: center;
+    text-transform: none;
+    font-size: 1em;
+    font-weight: normal;
+}
+
+
+.contact-address {
+    padding-top: 1em;
+}
+
+
+#main-box #sidebar {
+    box-shadow: none ;
+} 
+
+.socialize a {
+ border-radius: 50%;
+}
+
+.caption {
+    padding: 1em;
+    text-align: center;
+}
+
+.search-container {
+    padding: 12px 16px 11px 16px;
+}
+
+
+i, #submit {
+    font-family: georgia, FontAwesome;
+}
+
+.league-left-inner, .league-right-inner {
+    float: left;
+}
+
+ .league-left {
+    float: left;
+    width: 70%;
+} 
+ .league-right {
+    float: right;
+    width: 30%;
+    text-align: right;
+}
+
+.league-right-inner{
+    width: 50%;
+}
+
+.league-left-inner, .league-left-inner .table-row, .league-left-inner .league-left, .league-left-inner .league-right {
+    position: relative;
+}
+
+.league-left-inner .league-left, .league-left-inner .league-right {
+    z-index: 1;
+    margin-top: -1px;
+    top: 2px;
+}
+
+.league-left-inner .league-left {
+    width: auto;
+    padding-right: 4px;
+}
+.league-left-inner .league-right {
+    width: 15%;
+}
+
+.league-btn-container {
+    border: 0;
+    overflow: visible;
+    clear: both;
+}
+
+.league-btn-container .league-left, .league-btn-container .league-right {
+    width: 50%;
+    padding: 0;
+}
+
+
+.league-right .league-btn {
+    float: right;
+}
+
+.league-left .league-btn {
+     float: left;
+}
+
+
+.league-left-inner .one-third {
+    width: 32%;
+    padding: 1% 0;
+    margin-left: 2%;
+    float: left;
+}
+.league-left-inner .one-third:first-of-type {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.private, .public {
+    text-transform: uppercase;
+}
+
+.private .league-left, .public .league-left {
+    width: 60%;
+}
+
+.table-row.public, .table-row.private {
+  padding: .3em 1em;
+  font-size: .9em;
+}
+
+.league-right-inner .table-row:last-of-type {
+    border-bottom: 0;
+}
+
+.promo-hero {
+    position: relative;
+    padding-bottom: 1em;
+}
+
+.promo-hero img {
+    width: 100%;
+}
+
+.promo-content h3, #main .promo-content p, .event-container h3 {
+    font-size: 1em;
+    font-family: 'Open Sans', sans-serif;
+}
+
+#main .promo-content p {
+    text-transform: lowercase;
+}
+
+.promo-content h3, .event-container h3 {
+    text-transform: capitalize;
+    font-weight: 600;
+}
+
+.promo-image img {
+    max-width: 170px;
+}
+
+.promo-left, .promo-right {
+    float: left;
+    width: 50%;
+    padding-top: 1em;
+}
+
+.one-quarter {
+    width: 23%;
+    float: left;
+    margin: 0 1%;
+    padding-bottom: 1em;
+}
+
+.one-third {
+    width: 33%;
+    float: left;
+}
+.two-thirds {
+    width: 66%;
+    float: left;
+}
+
+.offset--one-third {
+    margin-left: 33%;
+}
+
+.event-container .left {
+    width: 25%;
+    float: left;
+}
+
+.event-list {
+     margin-top: 1em;
+}
+
+.event-container .right {
+    width: 70%;
+    float: right;
+}
+
+.event-container {
+    clear: both;
+    overflow: hidden;
+    padding: 1em;
+    background-image: url(../images/arrows.png);
+    background-position: right center;
+    background-repeat: no-repeat;
+    margin-bottom: .5em;
+}
+
+.panel-advert {
+    padding-bottom: 2em;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.panel-advert:first-of-type {
+    padding-top: 2em;
+}
+
+
+.social-icon-item {
+    display: inline-block;
+    margin-left: 1em;
+}
+
+.social-icon-item:first-of-type {
+    margin-left: .5em;
+}
+
+.social-icon-item:last-of-type {
+    margin-right: .5em;
+}
+
+.no-slider #slider-imgs .featured-img-box {
+    width: 100%;
+}
+
+#slider-imgs div.featured-img-box{
+    max-width: 1000px;
+}
+
+.one-half {
+    width: 50%;
+    float: left;
+}
+
+
+.league-item {
+    width: 90%;
+    margin-bottom: 1em;
+}
+.league-item:nth-child(odd) {
+    margin-right: 1em;
+}
+
+.league-item img {
+    width: 40%;
+    float: left;
+    margin-right: 5%;
+}
+
+.league-info {
+    width: 55%;
+    float: left;
+}
+
+
+.league-info p {
+    float: left;
+    width: 60%;
+  }
+
+.league-info span {
+    width: 40%;
+    float: left;
+
+}
+
+.league-info .row {
+    clear: both;
+    padding-bottom: 0;
+}
+
+.league-info .row:last-of-type {
+    padding-bottom: 1em;
+}
+
+.row {
+    padding-bottom: 2em;
+    overflow: hidden;
+    clear: both;
+}
+
+
+.one-fifth {
+    width: 20%;
+    float: left;
+}
+
+.game-info-right .game-menu {
+    border-bottom: 0;
+}
+.vid-contain {
+    width: 90%;
+    margin: 0 auto;
+}
+
+
+#main select {
+    height: 2em;
+    width: 86%;
+}
+#comments {
+    margin-bottom: 0;
+}
+
+
+.panel p:last-of-type {
+    padding-bottom: 2em ;
+}
+
+/*-------------------
+    Responsive 
+ -------------------- */
+
+ /* Small Desktop */
+
+ @media screen and (max-width: 1020px) {
+     .social-icon-item:first-of-type, .social-icon-item {
+        margin-left:0;
+    }
+    .socialize a {
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+    font-size: 25px;
+    }
+ }
+
+/* TABLET */
+@media only screen and (max-width: 900px) {
+    .search-container {
+        text-align: left;
+    }
+
+     #sidebar .panel .panel-content {
+        border-top: 0;
+    }
+
+     .promo-hero img {
+        height: 335px;
+    }
+    .promo-content {
+        right: 2%;
+        top: 2%;
+        padding: .5em;
+    }
+    .promo-image img {
+        height: auto;
+    }
+     .panel p:last-of-type {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .social-icon-item:first-of-type, .social-icon-item {
+        margin-left:0;
+    }
+    .socialize a {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 23px;
+    }
+}
+
+/* PHONE SMALL */
+@media only screen and (max-width: 600px) {
+    .small--one-whole {
+        width: 100%;
+    }
+    .league-left-inner {
+        border-right: 0;
+    }
+    .league-right-inner {
+        border-top: 1px solid #9c9c9c;
+        margin-top: 2em;
+        padding-top: 1em;
+    }
+    #main p, .contact-address, label, #main h2 span {
+        font-size: 1em;
+    }
+    .info-btn {
+        padding: .5em 3.3em;
+    }
+
+    .promo-image img {
+        max-width: 150px;
+    }
+
+    .small--one-half {
+        width: 48%;
+        float: left;
+        padding-bottom: 1em;
+    }
+
+    #sidebar .panel > h2 span {
+        font-size: 1.3em;
+    }
+     .promo-hero img {
+        height: 300px;
+    }
+    .promo-image img {
+        height: auto;
+    }  
+}
+
+/* Phone */
+
+@media only screen and (max-width: 400px) {
+    .info-btn {
+        padding: .5em 1.35em;
+    }
+}
