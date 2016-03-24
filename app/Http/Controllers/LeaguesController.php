@@ -216,7 +216,7 @@ class LeaguesController extends Controller {
             return redirect('/auth/login');
 
         $league = League::find($id);
-        var_dump($league);
+        
         $title = "League ".$league->name." details";
         $players = $league->Players;
 
@@ -272,6 +272,7 @@ class LeaguesController extends Controller {
         $league->name = $input['name'];
         $league->description = $input['description'];
         $league->users_id = $input['users_id'];
+        $league->type = $input['type'];
         
         if($input['auction_start_date'] != '')
             $league->auction_start_date = $input['auction_start_date'];

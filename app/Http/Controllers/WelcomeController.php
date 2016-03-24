@@ -6,6 +6,8 @@ use Mail;
 use Flash;
 use Redirect;
 use App\Models\User;
+use App\Models\Role;
+use App\Models\RoleUser;
 use App\Models\League;
 use App\Models\Auction;
 use App\Models\AuctionBid;
@@ -67,15 +69,29 @@ class WelcomeController extends Controller {
 		$content = SiteContent::section('HOM');
 
 		if (isset($authUser)) {
-			$public = League::availableLeagues($authUser)->count();
+			$count_array['public'] = League::availableLeagues($authUser)->count();
 		} else 
-			$public = League::where('type', 'U')->where('enabled', 1)
+			$count_array['public'] = League::where('type', 'U')->where('enabled', 1)
 	        	->Where(function ($query) {
 	        		$query->whereNull('auction_stage')->orWhere('auction_stage', '<', '2');
 	        	})->count();
 
+	    $count_array['newreleases'] = Movie::where('release_at', '>', date('Y-m-d', strtotime("-4 weeks")))->
+			where('release_at', '<=', date('Y-m-d'))->count();
+		$count_array['comingsoon'] = Movie::where('release_at', '<', date('Y-m-d', strtotime("+4 weeks")))
+			->where('release_at', '>', date('Y-m-d'))->count();
+		/* Move to User Model maybe? */
+		$playerRole = Role::where('name', 'Player')->first();
+		$player_role_ids = RoleUser::where('role_id', $playerRole->id)->lists('user_id');
+		$count_array['player'] = User::where('enabled', '1')->whereIn('id', $player_role_ids)->count();
+
+	    $count_array['private'] = League::where('type', 'R')->where('enabled', 1)->count();
         $opening_bid = Movie::where('opening_bid_date', '<=', date("Y-m-d"))->whereNotNull('opening_bid_date')->
         	where('opening_bid', '>', 0)->orderBy('updated_at', 'DESC')->first();
+
+        $recent_leagues = League::where('enabled', '1')->Where(function ($query) {
+	        		$query->whereNull('auction_stage')->orWhere('auction_stage', '<', '2');
+	        	})->orderBy('created_at', 'DESC')->limit(10)->get();
 
         //new trailers
         $trailers = MovieMedia::where('type', 'T')->orderBy('created_at', 'DESC')->limit(4)->get();
@@ -83,7 +99,8 @@ class WelcomeController extends Controller {
 		return view('welcome')
 			->with('slider', $slider)
 			->with('content', $content)
-			->with('public_count', $public)
+			->with('count_array', $count_array)
+			->with('recent_leagues', $recent_leagues)
 			->with('next_film', $next_film)
 			->with('trailers', $trailers)
 			->with('frontpage', true)

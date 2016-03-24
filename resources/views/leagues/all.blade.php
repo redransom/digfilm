@@ -25,7 +25,7 @@
                     <?php $leagueCnt = 1; 
 
                     $stage = $leagues[0]->auction_stage;
-                    $stage_array = [null=>'Not Ready', '0'=>'Start Set', '1'=>'Movies Chosen', '2'=>'Auctions Live', '3'=>'Rosters'];
+                    $stage_array = [null=>'Not Ready', '0'=>'Start Set', '1'=>'Movies Chosen', '2'=>'Auctions Live', '3'=>'Rosters', '4'=>'Awaiting End', 'League Ended'];
                     ?>
                     @foreach($leagues as $league)
                     <?php if (is_null($league->auction_start_date)) $start = ""; else $start = date("j/m/Y g:iA", strtotime($league->auction_start_date)); ?>

@@ -1,159 +1,99 @@
 @extends('layouts.site')
 
 @section('content')
-<div class="content-padding">
-@if (!is_null($content))
-{!! $content->summary !!}
-@endif
-</div>
 
+@if (!is_null($content))
+<h2><span>{{$content->title}}</span></h2>
+<div class="content-padding">{!! $content->body !!}
+</div>
+@endif
+
+<!-- Whats going on -->
 <h2><span>Whats Going On?</span></h2>
 <div class="content-padding">
-              <div class="league-container clearfix">
+    <div class="league-container clearfix">
         <div class="league-left-inner league-js small--one-whole">
             <h3>There are...</h3>
             <div class="league-table">
                  <!-- <div class="table-row"></div>-->
-                    <div class="league-left">
-                        <p>Public League</P>
-                    </div>
-                    <div class="league-right">
-                        <p>200 </p>
-                    </div>
-                    <div class="table-row"></div>
-                    <div class="league-left">
-                        <p>Private Leagues</P>
-                    </div>
-                    <div class="league-right">
-                        <p>2569 </p>
-                    </div>
-                    <div class="table-row"></div>
-                    <div class="league-left">
-                        <p>New Releases This Month</P>
-                    </div>
-                    <div class="league-right">
-                        <p>34 </p>
-                    </div>
-                    <div class="table-row"></div>
-                    <div class="league-left">
-                        <p>Films Coming Soon</P>
-                    </div>
-                    <div class="league-right">
-                        <p>56 </p>
-                    </div>
-                    <div class="table-row"></div>
-                    <div class="league-left">
-                        <p>Players</P>
-                    </div>
-                    <div class="league-right">
-                        <p>7000 </p>
-                    </div>
-                    <div class="table-row"></div>
-</div>
-<div class="league-btn-container">
-    <div class="league-left">
-           <a href="#" class="league-btn">Create a new league</a> 
+                <div class="league-left">
+                    <p>Public League</p>
+                </div>
+                <div class="league-right">
+                    <p>{{$count_array['public']}}</p>
+                </div>
+                <div class="table-row"></div>
+                <div class="league-left">
+                    <p>Private Leagues</p>
+                </div>
+                <div class="league-right">
+                    <p>{{$count_array['private']}}</p>
+                </div>
+                <div class="table-row"></div>
+                <div class="league-left">
+                    <p>New Releases This Month</p>
+                </div>
+                <div class="league-right">
+                    <p>{{$count_array['newreleases']}}</p>
+                </div>
+                <div class="table-row"></div>
+                <div class="league-left">
+                    <p>Films Coming Soon</p>
+                </div>
+                <div class="league-right">
+                    <p>{{$count_array['comingsoon']}}</p>
+                </div>
+                <div class="table-row"></div>
+                <div class="league-left">
+                    <p>Players</p>
+                </div>
+                <div class="league-right">
+                    <p>{{$count_array['player']}}</p>
+                </div>
+                <div class="table-row"></div>
+            </div>
+            <div class="league-btn-container">
+                <div class="league-left">
+                       <a href="{{URL('/create')}}" class="league-btn">Create a new league</a> 
+                </div>
+                <div class="league-right">
+                    <a href="{{URL('/all-leagues')}}" class="league-btn">Join a league</a>
+                </div>
+            </div><!-- end league-btn-container -->
+
+            <div class="league-btn-container">
+                <div class="one-third">
+                   <a href="{{URL('/auth/login')}}" class="info-btn">Login</a>
+                </div>
+                <div class="one-third">
+                    <a href="{{URL('/rules')}}" class="info-btn">Rules</a>
+                </div>
+                <div class="one-third">
+                    <a href="{{URL('/all-movies')}}" class="info-btn">Movies</a>
+                </div>
+            </div><!-- end league-btn-container -->
+
+        </div><!-- end league-left-inner -->
+
+        <div class="league-right-inner league-js small--one-whole">
+            @if($recent_leagues->count() > 0)
+            @foreach($recent_leagues as $recent)
+           <div class="table-row {{(($recent->type == 'U') ? 'public' : 'private')}}">
+                <div class="league-left">
+                    {{$recent->name}}
+                </div>
+                <div class="league-right">
+                   <a href="#" class="league-btn">{{(($recent->type == 'U') ? 'Public' : 'Private')}}</a>
+                </div>
+           </div>
+           @endforeach
+           @endif
+        </div>
     </div>
-    <div class="league-right">
-        <a href="#" class="league-btn">Join a league</a>
-    </div>
-</div><!-- end league-btn-container -->
-
-    <div class="league-btn-container">
-        <div class="one-third">
-           <a href="#" class="info-btn">Login</a>
-        </div>
-        <div class="one-third">
-            <a href="#" class="info-btn">Rules</a>
-        </div>
-        <div class="one-third">
-            <a href="#" class="info-btn">Movies</a>
-        </div>
-    </div><!-- end league-btn-container -->
-
-</div><!-- end league-left-inner -->
-
-<div class="league-right-inner league-js small--one-whole">
-   <div class="table-row public">
-        <div class="league-left">
-            Test Admin League
-        </div>
-        <div class="league-right">
-           <a href="#" class="league-btn">Public</a>
-        </div>
-   </div>
-   <div class="table-row private">
-        <div class="league-left">
-            Create League Player
-        </div>
-        <div class="league-right">
-            <a href="#" class="league-btn">Private</a>
-        </div>
-   </div>
-   <div class="table-row public">
-        <div class="league-left">
-            Test Admin League
-        </div>
-        <div class="league-right">
-           <a href="#" class="league-btn">Public</a>
-        </div>
-   </div>
-   <div class="table-row public">
-        <div class="league-left">
-            Test Admin League
-        </div>
-        <div class="league-right">
-           <a href="#" class="league-btn">Public</a>
-        </div>
-   </div>
-   <div class="table-row public">
-        <div class="league-left">
-            Test Admin League
-        </div>
-        <div class="league-right">
-           <a href="#" class="league-btn">Public</a>
-        </div>
-   </div>
-   <div class="table-row public">
-        <div class="league-left">
-            Test Admin League
-        </div>
-        <div class="league-right">
-           <a href="#" class="league-btn">Public</a>
-        </div>
-   </div>
-   <div class="table-row private">
-        <div class="league-left">
-            Create League Player
-        </div>
-        <div class="league-right">
-            <a href="#" class="league-btn">Private</a>
-        </div>
-   </div>
-   <div class="table-row private">
-        <div class="league-left">
-            Create League Player
-        </div>
-        <div class="league-right">
-            <a href="#" class="league-btn">Private</a>
-        </div>
-   </div>
-    <div class="table-row public">
-        <div class="league-left">
-            Test Admin League
-        </div>
-        <div class="league-right">
-           <a href="#" class="league-btn">Public</a>
-        </div>
-   </div>
 </div>
-</div>
+<!-- End Whats going on -->
 
-
-
-
-</div>
-
+<!-- Opening Bids -->
 <h2><span>Opening Bids</span></h2>
 <div class="content-padding">
 
