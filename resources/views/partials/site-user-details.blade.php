@@ -1,7 +1,7 @@
  
                 <!-- ************** - Categories - ************** -->   
                 <div class="panel">
-                    <h2>Snapshot</h2>
+                    <h2><span>Snapshot</span></h2>
                     
                     <div class="panel-content">
 						<h3>Won Balance</h3>

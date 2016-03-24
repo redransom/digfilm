@@ -8,8 +8,8 @@
             @endif
         </div>
         <div class="article-icons">
-            <a href="user-single.html" class="user-tooltip"><i class="fa fa-fire"></i>{{$content->owner->forenames}}</a>
-            <a href="#"><i class="fa fa-calendar"></i>{{date("F d, Y", strtotime($content->created_at))}}</a>
+            <a><i class="fa fa-fire"></i>{{$content->owner->forenames}}</a>
+            <a><i class="fa fa-calendar"></i>{{date("F d, Y", strtotime($content->created_at))}}</a>
             <!--a href="#" class="show-likes"><i class="fa fa-heart"></i>20 likes</a-->
         </div>
     

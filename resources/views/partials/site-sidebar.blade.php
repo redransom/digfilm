@@ -31,8 +31,6 @@
                         @include('partials.user-sidebar-genres')
                         @endif
                                                
-                        @include('partials.site-sidebar-adverts')
-                        @include('partials.site-sidebar-events')
                         @include('partials.site-sidebar-contact')
                     <!-- END #sidebar -->
                     </div>

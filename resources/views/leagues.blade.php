@@ -49,78 +49,43 @@
     <p>There are no leagues available presently.</p>
     @endif
     -->
+@if(isset($leagues) && $leagues->count() > 0)
 
-<div class="one-half small--one-whole">
-    <div class="league-container league-item">
-        <img src="{{asset('/images/league-1.jpg')}}" alt="Test Admin League">
-        <div class="league-info">
-            <div class="row">
-                <span class="title">Name:</span><p>Test Admin League</p>
+    @foreach($leagues as $league)
+    <div class="one-half small--one-whole">
+        <div class="league-container league-item">
+            @if(!is_null($league->file_name))
+            <img src="{{asset($league->file_name)}}" alt="{{$league->name}}">
+            @else
+            <img src="{{asset('/images/league-1.jpg')}}" alt="{{$league->name}}">
+            @endif
+            <div class="league-info">
+                <div class="row">
+                    <span class="title">Name:</span><p>{{$league->name}}</p>
+                </div>
+                <div class="row">
+                    <span class="title">Players:</span><p>{{count($league->players)}}</p>
+                </div>
+                <div class="row">
+                    <span class="title">Min:</span><p>{{$league->rule->min_players}}</p>
+                </div>
+                <div class="row">
+                    <span class="title">Max:</span><p>{{$league->rule->max_players}}</p>
+                </div>
+                <div class="row">
+                    <span class="title">Closes:</span><p>{{date("jS M Y", strtotime($league->auction_start_date))}} - {{date("g:iA", strtotime($league->auction_start_date))}}</p>
+                </div>
+                @if(!is_null($authUser) && time() < strtotime($league->auction_start_date))
+                <a class="btn" href="{{URL('join-league/'.$league->id)}}">Join</a>
+                @elseif(!is_null($authUser) && time() >= strtotime($league->auction_start_date))
+                <a class="btn" title="This league has started!">Started</a>
+                @else
+                <a class="btn" title="You need to be logged in to join a league">Join</a>
+                @endif
             </div>
-            <div class="row">
-                <span class="title">Players:</span><p>1</p>
-            </div>
-            <div class="row">
-                <span class="title">Min:</span><p>4</p>
-            </div>
-            <div class="row">
-                <span class="title">Max:</span><p>6</p>
-            </div>
-            <div class="row">
-                <span class="title">Closes:</span><p>8th Nov 2012 - 12pm</p>
-            </div>
-            <a href="#" class="btn">Join Now</a>
         </div>
     </div>
-</div>
-
-
-<div class="one-half small--one-whole">
-    <div class="league-container league-item">
-        <img src="{{asset('/images/league-1.jpg')}}" alt="Test Admin League">
-        <div class="league-info">
-            <div class="row">
-                <span class="title">Name:</span><p>Test Admin League</p>
-            </div>
-            <div class="row">
-                <span class="title">Players:</span><p>1</p>
-            </div>
-            <div class="row">
-                <span class="title">Min:</span><p>4</p>
-            </div>
-            <div class="row">
-                <span class="title">Max:</span><p>6</p>
-            </div>
-            <div class="row">
-                <span class="title">Closes:</span><p>8th Nov 2012 - 12pm</p>
-            </div>
-            <a href="#" class="btn">Join Now</a>
-        </div>
-    </div>
-</div>
-
-<div class="one-half small--one-whole">
-    <div class="league-container league-item">
-        <img src="{{asset('/images/league-1.jpg')}}" alt="Test Admin League">
-        <div class="league-info">
-            <div class="row">
-                <span class="title">Name:</span><p>Test Admin League</p>
-            </div>
-            <div class="row">
-                <span class="title">Players:</span><p>1</p>
-            </div>
-            <div class="row">
-                <span class="title">Min:</span><p>4</p>
-            </div>
-            <div class="row">
-                <span class="title">Max:</span><p>6</p>
-            </div>
-            <div class="row">
-                <span class="title">Closes:</span><p>8th Nov 2012 - 12pm</p>
-            </div>
-            <a href="#" class="btn">Join Now</a>
-        </div>
-    </div>
-</div>
+    @endforeach
+@endif
 </div>
 @endsection
