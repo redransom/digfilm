@@ -8,11 +8,11 @@
         @if(isset($meta) && !empty($meta))
         <meta name="description" content="{{$meta['meta_description']}}" />
         <meta name="keywords" content="{{$meta['meta_keywords']}}" />
+        <meta property="og:description" content="{{$meta['meta_description']}}" />
         @endif
         <meta property="og:type" content="TheNextBigFilm" />
         <meta property="og:title" content="TheNextBigFilm Movies | {{$title}}" />
         <meta property="og:image" content="" />
-        <meta property="og:description" content="" />
         <meta property="og:url" content="http://www.thenextbigfilm.com" />
         <meta property="og:site_name" content="TheNextBigFilm | Homepage" />
         <link rel="shortcut icon" type="image/png" href="{{ asset('images/favicon.png') }}" />
