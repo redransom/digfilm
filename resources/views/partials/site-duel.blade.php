@@ -1,3 +1,10 @@
+<style>
+
+/* Button color, default #256193 */
+            .panel-duel-voting .panel-duel-vote a {
+                background-color: #256193;
+            }
+</style>
                         <!-- BEGIN .panel -->
                         <div class="panel">
                             <h2>Duel of the week</h2>

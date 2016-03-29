@@ -70,10 +70,7 @@
                 background-color: #256193;
             }
 
-            /* Button color, default #256193 */
-            .panel-duel-voting .panel-duel-vote a {
-                background-color: #256193;
-            }
+            
 
             /* Menu background color, default #000 */
             #menu-bottom.blurred #menu > .blur-before:after {
