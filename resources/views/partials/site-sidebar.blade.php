@@ -30,7 +30,9 @@
                         @elseif(isset($genres_list))
                         @include('partials.user-sidebar-genres')
                         @endif
-                                               
-                        @include('partials.site-sidebar-contact')
+                                      
+                        @if(isset($contact_rhs))
+                        @include('partials.site-sidebar-contact', ['content'=>$contact_rhs])
+                        @endif
                     <!-- END #sidebar -->
                     </div>

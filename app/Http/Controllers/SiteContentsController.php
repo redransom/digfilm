@@ -93,7 +93,8 @@ class SiteContentsController extends Controller {
                 'LOG' => 'Login',
                 'PRO' => 'Profile',
                 'REG' => 'Register',
-                'COF' => 'Contact Footer'];
+                'COF' => 'Contact Footer',
+                'CRS' => 'Contact Right Side'];
     }
 
     /**

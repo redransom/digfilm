@@ -86,15 +86,15 @@ class WelcomeController extends Controller {
 		$count_array['player'] = User::where('enabled', '1')->whereIn('id', $player_role_ids)->count();
 
 	    $count_array['private'] = League::where('type', 'R')->where('enabled', 1)->count();
-        $opening_bid = Movie::where('opening_bid_date', '<=', date("Y-m-d"))->whereNotNull('opening_bid_date')->
-        	where('opening_bid', '>', 0)->orderBy('updated_at', 'DESC')->first();
+        $opening_bids = Movie::where('opening_bid_date', '<=', date("Y-m-d"))->whereNotNull('opening_bid_date')->
+        	where('opening_bid', '>', 0)->orderBy('updated_at', 'DESC')->limit(5)->get();
 
         $recent_leagues = League::where('enabled', '1')->Where(function ($query) {
 	        		$query->whereNull('auction_stage')->orWhere('auction_stage', '<', '2');
 	        	})->orderBy('created_at', 'DESC')->limit(10)->get();
 
         //new trailers
-        $trailers = MovieMedia::where('type', 'T')->orderBy('created_at', 'DESC')->limit(4)->get();
+        $trailers = MovieMedia::where('type', 'T')->orderBy('created_at', 'DESC')->limit(5)->get();
 
 		return view('welcome')
 			->with('slider', $slider)
@@ -104,7 +104,7 @@ class WelcomeController extends Controller {
 			->with('next_film', $next_film)
 			->with('trailers', $trailers)
 			->with('frontpage', true)
-			->with('opening_bid', $opening_bid)
+			->with('opening_bids', $opening_bids)
 			->with('authUser', $authUser)
 			->with('meta', $this->get_meta($content))
 			->with('title', (!is_null($content) ? $content->title : 'Welcome to TheNextBigFilm'));
@@ -548,7 +548,7 @@ class WelcomeController extends Controller {
 	}
 
 	/**
-	 * All new releases in the last month
+	 * All movies in db
 	 *
 	 * @return void
 	 */
@@ -557,8 +557,13 @@ class WelcomeController extends Controller {
 
 		$movies = Movie::where('enabled', '1')->get();
 
+		//highlights
+		//ten most popular movies
+		$highlights = Movie::where('opening_bid', '>', '10')->get();
+
 		return view('all-movies')
 			->with('page_name', 'movies')
+			->with('highlights', $highlights)
 			->with('page_title', 'The Next Big Film Database')
 			->with('movies', $movies)
 			->with('title', 'All Our Movies')

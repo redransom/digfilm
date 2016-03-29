@@ -38,12 +38,6 @@ class AppServiceProvider extends ServiceProvider {
 				->lists('movies_id');
 
 		$top_auctions = Movie::whereIn('id', $auctions)->get();
-		/*
-->select(DB::raw('count(*) as user_count, status'))
-                     ->where('status', '<>', 1)
-                     ->groupBy('status')
-
-		*/
 
 		//top 3 news articles
 		$news_articles = SiteContent::articles();
@@ -51,11 +45,13 @@ class AppServiceProvider extends ServiceProvider {
 		$genres = Genre::all();
 
 		$contact_footer = SiteContent::section('COF');
+		$contact_rhs = SiteContent::section('CRS');
 
 		$data = ['genres_list'=> $genres,
 				'news_articles' => $news_articles,
 				'new_movies'=> $new_movies,
 				'contact_footer' => $contact_footer,
+				'contact_rhs' => $contact_rhs,
 				'released_movies'=> $released_movies,
 				'top_auctions'=> $top_auctions];
 

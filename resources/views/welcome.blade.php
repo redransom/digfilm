@@ -93,6 +93,7 @@
 </div>
 <!-- End Whats going on -->
 
+@if(isset($opening_bids))
 <!-- Opening Bids -->
 <h2><span>Opening Bids</span></h2>
 <div class="content-padding">
@@ -100,48 +101,36 @@
 <div class="promo-hero">
     <img src="images/hero-image.jpg" alt="Still Alice" />
     <div class="promo-content">
+        @if($opening_bids[0]->firstImage())
         <div class="promo-image">
-            <img src="images/promo-img.jpg" alt="Still Alice" />
+            <img src="{{$opening_bids[0]->firstImage()}}" alt="{{$opening_bids[0]->name}}" />
         </div>
+        @endif
         <div class="promo-left">
-            <h3>Still Alice</h3>
+            <h3>{{$opening_bids[0]->name}}</h3>
             <p>Opening Bid</p>
         </div>
         <div class="promo-right">
-            <p class="price">Â£30</p>
+            <p class="price">&pound;{{$opening_bids[0]->opening_bid}}</p>
         </div>
     </div>
 </div>
 
+@for($movie_no=1; $movie_no < $opening_bids->count(); $movie_no++)
+<?php $movie_bid = $opening_bids[$movie_no]; ?>
 <div class="one-quarter small--one-half">
-    <img src="images/opening-bid-1.jpg" alt="Captain America" />
-    <h3>Captain America</h3>
-    <p>Include at: <span class="highlight">&pound;30.00</span></p>
-    <p>Release Date: <span class="highlight">Feb 2018</span></p>
+    @if($movie_bid->images()->count() > 0)
+    <img src="{{$movie_bid->images[0]->file_name}}" alt="{{$movie_bid->name}}" />
+    @endif
+    <h3>{{$movie_bid->name}}</h3>
+    <p>Include at: <span class="highlight">&pound;{{$movie_bid->opening_bid}}</span></p>
+    <p>Release Date: <span class="highlight">{{date("M Y", strtotime($movie_bid->release_at))}}</span></p>
 </div>
-
-<div class="one-quarter small--one-half">
-    <img src="images/opening-bid-1.jpg" alt="Captain America" />
-    <h3>Captain America</h3>
-    <p>Include at: <span class="highlight">&pound;30.00</span></p>
-    <p>Release Date: <span class="highlight">Feb 2018</span></p>
-</div>
-<div class="one-quarter small--one-half">
-    <img src="images/opening-bid-1.jpg" alt="Captain America" />
-    <h3>Captain America</h3>
-    <p>Include at: <span class="highlight">&pound;30.00</span></p>
-    <p>Release Date: <span class="highlight">Feb 2018</span></p>
-</div>
-<div class="one-quarter small--one-half">
-    <img src="images/opening-bid-1.jpg" alt="Captain America" />
-    <h3>Captain America</h3>
-    <p>Include at: <span class="highlight">&pound;30.00</span></p>
-    <p>Release Date: <span class="highlight">Feb 2018</span></p>
-</div>          
-    
-    
+@endfor
 </div><!--/ .content-container-->
+@endif
 
+@if(isset($trailers))
 <h2><span>New Trailers</span></h2>
 <div class="content-padding">
        
@@ -168,7 +157,7 @@
                         <h5 class="title"><a href="{{URL('movie-knowledge', ['id'=>$item->movie->slug])}}">
                         {{$item->movie->name}}</a></h5>
                         <div class="caption-info">
-                            <span class="date">{{date("d-M-Y h:i A", strtotime($item->created_at))}}Thursday </span>
+                            <span class="date">{{date("d-M-Y h:i A", strtotime($item->created_at))}} </span>
                             <span class="description">{{$item->description}}</span>
                         </div>
                     </div><!--/ .caption-->                            
@@ -179,5 +168,5 @@
         </div>
     </div>
 </div>
-           
+@endif    
 @endsection
