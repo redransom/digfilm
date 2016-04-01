@@ -120,7 +120,7 @@
 <?php $movie_bid = $opening_bids[$movie_no]; ?>
 <div class="one-quarter small--one-half">
     @if($movie_bid->images()->count() > 0)
-    <img src="{{$movie_bid->images[0]->file_name}}" alt="{{$movie_bid->name}}" />
+    <img src="{{$movie_bid->firstImage()->file_name}}" alt="{{$movie_bid->name}}" />
     @endif
     <h3>{{$movie_bid->name}}</h3>
     <p>Include at: <span class="highlight">&pound;{{$movie_bid->opening_bid}}</span></p>
