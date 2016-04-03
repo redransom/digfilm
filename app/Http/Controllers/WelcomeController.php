@@ -555,7 +555,7 @@ class WelcomeController extends Controller {
 	public function movies() {
 		$authUser = Auth::user();
 
-		$movies = Movie::where('enabled', '1')->get();
+		$movies = Movie::where('enabled', '1')->paginate(12);
 
 		//highlights
 		//ten most popular movies

@@ -639,6 +639,12 @@ a {
     font-size: 16px;
 }
 
+#main h2 .pagination-item.disabled {
+    color: #ccc !important;
+    text-decoration: none;
+    font-size: 16px;
+}
+
 h5.title a {
     color: #fff;
 }

@@ -14,7 +14,7 @@
                     @if($movie->firstImage())
                     <img src="{{asset($movie->firstImage()->file_name)}}" width="159" height="100" alt="" />
                     @else
-                    <img src="{{asset('images/temp/img_1.jpg')}}" width="159" height="100" alt="" />
+                    <img src="{{asset('images/TNBF.jpg')}}" width="159" height="100" alt="" />
                     @endif
                     </a>
                     <div class="caption">
@@ -41,28 +41,29 @@
     <div class="row">
     @endif
         <div class="one-quarter small--one-half">
+            <a href="{{URL('movie-knowledge', ['id'=>$movie->link()])}}">
             @if($movie->images()->count() > 0)
                 <img src="{{asset($movie->firstImage()->file_name)}}" alt="{{$movie->name}}" />
+            @else
+                <img src="{{asset('images/TNBF.jpg')}}" alt="{{$movie->name}}" />
             @endif
-
-            <h3>{{$movie->name}}</h3>
-            <p>Include at: <span class="highlight">&pound;{{$movie->opening_bid}}</span></p>
+            </a>
+            <h3><a href="{{URL('movie-knowledge', ['id'=>$movie->link()])}}">{{$movie->name}}</a></h3>
+            @if(!is_null($movie->opening_bid))
+            <p><a href="{{URL('movie-knowledge', ['id'=>$movie->link()])}}">Include at: <span class="highlight">&pound;{{$movie->opening_bid}}</span></a></p>
+            @endif
             <p>Release Date: <span class="highlight">{{date("M Y", strtotime($movie->release_at))}}</span></p>
         </div>
+
+    <?php $movieCnt++; ?>
+
     @if(($movieCnt % 4) == 0)
     </div>
-    <?php $movieCnt++; ?>
     @endif
 
     @endforeach
 </div>
+    
+    @include('pagination.default', ['paginator' => $movies])
 
-
-        <h2 class="pagination"><span>
-            <span class="pagination-item current">1</span>
-            <span class="pagination-item">2</span>
-            <span class="pagination-item">3</span>
-            <span class="pagination-item">4</span>
-            <span class="pagination-item">5</span>
-        </span></h2>
 @endsection
