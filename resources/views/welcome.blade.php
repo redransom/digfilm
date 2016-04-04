@@ -157,7 +157,7 @@
                         <h5 class="title"><a href="{{URL('movie-knowledge', ['id'=>$item->movie->slug])}}">
                         {{$item->movie->name}}</a></h5>
                         <div class="caption-info">
-                            <span class="date">{{date("d-M-Y h:i A", strtotime($item->created_at))}} </span>
+                            <span class="date">{{date("d-M-Y H:i A", strtotime($item->created_at))}} </span>
                             <span class="description">{{$item->description}}</span>
                         </div>
                     </div><!--/ .caption-->                            

@@ -1,6 +1,3 @@
-@extends('layouts.site')
-
-@section('content')
 <h2><span>Highlights</span></h2>
 <div class="content-padding">
     <div class="release">
@@ -30,8 +27,3 @@
         </div>
     </div>
 </div>
-<h2><span>{{$title}}</span></h2>
-@include('partials.site-movies', ['movies'=>$movies, 'description'=>$description])
-
-</div>
-@endsection

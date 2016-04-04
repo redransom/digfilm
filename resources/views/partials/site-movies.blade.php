@@ -1,47 +1,39 @@
 @if($movies->count() > 0)
-<div class="event-list">
-@foreach ($movies as $movie)
-    <!-- BEGIN .item -->
-    <div class="one-quarter small--one-half">
+<div class="content-padding">
+    @if(isset($description))
+    <h4>{{$description}}</h4>
+    @endif
 
-            @if($movie->firstImage())
-            <img src="{{asset($movie->firstImage()->file_name)}}" />
+    <?php $movieCnt = 0; ?>
+    @foreach($movies as $movie)
+    @if((($movieCnt % 4) == 0) || $movieCnt == 0)
+    <div class="row">
+    @endif
+        <div class="one-quarter small--one-half">
+            <a href="{{URL('movie-knowledge', ['id'=>$movie->link()])}}">
+            @if($movie->images()->count() > 0)
+                <img src="{{asset($movie->firstImage()->file_name)}}" alt="{{$movie->name}}" />
             @else
-            <img src="{{asset('images/temp/img_1.jpg')}}" />
+                <img src="{{asset('images/TNBF.jpg')}}" alt="{{$movie->name}}" />
             @endif
-
-            <h3>@if(!is_null($movie->slug) && $movie->slug != "")
-            <a href="{{URL('movie-knowledge', $movie->slug)}}">{{$movie->name}}</a>
-            @else
-            <a href="{{URL('movie-knowledge', $movie->id)}}">{{$movie->name}}</a>
-            @endif</h3>
-            <!--strong class="post-a"><i class="fa fa-clock-o"></i><strong>{{date("j M Y", strtotime($movie->release_at))}}</strong></strong>
-            @if(isset($movie->genre))
-            <strong class="post-a"><i class="fa fa-map-marker"></i><strong>Genre: {{$movie->genre->name}}</strong></strong>
+            </a>
+            <h3><a href="{{URL('movie-knowledge', ['id'=>$movie->link()])}}">{{$movie->name}}</a></h3>
+            @if(!is_null($movie->opening_bid))
+            <p><a href="{{URL('movie-knowledge', ['id'=>$movie->link()])}}">Include at: <span class="highlight">&pound;{{$movie->opening_bid}}</span></a></p>
             @endif
-            <span id="rating_{{$movie->id}}"></span><!--/ .star-->
-
-            <!--p>{{$movie->summary}}</p>
-            @if(!is_null($movie->slug) && $movie->slug != "")
-            <a href="{{URL('movie-knowledge', $movie->slug)}}" class="button invert">View Movie</a>
-            @else
-            <a href="{{URL('movie-knowledge', $movie->id)}}" class="button invert">View Movie</a>
-            @endif
+            <p>Release Date: <span class="highlight">{{date("M Y", strtotime($movie->release_at))}}</span></p>
         </div>
-        <script>
-        $(function() {
-            $('#rating_{{$movie->id}}').raty({ score: {{$movie->rating}}});
-        });
-        </script-->
 
-    <!-- END .item -->
-        <p>Include at: <span class="highlight">&pound;30.00</span></p>
-     <p>Release Date: <span class="highlight">{{date("j M Y", strtotime($movie->release_at))}}</span></p>
+    <?php $movieCnt++; ?>
+
+    @if(($movieCnt % 4) == 0)
     </div>
-@endforeach
+    @endif
 
+    @endforeach
 </div>
+
+
 @else
 <p>There are no movies in this category currently.</p>
 @endif
-
