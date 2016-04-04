@@ -695,4 +695,29 @@ class WelcomeController extends Controller {
             ->with('authUser', $authUser)
 			->with('title', 'Manage your league here');  
     }
+
+	/**
+     * Search site
+     *
+     * @return Response
+     */
+    public function postSearch() 
+    {
+    	$authUser = Auth::user();
+    	$input = Input::all();
+    	$results = array();
+    	if (!empty($input['search_text'])) {
+    		$title = 'You searched for ('.$input['search_text'].')';
+    		$search = '%'.$input['search_text'].'%';
+    		$results['movies'] = Movie::where('name', 'like', $search)->limit(5)->get();
+    	} else {
+    		$title = 'You searched for (nothing here)';
+    	}
+
+        return view('search-results')
+        	->with('results', $results)
+            ->with('page_name', 'search-results')
+           	->with('authUser', $authUser)
+			->with('title', $title);  
+    }
 }

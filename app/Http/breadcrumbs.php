@@ -275,6 +275,12 @@ Breadcrumbs::register('news-articles', function($breadcrumbs)
     $breadcrumbs->push('News', route('news'));
 });
 
+Breadcrumbs::register('search-results', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('Results from your search', route('search-results'));
+});
+
 Breadcrumbs::register('all-movies', function($breadcrumbs)
 {
     $breadcrumbs->parent('home');

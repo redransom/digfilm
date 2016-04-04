@@ -83,7 +83,7 @@
                     {{$recent->name}}
                 </div>
                 <div class="league-right">
-                   <a href="#" class="league-btn">{{(($recent->type == 'U') ? 'Public' : 'Private')}}</a>
+                   <a href="{{URL('league-show', ['id'=>$recent->id])}}" class="league-btn">{{(($recent->type == 'U') ? 'Public' : 'Private')}}</a>
                 </div>
            </div>
            @endforeach

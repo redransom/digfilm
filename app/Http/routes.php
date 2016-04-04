@@ -18,6 +18,7 @@ Route::get('terms', ['as'=>'terms', 'uses'=>'WelcomeController@terms']);
 Route::get('privacy', ['as'=>'privacy', 'uses'=>'WelcomeController@privacy']);
 Route::get('contact', ['as'=>'contact', 'uses'=>'WelcomeController@contact']);
 Route::post('contact', ['as'=>'contact', 'uses'=>'WelcomeController@postContact']);
+Route::post('search-results', ['as'=>'search-results', 'uses'=>'WelcomeController@postSearch']);
 
 Route::get('all-leagues', 'WelcomeController@leagues');
 Route::get('create', 'WelcomeController@create');
