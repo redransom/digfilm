@@ -130,7 +130,21 @@
 
         </div-->
         <div class="vid-contain">
+            @if(!is_null($movie->topTrailer()))
+            <?php                      
+                $base_url = "";              
+                //if ($item->type =='T' && str_contains(, "youtu.be")) {
+                    $url = $movie->topTrailer()->url;
+
+                    //only use youtube currently
+                    $path = parse_url($url, PHP_URL_PATH);
+                    $base_url = "http://www.youtube.com/embed".$path;
+                //}
+            ?>
+            <iframe width="100%" height="400" src="{{$base_url}}" frameborder="0" allowfullscreen></iframe>
+            @else
             <img src="{{asset('images/youtube-holder.jpg')}}" alt="Youtube Placeholder"/>
+            @endif
         </div>
         <h2><span>Media</span></h2>
         <div class="content-padding">
@@ -203,7 +217,7 @@
                                     datasetFill : true,
 
                                     //String - A legend template
-                                    legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+                                    legendTemplate : "{!! $legend1 !!}"
 
                                 };
                             @if(isset($no_of_bids))
@@ -218,7 +232,7 @@
                                             pointColor: "rgba(220,220,220,1)",
                                             pointStrokeColor: "#fff",
                                             pointHighlightFill: "#fff",
-                                            pointHighlightStroke: "rgba(220,220,220,1)",
+                                                pointHighlightStroke: "rgba(220,220,220,1)",
 
                                             data: [{{join($no_of_bids, ",")}}]
                                         }
@@ -252,199 +266,6 @@
                       
                 </div>
                 @endif
-
-        <!--h2><span>Stats</span></h2>
-        <div class="content-padding">
-            <div class="row">
-                <div class="one-half">
-                    <img src="{{asset('images/stats-image.jpg')}}" alt="Placeholder Stats Image" />
-                </div>
-                <div class="one-half">
-                    <img src="{{asset('images/stats-image.jpg')}}" alt="Placeholder Stats Image" />
-                </div>
-            </div>
-        </div>
-        
-        @if($movie->images()->count() > 0)
-        <h2><span>Media</span></h2>
-        <div class="content-padding">
-            <div class="photo-blocks">
-                <ul>
-                    @foreach($movie->images() as $image)
-                    <li>
-                        <a href="#" class="article-image-out">
-                        <span class="article-image"><img src="{{asset($image->file_name) }}" width="128" height="128" alt="" title="" /></span></a>
-                        </li>
-                    @endforeach
-                </ul>
-                <div class="clear-float"></div>
-            </div>
-        </div>
-        @endif -->
-
-       
-
-        <!--h2><span>Follows this game (202)</span></h2>
-        <div class="content-padding">
-            <ul class="profile-friends-list">
-                <li>
-                    <a href="user-single.html" class="avatar online user-tooltip">
-                        <img src="images/photos/avatar-1.jpg" class="setborder" title="" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a href="user-single.html" class="avatar online user-tooltip">
-                        <img src="images/photos/avatar-2.jpg" class="setborder" title="" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a href="user-single.html" class="avatar away user-tooltip">
-                        <img src="images/photos/avatar-4.jpg" class="setborder" title="" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a href="user-single.html" class="avatar ingame user-tooltip">
-                        <img src="images/photos/avatar-5.jpg" class="setborder" title="" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a href="user-single.html" class="avatar offline user-tooltip">
-                        <img src="images/photos/avatar-6.jpg" class="setborder" title="" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a href="user-single.html" class="avatar offline user-tooltip">
-                        <img src="images/photos/avatar-7.jpg" class="setborder" title="" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a href="user-single.html" class="avatar offline user-tooltip">
-                        <img src="images/photos/avatar-14.jpg" class="setborder" title="" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a href="user-single.html" class="avatar offline user-tooltip">
-                        <img src="images/photos/avatar-15.jpg" class="setborder" title="" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a href="user-single.html" class="avatar offline user-tooltip">
-                        <img src="images/photos/avatar-16.jpg" class="setborder" title="" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a href="user-single.html" class="avatar offline user-tooltip">
-                        <img src="images/photos/avatar-17.jpg" class="setborder" title="" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a href="user-single.html" class="avatar offline user-tooltip">
-                        <img src="images/photos/avatar-18.jpg" class="setborder" title="" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a href="user-single.html" class="avatar offline user-tooltip">
-                        <img src="images/photos/avatar-19.jpg" class="setborder" title="" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="users-more">+160</a>
-                </li>
-            </ul>
-            <div class="clear-float"></div>
-        </div-->
-
-        <!--h2><span>Comments (3)</span></h2-->
-        <!-- BEGIN .content-padding -->
-        <!--div class="content-padding">
-            
-            <div class="comment-part">
-
-                <ol id="comments">
-                    <li>
-                        <div class="comment-inner">
-                            <div class="comment-avatar">
-                                <img src="http://1.gravatar.com/avatar/b1c65c520efb9520269584aae4323fae?s=73&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D73&amp;r=G" alt="DatCouch">
-                            </div>
-                            <div class="comment-content">
-                                <div class="comment-header">
-                                    <h3><a href="#">DatCouch</a></h3>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet, ea rebum aeterno qui, cum tale dicta nihil id. Ex eam simul altera. Te sea labores persequeris. An suscipit menandri vel, est error nullam dictas ne. Debet instructior ea pri, vis singulis antiopam consulatu ex.</p>
-                                <a class="comment-reply-link post-a" href="#"><i class="fa fa-comment"></i><strong>Reply</strong></a>
-                                <span class="post-a"><i class="fa fa-calendar-o"></i> May 2, 2014</span>
-                            </div>
-                        </div>
-                        <ul>
-                            <li>
-                                <div class="comment-inner">
-                                    <div class="comment-avatar">
-                                        <img src="http://1.gravatar.com/avatar/b1c65c520efb9520269584aae4323fae?s=73&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D73&amp;r=G" alt="DatCouch">
-                                    </div>
-                                    <div class="comment-content">
-                                        <div class="comment-header">
-                                            <h3><a href="#">DatCouch</a></h3>
-                                        </div>
-                                        <p>Lorem ipsum dolor sit amet, ea rebum aeterno qui, cum tale dicta nihil id. Ex eam simul altera. Te sea labores persequeris. An suscipit menandri vel, est error nullam dictas ne. Debet instructior ea pri, vis singulis antiopam consulatu ex.</p>
-                                        <a class="comment-reply-link post-a" href="#"><i class="fa fa-comment"></i><strong>Reply</strong></a>
-                                        <span class="post-a"><i class="fa fa-calendar-o"></i> May 2, 2014</span>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <div class="comment-inner">
-                            <div class="comment-avatar">
-                                <img src="http://1.gravatar.com/avatar/b1c65c520efb9520269584aae4323fae?s=73&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D73&amp;r=G" alt="DatCouch">
-                            </div>
-                            <div class="comment-content">
-                                <div class="comment-header">
-                                    <h3><a href="#">DatCouch</a></h3>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet, ea rebum aeterno qui, cum tale dicta nihil id. Ex eam simul altera. Te sea labores persequeris. An suscipit menandri vel, est error nullam dictas ne. Debet instructior ea pri, vis singulis antiopam consulatu ex.</p>
-                                <a class="comment-reply-link post-a" href="#"><i class="fa fa-comment"></i><strong>Reply</strong></a>
-                                <span class="post-a"><i class="fa fa-calendar-o"></i> May 2, 2014</span>
-                            </div>
-                        </div>
-                    </li>
-                </ol>
-                <div class="comments-pager"></div>
-
-                <div class="comment-form">
-                    <a href="#" name="respond"></a>
-                    <div id="respond" class="comment-respond">
-                        <h3 id="reply-title" class="comment-reply-title"> <small><a rel="nofollow" id="cancel-comment-reply-link" href="/integer-nam-varius/#respond" style="display:none;">Cancel reply</a></small></h3>
-                        <form action="http://chronicles.datcouch.com/wp-comments-post.php" method="post" id="commentform" class="comment-form">
-                            <p class="comment-notes">Your email address will not be published. Required fields are marked <span class="required">*</span></p>                           
-                            <p class="form-name">
-                                <label for="author">Name:<span class="required">*</span></label>
-                                <input id="author" name="author" type="text" value="" size="30" aria-required="true" placeholder="Name">
-                            </p>
-
-                            <p class="form-email">
-                                <label for="email">Email:<span class="required">*</span></label>
-                                <input id="email" name="email" type="text" value="" size="30" aria-required="true" placeholder="Email">
-                            </p>
-
-                            <p class="form-website">
-                                <label for="website">Website:</label>
-                                <input id="website" name="url" type="text" value="" size="30" aria-required="true" placeholder="Website">
-                            </p>
-                            <p class="form-comment">
-                                <label for="comment">Comment:<span class="required">*</span></label>
-                                <textarea id="comment" name="comment" type="text" aria-required="true" placeholder="Comment Text"></textarea>
-                            </p>
-                            <p class="form-submit">
-                                <input name="submit" type="submit" id="submit" value="Post Comment" class="button">
-                                <input type="hidden" name="comment_post_ID" value="324" id="comment_post_ID" class="button">
-                                <input type="hidden" name="comment_parent" id="comment_parent" value="0" class="button">
-                            </p>
-                        </form>
-                    </div>
-                </div>
-
-            </div-->
 
         <!-- END .content-padding -->
         </div>

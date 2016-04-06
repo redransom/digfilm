@@ -493,12 +493,17 @@ class WelcomeController extends Controller {
 				$bid_groups['totals'][] = $bid->no_of_bids;
 			}
 
+			$legend1 = "<ul class='".strtolower($movie->name)."-legend'>";
+			$legend1 .= "<li><span style='background-color:#ddd'></span>No Of Bids</li>";
+			$legend1 .= "</ul>";
+
 		}
 
 		return view('movie-know')
 			->with('authUser', $authUser)
 			->with('fullwidth', true)
 			->with('padding', true)
+			->with('legend1', $legend1)
 			->with('no_of_bids', $no_of_bids)
 			->with('bid_groups', $bid_groups)
 			->with('days', $days)

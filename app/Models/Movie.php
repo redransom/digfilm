@@ -27,6 +27,10 @@ class Movie extends Model {
         return $this->media->where('type' ,'I')->first();
     }
 
+    public function topTrailer() {
+        return $this->media->where('type' ,'T')->where('image_type', 'F')->first();
+    }
+
     public function images() {
         return $this->media->where('type', 'I');
     }
@@ -44,7 +48,7 @@ class Movie extends Model {
     }
 
     public function link() {
-        return ((!is_null($this->slug) && $this->slug != "") ? $this->slug : $this->id);
+        return ((!is_null($this->slug) && trim($this->slug) != "") ? $this->slug : $this->id);
     }
 
 }

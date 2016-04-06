@@ -19,7 +19,7 @@
 	@foreach($results['movies'] as $movie_result)
 	<h4>{{$movie_result->name}}</h4>
 	<p>{!! $movie_result->summary !!}</p>
-	<a href="{{URL('movie-knowledge', ['id'=>$movie_result->slug])}}">More...</a>
+	<a href="{{URL('movie-knowledge', ['id'=>$movie_result->link()])}}">More...</a>
 	<br/>
 
 	@endforeach
