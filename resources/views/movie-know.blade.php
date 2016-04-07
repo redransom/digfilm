@@ -1,68 +1,6 @@
 @extends('layouts.site')
 
 @section('content')
-<style>
-/* Man content & sidebar top lne, default #256193 */
-            #sidebar .panel,
-            #main-box #main {
-                border-top: 5px solid #256193;
-            }
-
-            /* Slider colors, default #256193 */
-            a.featured-select,
-            #slider-info .padding-box ul li:before,
-            .home-article.right ul li a:hover {
-                background-color: #256193;
-            }
-
-            /* Button color, default #256193 */
-            .panel-duel-voting .panel-duel-vote a {
-                background-color: #256193;
-            }
-
-            /* Menu background color, default #000 */
-            #menu-bottom.blurred #menu > .blur-before:after {
-                background-color: #000;
-            }
-
-            /* Top menu background, default #0D0D0D */
-            #header-top {
-                background: #0D0D0D;
-            }
-
-            /* Sidebar panel titles color, default #333333 */
-            #sidebar .panel > h2 {
-                color: #333333;
-            }
-
-            /* Main titles color, default #353535 */
-            #main h2 span {
-                color: #353535;
-            }
-
-            /* Selection color, default #256193 */
-            ::selection {
-                background: #256193;
-            }
-
-            /* Links hover color, default #256193 */
-            .article-icons a:hover,
-            a:hover {
-                color: #256193;
-            }
-
-            /* Image hover background, default #256193 */
-            .article-image-out,
-            .article-image {
-                background: #256193;
-            }
-
-            /* Image hover icons color, default #256193 */
-            span.article-image span .fa {
-                color: #256193;
-            }
-
-</style>
 <div id="main" itemscope="" itemtype="http://data-vocabulary.org/Review">
     <div class="game-info-left">
         @if($movie->firstImage())
@@ -93,10 +31,12 @@
                     <span>Release Date:</span>
                     <strong itemprop="datePublished" content="2013-03-05">{{date("l, jS F Y", strtotime($movie->release_at))}}</strong>
                 </div>
+                @if(!is_null($movie->opening_bid))
                 <div>
                     <span>Opening Bid:</span>
-                    <strong>£0.20</strong>
+                    <strong>£{{$movie->opening_bid}}</strong>
                 </div>
+                @endif
                 @if(isset($movie->genre))
                 <div>
                     <span>Genre</span>
@@ -159,6 +99,9 @@
                     <?php break; ?>
                 @endif
                 @endforeach
+
+                @else
+                <p>There is no media for this movie currently.</p>
                 @endif
             </div>
         </div>
@@ -168,8 +111,34 @@
                 <div class="content-padding">
                         <script src="{{ asset('jscript/Chart.min.js') }}"></script>
 
-                        <canvas id="lcNoOfBids" width="250" height="200"></canvas>
-                        <canvas id="lcLast30" width="250" height="200"></canvas>
+                        <div width="100%" style="display: clear">
+                            <div style="float:left; width: 150px">
+                            <h3>Number of Bids in last month</h3>
+                            <p>Use this graph to see how popular the movie is and has been in the last 30 days</p>
+                            @if(isset($bid_history) && !empty($bid_history))
+                            <h4>Bids History</h4>
+                            <ul>
+                                @foreach($bid_history as $bid)
+                                    <li>{{$bid->month_nm}} : {{$bid->no_of_bids}} 
+                                    @if($bid->no_of_bids > 1)
+                                    bids
+                                    @else
+                                    bid
+                                    @endif
+                                    </li>
+                                @endforeach
+                            </ul>
+                            @endif
+                            </div>
+                            <canvas id="lcNoOfBids" width="400" height="200" style="float:right;display:block"></canvas>
+                        </div>
+                        <div width="100%">
+                            <div style="float:left; width: 150px">
+                            <h3>Bid amounts in last month</h3>
+                            <p>This graph shows what the values that were bid on the film over the last month.</p>
+                            </div>
+                            <canvas id="lcLast30" width="400" height="200" style="float:right;display:block"></canvas>
+                        </div>
 
                         <script type="text/javascript">
                             var options = {
@@ -190,13 +159,13 @@
                                     scaleShowVerticalLines: true,
 
                                     //Boolean - Whether the line is curved between points
-                                    bezierCurve : true,
+                                    bezierCurve : false,
 
                                     //Number - Tension of the bezier curve between points
                                     bezierCurveTension : 0.4,
 
                                     //Boolean - Whether to show a dot for each point
-                                    pointDot : true,
+                                    pointDot : false,
 
                                     //Number - Radius of each point dot in pixels
                                     pointDotRadius : 4,
@@ -227,12 +196,12 @@
                                     datasets: [
                                         {
                                             label: "No Of Bids",
-                                            fillColor: "rgba(220,220,220,0.2)",
+                                            fillColor: "rgba(93, 29, 30,0.2)",
                                             strokeColor: "rgba(220,220,220,1)",
                                             pointColor: "rgba(220,220,220,1)",
                                             pointStrokeColor: "#fff",
                                             pointHighlightFill: "#fff",
-                                                pointHighlightStroke: "rgba(220,220,220,1)",
+                                            pointHighlightStroke: "rgba(220,220,220,1)",
 
                                             data: [{{join($no_of_bids, ",")}}]
                                         }
@@ -244,23 +213,23 @@
                             @if(isset($bid_groups['totals']))
                             var ctx3 = document.getElementById("lcLast30").getContext("2d"),
                                 data3 = {
-                                    labels: [{{join($bid_groups['totals'], ",")}}],
+                                    labels: [{{join($bid_groups['amount'], ",")}}],
                                     datasets: [
                                         {
                                             label: "Last 30 bids",
-                                            fillColor: "rgba(220,220,220,0.2)",
+                                            fillColor: "rgba(93, 29, 30,0.2)",
                                             strokeColor: "rgba(220,220,220,1)",
                                             pointColor: "rgba(220,220,220,1)",
                                             pointStrokeColor: "#fff",
                                             pointHighlightFill: "#fff",
                                             pointHighlightStroke: "rgba(220,220,220,1)",
 
-                                            data: [{{join($bid_groups['amount'], ",")}}]
+                                            data: [{{join($bid_groups['totals'], ",")}}]
                                         }
                                     ]
                                 };
 
-                            var last30Bids = new Chart(ctx3).Line(data3, options);
+                            var last30Bids = new Chart(ctx3).Bar(data3, options);
                             @endif
                         </script>
                       

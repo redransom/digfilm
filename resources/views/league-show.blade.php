@@ -1,68 +1,7 @@
 @extends('layouts.site')
 
 @section('content')
-<style>
-/* Man content & sidebar top lne, default #256193 */
-            #sidebar .panel,
-            #main-box #main {
-                border-top: 5px solid #256193;
-            }
 
-            /* Slider colors, default #256193 */
-            a.featured-select,
-            #slider-info .padding-box ul li:before,
-            .home-article.right ul li a:hover {
-                background-color: #256193;
-            }
-
-            /* Button color, default #256193 */
-            .panel-duel-voting .panel-duel-vote a {
-                background-color: #256193;
-            }
-
-            /* Menu background color, default #000 */
-            #menu-bottom.blurred #menu > .blur-before:after {
-                background-color: #000;
-            }
-
-            /* Top menu background, default #0D0D0D */
-            #header-top {
-                background: #0D0D0D;
-            }
-
-            /* Sidebar panel titles color, default #333333 */
-            #sidebar .panel > h2 {
-                color: #333333;
-            }
-
-            /* Main titles color, default #353535 */
-            #main h2 span {
-                color: #353535;
-            }
-
-            /* Selection color, default #256193 */
-            ::selection {
-                background: #256193;
-            }
-
-            /* Links hover color, default #256193 */
-            .article-icons a:hover,
-            a:hover {
-                color: #256193;
-            }
-
-            /* Image hover background, default #256193 */
-            .article-image-out,
-            .article-image {
-                background: #256193;
-            }
-
-            /* Image hover icons color, default #256193 */
-            span.article-image span .fa {
-                color: #256193;
-            }
-
-</style>
 <div id="main" itemscope="" itemtype="http://data-vocabulary.org/Review">
     <div class="game-info-left">
         @if(!is_null($currentLeague->file_name))
@@ -122,7 +61,7 @@
         </div>
 
         <div class="clear-float"></div>
-        <h2>Stats</h2>
+        <h2><span>Stats</span></h2>
 
         <h3><span>League Pot Size</span></h3>
         @if($currentLeague->players()->count() > 0)

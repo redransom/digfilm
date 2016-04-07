@@ -453,6 +453,8 @@ class WelcomeController extends Controller {
 		$days = array();
 		$bid_groups = array();
 
+		$legend1 = null;
+
 		if (isset($authUser->id)) {
 			//get movie stats
 			//list of all bids in last 30 days
@@ -482,11 +484,16 @@ class WelcomeController extends Controller {
 					$no_of_bids[$day_no] = 0;
 			}
 
+			//no of bids in time on this movie
+			//TOOD: Move this to Movie function
+			$sql = "SELECT MONTHNAME(created_at) AS month_nm, COUNT(*) AS no_of_bids FROM `auction_bids` ";
+			$sql .= " WHERE movies_id = '".$movie->id."' GROUP BY MONTHNAME(created_at) ORDER BY created_at";
+			$bid_history = DB::select(DB::raw($sql));
+
 			//list of bid value in last 30 days
 			$sql = "SELECT bid_amount, COUNT(bid_amount) as no_of_bids FROM `auction_bids` WHERE `movies_id` = '".$movie->id;
 			$sql .= "' AND created_at >= '".$last_month."' GROUP BY bid_amount ORDER BY bid_amount";
 			$last_30_data = DB::select(DB::raw($sql));
-
 
 			foreach($last_30_data as $bid) {
 				$bid_groups['amount'][] = $bid->bid_amount;
@@ -504,6 +511,7 @@ class WelcomeController extends Controller {
 			->with('fullwidth', true)
 			->with('padding', true)
 			->with('legend1', $legend1)
+			->with('bid_history', $bid_history)
 			->with('no_of_bids', $no_of_bids)
 			->with('bid_groups', $bid_groups)
 			->with('days', $days)
