@@ -1,9 +1,12 @@
 @if($movies->count() > 0)
-<div class="content-padding">
-    @if(isset($description))
-    <h4>{{$description}}</h4>
-    @endif
 
+    @if(isset($sectionTitle))
+    <h2><span>{{$sectionTitle}}</span></h2>
+    @endif
+    @if(isset($description))
+    <p>{{$description}}</p>
+    @endif
+    <br/>
     <?php $movieCnt = 0; ?>
     @foreach($movies as $movie)
     @if((($movieCnt % 4) == 0) || $movieCnt == 0)
@@ -31,8 +34,11 @@
     @endif
 
     @endforeach
-</div>
 
+    @if(($movieCnt % 4) != 0)
+    <!-- always close off the row in case it doesnt end on a 4 -->
+    </div>
+    @endif
 
 @else
 <p>There are no movies in this category currently.</p>

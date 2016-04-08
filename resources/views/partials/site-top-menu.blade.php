@@ -6,14 +6,7 @@
                         <li><a href="/rules">How to play</a></li>
                         <li><a href="/terms">Terms</a></li>
                         <li><a href="/privacy">Privacy</a></li>
-                        <li><a href="/contact">Get in touch</a></li>
-                        <!--li><a href="/about"><span>Private messages</span></a>
-                            <ul class="sub-menu">
-                                <li><a href="messages.html">Conversation list</a></li>
-                                <li><a href="messages-conversation.html">Single conversation</a></li>
-                                <li><a href="messages-write.html">Start new conversation</a></li>
-                            </ul>
-                        </li-->
+                        <li><a href="/contact">Contact</a></li>
                         <!--li><a href="#drop-the-bass">Read Later<small>2</small></a>
                             <div class="drop">
                                 <div class="notify-header">Articles I should to read later</div>
@@ -48,9 +41,18 @@
                             </div>
                         </li-->
                         @if(isset($authUser))
-                        <li><a href="{{URL('auth/logout')}}">Logout</a></li>
-                        <li><a href="/dashboard">Dashboard</a></li>
-                        <li><a href="/edit-profile">Profile</a></li>
+                        <li><a href="/profile/{{$authUser->id}}"><span>{{$authUser->fullName()}}</span></a>
+                            <ul class="sub-menu">
+                                <li><a href="/dashboard">Dashboard</a></li>
+                                <li><a href="/edit-profile">Profile</a></li>
+                                <li><a href="{{URL('auth/logout')}}">Logout</a></li>
+
+                                <!--li><a href="messages.html">Conversation list</a></li>
+                                <li><a href="messages-conversation.html">Single conversation</a></li>
+                                <li><a href="messages-write.html">Start new conversation</a></li-->
+                            </ul>
+                        </li>
+
 
                         @else
                         <li><a href="{{URL('auth/login')}}">Login</a></li>

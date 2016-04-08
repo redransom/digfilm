@@ -108,9 +108,13 @@
                                 @else
                                 <p>No takings have been recorded for this movie currently.</p>
                                 @endif
+                                @if(!is_null($movie->takings_close_date) && $movie->takings_close_date >= date("Y-m-d"))
                                 <ul class="inline">
                                     <li><a href="{{Route('movie-add-takings', array('id'=>$movie->id))}}">Add Takings</a></li>
                                 </ul>
+                                @else
+                                <p>Takings date has passed or does not exist for this movie.</p>
+                                @endif 
                             </div>
                         </div>
 

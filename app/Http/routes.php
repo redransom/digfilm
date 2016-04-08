@@ -177,7 +177,7 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('sitecontent/{id}/disable', ['as'=>'content-disable', 'uses'=>'SiteContentsController@disable']);
         Route::get('sitecontent/{id}/enable', ['as'=>'content-enable', 'uses'=>'SiteContentsController@enable']);
 
-        Route::get('admin-dashboard', ['as' => 'admin-dashboard', 'uses'=>'UsersController@adminDashboard']);
+        Route::get('admin-dashboard', ['as' => 'admin-dashboard', 'uses'=>'AdminController@index']);
 
         Route::get('auctions/{status?}', ['as'=>'auctions', 'uses'=>'AuctionsController@index']);
         //Route::get('leagues/{status?}', ['as'=>'leagues', 'uses'=>'LeaguesController@index']);

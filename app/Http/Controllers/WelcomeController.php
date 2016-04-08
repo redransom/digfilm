@@ -303,6 +303,11 @@ class WelcomeController extends Controller {
 		if ($league->enabled == 0)
 			return redirect('/');
 
+		if ($league->auction_stage == '2') {
+			//redirect to the in play page
+			return redirect('league-play/'.$league->id);
+		}
+
 		/*
 		Need to find the league pot size (based on balances)
 		Player count
@@ -454,6 +459,7 @@ class WelcomeController extends Controller {
 		$bid_groups = array();
 
 		$legend1 = null;
+		$bid_history = null;
 
 		if (isset($authUser->id)) {
 			//get movie stats

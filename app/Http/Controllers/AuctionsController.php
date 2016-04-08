@@ -468,15 +468,24 @@ class AuctionsController extends Controller {
             $league_movies_count = $league->movies->count();
 
             $league->current_round = $league->current_round + 1;
-            echo "Round Duration: ".$league->rule->round_duration."<br/>";
+
+
+//            echo "Round Duration: ".$league->rule->round_duration."<br/>";
             $round_duration = ($league->rule->round_duration != 0) ? $league->rule->round_duration : 1;
-            echo "Round: ".$round_duration."<br/>";
-            if ($round_duration >= 1)
-                $league->round_start_date = date("Y-m-d H:i:s", strtotime("+".$round_duration." hours"));
+//            echo "Round: ".$round_duration."<br/>";
+            $round_date = date_create();
+
+            if ($round_duration >= 1) {
+                //date_add($round_date, date_interval_create_from_date_string($round_duration.' hours'));
+                date_add($round_date, date_interval_create_from_date_string(inval($round_duration).' hours'));
+                $league->round_start_date = date_format($round_date, 'Y-m-d H:i:s');;//date("Y-m-d H:i:s", strtotime("+".$round_duration." hours"));
+            }
             else {
                 //round duration needs to be multiplied by 100 as it's the number of minutes in decimal 
                 //so 0.15 * 100  is 15 mins
-                $league->round_start_date = date("Y-m-d H:i:s", strtotime("+".($round_duration * 100)." mins"));            
+                date_add($round_date, date_interval_create_from_date_string((inval($round_duration) * 100).' mins'));
+                $league->round_start_date = date_format($round_date, 'Y-m-d H:i:s');
+                //$league->round_start_date = date("Y-m-d H:i:s", strtotime("+".($round_duration * 100)." mins"));            
             }
             echo "Start Date: ".$league->round_start_date."<br/>";
             //clear out auctions that are being superceeded by the new round

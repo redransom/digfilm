@@ -50,6 +50,20 @@
                     </div>
 
                     <div class="control-group">
+                        <label class="control-label" for="MediaType">Location</label>
+                        <div class="controls">
+                            {!! Form::select('image_type', ['F'=>'Front', 'L'=>'List'], null, ['class'=>'span8']) !!}
+                        </div>
+                        <span class="help-inline">
+                        <ul>
+                            <li>Front images will be used on the front page - 644px by 364px.</li>
+                            <li>Front trailers will be used on the front page and also on the movie knowledge page - 660px by 377px.</li>
+                            <li>List images will be used on the front page as the first image that is shown in lists - [FIND SIZE]</li>
+                        </ul>
+                        </span>
+                    </div>
+
+                    <div class="control-group">
                         <label class="control-label" for="MediaFilename">File Name</label>
                         <div class="controls">
                             {!! Form::file('file_name', null, ['class'=>'span8', 'placeholder'=>'Enter filename...']) !!}

@@ -63,8 +63,9 @@
     @endif
     
     <br/>
-    <h2>Movies</h2>
+    <h2>Movies is great</h2>
     <p>This is a list of all movies that are to be played for in this league.</p>
+
         @if($currentLeague->movies->count() > 0)
 
             <?php $movieCnt = 0; ?>
@@ -91,15 +92,17 @@
     
     <br/>
     @elseif(!is_null($currentLeague->round_amount))
-    @include('partials.user-auction-movies', ['movies'=>$currentLeague->movies()->where('chosen', '0')->get(), 'movieTitle'=>'Remaining Movies'])
+
+    @include('partials.site-movies', ['movies'=>$currentLeague->movies()->where('chosen', '0')->get(), 'description'=>'This is a list of all movies that are to be played for in this league', 'sectionTitle'=>'Remaining Movies'])
+    
     @endif
     @include('partials.user-league-rules', ['rule'=>$currentLeague->rule, 'leagueUser'=>$currentLeagueUser]) 
 </div>
 
 <?php function auctionTimer ($auctionid, $auctionTime, $name='bid_link') { ?>
-    <div id="{{$name}}<?php echo $auctionid; ?>"></div>
+    <div id="{{$name}}_<?php echo $auctionid; ?>"></div>
     <script type="text/javascript">
-      $('#{{$name}}<?php echo $auctionid; ?>').countdown('<?php echo $auctionTime; ?>', function(event) {
+      $('#{{$name}}_<?php echo $auctionid; ?>').countdown('<?php echo $auctionTime; ?>', function(event) {
         <?php 
         //if auction finish time - current time is over an hour then show the hour not just the minute
         if (strtotime($auctionTime) - time() > 3600) { ?>

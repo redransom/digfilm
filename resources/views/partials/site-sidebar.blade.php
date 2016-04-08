@@ -21,7 +21,7 @@
                         <!-- END .panel -->
                         </div>
                         
-                        @if(isset($authUser) && !is_null($authUser))
+                        @if(isset($authUser) && !is_null($authUser) && !isset($currentLeague))
                         @include('partials.site-user-details')
                         @endif
 

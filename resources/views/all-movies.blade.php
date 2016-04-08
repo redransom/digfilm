@@ -34,7 +34,9 @@
 @endif
 
 <h2><span>All Movies</span></h2>
-@include('partials.site-movies', ['movies'=>$movies])
+<div class="content-padding">
+@include('partials.site-movies', ['movies'=>$movies, 'description'=>'All the movies in TheNextBigFilm database'])
+</div>
 @include('pagination.default', ['paginator' => $movies])
 
 @endsection

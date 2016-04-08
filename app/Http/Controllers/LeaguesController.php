@@ -290,7 +290,7 @@ class LeaguesController extends Controller {
 
         $file_name = $request->file('file_name');
         if (!empty($file_name)) {
-            $imageName = $this->generateRandomString().str_replace(' ', '_', strtolower($input['name'])) . '.' . $request->file('file_name')->getClientOriginalExtension();
+            $imageName = str_random(10).str_replace(' ', '_', strtolower($input['name'])) . '.' . $request->file('file_name')->getClientOriginalExtension();
             $request->file('file_name')->move(base_path() . '/public/images/leagues/', $imageName);
 
             $league->file_name = "/images/leagues/".$imageName;
@@ -1280,7 +1280,7 @@ class LeaguesController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    private function generateRandomString($length = 10) {
+    /*private function generateRandomString($length = 10) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';
@@ -1288,5 +1288,5 @@ class LeaguesController extends Controller {
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
         return $randomString;
-    }
+    }*/
 }
