@@ -51,6 +51,7 @@
             </div>
 
             <ul class="widget widget-usage unstyled span4">
+            @if($totals['LeagueTotal'] > 0)
             @foreach($totals['RuleSetTotal'] as $rule_name => $rule_count)
                 <li>
                     <p>
@@ -61,7 +62,8 @@
                         </div>
                     </div>
                 </li>
-            @endforeach                
+            @endforeach
+            @endif
                 <!--li>
                     <p>
                         <strong>Mac</strong> <span class="pull-right small muted">56%</span>

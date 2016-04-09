@@ -40,10 +40,9 @@
                 @if(isset($movie->genre))
                 <div>
                     <span>Genre</span>
-                    <strong itemprop="applicationCategory"><a href="games.html">{{$movie->genre->name}}</a></strong>
+                    <strong itemprop="applicationCategory"><a href="{{URL('/genre/'.$movie->genre->slug)}}">{{$movie->genre->name}}</a></strong>
                 </div>
                 @endif
-                <meta itemprop="reviewer" content="Datcouch.com">
             </div>
         </div>
     </div>

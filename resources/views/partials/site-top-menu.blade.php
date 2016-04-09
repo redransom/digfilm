@@ -41,7 +41,7 @@
                             </div>
                         </li-->
                         @if(isset($authUser))
-                        <li><a href="/profile/{{$authUser->id}}"><span>{{$authUser->fullName()}}</span></a>
+                        <li><a href="/dashboard"><span>{{$authUser->fullName()}}</span></a>
                             <ul class="sub-menu">
                                 <li><a href="/dashboard">Dashboard</a></li>
                                 <li><a href="/edit-profile">Profile</a></li>

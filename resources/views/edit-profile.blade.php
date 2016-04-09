@@ -73,6 +73,7 @@
         @if(!is_null($user->thumbnail))
             <img src="{{asset($user->thumbnail)}}" width="100px"/>
         @endif
+        <p>&nbsp;</p>
     </div>
 </div>
 @endsection
