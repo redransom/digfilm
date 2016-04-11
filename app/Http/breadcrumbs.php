@@ -227,6 +227,12 @@ Breadcrumbs::register('register-successful', function($breadcrumbs)
     $breadcrumbs->push('Register Success', route('register-successful'));
 });
 
+Breadcrumbs::register('login', function($breadcrumbs)
+{
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('Login to TheNextBigFilm');
+});
+
 Breadcrumbs::register('email-verified', function($breadcrumbs)
 {
     $breadcrumbs->parent('home');

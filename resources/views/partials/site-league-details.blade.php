@@ -119,7 +119,7 @@
 
                 @endif
 
-                @include('partials.site-league-chat', ['messages'=>$league->messages])
+                @include('partials.site-league-chat', ['messages'=>$league->messages()->orderBy('created_at', 'ASC')->limit(3)->get()])
                 <!-- ************** - END League Details - ************** -->
 
 <?php

@@ -50,6 +50,7 @@ class AuthController extends Controller {
 		return view('auth.login')
 			->with('fullwidth', true)
 			->with('content', $content)
+			->with('page_name', 'login')
 			->with('meta', $this->get_meta($content))
 			->with('title', 'Login to TheNextBigFilm');
 	}
@@ -105,7 +106,7 @@ class AuthController extends Controller {
 				return redirect()->intended('dashboard');
 		}
 
-		return redirect($this->loginPath())
+		return redirect('/auth/login')
 					->withInput($request->only('email', 'remember'))
 					->withErrors([
 						'email' => $this->getFailedLoginMessage(),

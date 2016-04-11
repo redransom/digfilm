@@ -66,7 +66,7 @@
     </table><!--/ feature-table-->
     @endif
 
-    @if($authUser->inLeagues()->where('auction_stage', '<', '2')->orWhereNull('auction_stage')->count() > 0)
+    @if($authUser->startedLeagues()->count() > 0)
     <h3>Leagues due to start</h3>
     <table class="feature-table dark-gray">
         <thead>
@@ -78,7 +78,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($authUser->inLeagues()->where('auction_stage', '<', '2')->orderBy('name', 'asc')->get() as $league)
+            @foreach($authUser->startedLeagues()->orderBy('name', 'asc')->get() as $league)
             <tr>
                 @if($league->auction_stage < 3)
                 <td><a class="btn btn-mini btn-danger" href="{{URL('league-show/'.$league->id)}}">{{$league->name}}</a></td>

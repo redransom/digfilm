@@ -5,7 +5,7 @@
                     <div class="panel-content">
                         @if($messages->count() > 0)
                         <div class="d-articles">
-                            @foreach($messages()->orderBy('created_at', 'ASC')->limit(3)->get() as $message)
+                            @foreach($messages as $message)
                             <div class="item">
                                 <div class="item-header">
                                     <a href="{{URL('profile', ['id'=>$message->owner->id])}}">

@@ -2,7 +2,7 @@
     <ul class="breadcrumb bc-1" >
         @foreach ($breadcrumbs as $breadcrumb)
             @if ($breadcrumb->first)
-                <li class="active"><a href="/dashboard"><i class="fa-home"></i>Home</a></li>
+                <li class="active"><a href="/dashboard"><i class="fa-home"></i> Home</a></li>
             @elseif (!$breadcrumb->last)
                 <li><a href="{{{ $breadcrumb->url }}}">{{{ $breadcrumb->title }}}</a></li>
             @else
