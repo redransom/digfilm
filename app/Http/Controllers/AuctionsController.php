@@ -628,7 +628,10 @@ class AuctionsController extends Controller {
                 //add round duration to the current time at the start
                 //default to 1 in case this has been overlooked
                 $round_duration = ($league->rule->round_duration != 0) ? $league->rule->round_duration : 1;
-                $league->round_start_date = date("Y-m-d H:i:s", strtotime("+".$round_duration." hours"));
+                date_add($round_date, date_interval_create_from_date_string((inval($round_duration) * 100).' mins'));
+                $league->round_start_date = date_format($round_date, 'Y-m-d H:i:s');
+
+                //$league->round_start_date = date("Y-m-d H:i:s", strtotime("+".$round_duration." hours"));
 
                 if ($rule->randomizer == 'Y') {
                     //choose random movies

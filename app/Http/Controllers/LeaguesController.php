@@ -1270,7 +1270,6 @@ class LeaguesController extends Controller {
         
         $input = Input::all();
         $message = LeagueMessage::create( $input );
-        //var_dump($message);
         return redirect()->back();        
     }
 
