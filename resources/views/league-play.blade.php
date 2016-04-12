@@ -111,7 +111,7 @@
         $(this).html(event.strftime('%-M:%S'));
         <?php } ?>
         if(event.elapsed) {
-            $('#{{$name}}_{{$auctionid}}').val = "ENDED";
+            $('#{{$name}}{{$auctionid}}').val = "ENDED";
         }
       });
     </script>
