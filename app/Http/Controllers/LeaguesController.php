@@ -535,7 +535,8 @@ class LeaguesController extends Controller {
                 $leagueUser->save();
 
                 Flash::success('You have successfully managed to join the '.$league->name.' league!');
-                return redirect()->route('league-show', [$id]);
+                //return redirect()->route('league-show', [$id]);
+                return redirect()->back();
             }
         }
 
