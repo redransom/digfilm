@@ -103,7 +103,7 @@
                                 <dd>Timeout: {{$league->rule->auction_timeout}} mins <br/>Denomination: {{$league->rule->denomination}} <br/>Movie Takings: {{$league->rule->movie_takings_duration}} weeks</dd>
                             </dl>
                         @else
-                        <p>No rules have been selected so far - go to the <a href="{{URL('leagues/'.$league->id.'/edit')}}">Edit League</a> page</p>
+                        <p>No rules have been selected so far - go to the <a href="{{URL('league/'.$league->id.'/edit')}}">Edit League</a> page</p>
                         @endif
                         </div>
                     </div>
