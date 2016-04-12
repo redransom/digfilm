@@ -477,13 +477,13 @@ class AuctionsController extends Controller {
 
             if ($round_duration >= 1) {
                 //date_add($round_date, date_interval_create_from_date_string($round_duration.' hours'));
-                date_add($round_date, date_interval_create_from_date_string(inval($round_duration).' hours'));
-                $league->round_start_date = date_format($round_date, 'Y-m-d H:i:s');;//date("Y-m-d H:i:s", strtotime("+".$round_duration." hours"));
+                date_add($round_date, date_interval_create_from_date_string(intval($round_duration).' hours'));
+                $league->round_start_date = date_format($round_date, 'Y-m-d H:i:s');//date("Y-m-d H:i:s", strtotime("+".$round_duration." hours"));
             }
             else {
                 //round duration needs to be multiplied by 100 as it's the number of minutes in decimal 
                 //so 0.15 * 100  is 15 mins
-                date_add($round_date, date_interval_create_from_date_string((inval($round_duration) * 100).' mins'));
+                date_add($round_date, date_interval_create_from_date_string((intval($round_duration) * 100).' mins'));
                 $league->round_start_date = date_format($round_date, 'Y-m-d H:i:s');
                 //$league->round_start_date = date("Y-m-d H:i:s", strtotime("+".($round_duration * 100)." mins"));            
             }
