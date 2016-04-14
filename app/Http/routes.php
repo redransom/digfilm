@@ -33,8 +33,8 @@ Route::get('accept-invite/{id}', ['as'=>'accept-invite', 'uses'=>'LeaguesControl
 Route::get('decline-invite/{id}', ['as'=>'decline-invite', 'uses'=>'LeaguesController@declineInvite']);
 Route::get('email-verified', ['as'=>'email-verified', 'uses'=>'WelcomeController@emailVerified']);
 Route::get('genres', 'WelcomeController@genres');
-Route::get('newreleases', 'WelcomeController@newreleases');
-Route::get('comingsoon', 'WelcomeController@comingsoon');
+Route::get('newreleases', ['as'=>'newreleases', 'uses'=>'WelcomeController@newreleases']);
+Route::get('comingsoon', ['as'=>'comingsoon', 'uses'=>'WelcomeController@comingsoon']);
 Route::get('league-show/{id}', ['as'=>'league-show', 'uses'=>'WelcomeController@getLeague']);
 
 // Registration routes...

@@ -581,7 +581,7 @@ class WelcomeController extends Controller {
 		$highlights = Movie::where('opening_bid', '>', '10')->get();
 
 		return view('all-movies')
-			->with('page_name', 'movies')
+			->with('page_name', 'all-movies')
 			->with('highlights', $highlights)
 			->with('page_title', 'The Next Big Film Database')
 			->with('movies', $movies)
@@ -604,6 +604,8 @@ class WelcomeController extends Controller {
 		return view('newreleases')
 			->with('description', 'Here is a list of all movies have come out in the last 4 weeks.')
 			->with('movies', $movies)
+			->with('page_title', 'New releases from last 4 weeks')
+			->with('page_name', 'newreleases')
 			->with('title', 'New Releases in last 4 weeks')
 			->with('authUser', $authUser);		
 	}
@@ -621,6 +623,8 @@ class WelcomeController extends Controller {
 
 		return view('comingsoon')
 			->with('movies', $movies)
+			->with('page_title', 'Coming up in next 4 weeks')
+			->with('page_name', 'comingsoon')
 			->with('description', 'Here is a list of all movies that are coming out in the next 4 weeks.')
 			->with('title', 'Coming Soon')
 			->with('authUser', $authUser);		

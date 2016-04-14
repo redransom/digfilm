@@ -102,9 +102,11 @@ class MoviesController extends Controller {
 			$movie->takings_close_date = date("Y-m-d", strtotime("+2 months", strtotime($movie->release_at)));
 		$movie->save();
 
-		foreach($input['ratings'] as $rating_id) {
-			$rating = new MovieRating(['movies_id'=>$movie->id, 'ratings_id'=>$rating_id]);
-			$rating->save();
+		if(isset($input['ratings'])) {
+			foreach($input['ratings'] as $rating_id) {
+				$rating = new MovieRating(['movies_id'=>$movie->id, 'ratings_id'=>$rating_id]);
+				$rating->save();
+			}
 		}
 
 		return Redirect::route('movies.show', [$movie->id]);

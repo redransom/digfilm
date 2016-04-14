@@ -31,5 +31,7 @@
     </div>
 </div>
 <h2><span>{{$title}}</span></h2>
+<div class="content-padding">
 @include('partials.site-movies', ['movies'=>$movies, 'description'=>$description])
+</div>
 @endsection

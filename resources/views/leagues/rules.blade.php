@@ -18,7 +18,7 @@
                 @endforeach
                 @endif
 
-                <a class="btn" href="{{route('leagues.edit', [$league->id])}}">Edit League</a>
+                <a class="btn" href="{{route('league.edit', [$league->id])}}">Edit League</a>
                 &nbsp;
                 <a class="btn" href="{{URL('league', array('id'=>$league->id))}}">League Details</a>
 

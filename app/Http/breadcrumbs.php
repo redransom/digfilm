@@ -293,6 +293,18 @@ Breadcrumbs::register('all-movies', function($breadcrumbs)
     $breadcrumbs->push('Movies', route('all-movies'));
 });
 
+Breadcrumbs::register('newreleases', function($breadcrumbs)
+{
+    $breadcrumbs->parent('all-movies');
+    $breadcrumbs->push('New Releases', route('newreleases'));
+});
+
+Breadcrumbs::register('comingsoon', function($breadcrumbs)
+{
+    $breadcrumbs->parent('all-movies');
+    $breadcrumbs->push('Coming Soon', route('comingsoon'));
+});
+
 Breadcrumbs::register('edit-profile', function($breadcrumbs, $object)
 {
     $breadcrumbs->parent('dashboard');

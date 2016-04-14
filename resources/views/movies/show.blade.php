@@ -9,7 +9,11 @@
                             <div class="module-body">
                                 <dl class="dl-horizontal">
                                     <dt>Summary</dt>
+                                    @if($movie->summary != '')
                                     <dd>{{$movie->summary}}</dd>
+                                    @else
+                                    <dd>&nbsp;</dd>
+                                    @endif
                                     <dt>Genre</dt>
                                     @if(isset($movie->genre->name))
                                     <dd>{{$movie->genre->name}}</dd>
@@ -22,6 +26,20 @@
                                     <dd>${{$movie->budget}}</dd>
                                     <dt>Release Date</dt>
                                     <dd>{{date("D jS M Y", strtotime($movie->release_at))}}</dd>
+                                    <dt>Slug</dt>
+                                    <dd>{{$movie->slug}}</dd>
+                                    <dt>Takings Close Date</dt>
+                                    <dd>{{date("D jS M Y", strtotime($movie->takings_close_date))}}</dd>
+                                    <dt>Takings Frequency</dt>
+                                    <dd>{{($movie->takings_frequency == 'W') ? 'Weekly' : 'Daily'}}</dd>
+                                    <dt>Opening Bid</dt>
+                                    <dd>{{$movie->opening_bid}}</dd>
+                                    <dt>Opening Bid Date</dt>
+                                    <dd>{{date("D jS M Y", strtotime($movie->opening_bid_date))}}</dd>
+                                    <dt>Meta Keywords</dt>
+                                    <dd>{{$movie->meta_keywords}}</dd>
+                                    <dt>Meta Description</dt>
+                                    <dd>{{$movie->meta_description}}</dd>
                                 </dl>
                                 <ul class="inline">
                                     <li><a href="{{URL('movies/'.$movie->id.'/edit')}}">Edit Movie</a></li>
