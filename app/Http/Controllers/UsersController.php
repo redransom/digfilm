@@ -248,6 +248,20 @@ class UsersController extends Controller {
 
 		$user->save();
 
+		 if (isset($input['role_id'])) {
+            //remove current roles
+            RoleUser::where('user_id', $user->id)->delete();
+
+            foreach ($input['role_id'] as $role) {
+                $ru = new RoleUser();
+                $ru->role_id = $role;
+                $ru->user_id = $user->id;
+                $ru->save(['timestamps' => false]);
+
+                unset($ru);
+            }
+        }
+
 		if (isset($input['update_from']) && $input['update_from'] == 'P') {
 			Flash::message('Profile updated!');
 			return Redirect::route('edit-profile');

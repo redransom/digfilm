@@ -250,7 +250,7 @@ class MoviesController extends Controller {
 		} else
         	Flash::message('You don\'t have the permissions to complete this task.');
 
-        return Redirect::route('movies.index');
+        return redirect()->back();
 	}
 
 	/**
@@ -277,7 +277,7 @@ class MoviesController extends Controller {
 		}
         	Flash::message('You don\'t have the permissions to complete this task.');
 
-        return Redirect::route('movies.index');
+        return redirect()->back();
 	}
 
     /**

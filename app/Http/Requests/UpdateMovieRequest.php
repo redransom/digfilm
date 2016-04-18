@@ -23,12 +23,13 @@ class UpdateMovieRequest extends Request {
 	{
 		return [
             'name' => ['required'],
-            'summary' => ['required'],
+            /*'summary' => ['required'],
             'genres_id' =>['required'],
             'rating' =>['required'],
-            'budget' =>['required'],
+            'budget' =>['required'],*/
             'release_at' =>['required'],
-            'takings_frequency' =>['required']
+            'opening_bid' =>['required']/*,
+            'takings_frequency' =>['required']*/
         ];
 	}
 
