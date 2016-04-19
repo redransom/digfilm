@@ -17,10 +17,10 @@
                                 <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped  display" width="100%">
                                     <thead>
                                         <tr>
-                                            <th width="25%">Name</th>
-                                            <th width="10%">Opening<br/>Bid</th>
-                                            <th width="13%">Release Dt</th>
-                                            <th width="13%">Close Dt</th>
+                                            <th width="25%"><a href="{{URL('movies/'.$status.'/name/'.(($order == 'asc') ? 'desc' : 'asc'))}}">Name</a></th>
+                                            <th width="10%"><a href="{{URL('movies/'.$status.'/opening_bid/'.(($order == 'asc') ? 'desc' : 'asc'))}}">Opening<br/>Bid</a></th>
+                                            <th width="13%"><a href="{{URL('movies/'.$status.'/release_at/'.(($order == 'asc') ? 'desc' : 'asc'))}}">Release Dt</a></th>
+                                            <th width="13%"><a href="{{URL('movies/'.$status.'/takings_close_date/'.(($order == 'asc') ? 'desc' : 'asc'))}}">Close Dt</a></th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -28,7 +28,7 @@
                                         <?php $movieCnt = 1; ?>
                                         @foreach($movies as $movie)
                                         <tr class="<?php echo (($movieCnt++ % 2) == 0) ? "odd" : "even"; ?> rating{{$movie->rating}}">
-                                            <td><a href="{{URL('movies', array('id'=>$movie->id))}}">{{$movie->name}}</a></td>
+                                            <td><a href="{{URL('movie', array('id'=>$movie->id))}}">{{$movie->name}}</a></td>
                                             @if(!is_null($movie->opening_bid))
                                             <td>{{$movie->opening_bid}}</td>
                                             @else
@@ -44,13 +44,13 @@
                                             <td>{{date("j M Y", strtotime($movie->takings_close_date))}}</td>
                                             @endif
                                             @endif
-                                            <td><a class="btn btn-mini btn-primary" href="{{URL('movies/'.$movie->id.'/edit')}}">Edit</a>
-                                            <a class="btn btn-mini btn-inverse" href="{{URL('movies/'.$movie->id.'/takings')}}">Add Takings</a>
-                                            <a class="btn btn-mini btn-success" href="{{URL('movies/'.$movie->id.'/media')}}">Add Media</a>
+                                            <td><a class="btn btn-mini btn-primary" href="{{URL('movie/'.$movie->id.'/edit')}}">Edit</a>
+                                            <a class="btn btn-mini btn-inverse" href="{{URL('movie/'.$movie->id.'/takings')}}">Add Takings</a>
+                                            <a class="btn btn-mini btn-success" href="{{URL('movie/'.$movie->id.'/media')}}">Add Media</a>
                                             @if($movie->enabled)
-                                            <a class="btn btn-mini btn-danger" href="{{URL('movies/'.$movie->id.'/disable')}}">Disable</a>
+                                            <a class="btn btn-mini btn-danger" href="{{URL('movie-disable/'.$movie->id)}}">Disable</a>
                                             @else
-                                            <a class="btn btn-mini btn-info" href="{{URL('movies/'.$movie->id.'/enable')}}">Enable</a>
+                                            <a class="btn btn-mini btn-info" href="{{URL('movie-enable/'.$movie->id)}}">Enable</a>
                                             @endif
                                             </td>
                                         </tr>

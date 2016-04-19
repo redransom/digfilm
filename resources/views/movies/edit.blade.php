@@ -31,6 +31,7 @@ $(function() {
                 <br />
                 {!! Form::open(array('route' => array('movies.update', $movie->id), 'class'=>'form-horizontal row-fluid', 'method'=>'PUT')) !!}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="referer" value="{{URL::previous()}}">
                     <div class="control-group">
                         <label class="control-label" for="MovieName">Name</label>
                         <div class="controls">

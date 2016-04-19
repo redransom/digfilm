@@ -28,7 +28,7 @@ $(function() {
                 @endforeach
                 @endif
 
-                <a class="btn" href="{{URL('leagues/'.$league->id.'/rules')}}">Edit Rules</a>
+                <a class="btn" href="{{URL('league/'.$league->id.'/rules')}}">Edit Rules</a>
                 &nbsp;
                 <a class="btn" href="{{URL('league', array('id'=>$league->id))}}">League Details</a>
                 <br/>

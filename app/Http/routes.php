@@ -134,7 +134,7 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('users/{id}/enable', ['as'=>'user-enable', 'uses'=>'UsersController@enable']);
 */
         /* Leagues Routes */
-        Route::get('leagues/{status?}/{col?}/{order?}', ['as'=>'league-disable', 'uses'=>'LeaguesController@index']);
+        Route::get('leagues/{status?}/{col?}/{order?}', ['as'=>'leagues', 'uses'=>'LeaguesController@index']);
         Route::get('league/{id}', ['as'=>'league', 'uses'=>'LeaguesController@show']);
         Route::get('league/{id}/edit', ['as'=>'league-edit', 'uses'=>'LeaguesController@edit']);
         Route::post('league/{id}/edit', ['as'=>'league-edit', 'uses'=>'LeaguesController@update']);
@@ -159,15 +159,19 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('user/{id}/enable', ['as'=>'user-enable', 'uses'=>'UsersController@enable']);
 
         /* all movies routes */
-        Route::get('movies/{id}/disable', ['as'=>'movie-disable', 'uses'=>'MoviesController@disable']);
-        Route::get('movies/{id}/enable', ['as'=>'movie-enable', 'uses'=>'MoviesController@enable']);
-        Route::get('movies/{id}/removemedia', ['as'=>'movie-remove-media', 'uses'=>'MoviesController@removeMedia']);
-        Route::get('movies/{id}/contributor', ['as'=>'movie-add-contributor', 'uses'=>'MoviesController@addContributor']);
-        Route::post('movies/{id}/contributor', ['as'=>'add-contributor', 'uses'=>'MoviesController@postContributor']);
-        Route::get('movies/{id}/takings', ['as'=>'movie-add-takings', 'uses'=>'MoviesController@addTakings']);
-        Route::post('movies/{id}/takings', ['as'=>'add-takings', 'uses'=>'MoviesController@postTakings']);
-        Route::get('movies/{id}/media', ['as'=>'movie-add-media', 'uses'=>'MoviesController@addMedia']);
-        Route::post('movies/{id}/media', ['as'=>'add-media', 'uses'=>'MoviesController@postMedia']);
+        Route::get('movies/{col?}/{order?}', ['as'=>'movies', 'uses'=>'MoviesController@index']);
+        Route::get('movie', ['as'=>'movie.create', 'uses'=>'MoviesController@create']);
+        Route::get('movie/{id?}', ['as'=>'movie.show', 'uses'=>'MoviesController@show']);
+        Route::get('movie-disable/{id}', ['as'=>'movie-disable', 'uses'=>'MoviesController@disable']);
+        Route::get('movie-enable/{id}', ['as'=>'movie-enable', 'uses'=>'MoviesController@enable']);
+        Route::get('movie/{id}/removemedia', ['as'=>'movie-remove-media', 'uses'=>'MoviesController@removeMedia']);
+        Route::get('movie/{id}/edit', ['as'=>'movie-edit', 'uses'=>'MoviesController@edit']);
+        Route::get('movie/{id}/contributor', ['as'=>'movie-add-contributor', 'uses'=>'MoviesController@addContributor']);
+        Route::post('movie/{id}/contributor', ['as'=>'add-contributor', 'uses'=>'MoviesController@postContributor']);
+        Route::get('movie/{id}/takings', ['as'=>'movie-add-takings', 'uses'=>'MoviesController@addTakings']);
+        Route::post('movie/{id}/takings', ['as'=>'add-takings', 'uses'=>'MoviesController@postTakings']);
+        Route::get('movie/{id}/media', ['as'=>'movie-add-media', 'uses'=>'MoviesController@addMedia']);
+        Route::post('movie/{id}/media', ['as'=>'add-media', 'uses'=>'MoviesController@postMedia']);
 
         /* all sitecontent routes */
 //        Route::get('sitecontent', ['as'=>'user-create', 'uses'=>'SiteContentsController@create']);
@@ -211,4 +215,4 @@ Route::get('clear-timeout-auctions/N4KuW01N6cVmQZPTQcxd', ['as'=>'clear-timeout-
 Route::get('close-league-auctions/NJWKIKWqlVjHfPNyI3cJ', ['as'=>'close-league-auctions', 'uses'=>'AuctionsController@completeLeagues']);
 Route::get('close-bad-leagues/H8BFC2Wp87DBA2b683uM', ['as'=>'close-bad-leagues', 'uses'=>'LeaguesController@closeLeaguesWhereStartDatePassed']);
 Route::get('end-leagues/55su3532IWH0968114eG', ['as'=>'end-leagues', 'uses'=>'LeaguesController@endLeagueWithWinners']);
-
+Route::get('disable-movies/8977H5F6hbBg28A047Wg', ['as'=>'disable-old-movies', 'uses'=>'MoviesController@disableOldMovies']);

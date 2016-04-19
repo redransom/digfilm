@@ -87,7 +87,8 @@
                                         <li><a href="{{route('prepare-clear-auctions')}}" target="_blank"><i class="icon-group"></i> 5) End Auctions</a></li>
                                         <li><a href="{{route('close-league-auctions')}}" target="_blank"><i class="icon-group"></i> 6) Close League Auctions</a></li>
                                         <li><a href="{{route('close-bad-leagues')}}" target="_blank"><i class="icon-group"></i> 7) Disable Old Leagues</a></li>
-                                        <li><a href="{{route('end-leagues')}}" target="_blank"><i class="icon-group"></i> 7) End Leagues</a></li>
+                                        <li><a href="{{route('end-leagues')}}" target="_blank"><i class="icon-group"></i> 8) End Leagues</a></li>
+                                        <li><a href="{{route('disable-old-movies')}}" target="_blank"><i class="icon-group"></i> 9) Disable Old Movies</a></li>
                                     </ul>
                                 </li>                                
                             </ul>

@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use Log;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
@@ -33,7 +34,7 @@ class MoviesController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index($status = '1', $col = 'release_at', $order = 'asc')
 	{
 		$authUser = Auth::user();
 		if (!isset($authUser))
@@ -42,13 +43,20 @@ class MoviesController extends Controller {
 		$input = Input::all();
 		$search = "";
 		if (isset($input['movies-search-text'])) {
-			$movies = Movie::where('name', 'LIKE', '%'.$input['movies-search-text'].'%')->orderBy('release_at', 'asc')->paginate();
+			$search_text = '%'.$input['movies-search-text'].'%';
+			$movies = Movie::where('name', 'LIKE', $search_text)->orderBy($col, $order)->paginate();
 			$search = $input['movies-search-text'];
-		} else
-			$movies = Movie::orderBy('release_at', 'asc')->paginate(10);
+		} else {
+			if ($status == 'all')
+				$movies = Movie::orderBy($col, $order)->paginate(10);
+			else
+				$movies = Movie::where('enabled', $status)->orderBy($col, $order)->paginate(10);
+		}
 
 		return View("movies.all")
 			->with('movies', $movies)
+			->with('status', $status)
+			->with('order', $order)
 			->with('authUser', $authUser)
 			->with('page_name', 'movies')
 			->with('search', $search)
@@ -109,7 +117,7 @@ class MoviesController extends Controller {
 			}
 		}
 
-		return Redirect::route('movies.show', [$movie->id]);
+		return Redirect::route('movie.show', [$movie->id]);
 	}
 
 	/**
@@ -221,8 +229,10 @@ class MoviesController extends Controller {
 		}
 
 		Flash::message('Movie '.$movie->name. ' has been updated!');
-		return Redirect::route('movies.index');
-
+		if (isset($input['referer']))
+			return redirect($input['referer']);
+		else
+			return Redirect::route('movies.index');
 	}
 
 /**
@@ -337,7 +347,7 @@ class MoviesController extends Controller {
 		$input = Input::all();
 		$movie = MovieContributor::create( $input );
 
-		return Redirect::route('movies.show', array($id))->with('message', 'Movie created.');
+		return Redirect::route('movie.show', array($id))->with('message', 'Movie created.');
 	}
 
 	public function addTakings($id) {
@@ -378,7 +388,7 @@ class MoviesController extends Controller {
 		DB::update(DB::raw("UPDATE league_roster SET total_gross = ".$input['amount'].", value_for_money = ((".$input['amount']." / bid_amount) / 100000) WHERE movies_id = ".$input['movies_id']." AND takings_end_date > NOW()"));
 
 		Flash::message('Movie takings added.');		
-		return Redirect::route('movies.show', array($id));
+		return Redirect::route('movie.show', array($id));
 	}
 
 	public function addMedia($id) {
@@ -425,7 +435,13 @@ class MoviesController extends Controller {
 			$media->save();
 		}
 
-
 		Flash::message('Movie media added.');		
-		return Redirect::route('movies.show', array($id));
-	}}
+		return Redirect::route('movie.show', array($id));
+	}
+
+	public function disableOldMovies() {
+		$currentTime = date("Y-m-d H:i:s");
+		$affected = Movie::where('enabled', '1')->whereNotNull('takings_close_date')->where('takings_close_date', '<', $currentTime)->update(['enabled'=>'0']);
+        Log::info("Disable Movies Time ".$currentTime. " disabled ".$affected.' movies');
+	}
+}

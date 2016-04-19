@@ -42,8 +42,8 @@
                                     <dd>{{$movie->meta_description}}</dd>
                                 </dl>
                                 <ul class="inline">
-                                    <li><a class="btn" href="{{URL('movies/'.$movie->id.'/edit')}}">Edit Movie</a></li>
-                                    <li><a class="btn" href="{{route('movies.create')}}">Add Movie</a></li>
+                                    <li><a class="btn" href="{{URL('movie/'.$movie->id.'/edit')}}">Edit Movie</a></li>
+                                    <li><a class="btn" href="{{route('movie.create')}}">Add Movie</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -151,10 +151,10 @@
 
                         </div>
 
-                                                      <ul class="inline">
-                                    <li><a class="btn" href="{{URL('movies/'.$movie->id.'/edit')}}">Edit Movie</a></li>
-                                    <li><a class="btn" href="{{route('movies.create')}}">Add Movie</a></li>
-                                </ul>
+                        <ul class="inline">
+                            <li><a class="btn" href="{{URL('movie/'.$movie->id.'/edit')}}">Edit Movie</a></li>
+                            <li><a class="btn" href="{{route('movie.create')}}">Add Movie</a></li>
+                        </ul>
                     </div>
 <!--/.content-->
 @endsection
