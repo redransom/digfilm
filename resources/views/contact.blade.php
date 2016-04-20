@@ -39,7 +39,7 @@
                         <textarea name="message" id="message" cols="30" rows="10"></textarea>
                     </p>
                     <p class="form-footer">
-                        <input type="submit" class="button green small" id="submit" value="Submit" />
+                        <input type="submit" class="button green small" id="submit1" value="Submit" />
                     </p>
                 </form>
             </div>
@@ -55,5 +55,5 @@
         @endif
     </div>
 
-</div>
+
 @endsection

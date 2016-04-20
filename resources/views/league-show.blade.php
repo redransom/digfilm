@@ -33,7 +33,7 @@
                 @if(isset($currentLeague->rule_set->name))
                 <div>
                     <span>Rules</span>
-                    <strong itemprop="applicationCategory">{{$currentLeague->rule_set->name}}</strong>
+                    <strong itemprop="applicationCategory"><a href="games.html">{{$currentLeague->rule_set->name}}</a></strong>
                 </div>
                 @endif
             </div>

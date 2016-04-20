@@ -24,7 +24,7 @@
                 <p>
                     <label for="UserUsername">Username</label>
                     {!! Form::text('name', $user->name, ['readonly'=>true]) !!}
-                    <span>This username is now un-changeable - if you have a problem with this - please get in touch via the contact page.</span>
+                    <p>This username is now un-changeable - if you have a problem with this - please get in touch via the contact page.</p>
                 </p>
                 <p>
                     <label for="UserForenames">Firstname(s)</label>
@@ -38,13 +38,13 @@
                 <p>
                     <label for="UserSurname">Interests/Summary</label>
                     {!! Form::textarea('description', $user->description, ['placeholder'=>'Description here...']) !!}
-                    <span>Please give a basic synopysis.</span>
+                    <p>Please give a basic synopysis.</p>
                 </p>
 
                 <p>
                     <label for="UserEmail">Email</label>
                     {!! Form::text('email', $user->email, ['placeholder'=>'Email here...']) !!}
-                    <span>Provide a correct email account.</span>
+                    <p>Provide a correct email account.</p>
                 </p>
 
                 <p>
@@ -57,7 +57,7 @@
                     {!! Form::file('thumbnail', null) !!}
                 </p>
                 <p>
-                    <button type="submit" class="button medium dark">Save Profile</button>
+                    <button type="submit" id="submit1" class="button medium dark">Save Profile</button>
                 </p>
             </form>
             </div>
@@ -75,5 +75,5 @@
         @endif
         <p>&nbsp;</p>
     </div>
-</div>
+
 @endsection

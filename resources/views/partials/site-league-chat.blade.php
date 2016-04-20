@@ -17,8 +17,8 @@
                                     </a>
                                 </div>
                                 <div class="item-content">
-                                    <p>{{$message->message}}</p>
                                     <h5>{{$message->owner->fullName()}} said {{date("d M Y h:iA", strtotime($message->created_at))}}</h5>
+                                    <p>{{$message->message}}</p>
                                 </div>
                             </div>
                             @endforeach

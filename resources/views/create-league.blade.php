@@ -2,35 +2,36 @@
 
 @section('content')
 <h2><span>Create Your League</span></h2>
-<div class="content-padding">
 
+<div class="content-padding">
+    <p>Use the below form to enter the name of the league you wish to create and select the movies to be auctioned for.</p>
     @if(isset($authUser))
-    <div class="the-form" style="margin-top:40px;">
+    <div class="the-form league--form">
     {!! Form::open(array('route' => 'league-store', 'class'=>'form-vertical', 'id'=>'contactform', 'files'=>true)) !!}
-        <p>Use the below form to enter the name of the league you wish to create and select the movies to be auctioned for.</p>
+        <div class="divider--img"></div>
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <input type="hidden" name="source" value="P">
         <input type="hidden" name="users_id" value="{{$authUser->id}}">
 
-        <p>
+        <div class="form--item">
             <label for="LeagueName">League Name:</label>
             {!! Form::text('name', null, ['class'=>'span8', 'placeholder'=>'Enter league name here...']) !!}
-        </p>
+        </div>
                     
-        <p>
+        <div class="form--item">
             <label for="LeagueDescription">League Slogan:</label>
             {!! Form::textarea('description', null, ['class'=>'span8', 'placeholder'=>'Enter slogan for your league.', 'rows'=>'2']) !!}
-        </p>
+        </div>
 
-        <p>
+       <div class="form--item">
             <label for="LeagueAuctionStartDate">Start Date/Time:</label>
-            {!! Form::text('auction_start_date', null, ['class'=>'span8', 'placeholder'=>'YYYY-MM-DD HH:II']) !!}
-        </p>
+            {!! Form::text('auction_start_date', null, ['class'=>'span8', 'id'=>'datepicker', 'placeholder'=>'YYYY-MM-DD HH:II']) !!}
+       </div>
 
-        <p>
-            <label for="LeagueFilename">Thumbnail:</label>
+        <div class="form--item">
+            <label>Thumbnail:</label>
             {!! Form::file('file_name', null, ['class'=>'span8', 'placeholder'=>'Enter filename...']) !!}
-        </p>
+       </div>
 
     </div>
     <div class="clear"></div>
@@ -55,9 +56,10 @@
         </div><!--/ small-package-->
 
     @endforeach
-    <p class="form-footer">
-        <input type="submit" name="submit" id="submit" value="Next Step" />
-    </p>
+    <div class="form-footer">
+         <div class="divider--img"></div>
+        <input type="submit" name="submit" class="submit-btn btn-small" id="submit" value="Next Step" />
+    </div>
     </form>
     @else
     <p>You need to be logged in if you want create a league here for your friends to play in.</p>

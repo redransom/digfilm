@@ -395,24 +395,37 @@ table.feature-table thead tr {
 
 /* SP Additions */
 
+.three-quarters {
+    width: 75%;
+    float: left;
+}
+
 /*------------- 
   Red
 -------------*/
 
-.article-icons a:hover, a:hover {
+.article-icons a:hover, a:hover,.round  {
     color: #5d1d1e;
 }
-#sidebar .panel > h2, #main h2 span {
+
+
+#sidebar .panel > h2, #main h2 span, #main h3 span {
   color: #5d1d1e !important;
   background: #1a1a1a;
   background: url(/images/content-title-bg.png) #1a1a1a repeat-x left center;
+}
+
+.divider--img {
+    background: url(/images/content-title-bg.png) #1a1a1a repeat-x left center;
+    height: 1em;
+    padding: 1em 0;
 }
 
 h5.title a:hover {
     color: #5d1d1e !important;
 }
 
-#submit {
+#submit1, #submit {
     background: #BF1C29;
     padding: 5px 10px;
     border: none;
@@ -421,7 +434,7 @@ h5.title a:hover {
     color: #fff;
 }
 
-#submit:hover {
+#submit:hover, #submit1:hover {
     background: #5d1d1e;
 }
 
@@ -485,6 +498,23 @@ h5.title a:hover {
 #submit.submit-btn:hover {
     background: #7c2c2c;
 }
+
+
+.defbutton .pricetag {
+    background: #5d1d1e;
+}
+
+.content-padding h3, .content-padding h4 {
+    color: #5d1d1e;
+}
+
+ul li {
+    color: #fff;
+}
+
+.white-popup strong {
+    color: #5d1d1e !important;
+}
 /*------------- 
   Green
 -------------*/
@@ -497,8 +527,8 @@ h5.title a:hover {
 .league-btn {
     background: #00a14b;
     width: 59%;
-    padding: 5% 19%;
-    border-radius: .3em;
+    padding: 5% 19% !important;
+    border-radius: .3em !important;
     text-align: center;
     text-transform: uppercase;
     color: #fff;
@@ -530,11 +560,41 @@ h5.title a:hover {
     display: block;
 }
 
+.game-info-buttons .defbutton.green {
+    background:#00a14b ;
+}
+.game-info-buttons .defbutton.green:hover {
+    background: #277042;
+}
+
+table.feature-table tbody td.bid--placed {
+    color: #00A14B;
+}
+
+.bid-btn {
+    background: #00a14b;
+    border: none;
+    width: 25%;
+    padding: .8em;
+    color: #fff;
+    text-transform: uppercase;
+    margin-top: 1em;
+    border-radius: .3em;
+}
+
+.white-popup p:first-of-type{
+    padding: 1.5em 0;
+}
+
+.white-popup p:last-of-type {
+    padding: .2em 0 1.5em 0;
+}
+
 /*------------- 
   Grey
 -------------*/
 
-#sidebar .panel > h2 span, #main h2 span {
+#sidebar .panel > h2 span, #main h2 span, #main h3 span {
   background: #1a1a1a;
   padding: .5em;
 }
@@ -569,6 +629,7 @@ h5.title a:hover {
 #main p, .contact-address, label {
     color: #9c9c9c;
     font-size: 0.9em;
+    line-height: 2em !important;
 }
 
 .caption span, h4, .dropspot, h6 {
@@ -613,6 +674,83 @@ h5.title a:hover {
     font-weight: 600;
 }
 
+.panel h3 {
+   color: #353535 ; 
+}
+
+.panel strong, .panel dd, .panel-content h5 {
+    color: #929497;
+}
+
+
+
+/* Tables */
+
+.feature-table, table.feature-table thead tr th {
+    border: 0 !important;
+}
+
+table.feature-table.dark-gray thead tr th {
+    background: #110f10;
+    color: #fff;
+    text-transform: uppercase;
+    border: 0;
+}
+
+.feature-table tbody tr:nth-child(odd) {
+    background: #222222;
+}
+.feature-table tbody tr:nth-child(even) {
+    background: #110f10;
+}
+table.feature-table tbody td {
+    border-color: #000;
+    border-bottom: 0 !important;
+    color: #fff;
+    text-transform: capitalize;
+}
+
+.form--item input[type="file"]::-webkit-file-upload-button,.form--item button, .the-form input[type="file"]::-webkit-file-upload-button, .the-form button  {
+   background: #222222;
+    color: #fff;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 1em .5em;
+    width: 60%;
+    border: 1px solid #222;
+}
+
+#main .the-form form > p {
+    font-size: .7em;
+}
+
+
+#main .the-form form > p > label {
+    font-size: 1em;
+}
+
+.game-info-buttons .defbutton {
+    background: #4B4B4B;
+    color: #fff;
+}
+.game-info-buttons .defbutton:hover {
+    background: #353535;
+}
+
+.white-popup h3, .white-popup label {
+    color: #353535;
+}
+
+.white-popup input {
+    padding: .6em;
+    margin-right: 2em;
+}
+
+.white-popup label  {
+    vertical-align: middle;
+}
+
 /*------------- 
   Blue
 -------------*/
@@ -636,12 +774,6 @@ a {
 #main h2 .pagination-item.current {
     color: #fff !important;
     text-decoration: underline;
-    font-size: 16px;
-}
-
-#main h2 .pagination-item.disabled {
-    color: #ccc !important;
-    text-decoration: none;
     font-size: 16px;
 }
 
@@ -717,12 +849,43 @@ h5.title a {
     border: 4px solid #fff;
 }
 
+.game-info-right .content-padding,.game-info-right .content-padding p{
+    color: #fff;
+}
+
 #main .the-form textarea, #main input[type=text], #main select, #main input[type=password], #comments, #main .the-form textarea:focus, #main input[type=text]:focus, #main select:focus, #main input[type=password]:focus {
     background: #fff;
     box-shadow: 0; 
     border: 0;
     width: 80%;
 }
+
+.dashboard h1, h2 {
+    color: #fff;
+    font-size: 1em;
+    display: inline-block;
+    font-weight: 400;
+}
+
+.dashboard h2 {
+    text-transform: none;
+}
+
+.dashboard p {
+    padding-bottom: 1em;
+}
+
+.white-popup {
+  position: relative;
+  background: #FFF;
+  padding: 3.5em 2em 3.5em 2em;
+  width: auto;
+  max-width: 500px;
+  margin: 20px auto;
+  text-align: center;
+  border-radius: .3em;
+}
+
 /*--------------
  Black 
 --------------*/
@@ -1068,6 +1231,71 @@ i, #submit {
     padding-bottom: 2em ;
 }
 
+#main .the-form {
+    margin: 1em 0 0 0;
+    width: 100%;
+}
+
+#main .league--form label {
+    float: left;
+    width: 20%;
+    font-weight: 600;
+    color: #fff;
+
+}
+
+#main .league--form .form--item {
+    margin: .5em 0;
+    overflow: hidden;
+}
+
+#main .league--form textarea, #main .league--form input {
+    float: right;
+    width: 60% !important;
+}
+
+#main .form-footer {
+    clear: both;
+    text-align: center;
+}
+
+#main .btn-small {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.signup-panel > div > h2, .user-profile .profile-right-side h2, .game-info-right h2, .article-footer h2, #main .forum-block > h2, #main > h2 {
+    width: 90%;
+}
+
+.form--item input[type="file"] {
+    color: #fff;
+}
+
+table.feature-table tbody td.place--bid {
+    width: 25%;
+}
+
+.place--bid .league-btn {
+    width: 100%;
+}
+
+table.feature-table tbody td {
+     padding: .45em 0.5em;
+}
+
+.strike-wysiwyg-enable {
+    height: 100px;
+}
+
+.strike-wysiwyg {
+    height: 80px;
+}
+
+
+.the-form form > p > label:not(.iiiii) {
+    text-align: left;
+}
 /*-------------------
     Responsive 
  -------------------- */
@@ -1138,6 +1366,7 @@ i, #submit {
     }
     #main p, .contact-address, label, #main h2 span {
         font-size: 1em;
+
     }
     .info-btn {
         padding: .5em 3.3em;

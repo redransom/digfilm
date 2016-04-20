@@ -77,6 +77,15 @@ var thetop = parseInt((jQuery(window).height()/2)-50);
         $('.event-list img').matchHeight();
         $('.event-list h3').matchHeight();
 
+        /* Date Picker */
+
+		$( "#datepicker" ).datetimepicker();
+
+		/* Popup */
+		$('.popup').magnificPopup({type:'inline'});
+
+		
+
         $('.selectdropdown').change(function() {
         	window.location.href=$(this).val();
         });

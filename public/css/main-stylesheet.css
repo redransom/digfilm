@@ -1170,7 +1170,7 @@ a.featured-select:hover img {
 .game-info-right h2,
 .article-footer h2,
 #main .forum-block > h2,
-#main > h2 {
+#main > h2, .dashboard h3{
 	padding: 0px 28px;
 	background: url(/images/content-title-bg.png) repeat-x left center;
 	margin-bottom: 20px;
@@ -3935,7 +3935,6 @@ body .photo-galleries > .item .photos-related-games a {
 
 #main .the-form textarea,
 #main input[type=text],
-#main input[type=file],
 #main select,
 #main input[type=password] {
 	background: #fff;

@@ -19,7 +19,7 @@
                                     </div>
                                     <div class="item-content">
                                         <h4><a href="{{URL('news-detail', $article->link())}}">{!! $article->title !!}</a></h4>
-                                        <p>{!! $article->summary !!}...</p>
+                                       {!! $article->summary !!}...
                                     </div>
                                 </div>
                                 @endforeach

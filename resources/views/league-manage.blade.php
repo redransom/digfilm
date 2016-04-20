@@ -33,7 +33,7 @@
         @endif
     </div>
 
-    <div class="one-quarter last">
+    <div class="three-quarters last">
         @if($league->auction_stage == 0)
         {!! Form::open(array('route' => array('player-rules', $league->id), 'class'=>'form-horizontal row-fluid', 'method'=>'POST')) !!}
         <fieldset>
