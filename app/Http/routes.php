@@ -159,9 +159,9 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('user/{id}/enable', ['as'=>'user-enable', 'uses'=>'UsersController@enable']);
 
         /* all movies routes */
-        Route::get('movies/{col?}/{order?}', ['as'=>'movies', 'uses'=>'MoviesController@index']);
-        Route::get('movie', ['as'=>'movie.create', 'uses'=>'MoviesController@create']);
-        Route::get('movie/{id?}', ['as'=>'movie.show', 'uses'=>'MoviesController@show']);
+        Route::get('movies/{status}/{col?}/{order?}', ['as'=>'movies', 'uses'=>'MoviesController@index']);
+        Route::get('movie-create', ['as'=>'movie.create', 'uses'=>'MoviesController@create']);
+        Route::get('movie-show/{id?}', ['as'=>'movie-show', 'uses'=>'MoviesController@show']);
         Route::get('movie-disable/{id}', ['as'=>'movie-disable', 'uses'=>'MoviesController@disable']);
         Route::get('movie-enable/{id}', ['as'=>'movie-enable', 'uses'=>'MoviesController@enable']);
         Route::get('movie/{id}/removemedia', ['as'=>'movie-remove-media', 'uses'=>'MoviesController@removeMedia']);

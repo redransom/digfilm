@@ -33,7 +33,7 @@
                 @if(isset($currentLeague->rule_set->name))
                 <div>
                     <span>Rules</span>
-                    <strong itemprop="applicationCategory"><a href="games.html">{{$currentLeague->rule_set->name}}</a></strong>
+                    <strong itemprop="applicationCategory"><a href="#">{{$currentLeague->rule_set->name}}</a></strong>
                 </div>
                 @endif
             </div>
@@ -96,6 +96,12 @@
                 <div class="clear-float"></div>
             <!-- END .photo-blocks -->
             </div>
+        </div>
+        @endif
+
+        @if($currentLeague->movies()->count() > 0)
+        <div class="content-padding">
+            @include('partials.site-movies', ['movies'=>$currentLeague->movies])
         </div>
         @endif
 

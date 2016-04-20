@@ -90,9 +90,9 @@
                                     ?>
                                     <li>
                                     @if($item->type == 'I')
-                                    <img src="{{$item->file_name}}" alt="{{$item->name}}" width="100px"/>
+                                        <img src="{{$item->path()}}" alt="{{$item->name}}" width="100px"/>
                                     @else
-                                    <iframe width="200" height="150" src="{{$base_url}}" frameborder="0" allowfullscreen></iframe>
+                                        <iframe width="200" height="150" src="{{$base_url}}" frameborder="0" allowfullscreen></iframe>
                                     @endif
                                     <a href="{{Route('movie-remove-media', array($item->id))}}" title="Remove Media {{$item->name}}">x</a>
                                     </li>

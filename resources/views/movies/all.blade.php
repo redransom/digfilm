@@ -8,7 +8,7 @@
                             </div>
                             
                             <div class="module-body">
-                                <a class="btn" href="{{route('movies.create')}}">Add Movie</a>
+                                <a class="btn" href="{{route('movie.create')}}">Add Movie</a>
                             </div>
                             
                             <div class="module-body table">
@@ -28,7 +28,7 @@
                                         <?php $movieCnt = 1; ?>
                                         @foreach($movies as $movie)
                                         <tr class="<?php echo (($movieCnt++ % 2) == 0) ? "odd" : "even"; ?> rating{{$movie->rating}}">
-                                            <td><a href="{{URL('movie', array('id'=>$movie->id))}}">{{$movie->name}}</a></td>
+                                            <td><a href="{{URL('movie-show', array('id'=>$movie->id))}}">{{$movie->name}}</a></td>
                                             @if(!is_null($movie->opening_bid))
                                             <td>{{$movie->opening_bid}}</td>
                                             @else

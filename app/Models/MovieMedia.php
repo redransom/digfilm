@@ -10,4 +10,11 @@ class MovieMedia extends Model {
     public function movie() {
         return $this->belongsTo("\App\Models\Movie", "movies_id");
     }
+
+    public function path() {
+        if ($this->file_name != '')
+            return $this->file_name;
+        else
+            return $this->url;
+    }
 }
