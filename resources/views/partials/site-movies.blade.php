@@ -22,7 +22,7 @@
             </a>
             <h3><a href="{{URL('movie-knowledge', ['id'=>$movie->link()])}}">{{$movie->name}}</a></h3>
             @if(!is_null($movie->opening_bid))
-            <p><a href="{{URL('movie-knowledge', ['id'=>$movie->link()])}}">Include at: <span class="highlight">&pound;{{$movie->opening_bid}}</span></a></p>
+            <p>Include at: <span class="highlight">&pound;{{$movie->opening_bid}}</span></p>
             @endif
             <p>Release Date: <span class="highlight">{{date("M Y", strtotime($movie->release_at))}}</span></p>
         </div>

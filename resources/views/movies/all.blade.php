@@ -7,8 +7,15 @@
                                 <h3>Movies Database</h3>
                             </div>
                             
-                            <div class="module-body">
-                                <a class="btn" href="{{route('movie.create')}}">Add Movie</a>
+                            <div class="module-option clearfix">
+                                <div class="input-append pull-left">
+                                     <a class="btn" href="{{route('movie.create')}}">Add Movie</a>
+                                </div>
+                                <div class="btn-group pull-right" data-toggle="buttons-radio">
+                                    <a class="btn" href="{{URL('movies/all')}}">All</a>
+                                    <a class="btn" href="{{URL('movies/1')}}">Enabled</a>
+                                    <a class="btn" href="{{URL('movies/0')}}">Disabled</a>
+                                </div>
                             </div>
                             
                             <div class="module-body table">

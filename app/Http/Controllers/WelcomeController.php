@@ -362,6 +362,7 @@ class WelcomeController extends Controller {
 
 		return view('create-league')
 			->with('rules', $rules)
+			->with('page_name', 'league-create')
 			->with('authUser', $authUser)
 			->with('title', 'Create League');	
 	}

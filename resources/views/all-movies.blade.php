@@ -11,10 +11,26 @@
                
                 <div class="item">
                     <a href="{{URL('movie-knowledge', $movie->link())}}">
+                    @if($movie->topTrailer())
+                    <?php                      
+                    $base_url = "";  
+                    $item = $movie->topTrailer();            
+                    if ($item->type =='T' && str_contains($item->url, "youtu.be")) {
+                        $url = $item->url;
+
+                        //only use youtube currently
+                        $path = parse_url($url, PHP_URL_PATH);
+                        $base_url = "http://www.youtube.com/embed".$path;
+                    }
+                    ?>
+                    <iframe width="100%" height="400" src="{{$base_url}}" frameborder="0" allowfullscreen></iframe>
+
+                    @else
                     @if($movie->firstImage())
                     <img src="{{asset($movie->firstImage()->path())}}" width="159" height="100" alt="" />
                     @else
                     <img src="{{asset('images/TNBF.jpg')}}" width="159" height="100" alt="" />
+                    @endif
                     @endif
                     </a>
                     <div class="caption">
