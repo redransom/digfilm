@@ -4,7 +4,7 @@
         
         <section class="post-thumb">
             @if($movie->firstImage())
-            <a href="#"><img src="{{$movie->firstImage()->file_name}}" width="159" height="100" alt="" /></a>
+            <a href="#"><img src="{{$movie->firstImage()->path()}}" width="159" height="100" alt="" /></a>
             @else
             <a href="#"><img src="images/temp/img_1.jpg" width="159" height="100" alt="" /></a>
             @endif

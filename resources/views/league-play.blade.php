@@ -78,7 +78,7 @@
                 @endif
                 
                 @if($movie->firstImage())
-                    <img src="{{$movie->firstImage()->file_name}}" alt="{{$movie->firstImage()->description}}" width="100px"/>
+                    <img src="{{$movie->firstImage()->path()}}" alt="{{$movie->firstImage()->description}}" width="100px"/>
                 @endif
                 <a href="{{URL('movie-knowledge', [$movie->slug()])}}">{{$movie->name}}</a>
                 @if($movie->opening_bid != 0)

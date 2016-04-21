@@ -15,7 +15,7 @@
         <div class="one-quarter small--one-half">
             <a href="{{URL('movie-knowledge', ['id'=>$movie->link()])}}">
             @if($movie->images()->count() > 0)
-                <img src="{{asset($movie->firstImage()->file_name)}}" alt="{{$movie->name}}" />
+                <img src="{{asset($movie->firstImage()->path())}}" alt="{{$movie->name}}" />
             @else
                 <img src="{{asset('images/TNBF.jpg')}}" alt="{{$movie->name}}" />
             @endif

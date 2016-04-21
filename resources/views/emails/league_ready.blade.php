@@ -42,7 +42,7 @@
                                                 @foreach($leagueMovies as $movie)
                                                    <li>
                                                    @if($movie->firstImage())
-                                                   <img src="{{asset($movie->firstImage()->file_name)}}" alt="{{$movie->name}} image" width="100px"/>
+                                                   <img src="{{asset($movie->firstImage()->path())}}" alt="{{$movie->name}} image" width="100px"/>
                                                    @endif
                                                    @if(!is_null($movie->slug))
                                                     <a href="{{URL('movie-knowledge', ['id'=>$movie->slug])}}">{{$movie->name}}</a>

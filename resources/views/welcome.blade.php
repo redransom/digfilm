@@ -3,9 +3,7 @@
 @section('content')
 
 @if (!is_null($content))
-<h2><span>{{$content->title}}</span></h2>
-<div class="content-padding">{!! $content->body !!}
-</div>
+<div class="content-padding">{!! $content->body !!}</div>
 @endif
 
 <!-- Whats going on -->
@@ -103,7 +101,7 @@
     <div class="promo-content">
         @if($opening_bids[0]->firstImage())
         <div class="promo-image">
-            <img src="{{$opening_bids[0]->firstImage()}}" alt="{{$opening_bids[0]->name}}" />
+            <img src="{{$opening_bids[0]->firstImage()->path()}}" alt="{{$opening_bids[0]->name}}" />
         </div>
         @endif
         <div class="promo-left">
@@ -120,7 +118,7 @@
 <?php $movie_bid = $opening_bids[$movie_no]; ?>
 <div class="one-quarter small--one-half">
     @if($movie_bid->images()->count() > 0)
-    <img src="{{$movie_bid->firstImage()->file_name}}" alt="{{$movie_bid->name}}" />
+    <img src="{{$movie_bid->firstImage()->path()}}" alt="{{$movie_bid->name}}" />
     @endif
     <h3>{{$movie_bid->name}}</h3>
     <p>Include at: <span class="highlight">&pound;{{$movie_bid->opening_bid}}</span></p>
@@ -156,9 +154,8 @@
                         
                         <h5 class="title"><a href="{{URL('movie-knowledge', ['id'=>$item->movie->slug])}}">
                         {{$item->movie->name}}</a></h5>
-                        <div class="caption-info">
-                            <span class="date">{{date("d-M-Y H:i A", strtotime($item->created_at))}} </span>
-                            <span class="description">{{$item->description}}</span>
+                        <div class="caption-info" style="font-size: 0.9em">
+                            <span class="description">Include at <span style="font-color: #F00">&pound;{{number_format($item->movie->opening_bid, 2)}}</span></span> | <span class="date">Release Date: <span style="font-color: #F00">{{date("M Y", strtotime($item->movie->release_at))}}</span></span>
                         </div>
                     </div><!--/ .caption-->                            
                     <div class="clear"></div>

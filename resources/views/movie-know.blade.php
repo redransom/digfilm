@@ -4,7 +4,7 @@
 <div id="main" itemscope="" itemtype="http://data-vocabulary.org/Review">
     <div class="game-info-left">
         @if($movie->firstImage())
-        <img itemprop="image" src="{{ asset($movie->firstImage()->file_name) }}" class="game-poster" alt="" />
+        <img itemprop="image" src="{{ asset($movie->firstImage()->path()) }}" class="game-poster" alt="" />
         @else
         <img itemprop="image" src="{{ asset('images/posters/2351232-tomb_raider.jpg') }}" class="game-poster" alt="" />
         @endif
@@ -92,7 +92,7 @@
                 <?php $imageCnt = 1; ?>
                 @foreach($movie->images() as $image)
                 <div class="one-fifth">
-                    <img src="{{asset($image->file_name)}}" alt="{{$image->name}}" />
+                    <img src="{{asset($image->path())}}" alt="{{$image->name}}" />
                 </div>
                 @if($imageCnt++ > 6)
                     <?php break; ?>

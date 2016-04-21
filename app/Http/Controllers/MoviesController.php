@@ -436,7 +436,7 @@ class MoviesController extends Controller {
 		}
 
 		Flash::message('Movie media added.');		
-		return Redirect::route('movie.show', array($id));
+		return Redirect::route('movie-show', array($id));
 	}
 
 	public function disableOldMovies() {

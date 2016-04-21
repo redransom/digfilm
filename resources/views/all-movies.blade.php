@@ -12,7 +12,7 @@
                 <div class="item">
                     <a href="{{URL('movie-knowledge', $movie->link())}}">
                     @if($movie->firstImage())
-                    <img src="{{asset($movie->firstImage()->file_name)}}" width="159" height="100" alt="" />
+                    <img src="{{asset($movie->firstImage()->path())}}" width="159" height="100" alt="" />
                     @else
                     <img src="{{asset('images/TNBF.jpg')}}" width="159" height="100" alt="" />
                     @endif

@@ -10,18 +10,21 @@
                             <a href="/" class="header-logo left"><img src="{{asset('images/BFlogo.png')}}" class="logo" /></a>
                             <a href="#dat-menu" class="datmenu-prompt"><i class="fa fa-bars"></i>Show menu</a>
                             <ul class="load-responsive right" rel="Main menu">
-                                <li><a href="/all-leagues"><span><i class="fa fa-calendar-o"></i><strong>Leagues</strong></span></a>
+                                <li><a href="/"><span><i class="fa fa-home"></i><strong>Home</strong></span></a></li>
+                                <li><a href="/"><span><i class="fa fa-calendar-o"></i><strong>Rules</strong></span></a></li>
+                                <li><a href="/all-leagues"><span><i class="fa fa-th-list"></i><strong>Leagues</strong></span></a>
                                     <ul class="sub-menu">
                                         <li><a href="{{URL('/all-leagues')}}">All Leagues</a></li>
                                         <li><a href="{{URL('/create')}}">Create League</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="/all-movies"><span><i class="fa fa-comments-o"></i><strong>Movies</strong></span></a>
+                                <li><a href="/all-movies"><span><i class="fa fa-film"></i><strong>Movies</strong></span></a>
                                     <ul class="sub-menu">
                                         <li><a href="/newreleases">New Releases</a></li>
                                         <li><a href="/comingsoon">Coming Soon</a></li>
                                     </ul>
                                 </li>
+                                <li><a href="/auth/register"><span><i class="fa fa-user-plus"></i><strong>Sign Up</strong></span></a></li>
                             </ul>
                         </nav>
                     </div>
