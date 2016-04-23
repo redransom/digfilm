@@ -52,7 +52,7 @@
         <div class="game-menu">
             <div class="game-overlay-info">
                 <h1 itemprop="itemreviewed">{{$movie->name}}</h1>
-                <p> {{$movie->summary}}</p>
+                <h2> {{$movie->summary}}</h2>
             </div>
             <!--ul>
                 <li class="active" style="background-color: #921913;"><a href="#info"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;Information</a></li>
@@ -82,9 +82,10 @@
             ?>
             <iframe width="100%" height="400" src="{{$base_url}}" frameborder="0" allowfullscreen></iframe>
             @else
-            <img src="{{asset('images/youtube-holder.jpg')}}" alt="Youtube Placeholder"/>
+            <img src="{{asset('images/temp/img_1.jpg')}}" alt="Youtube Placeholder"/>
             @endif
         </div>
+        <br/>
         <h2><span>Media</span></h2>
         <div class="content-padding">
             <div class="row">
@@ -131,7 +132,8 @@
                             </div>
                             <canvas id="lcNoOfBids" width="400" height="200" style="float:right;display:block"></canvas>
                         </div>
-                        <div width="100%">
+                        <div class="sep"></div>
+                        <div style="width:600px; float: left; clear:both; padding-top: 10px">
                             <div style="float:left; width: 150px">
                             <h3>Bid amounts in last month</h3>
                             <p>This graph shows what the values that were bid on the film over the last month.</p>

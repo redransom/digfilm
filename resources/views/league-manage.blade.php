@@ -80,18 +80,18 @@
     @endif
 
     </div>
+</div>
+<div class="sep"></div>
 
-    <div class="sep"></div>
-    <h4>Available Movies</h4>
-    @if($league->movies->count() > 0)
-    <ul>
+<h2><span>Available Movies</span></h2>
 
-    @foreach($league->movies as $movie)
-        <li>{{$movie->pivot->id}}: {{$movie->name}}</li>
-    @endforeach
-    </ul>
-    @else
-    <p>There are no movies associated with this league presently.</p>
-    @endif
+<div class="content-padding">
+@if($league->movies->count() > 0)
+
+@include('partials.site-movies', ['movies'=>$league->movies])
+
+@else
+<p>There are no movies associated with this league presently.</p>
+@endif
 </div>
 @endsection

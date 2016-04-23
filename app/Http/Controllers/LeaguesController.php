@@ -112,12 +112,17 @@ class LeaguesController extends Controller {
         $input = Input::all();
         $league = League::create( $input );
 
+
         if (!isset($input['rule_sets_id'])) {
             //if no rule set is provided - just create a blank rule set
             $ruleset = RuleSet::first();
         } else {
             $ruleset = RuleSet::find($input['rule_sets_id']);
         }
+
+        //add meta data
+        $league->meta_keywords = strtolower($league->name).' rules '.strtolower($ruleset->name);
+        $league->meta_description = strtolower($league->description);
 
         //add rule set for future reference
         $league->rule_sets_id = $ruleset->id;

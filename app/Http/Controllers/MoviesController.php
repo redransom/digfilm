@@ -103,11 +103,20 @@ class MoviesController extends Controller {
 		$movie = Movie::create( $input );
 		$movie->slug = str_slug($movie->name, "-");
 
+        $genre_string = '';
+        if ($input['genres_id'] != '') {
+            $genre = Genre::find($input['genres_id']);
+            $genre_string = $genre->name;
+        }
+        $movie->meta_keywords = strtolower($movie->name).' genre '.$genre_string;
+        $movie->meta_description = strtolower($movie->summary);
+
 		if(is_numeric($input['opening_bid']) && $input['opening_bid'] > 0)
 			$movie->opening_bid_date = date("Y-m-d H:i");
 
 		if (!empty($input['release_at']))
 			$movie->takings_close_date = date("Y-m-d", strtotime("+2 months", strtotime($movie->release_at)));
+		
 		$movie->save();
 
 		if(isset($input['ratings'])) {
@@ -117,7 +126,7 @@ class MoviesController extends Controller {
 			}
 		}
 
-		return Redirect::route('movie.show', [$movie->id]);
+		return Redirect::route('movie-show', [$movie->id]);
 	}
 
 	/**

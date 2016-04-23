@@ -11,7 +11,7 @@
                             <a href="#dat-menu" class="datmenu-prompt"><i class="fa fa-bars"></i>Show menu</a>
                             <ul class="load-responsive right" rel="Main menu">
                                 <li><a href="/"><span><i class="fa fa-home"></i><strong>Home</strong></span></a></li>
-                                <li><a href="/"><span><i class="fa fa-calendar-o"></i><strong>Rules</strong></span></a></li>
+                                <li><a href="/rules"><span><i class="fa fa-calendar-o"></i><strong>Rules</strong></span></a></li>
                                 <li><a href="/all-leagues"><span><i class="fa fa-th-list"></i><strong>Leagues</strong></span></a>
                                     <ul class="sub-menu">
                                         <li><a href="{{URL('/all-leagues')}}">All Leagues</a></li>
