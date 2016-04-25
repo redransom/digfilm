@@ -60,16 +60,7 @@
         {{$currentLeague->description}}
         </div>
 
-        <div class="clear-float"></div>
-        <h2><span>Stats</span></h2>
-
-        <h3><span>League Pot Size</span></h3>
-        @if($currentLeague->players()->count() > 0)
-        <p><strong>{{$currentLeague->players()->count() * 100}} USD</strong></p>
-        @endif
-
-
-        <h3><span>Players</span></h3>
+        <h2><span>Players</span></h2>
         <p>
         The following <strong>{{$currentLeague->players()->count()}}</strong> players are in the league:
         </p>
@@ -99,11 +90,19 @@
         </div>
         @endif
 
+        <div class="clear-float"></div>
         @if($currentLeague->movies()->count() > 0)
-        <div class="content-padding">
-            @include('partials.site-movies', ['movies'=>$currentLeague->movies])
-        </div>
+            @include('partials.site-movies', ['movies'=>$currentLeague->movies, 'sectionTitle'=>'Movies in this league'])
         @endif
+
+        <div class="clear-float"></div>
+        <h2><span>Stats</span></h2>
+
+        <h3><span>League Pot Size</span></h3>
+        @if($currentLeague->players()->count() > 0)
+        <p><strong>{{$currentLeague->players()->count() * 100}} USD</strong></p>
+        @endif
+
 
         @if($currentLeague->auction_stage == 3)
 
@@ -117,7 +116,9 @@
                     @endforeach
                 </ol>
             </li>
+            @if(isset($highest_bid))
             <li>Highest Bid <strong>{{number_format($highest_bid->bid_amount, 2)}} USD </strong> for <strong><a href="{{URL('movie-knowledge', $highest_bid->movie->link())}}">{{$highest_bid->movie->name}}</a></strong></li>
+            @endif
         </ul>
         <br/>
 

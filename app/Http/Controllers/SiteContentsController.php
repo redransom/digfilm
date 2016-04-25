@@ -114,14 +114,17 @@ class SiteContentsController extends Controller {
             $request->file('thumbnail')->move(base_path() . '/public/images/sitecontents/', $imageName);
 
             $sitecontent->thumbnail = "/images/sitecontents/".$imageName;
-        }
+        } else
+            $sitecontent->thumbnail = null;
 
         if ($request->file('main_image') != "") {
             $imageName = $sitecontent->id.'main_'.str_replace(' ', '_', strtolower(str_slug($input['title']))) . '.' . $request->file('main_image')->getClientOriginalExtension();
             $request->file('main_image')->move(base_path() . '/public/images/sitecontents/', $imageName);
 
             $sitecontent->main_image = "/images/sitecontents/".$imageName;
-        }
+        } else
+            $sitecontent->main_image = null;
+            
         $sitecontent->save();
 
         Flash::message('Content created.');

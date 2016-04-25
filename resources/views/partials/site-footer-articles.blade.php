@@ -13,7 +13,7 @@
                                         @if(!is_null($article->thumbnail))
                                         <img src="{{asset($article->thumbnail) }}" alt="" />
                                         @else
-                                        <img src="{{asset('/images/photos/image-96.jpg') }}" alt="" />
+                                        <img src="{{asset('/images/TNBF.jpg') }}" alt="" />
                                         @endif
                                         </a>
                                     </div>

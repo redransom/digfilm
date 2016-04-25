@@ -1,12 +1,10 @@
 @if(isset($content))
     <div class="article-full">
+        @if(!is_null($content->main_image))
         <div class="article-main-photo">
-            @if(!is_null($content->main_image))
             <img src="{{ asset($content->main_image) }}" alt="" title=""  width="644" height="300"/>
-            @else
-            <img src="{{ asset('images/photos/image-59.jpg') }}" alt="" title=""/>
-            @endif
         </div>
+        @endif
         <div class="article-icons">
             <a><i class="fa fa-fire"></i>{{$content->owner->forenames}}</a>
             <a><i class="fa fa-calendar"></i>{{date("F d, Y", strtotime($content->created_at))}}</a>
@@ -21,7 +19,6 @@
             <div class="breaking-line"></div>
             @endif
             {!! $content->body !!}
-
         </div>
     </div>
 @endif
