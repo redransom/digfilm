@@ -31,6 +31,14 @@ class Movie extends Model {
         return $this->media->where('type' ,'T')->where('image_type', 'F')->first();
     }
 
+    public function topMedia($media_type = 'I') {
+        return $this->media->where('type', $media_type)->where('image_type', 'F')->first();
+    }
+
+    public function topImage($type = 'F') {
+        return $this->media->where('type', 'I')->where('image_type', $type)->first();
+    }
+
     public function images() {
         return $this->media->where('type', 'I');
     }

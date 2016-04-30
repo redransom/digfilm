@@ -55,9 +55,17 @@
                                             <a class="btn btn-mini btn-inverse" href="{{URL('movie/'.$movie->id.'/takings')}}">Add Takings</a>
                                             <a class="btn btn-mini btn-success" href="{{URL('movie/'.$movie->id.'/media')}}">Add Media</a>
                                             @if($movie->enabled)
+                                            @if(isset($search) && $search != '')
+                                            <a class="btn btn-mini btn-danger" href="{{URL('movie-disable/'.$movie->id.'/'.$search)}}">Disable</a>
+                                            @else
                                             <a class="btn btn-mini btn-danger" href="{{URL('movie-disable/'.$movie->id)}}">Disable</a>
+                                            @endif
+                                            @else
+                                            @if(isset($search) && $search != '')
+                                            <a class="btn btn-mini btn-info" href="{{URL('movie-enable/'.$movie->id.'/'.$search)}}">Enable</a>
                                             @else
                                             <a class="btn btn-mini btn-info" href="{{URL('movie-enable/'.$movie->id)}}">Enable</a>
+                                            @endif
                                             @endif
                                             </td>
                                         </tr>

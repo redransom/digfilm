@@ -93,23 +93,27 @@
 
 @if(isset($opening_bids))
 <!-- Opening Bids -->
+<?php $openingBid = $opening_bids[0]; ?>
 <h2><span>Opening Bids</span></h2>
 <div class="content-padding">
 
 <div class="promo-hero">
-    <img src="images/hero-image.jpg" alt="Still Alice" />
+    
+    @if($openingBid->topMedia())
+    <img src="{{asset($openingBid->topMedia()->file_name)}}" alt="{{$openingBid->topMedia()->name}}" />
+    @endif
     <div class="promo-content">
-        @if($opening_bids[0]->firstImage())
+        @if($openingBid->topImage('L'))
         <div class="promo-image">
-            <img src="{{$opening_bids[0]->firstImage()->path()}}" alt="{{$opening_bids[0]->name}}" />
+            <img src="{{$openingBid->topImage('L')->path()}}" alt="{{$openingBid->topImage('L')->name}}" width="55%" />
         </div>
         @endif
         <div class="promo-left">
-            <h3>{{$opening_bids[0]->name}}</h3>
+            <h3>{{$openingBid->name}}</h3>
             <p>Opening Bid</p>
         </div>
         <div class="promo-right">
-            <p class="price">&pound;{{$opening_bids[0]->opening_bid}}</p>
+            <p class="price">&pound;{{$openingBid->opening_bid}}</p>
         </div>
     </div>
 </div>
@@ -117,8 +121,10 @@
 @for($movie_no=1; $movie_no < $opening_bids->count(); $movie_no++)
 <?php $movie_bid = $opening_bids[$movie_no]; ?>
 <div class="one-quarter small--one-half">
-    @if($movie_bid->images()->count() > 0)
-    <img src="{{$movie_bid->firstImage()->path()}}" alt="{{$movie_bid->name}}" />
+    @if($movie_bid->topImage('L'))
+    <img src="{{asset($movie_bid->topImage('L')->path())}}" alt="{{$movie_bid->name}}" />
+    @else
+    <img src="{{asset('images/TNBF_missing_poster.jpg')}}" alt="{{$movie_bid->name}}" />
     @endif
     <h3>{{$movie_bid->name}}</h3>
     <p>Include at: <span class="highlight">&pound;{{$movie_bid->opening_bid}}</span></p>

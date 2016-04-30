@@ -162,8 +162,8 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('movies/{status}/{col?}/{order?}', ['as'=>'movies', 'uses'=>'MoviesController@index']);
         Route::get('movie-create', ['as'=>'movie.create', 'uses'=>'MoviesController@create']);
         Route::get('movie-show/{id?}', ['as'=>'movie-show', 'uses'=>'MoviesController@show']);
-        Route::get('movie-disable/{id}', ['as'=>'movie-disable', 'uses'=>'MoviesController@disable']);
-        Route::get('movie-enable/{id}', ['as'=>'movie-enable', 'uses'=>'MoviesController@enable']);
+        Route::get('movie-disable/{id}/{search?}', ['as'=>'movie-disable', 'uses'=>'MoviesController@disable']);
+        Route::get('movie-enable/{id}/{search?}', ['as'=>'movie-enable', 'uses'=>'MoviesController@enable']);
         Route::get('movie/{id}/removemedia', ['as'=>'movie-remove-media', 'uses'=>'MoviesController@removeMedia']);
         Route::get('movie/{id}/edit', ['as'=>'movie-edit', 'uses'=>'MoviesController@edit']);
         Route::get('movie/{id}/contributor', ['as'=>'movie-add-contributor', 'uses'=>'MoviesController@addContributor']);

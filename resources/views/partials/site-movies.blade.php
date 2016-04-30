@@ -14,15 +14,15 @@
     @endif
         <div class="one-quarter small--one-half">
             <a href="{{URL('movie-knowledge', ['id'=>$movie->link()])}}">
-            @if($movie->images()->count() > 0)
-                <img src="{{asset($movie->firstImage()->path())}}" alt="{{$movie->name}}" />
+            @if($movie->topImage('L'))
+            <img src="{{asset($movie->topImage('L')->path())}}" alt="{{$movie->name}}" />
             @else
-                <img src="{{asset('images/TNBF.jpg')}}" alt="{{$movie->name}}" />
+            <img src="{{asset('images/TNBF_missing_poster.jpg')}}" alt="{{$movie->name}}" />
             @endif
             </a>
             <h3><a href="{{URL('movie-knowledge', ['id'=>$movie->link()])}}">{{$movie->name}}</a></h3>
             @if(!is_null($movie->opening_bid))
-            <p>Include at: <span class="highlight">&pound;{{$movie->opening_bid}}</span></p>
+            <p>Open Bid: <span class="highlight">&pound;{{$movie->opening_bid}}</span></p>
             @endif
             <p>Release Date: <span class="highlight">{{date("M Y", strtotime($movie->release_at))}}</span></p>
         </div>

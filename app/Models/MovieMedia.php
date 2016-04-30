@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 class MovieMedia extends Model {
 
     //
-    protected $fillable = array('name', 'file_name', 'movies_id', 'description', 'type', 'url');
+    protected $fillable = array('name', 'file_name', 'movies_id', 'description', 'type', 'url',  'image_type');
 
     public function movie() {
         return $this->belongsTo("\App\Models\Movie", "movies_id");

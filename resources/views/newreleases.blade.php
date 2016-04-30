@@ -7,7 +7,6 @@
         <div class="gamelist">
             <div class="clearfix owl-carousel owl-theme" id="owl-movies">
                 @foreach($movies as $movie)
-               {{var_dump($movie)}}
                 <div class="item">
                     <a href="{{URL('movie-knowledge', $movie->link())}}">
                     @if($movie->topTrailer())

@@ -826,6 +826,11 @@ h5.title a {
     padding: 1em;
 }
 
+.promo-content img {
+    height: 217px;
+    width: 151px;
+}
+
 .one-quarter h3, #main .one-quarter h3 a  {
     color: #fff;
     text-transform: capitalize;
@@ -1151,6 +1156,16 @@ i, #submit {
     max-width: 1000px;
 }
 
+#slider-info .padding-box ul li{
+width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+a.featured-select, #slider-info .padding-box ul li:before, .home-article.right ul li a:hover {
+    background-color: #000000 !important;
+}
 .one-half {
     width: 50%;
     float: left;
@@ -1393,6 +1408,8 @@ table.feature-table tbody td {
     }  
 }
 
+
+
 /* Phone */
 
 @media only screen and (max-width: 400px) {
@@ -1400,3 +1417,4 @@ table.feature-table tbody td {
         padding: .5em 1.35em;
     }
 }
+

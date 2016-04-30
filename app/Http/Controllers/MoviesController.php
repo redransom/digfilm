@@ -250,7 +250,7 @@ class MoviesController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function disable($id)
+	public function disable($id, $search = "")
 	{
 		//
 		$authUser = Auth::user();
@@ -269,7 +269,10 @@ class MoviesController extends Controller {
 		} else
         	Flash::message('You don\'t have the permissions to complete this task.');
 
-        return redirect()->back();
+        if ($search != "")
+        	return Redirect::route('movies.index');
+        else
+        	return redirect()->back();
 	}
 
 	/**
@@ -278,9 +281,8 @@ class MoviesController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function enable($id)
+	public function enable($id, $search = "")
 	{
-		//
 		$authUser = Auth::user();
 
 		//ensure permissions are available - should probably check for permissions and not role
@@ -293,10 +295,13 @@ class MoviesController extends Controller {
 				$movie->enabled = true;
 				$movie->save();
 			}
-		}
+		} else
         	Flash::message('You don\'t have the permissions to complete this task.');
 
-        return redirect()->back();
+        if ($search != "")
+        	return Redirect::route('movies.index');
+        else
+        	return redirect()->back();
 	}
 
     /**
@@ -320,11 +325,11 @@ class MoviesController extends Controller {
 
                 $mm->delete();
             }
-            return Redirect::route('movies.show', $movie->id);
+            return redirect()->back();
         } else
             Flash::message("You don\'t have the permissions to complete this task.");
 
-        return Redirect::route('movies.index');
+        return redirect()->back();
     }
 
 	public function addContributor($id) {
@@ -427,6 +432,7 @@ class MoviesController extends Controller {
 		$media->name = $input['name'];
 		$media->description = $input['description'];
 		$media->type = $input['type'];
+		$media->image_type = $input['image_type'];
 		if (isset($input['url']))
 			$media->url = $input['url'];
 
