@@ -731,9 +731,10 @@ class WelcomeController extends Controller {
     	$input = Input::all();
     	$results = array();
     	if (!empty($input['search_text'])) {
-    		$title = 'You searched for ('.$input['search_text'].')';
+    		$title = 'Youe search for ('.$input['search_text'].') returned';
     		$search = '%'.$input['search_text'].'%';
-    		$results['movies'] = Movie::where('name', 'like', $search)->limit(5)->get();
+    		$results['movies'] = Movie::where('name', 'like', $search)->where('enabled', '1')->limit(5)->get();
+    		$results['leagues'] = League::where('name', 'like', $search)->where('enabled', '1')->limit(5)->get();
     	} else {
     		$title = 'You searched for (nothing here)';
     	}

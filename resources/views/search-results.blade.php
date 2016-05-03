@@ -1,33 +1,25 @@
 @extends('layouts.site')
 
 @section('content')
+
 <h2><span>{{$title}}</span></h2>
+@if(!empty($results))
+
+@if(isset($results['movies']) && !empty($results['movies']))
 <div class="content-padding">
-	<p>The order of any search is by the following:</p>
-	<ol>
-		<li>Movies</li>
-		<li>Leagues</li>
-		<li>News</li>
-	</ol>
+@include('partials.site-movies', ['movies'=>$results['movies'], 'description'=>'Movies Found'])
+</div>	
+@endif
 
-	@if(!empty($results))
-	<p>Your search brought up the following matches:</p>
-
-	@if(isset($results['movies']) && !empty($results['movies']))
-	<h3>Movies Found</h3>
-
-	@foreach($results['movies'] as $movie_result)
-	<h4>{{$movie_result->name}}</h4>
-	<p>{!! $movie_result->summary !!}</p>
-	<a href="{{URL('movie-knowledge', ['id'=>$movie_result->link()])}}">More...</a>
-	<br/>
-
-	@endforeach
-	@endif
-
-	@else
-	<p>We are sorry but there are no results from your search.</p>
-
-	@endif
+@if(isset($results['leagues']) && !empty($results['leagues']))
+<div class="content-padding">
+@include('partials.site-leagues', ['leagues'=>$results['leagues'], 'description'=>'Leagues Found'])
 </div>
+@endif
+
+@else
+<div class="content-padding">
+<p>We are sorry but there are no results from your search.</p>
+</div>
+@endif
 @endsection

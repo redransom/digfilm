@@ -132,7 +132,7 @@ table.feature-table thead tr {
         -webkit-border-radius:6px;
         -moz-border-radius:6px;
         border-radius:6px;
-        background: url(../images/bg-package.png) repeat;
+        /*background: url(../images/bg-package.png) repeat; */
     }
 
     .package.last {
@@ -263,7 +263,7 @@ table.feature-table thead tr {
         -webkit-border-radius:6px;
         -moz-border-radius:6px;
         border-radius:6px;
-        background: url(../images/bg-package.png) repeat #101010;
+        /* background: url(../images/bg-package.png) repeat #101010;*/
         -webkit-transition: all .25s linear;
         -moz-transition: all .25s linear;
         -o-transition: all .25s linear;
@@ -290,7 +290,7 @@ table.feature-table thead tr {
         -webkit-border-radius: 6px 6px 0 0;
         -moz-border-radius: 6px 6px 0 0;
         border-radius: 6px 6px 0 0;
-        background: url(../images/shadow-price.png) repeat;
+        /* background: url(../images/shadow-price.png) repeat;*/
     }
 
     .small-package .head-title h3 { 

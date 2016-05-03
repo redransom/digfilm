@@ -4,7 +4,7 @@
     <h2><span>{{$sectionTitle}}</span></h2>
     @endif
     @if(isset($description))
-    <p>{{$description}}</p>
+    <h3>{{$description}}</h3>
     @endif
     <br/>
     <?php $movieCnt = 0; ?>

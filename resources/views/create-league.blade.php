@@ -23,6 +23,12 @@
             {!! Form::textarea('description', null, ['class'=>'span8', 'placeholder'=>'Enter slogan for your league.', 'rows'=>'2']) !!}
         </div>
 
+        <script>
+        $(function() {
+            $('#datepicker').datepicker( "option", "dateFormat", "yy-mm-dd");
+        });
+        </script>
+
        <div class="form--item">
             <label for="LeagueAuctionStartDate">Start Date/Time:</label>
             {!! Form::text('auction_start_date', null, ['class'=>'span8', 'id'=>'datepicker', 'placeholder'=>'YYYY-MM-DD HH:II']) !!}
@@ -39,7 +45,7 @@
     @foreach($rules as $rule)
     <!-- ************ - Small Package - ************** -->  
         <div class="small-package">
-            <div class="head-title"><h3><span>{{$rule->name}}</span> Rules</h3></div>
+            <div class="head-title"><h3><span>{{$rule->name}}</span></h3></div>
             <div class="price">
                 {{$rule->min_players}} to {{$rule->max_players}} players<br/>
                 {{$rule->min_movies}} to {{$rule->max_movies}} movies
