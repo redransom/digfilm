@@ -410,7 +410,7 @@ table.feature-table thead tr {
 
 
 #sidebar .panel > h2, #main h2 span, #main h3 span {
-  color: #5d1d1e !important;
+  color: #BF1C29 !important;
   background: #1a1a1a;
   background: url(/images/content-title-bg.png) #1a1a1a repeat-x left center;
 }
@@ -478,8 +478,10 @@ h5.title a:hover {
 }
 
 .league-item .btn:hover {
-    background: #1a1a1a;
-    border-color: #7c2c2c;
+    /*background: #1a1a1a;
+    border-color: #7c2c2c;*/
+    background: #277042;
+    color: #fff;
 }
 
 .game-info-graph > div strong:hover {
@@ -549,15 +551,16 @@ ul li {
 }
 
 .league-item .btn {
-    border: 2px solid #FF4D49;
+    /*border: 2px solid #FF4D49;*/
     width: 90%;
     color: #fff;
     text-align: center;
-    background: #000;
+    background: #00a14b;
     padding: .5em;
     font-size: .9em;
     clear: both;
     display: block;
+    border-radius: .3em;
 }
 
 .game-info-buttons .defbutton.green {
@@ -898,6 +901,30 @@ h5.title a {
   border-top: 5px solid #000000 !important;
 }
 
+#sidebar .panel {
+    padding: 0 0 0 15px;
+}
+
+#sidebar .panel.panel-first {
+    padding-top: 15px;
+}
+
+#sidebar .socialize a {
+    margin: 0;
+}
+
+#sidebar .social-icon-item:first-of-type {
+    margin-left: 0;
+}
+#sidebar .social-icon-item {
+    display: inline-block;
+    margin-left: .5em;
+}
+
+#slider div#slider-info {
+    background: #000;
+}
+
 /*---------------------------------
   General Styles - No Colours
 ----------------------------------*/
@@ -942,6 +969,8 @@ h5.title {
 
 #main-box #sidebar {
     box-shadow: none ;
+    border-left: 1px solid #2B2B2B;
+    box-sizing: border-box;
 } 
 
 .socialize a {

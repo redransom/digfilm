@@ -121,11 +121,17 @@
 @for($movie_no=1; $movie_no < $opening_bids->count(); $movie_no++)
 <?php $movie_bid = $opening_bids[$movie_no]; ?>
 <div class="one-quarter small--one-half">
-    @if($movie_bid->topImage('L'))
-    <img src="{{asset($movie_bid->topImage('L')->path())}}" alt="{{$movie_bid->name}}" />
-    @else
-    <img src="{{asset('images/TNBF_missing_poster.jpg')}}" alt="{{$movie_bid->name}}" />
-    @endif
+
+    <div class="home__table">
+        <span class="home__cell">
+            @if($movie_bid->topImage('L'))
+            <img src="{{asset($movie_bid->topImage('L')->path())}}" alt="{{$movie_bid->name}}" />
+            @else
+            <img src="{{asset('images/TNBF_missing_poster.jpg')}}" alt="{{$movie_bid->name}}" />
+            @endif
+        </span>
+    </div>
+
     <h3>{{$movie_bid->name}}</h3>
     <p>Include at: <span class="highlight">&pound;{{$movie_bid->opening_bid}}</span></p>
     <p>Release Date: <span class="highlight">{{date("M Y", strtotime($movie_bid->release_at))}}</span></p>

@@ -2,7 +2,7 @@
                     <div id="sidebar">
                         
                         <!-- BEGIN .panel -->
-                        <div class="panel">
+                        <div class="panel panel-first">
                             <h2><span>We are social</span></h2>
                             <div class="panel-content socialize">
                                 <div class="social-icon-item">

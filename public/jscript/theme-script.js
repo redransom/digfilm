@@ -76,6 +76,7 @@ var thetop = parseInt((jQuery(window).height()/2)-50);
         $('.league-js').matchHeight();
         $('.event-list img').matchHeight();
         $('.event-list h3').matchHeight();
+        $('.home__table').matchHeight();
 
         /* Date Picker */
 

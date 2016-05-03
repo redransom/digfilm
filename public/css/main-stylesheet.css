@@ -844,7 +844,7 @@ a.featured-select:hover img {
 
 #header .header-logo {
 	float: left;
-	padding: 8px 18px;
+	padding: 2px 18px;
 	-moz-transition: all 0.2s;
 	-webkit-transition: all 0.2s;
 	-o-transition: all 0.2s;
@@ -9032,5 +9032,32 @@ a.defbutton {
 }
 
 .logo {
-	height: 70px;
+	height: 80px;
 }
+
+.home__table {
+	display: table;
+	width: 100%;
+}
+.home__cell {
+	display: table-cell;
+	vertical-align: middle;
+	width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
