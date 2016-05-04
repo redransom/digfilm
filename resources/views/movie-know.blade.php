@@ -6,7 +6,7 @@
         @if($movie->firstImage())
         <img itemprop="image" src="{{ asset($movie->firstImage()->path()) }}" class="game-poster" alt="" />
         @else
-        <img itemprop="image" src="{{ asset('images/posters/2351232-tomb_raider.jpg') }}" class="game-poster" alt="" />
+        <img itemprop="image" src="{{ asset('images/TNBF_missing_poster.jpg') }}" class="game-poster" alt="" />
         @endif
         <div class="game-info-details">
             <!--div class="game-info-buttons">
@@ -34,9 +34,13 @@
                 @if(!is_null($movie->opening_bid))
                 <div>
                     <span>Opening Bid:</span>
-                    <strong>£{{$movie->opening_bid}}</strong>
+                    <strong>£{{number_format($movie->opening_bid, 2)}}</strong>
                 </div>
                 @endif
+                <div>
+                    <span>Highest Bid:</span>
+                    <strong>£{{number_format($movie->topBid(), 2)}}</strong>
+                </div>
                 @if(isset($movie->genre))
                 <div>
                     <span>Genre</span>
@@ -52,14 +56,13 @@
         <div class="game-menu">
             <div class="game-overlay-info">
                 <h1 itemprop="itemreviewed">{{$movie->name}}</h1>
-                <h2> {{$movie->summary}}</h2>
             </div>
             <!--ul>
                 <li class="active" style="background-color: #921913;"><a href="#info"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;Information</a></li>
-                <!--li><a href="games-single-news.html"><i class="fa fa-comments"></i>&nbsp;&nbsp;News</a></li-->
-                <!--li><a href="games-single-video.html"><i class="fa fa-film"></i>&nbsp;&nbsp;Video (3)</a></li>
-                <li><a href="photo-gallery-single.html"><i class="fa fa-camera-retro"></i>&nbsp;&nbsp;Photos (18)</a></li-->
-            <!--/ul-->
+                <li><a href="#stats"><i class="fa fa-comments"></i>&nbsp;&nbsp;Stats</a></li>
+                <li><a href="games-single-video.html"><i class="fa fa-film"></i>&nbsp;&nbsp;Video (3)</a></li>
+                <li><a href="photo-gallery-single.html"><i class="fa fa-camera-retro"></i>&nbsp;&nbsp;Photos (18)</a></li>
+            </ul-->
         <!-- END .game-menu -->
         </div>
 
@@ -81,9 +84,9 @@
                 //}
             ?>
             <iframe width="100%" height="400" src="{{$base_url}}" frameborder="0" allowfullscreen></iframe>
-            @else
-            <img src="{{asset('images/temp/img_1.jpg')}}" alt="Youtube Placeholder"/>
             @endif
+            <br/>
+            <h4>{{$movie->summary}}</h4>
         </div>
         <br/>
         <h2><span>Media</span></h2>
@@ -107,135 +110,135 @@
         </div>
 
          @if($movie->bids()->count() > 0 && isset($authUser))
-                <h2><span>Stats</span></h2>
-                <div class="content-padding">
-                        <script src="{{ asset('jscript/Chart.min.js') }}"></script>
+            <h2><span>Stats</span></h2>
+            <div class="content-padding">
+                <script src="{{ asset('jscript/Chart.min.js') }}"></script>
 
-                        <div width="100%" style="display: clear">
-                            <div style="float:left; width: 150px">
-                            <h3>Number of Bids in last month</h3>
-                            <p>Use this graph to see how popular the movie is and has been in the last 30 days</p>
-                            @if(isset($bid_history) && !empty($bid_history))
-                            <h4>Bids History</h4>
-                            <ul>
-                                @foreach($bid_history as $bid)
-                                    <li>{{$bid->month_nm}} : {{$bid->no_of_bids}} 
-                                    @if($bid->no_of_bids > 1)
-                                    bids
-                                    @else
-                                    bid
-                                    @endif
-                                    </li>
-                                @endforeach
-                            </ul>
+                <div width="100%" style="display: clear">
+                    <div style="float:left; width: 150px">
+                    <h3>Number of Bids in last month</h3>
+                    <p>Use this graph to see how popular the movie is and has been in the last 30 days</p>
+                    @if(isset($bid_history) && !empty($bid_history))
+                    <h4>Bids History</h4>
+                    <ul>
+                        @foreach($bid_history as $bid)
+                            <li>{{$bid->month_nm}} : {{$bid->no_of_bids}} 
+                            @if($bid->no_of_bids > 1)
+                            bids
+                            @else
+                            bid
                             @endif
-                            </div>
-                            <canvas id="lcNoOfBids" width="400" height="200" style="float:right;display:block"></canvas>
-                        </div>
-                        <div class="sep"></div>
-                        <div style="width:600px; float: left; clear:both; padding-top: 10px">
-                            <div style="float:left; width: 150px">
-                            <h3>Bid amounts in last month</h3>
-                            <p>This graph shows what the values that were bid on the film over the last month.</p>
-                            </div>
-                            <canvas id="lcLast30" width="400" height="200" style="float:right;display:block"></canvas>
-                        </div>
-
-                        <script type="text/javascript">
-                            var options = {
-
-                                    ///Boolean - Whether grid lines are shown across the chart
-                                    scaleShowGridLines : true,
-
-                                    //String - Colour of the grid lines
-                                    scaleGridLineColor : "rgba(0,0,0,.05)",
-
-                                    //Number - Width of the grid lines
-                                    scaleGridLineWidth : 1,
-
-                                    //Boolean - Whether to show horizontal lines (except X axis)
-                                    scaleShowHorizontalLines: true,
-
-                                    //Boolean - Whether to show vertical lines (except Y axis)
-                                    scaleShowVerticalLines: true,
-
-                                    //Boolean - Whether the line is curved between points
-                                    bezierCurve : false,
-
-                                    //Number - Tension of the bezier curve between points
-                                    bezierCurveTension : 0.4,
-
-                                    //Boolean - Whether to show a dot for each point
-                                    pointDot : false,
-
-                                    //Number - Radius of each point dot in pixels
-                                    pointDotRadius : 4,
-
-                                    //Number - Pixel width of point dot stroke
-                                    pointDotStrokeWidth : 1,
-
-                                    //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-                                    pointHitDetectionRadius : 20,
-
-                                    //Boolean - Whether to show a stroke for datasets
-                                    datasetStroke : true,
-
-                                    //Number - Pixel width of dataset stroke
-                                    datasetStrokeWidth : 2,
-
-                                    //Boolean - Whether to fill the dataset with a colour
-                                    datasetFill : true,
-
-                                    //String - A legend template
-                                    legendTemplate : "{!! $legend1 !!}"
-
-                                };
-                            @if(isset($no_of_bids))
-                            var ctx2 = document.getElementById("lcNoOfBids").getContext("2d"),
-                                data2 = {
-                                    labels: [{{join($days, ",")}}],
-                                    datasets: [
-                                        {
-                                            label: "No Of Bids",
-                                            fillColor: "rgba(93, 29, 30,0.2)",
-                                            strokeColor: "rgba(220,220,220,1)",
-                                            pointColor: "rgba(220,220,220,1)",
-                                            pointStrokeColor: "#fff",
-                                            pointHighlightFill: "#fff",
-                                            pointHighlightStroke: "rgba(220,220,220,1)",
-
-                                            data: [{{join($no_of_bids, ",")}}]
-                                        }
-                                    ]
-                                };
-
-                            var noOfBids = new Chart(ctx2).Line(data2, options);
-                            @endif
-                            @if(isset($bid_groups['totals']))
-                            var ctx3 = document.getElementById("lcLast30").getContext("2d"),
-                                data3 = {
-                                    labels: [{{join($bid_groups['amount'], ",")}}],
-                                    datasets: [
-                                        {
-                                            label: "Last 30 bids",
-                                            fillColor: "rgba(93, 29, 30,0.2)",
-                                            strokeColor: "rgba(220,220,220,1)",
-                                            pointColor: "rgba(220,220,220,1)",
-                                            pointStrokeColor: "#fff",
-                                            pointHighlightFill: "#fff",
-                                            pointHighlightStroke: "rgba(220,220,220,1)",
-
-                                            data: [{{join($bid_groups['totals'], ",")}}]
-                                        }
-                                    ]
-                                };
-
-                            var last30Bids = new Chart(ctx3).Bar(data3, options);
-                            @endif
-                        </script>
-                      
+                            </li>
+                        @endforeach
+                    </ul>
+                    @endif
+                    </div>
+                    <canvas id="lcNoOfBids" width="400" height="200" style="float:right;display:block"></canvas>
                 </div>
-                @endif
+                <div class="sep"></div>
+                <div style="width:600px; float: left; clear:both; padding-top: 10px">
+                    <div style="float:left; width: 150px">
+                    <h3>Bid amounts in last month</h3>
+                    <p>This graph shows what the values that were bid on the film over the last month.</p>
+                    </div>
+                    <canvas id="lcLast30" width="400" height="200" style="float:right;display:block"></canvas>
+                </div>
+
+                <script type="text/javascript">
+                    var options = {
+
+                            ///Boolean - Whether grid lines are shown across the chart
+                            scaleShowGridLines : true,
+
+                            //String - Colour of the grid lines
+                            scaleGridLineColor : "rgba(0,0,0,.05)",
+
+                            //Number - Width of the grid lines
+                            scaleGridLineWidth : 1,
+
+                            //Boolean - Whether to show horizontal lines (except X axis)
+                            scaleShowHorizontalLines: true,
+
+                            //Boolean - Whether to show vertical lines (except Y axis)
+                            scaleShowVerticalLines: true,
+
+                            //Boolean - Whether the line is curved between points
+                            bezierCurve : false,
+
+                            //Number - Tension of the bezier curve between points
+                            bezierCurveTension : 0.4,
+
+                            //Boolean - Whether to show a dot for each point
+                            pointDot : false,
+
+                            //Number - Radius of each point dot in pixels
+                            pointDotRadius : 4,
+
+                            //Number - Pixel width of point dot stroke
+                            pointDotStrokeWidth : 1,
+
+                            //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+                            pointHitDetectionRadius : 20,
+
+                            //Boolean - Whether to show a stroke for datasets
+                            datasetStroke : true,
+
+                            //Number - Pixel width of dataset stroke
+                            datasetStrokeWidth : 2,
+
+                            //Boolean - Whether to fill the dataset with a colour
+                            datasetFill : true,
+
+                            //String - A legend template
+                            legendTemplate : "{!! $legend1 !!}"
+
+                        };
+                    @if(isset($no_of_bids))
+                    var ctx2 = document.getElementById("lcNoOfBids").getContext("2d"),
+                        data2 = {
+                            labels: [{{join($days, ",")}}],
+                            datasets: [
+                                {
+                                    label: "No Of Bids",
+                                    fillColor: "rgba(93, 29, 30,0.2)",
+                                    strokeColor: "rgba(220,220,220,1)",
+                                    pointColor: "rgba(220,220,220,1)",
+                                    pointStrokeColor: "#fff",
+                                    pointHighlightFill: "#fff",
+                                    pointHighlightStroke: "rgba(220,220,220,1)",
+
+                                    data: [{{join($no_of_bids, ",")}}]
+                                }
+                            ]
+                        };
+
+                    var noOfBids = new Chart(ctx2).Line(data2, options);
+                    @endif
+                    @if(isset($bid_groups['totals']))
+                    var ctx3 = document.getElementById("lcLast30").getContext("2d"),
+                        data3 = {
+                            labels: [{{join($bid_groups['amount'], ",")}}],
+                            datasets: [
+                                {
+                                    label: "Last 30 bids",
+                                    fillColor: "rgba(93, 29, 30,0.2)",
+                                    strokeColor: "rgba(220,220,220,1)",
+                                    pointColor: "rgba(220,220,220,1)",
+                                    pointStrokeColor: "#fff",
+                                    pointHighlightFill: "#fff",
+                                    pointHighlightStroke: "rgba(220,220,220,1)",
+
+                                    data: [{{join($bid_groups['totals'], ",")}}]
+                                }
+                            ]
+                        };
+
+                    var last30Bids = new Chart(ctx3).Bar(data3, options);
+                    @endif
+                </script>
+                  
+            </div>
+            @endif
 
         <!-- END .content-padding -->
         </div>
@@ -246,5 +249,4 @@
     
 </div>
 
-<div class="clear-float"></div>
 @endsection

@@ -238,10 +238,10 @@ class MoviesController extends Controller {
 		}
 
 		Flash::message('Movie '.$movie->name. ' has been updated!');
-		if (isset($input['referer']))
+		if (isset($input['referer']) && strrpos($input['referer'], 'movies-admin-search') === FALSE)
 			return redirect($input['referer']);
 		else
-			return Redirect::route('movies.index');
+			return Redirect::route('movie-show', $movie->id);
 	}
 
 /**

@@ -26,7 +26,7 @@ table {
             <th width="30%">Name</th> 
             <th width="10%">Players</th>
             <th width="18%">Rules</th> 
-            <th width="23%">Auction Ends?</th>
+            <th width="23%">Ends</th>
         </tr>
     </thead>
     <tbody>
@@ -35,6 +35,8 @@ table {
             <td>
             @if($league->file_name != "")
                 <img src="{{asset($league->file_name)}}" alt="{{$league->name}}" width="100px"/>
+            @else
+                <img src="{{asset('images/TNBF.jpg')}}" alt="{{$league->name}}" width="100px"/>
             @endif
             </td>
             <td><a class="btn btn-mini btn-danger" href="{{URL('league-play/'.$league->id)}}">{{$league->name}}</a></td>
@@ -71,6 +73,8 @@ table {
             <td>
             @if($league->file_name != "")
                 <img src="{{asset($league->file_name)}}" alt="{{$league->name}}" width="100px"/>
+            @else
+                <img src="{{asset('images/TNBF.jpg')}}" alt="{{$league->name}}" width="100px"/>
             @endif
             </td>
             <td><a class="btn btn-mini btn-danger" href="{{URL('roster/'.$league->id)}}">{{$league->name}}</a></td>
@@ -115,6 +119,8 @@ table {
             <td>
             @if($league->file_name != "")
                 <img src="{{asset($league->file_name)}}" alt="{{$league->name}}" width="100px"/>
+            @else
+                <img src="{{asset('images/TNBF.jpg')}}" alt="{{$league->name}}" width="100px"/>
             @endif
             </td>
             @if($league->auction_stage < 3)
@@ -168,6 +174,8 @@ table {
             <td>
             @if($league->file_name != "")
                 <img src="{{asset($league->file_name)}}" alt="{{$league->name}}" width="100px"/>
+            @else
+                <img src="{{asset('images/TNBF.jpg')}}" alt="{{$league->name}}" width="100px"/>
             @endif
             </td>
             <td>{{$league->name}}</td>

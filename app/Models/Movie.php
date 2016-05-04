@@ -55,6 +55,10 @@ class Movie extends Model {
         return $this->hasMany("\App\Models\AuctionBid", 'movies_id', 'id');
     }
 
+    public function topBid() {
+        return $this->bids->max('bid_amount');
+    }
+
     public function link() {
         return ((!is_null($this->slug) && trim($this->slug) != "") ? $this->slug : $this->id);
     }

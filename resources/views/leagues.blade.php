@@ -13,7 +13,7 @@
             @if(!is_null($league->file_name))
             <img src="{{asset($league->file_name)}}" alt="{{$league->name}}">
             @else
-            <img src="{{asset('/images/league-1.jpg')}}" alt="{{$league->name}}">
+            <img src="{{asset('/images/tnbf_missing_poster.jpg')}}" alt="{{$league->name}}">
             @endif
             </a>
             <div class="league-info">
@@ -30,7 +30,7 @@
                 @endif
                 </div>
                 <div class="row">
-                    <span class="title">Closes:</span><p>{{date("jS M Y", strtotime($league->auction_start_date))}} - {{date("g:iA", strtotime($league->auction_start_date))}}</p>
+                    <span class="title">Closes:</span><p>{{date("jS M Y", strtotime($league->auction_start_date))}} <br/>at {{date("g:iA", strtotime($league->auction_start_date))}}</p>
                 </div>
                 @if(!is_null($authUser) && time() < strtotime($league->auction_start_date))
                 @if(count($league->players) == $league->rule->max_players)

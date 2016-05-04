@@ -47,8 +47,13 @@
 							<p class="form-footer">
 								<input type="submit" name="login_submit" id="login_submit" value="Log in" />
 							</p>
-
-							<p style="margin-top:40px;">
+							<style>
+								.loginlinks a {
+									color: #000;
+									font-weight: bold;
+								}
+							</style>
+							<p style="margin-top:40px;" class="loginlinks">
 								<span class="info-msg">If you don't have an account, <a href="{{URL('/auth/register')}}">sign up</a> !<br /><br />If lost password <a href="{{URL('auth/reset')}}">click here</a> and we will help you to reset !</span>
 							</p>
 

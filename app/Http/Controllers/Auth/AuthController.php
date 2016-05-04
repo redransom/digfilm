@@ -166,7 +166,8 @@ class AuthController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function getReset() {
-		return view('auth.register')->with('fullwidth', true);
+		return view('auth.reset')
+			->with('title', 'Reset your password');
 	}
 
 }
