@@ -13,7 +13,7 @@
             @if(!is_null($league->file_name))
             <img src="{{asset($league->file_name)}}" alt="{{$league->name}}">
             @else
-            <img src="{{asset('/images/tnbf_missing_poster.jpg')}}" alt="{{$league->name}}">
+            <img src="{{asset('/images/TNBF_missing_poster.jpg')}}" alt="{{$league->name}}">
             @endif
             </a>
             <div class="league-info">

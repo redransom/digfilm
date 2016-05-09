@@ -1,11 +1,8 @@
 @extends('layouts.users')
 
 @section('content')
-<section class="entry sbr clearfix">
-    <div class="title-caption-large">
-        <h3>Choose who you want to play!</h3>
-    </div>
-
+<h2><span>Choose who you want to play!</span></h2>
+<div class="content-padding">
     <p>You can select any players from your friends list or invite players to join.</p>
 
     <div class="one-fourth">  
@@ -19,12 +16,20 @@
                     <input type="hidden" name="leagues_id" value="{{$league->id}}">
                     <div class="alignleft">
                         <ul>
-                        @foreach($users as $user)
-                            <li>{!! Form::checkbox('users_id[]', $user->id, false) !!}&nbsp;&nbsp;{{$user->fullName()}}</li>
+                        @foreach($users as $player)
+                            <li>
+                            @if(!is_null($player->thumbnail) || $player->thumbnail != '')
+                            <span class="article-image"><img src="{{asset($player->thumbnail) }}" width="128" height="128" alt="" title="" /></span><!--/a-->
+                            @else
+                            <span class="article-image"><img src="{{asset('/images/TNBF.jpg') }}" width="128" height="128" alt="" title="" /></span><!--/a-->
+                            @endif
+                            <span>{{$player->fullName()}}</span>
+                            {!! Form::checkbox('users_id[]', $player->id, false) !!}&nbsp;&nbsp;{{$player->fullName()}}
+                            </li>
                         @endforeach
                         </ul>
                         <br/>
-                        <input type="submit" class="button green small" id="submit" value="Add Friends" />
+                        <input type="submit" class="league-btn" id="submit" value="Add Friends" />
                     </div><!--/ textfield-->
                 </fieldset>
             </form>
@@ -36,26 +41,36 @@
     </div>
     <div class="one-fourth">
         <h4>Invite Friend</h4>
-        <div id="contact">
+        <div class="the-form league--form">
             <div id="message"></div>
-            {!! Form::open(array('route' => 'league-invite', 'class'=>'form-horizontal row-fluid', 'id'=>'contactform')) !!}
-                <fieldset>
+            {!! Form::open(array('route' => 'league-invite', 'class'=>'form-vertical', 'id'=>'contactform')) !!}
+                
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="leagues_id" value="{{$league->id}}">
-                    <div class="alignleft">
-                        @for($player_cnt = 1; $player_cnt <= ($league->rule->max_players - $league->players->count()); $player_cnt++)
-                        <h3>Friend  {{$player_cnt}}</h3>
-                        <div class="row">
-                            <label for="name"><span class="required">*</span>Name:</label>
-                            {!! Form::text('name[]', null, ['class'=>'span8', 'placeholder'=>'Enter friends name here...']) !!}
-                        </div><!--/ row-->
-                        
-                        <div class="row">
-                            <label for="name"><span class="required">*</span>Email:</label>
-                            {!! Form::text('email_address[]', null, ['class'=>'span8', 'placeholder'=>'Enter email address here...']) !!}
-                        </div><!--/ row-->
-                        @endfor
-                        <input type="submit" class="button green small" id="submit" value="Invite" />
+
+
+
+                    @for($player_cnt = 1; $player_cnt <= ($league->rule->max_players - $league->players->count()); $player_cnt++)
+                    <h3>Friend  {{$player_cnt}}</h3>
+                    <div class="form--item">
+                        <label for="LeagueName"><span class="required">*</span>Name:</label>
+                        {!! Form::text('name[]', null, ['class'=>'span8', 'placeholder'=>'Enter friends name here...']) !!}
+                    </div>
+                    <div class="form--item">
+                        <label for="LeagueName"><span class="required">*</span>Email:</label>
+                        {!! Form::text('email_address[]', null, ['class'=>'span8', 'placeholder'=>'Enter email address here...']) !!}
+                    </div>
+
+                    <!--div class="row">
+                        <label for="name"><span class="required">*</span>Name:</label>
+                        {!! Form::text('name[]', null, ['class'=>'span8', 'placeholder'=>'Enter friends name here...']) !!}
+                    </div>
+                    <div class="row">
+                        <label for="name"><span class="required">*</span>Email:</label>
+                        {!! Form::text('email_address[]', null, ['class'=>'span8', 'placeholder'=>'Enter email address here...']) !!}
+                    </div-->
+                    @endfor
+                    <input type="submit" class="league-btn" id="submit" value="Invite" />
                     </div><!--/ textfield-->
                 </fieldset>
             </form>

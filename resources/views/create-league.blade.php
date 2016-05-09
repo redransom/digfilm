@@ -56,8 +56,7 @@
                 </p>
             </div><!--/ content-price-->
             <div class="foot-price">
-                <input type="radio" name="rule_set" value="{{$rule->id}}"/>
-                <a href="#" class="button medium yellow">Choose</a>  
+                <input type="radio" name="rule_sets_id" value="{{$rule->id}}"/>
             </div><!--/ foot-price-->
         </div><!--/ small-package-->
 
