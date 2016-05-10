@@ -8,7 +8,8 @@
         <div class="gamelist">
             <div class="clearfix owl-carousel owl-theme" id="owl-movies">
                 @foreach($highlights as $movie)
-               
+                <?php $item = $movie->topTrailer(); ?>
+                @if(!is_null($movie) && $movie->type =='T' && str_contains($movie->url, "youtu.be"))
                 <div class="item">
                     <a href="{{URL('movie-knowledge', $movie->link())}}">
                     @if($movie->topTrailer())
@@ -42,6 +43,7 @@
                     </div><!--/ .caption-->                            
                     <div class="clear"></div>
                 </div><!-- End Owl Item-->
+                @endif
                 @endforeach
             </div><!-- End Owl Carousel, Owl Movies -->
         </div>
