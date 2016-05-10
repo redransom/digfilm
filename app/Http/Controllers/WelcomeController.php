@@ -706,6 +706,7 @@ class WelcomeController extends Controller {
             return redirect('/');
         }
 
+        $player_array = ['1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5', '6'=>'6', '7'=>'7', '8'=>'8', '9'=>'9', '10'=>'10'];
         $authUser = Auth::user();
         $league = League::find($id);
 /*
@@ -714,6 +715,7 @@ class WelcomeController extends Controller {
 */
         return view('league-manage')
             ->with('league', $league)
+            ->with('player_array', $player_array)
             ->with('page_name', 'manage-league')
             ->with('object', $league)
             ->with('authUser', $authUser)

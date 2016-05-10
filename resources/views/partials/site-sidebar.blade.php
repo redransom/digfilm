@@ -34,5 +34,7 @@
                         @if(isset($contact_rhs))
                         @include('partials.site-sidebar-contact', ['content'=>$contact_rhs])
                         @endif
+
+                        @include('partials.site-sidebar-adverts')
                     <!-- END #sidebar -->
                     </div>
