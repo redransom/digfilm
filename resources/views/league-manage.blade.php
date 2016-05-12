@@ -27,13 +27,14 @@
         </ul>
 
         @if($league->players->count() < $league->rule->max_players && $league->auction_stage == 0)
-        <br/>
-        <a href="{{URL('select-participants', array('id'=>$league->id))}}" class="button green small">Add more players</a></li>
-        
+        <div class="form-footer">
+            <div class="divider--img"></div>
+            <a href="{{URL('select-participants', array('id'=>$league->id))}}" class="submit-btn btn-small">Add more players</a></li>
+        </div>
         @endif
     </div>
 
-    <div class="three-quarters last">
+    <div class="two-thirds last">
         @if($league->auction_stage == 0)
         {!! Form::open(array('route' => array('player-rules', $league->id), 'class'=>'form-horizontal row-fluid', 'method'=>'POST')) !!}
         <fieldset>
@@ -42,11 +43,14 @@
             {!! Form::select('min_players', $player_array, $league->rule->min_players, ['class'=>'span2']) !!} to 
             {!! Form::select('max_players', $player_array, $league->rule->max_players, ['class'=>'span2']) !!}<br/>
             <label>Number of movies:</label><br/>
-            {!! Form::select('min_movies', [10=>10, 20=>20, 30=>30, 40=>40, 50=>50, 60=>60, 70=>70], $league->rule->min_movies, ['class'=>'span2']) !!} to 
-            {!! Form::select('max_movies', [10=>10, 20=>20, 30=>30, 40=>40, 50=>50, 60=>60, 70=>70, 80=>80, 90=>90, 100=>100], $league->rule->max_movies, ['class'=>'span2']) !!}<br/>
+            {!! Form::select('min_movies', $movie_array, $league->rule->min_movies, ['class'=>'span2']) !!} to 
+            {!! Form::select('max_movies', $movie_array, $league->rule->max_movies, ['class'=>'span2']) !!}<br/>
             <label>Auction Start Date:</label><br/>
-            {!! Form::text('auction_start_date', $league->auction_start_date, ['class'=>'span2']) !!}<br/>
-            <input type="submit" class="button green small" id="submit" value="Update" />
+            {!! Form::text('auction_start_date', $league->auction_start_date, ['class'=>'span2']) !!}
+            <div class="form-footer">
+             <div class="divider--img"></div>
+                <input type="submit" class="submit-btn btn-small" id="submit" value="Update" />
+            </div>
         </fieldset>
         {!! Form::close() !!}
 
