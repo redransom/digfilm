@@ -1,6 +1,7 @@
 <?php namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class Movie extends Model {
 
@@ -56,11 +57,39 @@ class Movie extends Model {
     }
 
     public function topBid() {
-        return $this->bids->max('bid_amount');
+        $sql = "SELECT max(bid_amount) top_bid FROM auctions WHERE movies_id = '".$this->id."' AND ready_for_auction > 2";
+        $topBid = DB::select(DB::Raw($sql));
+        return $topBid[0]->top_bid;
+        //return $this->bids->max('bid_amount');
     }
 
     public function link() {
         return ((!is_null($this->slug) && trim($this->slug) != "") ? $this->slug : $this->id);
     }
 
+    public function averageBid() {
+//        return $this->bids()->avg('bid_amount');
+        $sql = "SELECT avg(bid_amount) avg_bid FROM auctions WHERE movies_id = '".$this->id."' AND ready_for_auction > 2";
+        $avgBid = DB::select(DB::Raw($sql));
+        return $avgBid[0]->avg_bid;//$this->bids->min('bid_amount');
+    }
+
+    public function lowestBid() {
+        $sql = "SELECT min(bid_amount) min_bid FROM auctions WHERE movies_id = '".$this->id."' AND ready_for_auction > 2";
+        $lowestBid = DB::select(DB::Raw($sql));
+        return $lowestBid[0]->min_bid;//$this->bids->min('bid_amount');
+    }
+
+    public function daysInBO($till = true) {
+        $release = new \DateTime($this->release_at);
+        $now = new \DateTime();
+
+        if ($till == true && $release > $now) 
+            return false;
+
+        $interval = $release->diff($now);
+        $daysInBO = $interval->m.(($interval->m > 1) ? " months, " : " month, ").$interval->d.(($interval->d > 1) ? " days " : " day"); 
+
+        return $daysInBO;
+    }
 }

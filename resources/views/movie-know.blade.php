@@ -41,6 +41,25 @@
                     <span>Highest Bid:</span>
                     <strong>£{{number_format($movie->topBid(), 2)}}</strong>
                 </div>
+                <div>
+                    <span>Lowest Bid:</span>
+                    <strong>£{{number_format($movie->lowestBid(), 2)}}</strong>
+                </div>
+                <div>
+                    <span>Average Bid:</span>
+                    <strong>£{{number_format($movie->averageBid(), 2)}}</strong>
+                </div>
+                @if($movie->daysInBO() !== FALSE)
+                 <div>
+                    <span>Days since release:</span>
+                    <strong>{{$movie->daysInBO()}}</strong>
+                </div>
+                @else
+                 <div>
+                    <span>Days till release:</span>
+                    <strong>{{$movie->daysInBO(false)}}</strong>
+                </div>
+                @endif
                 @if(isset($movie->genre))
                 <div>
                     <span>Genre</span>
