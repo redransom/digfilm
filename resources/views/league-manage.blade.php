@@ -39,14 +39,24 @@
         {!! Form::open(array('route' => array('player-rules', $league->id), 'class'=>'form-horizontal row-fluid', 'method'=>'POST')) !!}
         <fieldset>
             <input type="hidden" name="location" value="C"/>
-            <label>Number of players:</label><br/>
-            {!! Form::select('min_players', $player_array, $league->rule->min_players, ['class'=>'span2']) !!} to 
-            {!! Form::select('max_players', $player_array, $league->rule->max_players, ['class'=>'span2']) !!}<br/>
-            <label>Number of movies:</label><br/>
-            {!! Form::select('min_movies', $movie_array, $league->rule->min_movies, ['class'=>'span2']) !!} to 
-            {!! Form::select('max_movies', $movie_array, $league->rule->max_movies, ['class'=>'span2']) !!}<br/>
-            <label>Auction Start Date:</label><br/>
-            {!! Form::text('auction_start_date', $league->auction_start_date, ['class'=>'span2']) !!}
+
+            <div class="manage_selects">
+                <label>Number of players:</label><br/>
+                {!! Form::select('min_players', $player_array, $league->rule->min_players, ['class'=>'span2']) !!} to 
+                {!! Form::select('max_players', $player_array, $league->rule->max_players, ['class'=>'span2']) !!}<br/>
+            </div>
+            
+            <div class="manage_selects">
+                <label>Number of movies:</label><br/>
+                {!! Form::select('min_movies', $movie_array, $league->rule->min_movies, ['class'=>'span2']) !!} to 
+                {!! Form::select('max_movies', $movie_array, $league->rule->max_movies, ['class'=>'span2']) !!}<br/>
+            </div>
+
+            <div class="manage_selects">
+                <label>Auction Start Date:</label><br/>
+                {!! Form::text('auction_start_date', $league->auction_start_date, ['class'=>'span2']) !!}
+            </div>
+            
             <div class="form-footer">
              <div class="divider--img"></div>
                 <input type="submit" class="submit-btn btn-small" id="submit" value="Update" />

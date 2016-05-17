@@ -13,7 +13,7 @@
         <p>You can choose <strong>{{$league->rule->max_players - $league->players->count()}}</strong> more players.</p>
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <input type="hidden" name="leagues_id" value="{{$league->id}}">
-        <ul>
+        <ul class="choose-friends-ul">
         @foreach($users as $player)
             <li>
             @if(!is_null($player->thumbnail) || $player->thumbnail != '')
