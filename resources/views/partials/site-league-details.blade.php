@@ -1,6 +1,17 @@
+                <style>
+                .round {
+                    float:left;
+                    display:block;
+                    clear:both;
+                    width: 250px !important;
+                    font-weight:bold;
+                    font-size: 3em;
+                    color: #BF1C29;
+                }
+                </style>
  
                 <!-- ************** - Categories - ************** -->   
-                <div class="panel">
+                <div class="panel panel-first">
                     <h2><span>League Details</span></h2>
                     
                     <div class="panel-content">
@@ -25,16 +36,6 @@
                         <h3>Remaining Round Time: </h3>
                         <div class="round"><?php auctionTimer($league->id, $league->round_start_date, 'league'); ?></div>
                         
-                        <style>
-                        .round {
-                            float:left;
-                            display:block;
-                            clear:both;
-                            width: 250px !important;
-                            font-weight:bold;
-                            font-size: 2em;
-                        }
-                        </style>
                         <div class="round">
                         @if($league->current_round < $league->round_amount)
                         <span>Round No: {{$league->current_round}} of {{$league->round_amount}}</span>

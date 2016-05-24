@@ -1,6 +1,7 @@
 @extends('layouts.site')
 
 @section('content')
+@include('partials.site-auction-timer')
 <div id="main" itemscope="" itemtype="http://data-vocabulary.org/Review">
     <div class="game-info-left">
         @if($movie->firstImage())
@@ -59,7 +60,7 @@
                 @else
                  <div>
                     <span>Days till release:</span>
-                    <strong>{{$movie->daysInterval(false)}}</strong>
+                    <strong><?php auctionTimer($movie->id, $movie->release_at); ?></strong>
                 </div>
                 @endif
                 @if($movie->daysInterval(true, 'TC') !== FALSE)
