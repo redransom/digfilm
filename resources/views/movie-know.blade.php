@@ -4,7 +4,7 @@
 <div id="main" itemscope="" itemtype="http://data-vocabulary.org/Review">
     <div class="game-info-left">
         @if($movie->firstImage())
-        <img itemprop="image" src="{{ asset($movie->firstImage()->path()) }}" class="game-poster" alt="" />
+        <img itemprop="image" src="{{ asset($movie->firstImage()->path()) }}" class="game-poster" width="220px" height="220px" alt="" />
         @else
         <img itemprop="image" src="{{ asset('images/TNBF_missing_poster.jpg') }}" class="game-poster" alt="" />
         @endif
@@ -16,10 +16,12 @@
             <div class="game-info-rating">
                 <h3>TheNextBigFilm Review</h3>
                 <hr />
+                @if($movie->rating > 0)
                 <strong itemprop="rating">{{$movie->rating}}</strong>
                 <div class="rating-stars">
                     <div class="rating-stars-inner" style="width: 90%;"></div>
                 </div>
+                @endif
                 <!--a href="post.html" class="defbutton"><i class="fa fa-file-text-o"></i>Read Review</a-->
             </div>
             <!--div class="game-info-buttons">
@@ -38,28 +40,38 @@
                 </div>
                 @endif
                 <div>
-                    <span>Highest Bid:</span>
+                    <span>Highest Purchase Value:</span>
                     <strong>£{{number_format($movie->topBid(), 2)}}</strong>
                 </div>
                 <div>
-                    <span>Lowest Bid:</span>
+                    <span>Lowest Purchase Value:</span>
                     <strong>£{{number_format($movie->lowestBid(), 2)}}</strong>
                 </div>
                 <div>
-                    <span>Average Bid:</span>
+                    <span>Average Purchase Value:</span>
                     <strong>£{{number_format($movie->averageBid(), 2)}}</strong>
                 </div>
-                @if($movie->daysInBO() !== FALSE)
+                @if($movie->daysInterval() !== FALSE)
                  <div>
                     <span>Days since release:</span>
-                    <strong>{{$movie->daysInBO()}}</strong>
+                    <strong>{{$movie->daysInterval()}}</strong>
                 </div>
                 @else
                  <div>
                     <span>Days till release:</span>
-                    <strong>{{$movie->daysInBO(false)}}</strong>
+                    <strong>{{$movie->daysInterval(false)}}</strong>
                 </div>
                 @endif
+                @if($movie->daysInterval(true, 'TC') !== FALSE)
+                 <div>
+                    <span>Days left for auctions:</span>
+                    <strong>{{$movie->daysInterval(true, 'TC')}}</strong>
+                </div>
+                @endif
+                <div>
+                    <span>No of Bids:</span>
+                    <strong>{{$movie->bids()->count()}}</strong>
+                </div>
                 @if(isset($movie->genre))
                 <div>
                     <span>Genre</span>
@@ -114,7 +126,7 @@
                 @if($movie->images()->count() > 0)
                 <?php $imageCnt = 1; ?>
                 @foreach($movie->images() as $image)
-                <div class="one-fifth">
+                <div class="one-fifth" style="padding-right: 10px">
                     <img src="{{asset($image->path())}}" alt="{{$image->name}}" />
                 </div>
                 @if($imageCnt++ > 6)
@@ -152,7 +164,7 @@
                     </ul>
                     @endif
                     </div>
-                    <canvas id="lcNoOfBids" width="400" height="200" style="float:right;display:block"></canvas>
+                    <canvas id="lcNoOfBids" width="400" height="200" style="float:left; padding-left: 50px; display:block"></canvas>
                 </div>
                 <div class="sep"></div>
                 <div style="width:600px; float: left; clear:both; padding-top: 10px">
@@ -160,7 +172,7 @@
                     <h3>Bid amounts in last month</h3>
                     <p>This graph shows what the values that were bid on the film over the last month.</p>
                     </div>
-                    <canvas id="lcLast30" width="400" height="200" style="float:right;display:block"></canvas>
+                    <canvas id="lcLast30" width="400" height="200" style="float:left; padding-left: 50px; display:block"></canvas>
                 </div>
 
                 <script type="text/javascript">
@@ -170,7 +182,7 @@
                             scaleShowGridLines : true,
 
                             //String - Colour of the grid lines
-                            scaleGridLineColor : "rgba(0,0,0,.05)",
+                            scaleGridLineColor : "rgba(35,25,125,.05)",
 
                             //Number - Width of the grid lines
                             scaleGridLineWidth : 1,

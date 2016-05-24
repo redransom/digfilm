@@ -459,4 +459,28 @@ class MoviesController extends Controller {
 		$affected = Movie::where('enabled', '1')->whereNotNull('takings_close_date')->where('takings_close_date', '<', $currentTime)->update(['enabled'=>'0']);
         Log::info("Disable Movies Time ".$currentTime. " disabled ".$affected.' movies');
 	}
+
+	/**
+     * Remove the movie from site
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        $authUser = Auth::user();
+        if (!isset($authUser) || !$authUser->hasRole("Admin"))
+            return redirect('/auth/login');
+
+        //not sure if this is a function...
+        if (Movie::exists($id)) {
+            $movie = Movie::find($id);
+            Flash::message('Movie '.$movie->name.' has been removed from the system.');
+            $movie->delete();
+            
+        } else 
+            Flash::message('You don\'t have the permissions to complete this task.');
+
+        return redirect()->back();
+    }
 }

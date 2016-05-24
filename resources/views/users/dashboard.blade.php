@@ -31,13 +31,16 @@ table {
     </thead>
     <tbody>
         @foreach($authUser->inLeagues()->where('auction_stage', '2')->orderBy('auction_close_date', 'asc')->get() as $league)
+        <?php $link = ($league->auction_stage < 3) ? URL('league-play/'.$league->id) : URL('roster/'.$league->id); ?>
         <tr>
             <td>
+            <a href="{{$link}}">
             @if($league->file_name != "")
                 <img src="{{asset($league->file_name)}}" alt="{{$league->name}}" width="100px"/>
             @else
                 <img src="{{asset('images/TNBF.jpg')}}" alt="{{$league->name}}" width="100px"/>
             @endif
+            </a>
             </td>
             <td><a class="btn btn-mini btn-danger" href="{{URL('league-play/'.$league->id)}}">{{$league->name}}</a></td>
             <td>{{count($league->players)}}</td>
@@ -69,13 +72,16 @@ table {
     </thead>
     <tbody>
         @foreach($authUser->inLeagues()->where('auction_stage', '3')->orderBy('name', 'asc')->get() as $league)
+        <?php $link = ($league->auction_stage < 3) ? URL('league-show/'.$league->id) : URL('roster/'.$league->id); ?>
         <tr>
             <td>
+            <a href="{{$link}}">
             @if($league->file_name != "")
                 <img src="{{asset($league->file_name)}}" alt="{{$league->name}}" width="100px"/>
             @else
                 <img src="{{asset('images/TNBF.jpg')}}" alt="{{$league->name}}" width="100px"/>
             @endif
+            </a>
             </td>
             <td><a class="btn btn-mini btn-danger" href="{{URL('roster/'.$league->id)}}">{{$league->name}}</a></td>
             <td>{{count($league->players)}}</td>
@@ -115,19 +121,18 @@ table {
     </thead>
     <tbody>
         @foreach($authUser->startedLeagues()->orderBy('name', 'asc')->get() as $league)
+        <?php $link = ($league->auction_stage < 3) ? URL('league-show/'.$league->id) : URL('roster/'.$league->id); ?>
         <tr>
             <td>
+            <a href="{{$link}}">
             @if($league->file_name != "")
                 <img src="{{asset($league->file_name)}}" alt="{{$league->name}}" width="100px"/>
             @else
                 <img src="{{asset('images/TNBF.jpg')}}" alt="{{$league->name}}" width="100px"/>
             @endif
+            </a>
             </td>
-            @if($league->auction_stage < 3)
-            <td><a class="btn btn-mini btn-danger" href="{{URL('league-show/'.$league->id)}}">{{$league->name}}</a></td>
-            @else
-            <td><a class="btn btn-mini btn-danger" href="{{URL('roster/'.$league->id)}}">{{$league->name}}</a></td>
-            @endif
+            <td><a class="btn btn-mini btn-danger" href="{{$link}}">{{$league->name}}</a></td>
             <td>{{count($league->players)}}</td>
             @if(!is_null($league->auction_start_date))
             <td>{{date("jS M Y g:iA", strtotime($league->auction_start_date))}}</td>
@@ -152,7 +157,7 @@ table {
 
 
 
-@if($authUser->leagues->count() > 0)
+@if($authUser->leagues->where('auction_stage', '<', '2')->count() > 0)
 <h2><span>Leagues Owned</span></h2>
 <div class="content-padding">
 <p>Here are the leagues you own:</p>
@@ -169,7 +174,7 @@ table {
         </tr>
     </thead>
     <tbody>
-        @foreach($authUser->leagues as $league)
+        @foreach($authUser->leagues->where('auction_stage', '<','2') as $league)
         <tr>
             <td>
             @if($league->file_name != "")
@@ -196,8 +201,6 @@ table {
     </tbody>
 </table><!--/ feature-table-->
 </div>
-@else
-<p>You don't currently own any leagues.</p>
 @endif
  
 @endsection

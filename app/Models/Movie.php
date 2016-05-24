@@ -60,7 +60,6 @@ class Movie extends Model {
         $sql = "SELECT max(bid_amount) top_bid FROM auctions WHERE movies_id = '".$this->id."' AND ready_for_auction > 2";
         $topBid = DB::select(DB::Raw($sql));
         return $topBid[0]->top_bid;
-        //return $this->bids->max('bid_amount');
     }
 
     public function link() {
@@ -68,28 +67,43 @@ class Movie extends Model {
     }
 
     public function averageBid() {
-//        return $this->bids()->avg('bid_amount');
         $sql = "SELECT avg(bid_amount) avg_bid FROM auctions WHERE movies_id = '".$this->id."' AND ready_for_auction > 2";
         $avgBid = DB::select(DB::Raw($sql));
-        return $avgBid[0]->avg_bid;//$this->bids->min('bid_amount');
+        return $avgBid[0]->avg_bid;
     }
 
     public function lowestBid() {
         $sql = "SELECT min(bid_amount) min_bid FROM auctions WHERE movies_id = '".$this->id."' AND ready_for_auction > 2";
         $lowestBid = DB::select(DB::Raw($sql));
-        return $lowestBid[0]->min_bid;//$this->bids->min('bid_amount');
+        return $lowestBid[0]->min_bid;
     }
 
-    public function daysInBO($till = true) {
-        $release = new \DateTime($this->release_at);
+    /*
+     * daysInterval between the dates in this movie
+     * RA = release_at
+     * TC = takings_close_date
+    */
+    public function daysInterval($till = true, $type = 'RA') {
+        if ($type == 'RA')
+            $compare = new \DateTime($this->release_at);
+        elseif ($type == 'TC' && !is_null($this->takings_close_date))
+            $compare = new \DateTime($this->takings_close_date);
+        else
+            return false;
         $now = new \DateTime();
 
-        if ($till == true && $release > $now) 
+        if ($till == true && $compare > $now) 
             return false;
 
-        $interval = $release->diff($now);
-        $daysInBO = $interval->m.(($interval->m > 1) ? " months, " : " month, ").$interval->d.(($interval->d > 1) ? " days " : " day"); 
+        $interval = $compare->diff($now);
+        $daysInterval = "";
+        if($interval->m > 1)
+            $daysInterval = $interval->m." months, ";
+        elseif($interval->m == 1)
+            $daysInterval = $interval->m." month, ";
 
-        return $daysInBO;
+        $daysInterval .= $interval->d.(($interval->d > 1) ? " days " : " day"); 
+
+        return $daysInterval;
     }
 }

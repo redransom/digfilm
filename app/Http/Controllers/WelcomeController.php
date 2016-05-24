@@ -466,7 +466,7 @@ class WelcomeController extends Controller {
 			//get movie stats
 			//list of all bids in last 30 days
 			//TODO: Move all of this to the model
-			$last_month = date("Y-m-d", strtotime("-30 days"));
+			$last_month = date("Y-m-d", strtotime("-1 year"));
 			$sql = "SELECT COUNT(movies_id) AS no_of_bids, DAYOFMONTH(created_at) AS day_no FROM `auction_bids` ";
 			$sql .= "WHERE `movies_id` = '".$movie->id."' AND created_at >= '".$last_month."' GROUP BY DAYOFMONTH(created_at), ";
 			$sql .= "DAY(created_at) ORDER BY DAY(created_at)";
@@ -540,6 +540,8 @@ class WelcomeController extends Controller {
 		return view('movie-genre')
 			->with('authUser', $authUser)
 			->with('genre', $genre)
+			->with('object', $genre)
+			->with('page_name', 'genre')
 			->with('title', 'Movies in the '.$genre->name.' Genre');	
 	}
 

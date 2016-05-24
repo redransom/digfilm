@@ -12,7 +12,7 @@
 						<p>You have won <strong>{{$authUser->winTotal()}}</strong> leagues so far!</p>
 						@if(!is_null($authUser->thumbnail)) 
 						<h3>Profile Image</h3>
-						<img src="{{asset($authUser->thumbnail)}}" alt="Player Mugshot" width="135px" height="200px"/>
+						<p><img src="{{asset($authUser->thumbnail)}}" alt="Player Mugshot" width="135px" height="200px"/></p>
 						@endif
                     </div>
 

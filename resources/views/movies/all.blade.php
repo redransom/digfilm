@@ -24,7 +24,7 @@
                                 <table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped  display" width="100%">
                                     <thead>
                                         <tr>
-                                            <th width="25%"><a href="{{URL('movies/'.$status.'/name/'.(($order == 'asc') ? 'desc' : 'asc'))}}">Name</a></th>
+                                            <th width="20%"><a href="{{URL('movies/'.$status.'/name/'.(($order == 'asc') ? 'desc' : 'asc'))}}">Name</a></th>
                                             <th width="10%"><a href="{{URL('movies/'.$status.'/opening_bid/'.(($order == 'asc') ? 'desc' : 'asc'))}}">Opening<br/>Bid</a></th>
                                             <th width="13%"><a href="{{URL('movies/'.$status.'/release_at/'.(($order == 'asc') ? 'desc' : 'asc'))}}">Release Dt</a></th>
                                             <th width="13%"><a href="{{URL('movies/'.$status.'/takings_close_date/'.(($order == 'asc') ? 'desc' : 'asc'))}}">Close Dt</a></th>
@@ -56,9 +56,9 @@
                                             <a class="btn btn-mini btn-success" href="{{URL('movie/'.$movie->id.'/media')}}">Add Media</a>
                                             @if($movie->enabled)
                                             @if(isset($search) && $search != '')
-                                            <a class="btn btn-mini btn-danger" href="{{URL('movie-disable/'.$movie->id.'/'.$search)}}">Disable</a>
+                                            <a class="btn btn-mini btn-warning" href="{{URL('movie-disable/'.$movie->id.'/'.$search)}}">Disable</a>
                                             @else
-                                            <a class="btn btn-mini btn-danger" href="{{URL('movie-disable/'.$movie->id)}}">Disable</a>
+                                            <a class="btn btn-mini btn-warning" href="{{URL('movie-disable/'.$movie->id)}}">Disable</a>
                                             @endif
                                             @else
                                             @if(isset($search) && $search != '')
@@ -66,6 +66,7 @@
                                             @else
                                             <a class="btn btn-mini btn-info" href="{{URL('movie-enable/'.$movie->id)}}">Enable</a>
                                             @endif
+                                            <a class="btn btn-mini btn-danger" href="{{URL('movie-delete/'.$movie->id)}}">Delete</a>
                                             @endif
                                             </td>
                                         </tr>
@@ -74,13 +75,6 @@
                                 </table>
                             </div>
                             <div class="pagination pagination-centered">
-                                    <!-- <ul>
-                                        <li><a href="#"><i class="icon-double-angle-left"></i></a></li>
-                                        <li><a href="#">1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#"><i class="icon-double-angle-right"></i></a></li>
-                                    </ul> -->
                                     <?php echo $movies->render(); ?>
                                 </div>
                         </div>

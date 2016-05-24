@@ -36,7 +36,7 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.1/jquery-ui-timepicker-addon.min.js"></script>
         <script type='text/javascript'>
             @if(isset($frontpage))
-            var strike_featCount = 4;
+            var strike_featCount = {!! count($slider) !!};
             var strike_autostart = true;
             var strike_autoTime = 7000;
             @else

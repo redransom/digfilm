@@ -404,8 +404,10 @@ table.feature-table thead tr {
   Red
 -------------*/
 
-.article-icons a:hover, a:hover,.round  {
-    color: #5d1d1e;
+.article-icons .round  {
+    color: #BF1C29;
+    font-size: 2em;
+    font-weight: bold;
 }
 
 
@@ -774,6 +776,9 @@ a {
     color: #fff;
 }
 
+a:hover {
+    color: #BF1C29 !important;
+}
 #main h2 .pagination-item.current {
     color: #fff !important;
     text-decoration: underline;

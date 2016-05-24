@@ -14,6 +14,13 @@
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <input type="hidden" name="leagues_id" value="{{$league->id}}">
         <ul class="choose-friends-ul">
+        <style>
+            div.name {
+                text-align: center !important;
+                clear:both;
+                display: block;
+            }
+        </style>
         @foreach($users as $player)
             <li>
             @if(!is_null($player->thumbnail) || $player->thumbnail != '')
@@ -22,7 +29,8 @@
             <span class="article-image"><img src="{{asset('/images/TNBF.jpg') }}" width="128" height="128" alt="" title="" /></span><!--/a-->
             @endif
             <br/>
-            <span>{{$player->fullName()}}&nbsp;{!! Form::checkbox('users_id[]', $player->id, false) !!}</span>
+            <div class="name">{{$player->fullName()}}</div>
+            {!! Form::checkbox('users_id[]', $player->id, false, ['style'=>'float: middle; margin-top: 5px; clear: both; display: block; width: 100%']) !!}</span>
             
             </li>
         @endforeach

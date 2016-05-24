@@ -39,7 +39,20 @@
         {!! Form::open(array('route' => array('player-rules', $league->id), 'class'=>'form-horizontal row-fluid', 'method'=>'POST')) !!}
         <fieldset>
             <input type="hidden" name="location" value="C"/>
+            <style>
+                .manage_selects select {
+                    width: 20% !important;
+                    height: 2.5em !important;
+                }
+            </style>
 
+            <script>
+            $(function() {
+                $('#datepicker').datepicker( "option", "dateFormat", "yy-mm-dd h:i");
+                $("#datepicker")..val({!! $league->auction_start_date !!});
+                });
+            });
+            </script>            
             <div class="manage_selects">
                 <label>Number of players:</label><br/>
                 {!! Form::select('min_players', $player_array, $league->rule->min_players, ['class'=>'span2']) !!} to 
@@ -54,7 +67,7 @@
 
             <div class="manage_selects">
                 <label>Auction Start Date:</label><br/>
-                {!! Form::text('auction_start_date', $league->auction_start_date, ['class'=>'span2']) !!}
+                {!! Form::text('auction_start_date', $league->auction_start_date, ['class'=>'span2', 'id'=>'datepicker']) !!}
             </div>
             
             <div class="form-footer">
@@ -63,7 +76,8 @@
             </div>
         </fieldset>
         {!! Form::close() !!}
-
+        <br/>
+        <h3>Rules of the league</h3>
         <table class="feature-table dark-gray">
             <tr>
                 <td>Durations</td>

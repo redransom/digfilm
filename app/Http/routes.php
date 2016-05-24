@@ -24,7 +24,7 @@ Route::get('all-leagues', 'WelcomeController@leagues');
 Route::get('create', 'WelcomeController@create');
 Route::get('movie-knowledge/{id}', 'WelcomeController@movieKnow');
 Route::get('all-movies', ['as'=>'all-movies', 'uses'=>'WelcomeController@movies']);
-Route::get('movie-genre/{id}', 'WelcomeController@movieGenre');
+Route::get('movie-genre/{id}', ['as'=>'movie-genre', 'uses'=>'WelcomeController@movieGenre']);
 Route::get('news-detail/{id}', ['as'=>'news-detail', 'uses'=>'WelcomeController@newsDetail']);
 Route::get('news', ['as'=>'news', 'uses'=>'WelcomeController@newsArticles']);
 
@@ -124,6 +124,7 @@ Route::group(['middleware'=>'auth'], function() {
         Entrust::routeNeedsRole('league-enable', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('movie-disable', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('movie-enable', ['Admin'], Redirect::to('/'));
+        Entrust::routeNeedsRole('movie-delete', ['Admin'], Redirect::to('/'));
 
         Route::put('movies-admin-search', ['as'=>'movies-admin-search', 'uses'=>'MoviesController@index']);
         Route::put('users-admin-search', ['as'=>'users-admin-search', 'uses'=>'UsersController@index']);
@@ -164,6 +165,7 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('movie-show/{id?}', ['as'=>'movie-show', 'uses'=>'MoviesController@show']);
         Route::get('movie-disable/{id}/{search?}', ['as'=>'movie-disable', 'uses'=>'MoviesController@disable']);
         Route::get('movie-enable/{id}/{search?}', ['as'=>'movie-enable', 'uses'=>'MoviesController@enable']);
+        Route::get('movie-delete/{id}', ['as'=>'movie-delete', 'uses'=>'MoviesController@destroy']);
         Route::get('movie/{id}/removemedia', ['as'=>'movie-remove-media', 'uses'=>'MoviesController@removeMedia']);
         Route::get('movie/{id}/edit', ['as'=>'movie-edit', 'uses'=>'MoviesController@edit']);
         Route::get('movie/{id}/contributor', ['as'=>'movie-add-contributor', 'uses'=>'MoviesController@addContributor']);

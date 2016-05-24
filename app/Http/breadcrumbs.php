@@ -269,6 +269,12 @@ Breadcrumbs::register('roster', function($breadcrumbs, $object)
     $breadcrumbs->push('Roster for '.$object->name, route('roster', [$object->id]));
 });
 
+Breadcrumbs::register('genre', function($breadcrumbs, $object)
+{
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Movies in the '.$object->name.' genre', route('movie-genre', [$object->id]));
+});
+
 Breadcrumbs::register('manage-league', function($breadcrumbs, $object)
 {
     $breadcrumbs->parent('dashboard');
