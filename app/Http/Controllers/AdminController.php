@@ -10,6 +10,7 @@ use App\Models\LeagueInvite;
 use App\Models\LeagueUser;
 use App\Models\RuleSet;
 use App\Models\Movie;
+use App\Models\MovieTaking;
 
 class AdminController extends Controller {
 
@@ -45,6 +46,8 @@ class AdminController extends Controller {
         if (!isset($authUser))
             return redirect('/auth/login');
 
+        $totals['takings'] = MovieTaking::dueTakings();
+
         //totals 
         $totals['liveAuctionTotal'] = Auction::where('ready_for_auction', '1')->count();
         $totals['liveLeaguesTotal'] = League::where('auction_stage', '>', '0')->where('auction_stage', '<', '3')->count();
@@ -70,6 +73,7 @@ class AdminController extends Controller {
             ->with('totals', $totals)
             ->with('authUser', $authUser)
             ->with('page_name', 'admin-dashboard')
+            ->with('movies', Movie::lists('name', 'id'))
             ->with('title', 'Welcome to the TheNextBigFilm adminstration system Dashboard');
 
 /*        return View("admin.dashboard")

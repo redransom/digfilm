@@ -77,4 +77,11 @@ class League extends Model {
 
         return $stage;
     }
+
+    public static function livePublicLeagues() {
+        return League::where('type', 'U')->where('enabled', 1)
+                ->Where(function ($query) {
+                    $query->whereNull('auction_stage')->orWhere('auction_stage', '<', '4');
+                })->get();
+    }
 }

@@ -375,6 +375,9 @@ class AuctionsController extends Controller {
             $league->save();
 
             $this->setRoster($league->id);
+
+            //clear out any players who didn't take part in this league
+            $this->disableNonplayingUsers($league->id);
         }
     
         //look for leagues where the auction_stage = 2 and have got past the above
@@ -399,13 +402,11 @@ class AuctionsController extends Controller {
                 }
             }
         }
-
-
     }
-
 
     /**
      * Populate the rosters for a league
+     * TODO: Move this into the LeagueRoster model
      *
      * @param  int  $league_id
      * @return Response
@@ -441,8 +442,22 @@ class AuctionsController extends Controller {
             DB::insert(DB::raw($sql));
 
         }
+    }
 
+    /**
+     * Disable all players who didn't take part in an auction
+     *
+     * @param  int  $league_id
+     * @return Response
+     */
+    private function disableNonplayingUsers($league_id) 
+    {
+        $league = League::find($league_id);
 
+        //get all users in league roster
+        $playing_users = $league->rosters()->lists('users_id');
+        //use this list to set all league users to 0 where not in playing users list
+        LeagueUser::whereNotIn('user_id', $playing_users)->where('league_id', $league_id)->update(['enabled'=>'0']);
     }
 
     /**

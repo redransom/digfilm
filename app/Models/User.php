@@ -38,11 +38,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	}
 
 	public function leagues() {
-		return $this->hasMany("\App\Models\League", "users_id")->where('enabled', '1');
+		return $this->hasMany("\App\Models\League", "users_id")->where('leagues.enabled', '1');
 	}
 
 	public function inLeagues() {
-		return $this->belongsToMany("\App\Models\League", "league_users", "user_id", "league_id")->where('enabled', '1')->withPivot('id');
+		return $this->belongsToMany("\App\Models\League", "league_users", "user_id", "league_id")->where('leagues.enabled', '1')->where('league_users.enabled', '1')->withPivot('id');
 	}
 
 	public function startedLeagues() {

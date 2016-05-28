@@ -71,10 +71,10 @@ class WelcomeController extends Controller {
 		if (isset($authUser)) {
 			$count_array['public'] = League::availableLeagues($authUser)->count();
 		} else 
-			$count_array['public'] = League::where('type', 'U')->where('enabled', 1)
+			$count_array['public'] = League::livePublicLeagues()->count(); /*where('type', 'U')->where('enabled', 1)
 	        	->Where(function ($query) {
-	        		$query->whereNull('auction_stage')->orWhere('auction_stage', '<', '2');
-	        	})->count();
+	        		$query->whereNull('auction_stage')->orWhere('auction_stage', '<', '4');
+	        	})->count();*/
 
 	    $count_array['newreleases'] = Movie::where('release_at', '>', date('Y-m-d', strtotime("-4 weeks")))->
 			where('release_at', '<=', date('Y-m-d'))->count();
@@ -210,11 +210,11 @@ class WelcomeController extends Controller {
 		$authUser = Auth::user();
 
 		if (!isset($authUser))
-			//ensure auction stage is less than 4 as this means the league has ended
-			$leagues = League::where('type', 'U')->where('enabled', 1)
+			//ensure auction stage is less than 2 as this means the league has ended
+			$leagues = League::livePublicLeagues(); /*where('type', 'U')->where('enabled', 1)
 	        	->Where(function ($query) {
 	        		$query->whereNull('auction_stage')->orWhere('auction_stage', '<', '4');
-	        	})->get();
+	        	})->get();*/
 		else
 			$leagues = League::availableLeagues($authUser->id);
 

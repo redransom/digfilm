@@ -40,7 +40,7 @@
                         <td>{{count($league->players)}}</td>
                         <td>{{$league->movies()->count()}}</td>
                         <td>{{$start}}</td>
-                        <td class="center"><a href="{{URL('users/'.$league->owner->id)}}">{{$league->owner->name}}</a></td>
+                        <td class="center"><a href="{{URL('user/'.$league->owner->id)}}">{{$league->owner->name}}</a></td>
                         <td>
                         <a class="btn btn-mini btn-primary" href="{{URL('league/'.$league->id.'/edit')}}">Edit</a>
                         @if($league->enabled)
