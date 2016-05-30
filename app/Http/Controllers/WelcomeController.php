@@ -415,6 +415,8 @@ class WelcomeController extends Controller {
 			->with('league', $league)
 			->with('users', $users)
 			->with('authUser', $authUser)
+			->with('page_name', 'add-participants')
+			->with('object', $league)
 			->with('title', 'Choose who you want to play with');	
 	}
 

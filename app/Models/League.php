@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\LeagueUser;
-
+use DB;
 class League extends Model {
 
     //
@@ -52,13 +52,14 @@ class League extends Model {
      * @var array
      */
     public static function availableLeagues($user_id) {
-        $leagueUsers = LeagueUser::where('user_id', $user_id)->lists('id');
+        $leagueUsers = LeagueUser::where('user_id', $user_id)->lists('league_id');
 
         $leagues = League::where('users_id', '!=', $user_id)->
                 where('enabled', '1')
                 ->Where(function ($query) {
                     $query->whereNull('auction_stage')->orWhere('auction_stage', '<', '4');
                 })->whereNotIn('id', $leagueUsers)->get();
+
         return $leagues;
     }
 

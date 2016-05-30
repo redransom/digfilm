@@ -66,6 +66,7 @@ class AdminController extends Controller {
 
         //movies
         $totals['LiveMovies'] = Movie::where('enabled', '1')->count();
+        $totals['TotalMovies'] = Movie::count();
         $totals['MoviesOnRelease'] = Movie::where('enabled', '1')->where('release_at', '<', date('Y-m-d'))->count();
 
         return View("admin.dashboard")
@@ -75,11 +76,5 @@ class AdminController extends Controller {
             ->with('page_name', 'admin-dashboard')
             ->with('movies', Movie::lists('name', 'id'))
             ->with('title', 'Welcome to the TheNextBigFilm adminstration system Dashboard');
-
-/*        return View("admin.dashboard")
-            ->with('authUser', $authUser)
-            ->with('page_name', 'admin')
-            ->with('instructions', 'Use this page to manage the site')
-            ->with('title', 'Administration Dashboard');
-*/    }
+   }
 }

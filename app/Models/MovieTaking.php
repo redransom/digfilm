@@ -35,7 +35,8 @@ class MovieTaking extends Model {
     				$takings = $movie->takings()->where('takings_at', $takings_date)->get();
     				if ($takings->isEmpty()) {
     					//need to record this
-    					$takings_dates[] = date("d M Y", strtotime($takings_date));
+    					//$takings_dates[] = date("d M Y", strtotime($takings_date));
+    					$takings_dates[] = strtotime($takings_date);
     				}
     			}
 

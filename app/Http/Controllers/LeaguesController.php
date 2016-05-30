@@ -45,12 +45,12 @@ class LeaguesController extends Controller {
         $paginate = true;
 
         if ($status == 100)
-            $leagues = League::orderBy('auction_stage', 'asc')->orderBy('created_at', $order)->paginate(10);
+            $leagues = League::orderBy('auction_stage', 'asc')->where('enabled', '1')->orderBy('created_at', $order)->paginate(10);
         else {
             if($status == 0)
-                $leagues = League::whereNull('auction_stage')->orderBy('created_at', $order)->get();
+                $leagues = League::whereNull('auction_stage')->where('enabled', '1')->orderBy('created_at', $order)->get();
             else
-                $leagues = League::where('auction_stage', ($status - 1))->orderBy('created_at', $order)->orderBy('created_at', 'desc')->get();
+                $leagues = League::where('auction_stage', ($status - 1))->where('enabled', '1')->orderBy('created_at', $order)->orderBy('created_at', 'desc')->get();
 
             $paginate = false;
         }
@@ -58,7 +58,7 @@ class LeaguesController extends Controller {
         return View("leagues.all")
             ->with('leagues', $leagues)
             ->with('authUser', $authUser)
-            ->with('use_graph', true)
+            /*->with('use_graph', true)*/
             ->with('order', $order)
             ->with('col', $col)
             ->with('status', $status)
@@ -69,7 +69,7 @@ class LeaguesController extends Controller {
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new league
      *
      * @return Response
      */
@@ -91,11 +91,24 @@ class LeaguesController extends Controller {
             ->with('title', 'Add League');
     }
 
-    private function get_players() {
+    /**
+     * get players to use in drop down
+     *
+     * @return Response
+     */
+    private function get_players($league_id = 0) {
         $role = Role::where('name', 'Player')->first();
         $user_ids = DB::table('role_user')->where('role_id', $role->id)->lists('user_id');
 
-        return User::whereIn('id', $user_ids)->where('enabled', '1')->orderBy('name', 'asc')->lists('name', 'id');
+        // if league id is provided we need to restrict to those not selected so far
+        if ($league_id != 0) {
+            $league = League::find($league_id);
+            $league_users = $league->players()->lists('user_id');
+            
+            return User::whereIn('id', $user_ids)->whereNotIn('id', $league_users)->where('enabled', '1')->orderBy('name', 'asc')->lists('name', 'id');
+        } else {
+            return User::whereIn('id', $user_ids)->where('enabled', '1')->orderBy('name', 'asc')->lists('name', 'id');
+        }        
     }
 
     /**
@@ -439,7 +452,7 @@ class LeaguesController extends Controller {
 
         $league = League::find($id);
         $title = "Add League to ".$league->name." movie";
-        $players = $this->get_players();
+        $players = $this->get_players($id);
 
         return View("leagues.player")
             ->with('authUser', $authUser)
@@ -1279,19 +1292,4 @@ class LeaguesController extends Controller {
         return redirect()->back();        
     }
 
-    /**
-     * Random string generator for filename
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    /*private function generateRandomString($length = 10) {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-        return $randomString;
-    }*/
 }

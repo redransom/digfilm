@@ -48,9 +48,8 @@
 
             <script>
             $(function() {
-                $('#datepicker').datepicker( "option", "dateFormat", "yy-mm-dd h:i");
-                $("#datepicker")..val({!! $league->auction_start_date !!});
-                });
+                $('#datepicker').datetimepicker( "option", "dateFormat", "yy-mm-dd HH:mm");
+                $('#datepicker').val('{!! $league->auction_start_date !!}');
             });
             </script>            
             <div class="manage_selects">

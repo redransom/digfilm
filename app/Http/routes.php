@@ -170,7 +170,7 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('movie/{id}/edit', ['as'=>'movie-edit', 'uses'=>'MoviesController@edit']);
         Route::get('movie/{id}/contributor', ['as'=>'movie-add-contributor', 'uses'=>'MoviesController@addContributor']);
         Route::post('movie/{id}/contributor', ['as'=>'add-contributor', 'uses'=>'MoviesController@postContributor']);
-        Route::get('movie/{id}/takings', ['as'=>'movie-add-takings', 'uses'=>'MoviesController@addTakings']);
+        Route::get('movie/{id}/takings/{date?}', ['as'=>'movie-add-takings', 'uses'=>'MoviesController@addTakings']);
         Route::post('movie/{id}/takings', ['as'=>'add-takings', 'uses'=>'MoviesController@postTakings']);
         Route::get('movie/{id}/media', ['as'=>'movie-add-media', 'uses'=>'MoviesController@addMedia']);
         Route::post('movie/{id}/media', ['as'=>'add-media', 'uses'=>'MoviesController@postMedia']);

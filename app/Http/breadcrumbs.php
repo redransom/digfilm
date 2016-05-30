@@ -322,3 +322,9 @@ Breadcrumbs::register('edit-profile', function($breadcrumbs, $object)
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push('Your Profile Details', route('edit-profile'));
 });
+
+Breadcrumbs::register('add-participants', function($breadcrumbs, $object)
+{
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Add Participants to '.$object->name, route('select-participants'));
+});

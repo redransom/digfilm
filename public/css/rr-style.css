@@ -531,7 +531,7 @@ ul li {
 .league-btn {
     background: #00a14b;
     width: 59%;
-    padding: 5% 19% !important;
+    padding: 5% 12% !important;
     border-radius: .3em !important;
     text-align: center;
     text-transform: uppercase;
@@ -821,7 +821,6 @@ h5.title a {
 
 .private .league-btn, .public .league-btn {
     color: #fff;
-    text-transform: lowercase;
     padding: 2%;
     border-radius: 0.2em
 }

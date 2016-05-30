@@ -1,25 +1,42 @@
 
 @if($currentLeague->auctions()->where('ready_for_auction', 1)->count() > 0)
 <p>See a list of movies you can bid on:</p>
+<style>
+    td.bid--placed span {
+        background-color: #BF1C29 !important;
+        color: #fff;
+        font-weight: bold;
+        padding: 5% 12%  !important;
+        border-radius: 0.3em !important;
+    }
+
+    .feature-table img {
+        min-width: 120% !important;
+    }
+
+    .feature-table td {
+        font-size: 0.8em;
+    }
+</style>
 <table class="feature-table dark-gray">
     <thead>
-        <tr><th>&nbsp;</th>
-        <th><a href="{{Route('league-play', ['id' => $currentLeague->id, 'col'=>'name', 'order'=> (($order == 'asc') ? 'desc' : 'asc')])}}">Movie</a></th>
-        <th><a href="{{Route('league-play', ['id' => $currentLeague->id, 'col'=>'release_at', 'order'=> (($order == 'asc') ? 'desc' : 'asc')])}}">Release Date</a></th>
-        <th>Opening<br/>Bid</th>
-        <th>Current Price /<br/>$ USD</th>
-        <th>Place Bid</th>
-        <th>Owner</th>
-        <th><a href="{{Route('league-play', ['id' => $currentLeague->id, 'col'=>'auction_end_time', 'order'=> (($order == 'asc') ? 'desc' : 'asc')])}}">Time</a></th>
+        <tr><th width="15%">&nbsp;</th>
+        <th width="30%"><a href="{{Route('league-play', ['id' => $currentLeague->id, 'col'=>'name', 'order'=> (($order == 'asc') ? 'desc' : 'asc')])}}">Movie</a></th>
+        <th width="12%"><a href="{{Route('league-play', ['id' => $currentLeague->id, 'col'=>'release_at', 'order'=> (($order == 'asc') ? 'desc' : 'asc')])}}">Release Date</a></th>
+        <th width="15%">Opening<br/>Bid</th>
+        <th width="15%">Price /<br/>$ USD</th>
+        <th width="25%">Place Bid</th>
+        <th width="15%">Owner</th>
+        <th width="10%"><a href="{{Route('league-play', ['id' => $currentLeague->id, 'col'=>'auction_end_time', 'order'=> (($order == 'asc') ? 'desc' : 'asc')])}}">Time</a></th>
     </thead>
     <tbody>
     <?php $movieCnt = 1; ?>
     @foreach($currentLeague->auctions()->where('ready_for_auction', 1)->orderBy($col, $order)->get() as $auction)
         <tr>
         @if(!is_null($auction->firstImage()))
-        <td><img src='{{asset($auction->firstImage()->file_name)}}' width="100px"/></td>
+        <td><img src='{{asset($auction->firstImage()->file_name)}}'/></td>
         @else
-        <td>&nbsp;</td>
+        <td><img src="{{asset('images/TNBF.jpg')}}"/></td>
         @endif
         <td><a href="{{URL('movie-knowledge', [$auction->link()])}}">{{$auction->name}}</a></td>
         <td>{{date("j-M-y", strtotime($auction->release_at))}}</td>
@@ -34,7 +51,7 @@
 
         @if($auction->pivot->ready_for_auction == 1 && strtotime($auction->pivot->auction_end_time) > time())
             @if($auction->pivot->users_id == $authUser->id)
-            <td class="bid--placed">PLACED</td>
+            <td class="bid--placed"><span>PLACED</span></td>
             @elseif ($leagueUser->balance > 0 && (is_null($auction->pivot->bid_amount) || $auction->pivot->bid_amount < $currentLeague->rule->max_bid) && ($leagueUser->balance > $auction->pivot->bid_amount))
             <td id="bid_link{{$auction->pivot->id}}" class="public place--bid"><!--a href="{{URL('place-bid', [$auction->pivot->id])}}" class="popup1"--><a href="#poppup-open-bid_link{{$auction->pivot->id}}" class="popup league-btn">PLACE BID</a>
             <div id="poppup-open-bid_link{{$auction->pivot->id}}" class="mfp-hide white-popup">   
@@ -60,10 +77,11 @@
         @if($auction->pivot->ready_for_auction == 1)
 
         @if(strtotime($auction->pivot->updated_at) > strtotime('-10 seconds') && $auction->pivot->users_id != $authUser->id)
-        <td style="background-color: #f00">CHANGE<?php auctionTimer($auction->pivot->id, $auction->pivot->auction_end_time); ?></td>
+        <td style="background-color: #f00">
         @else
-        <td><?php auctionTimer($auction->pivot->id, $auction->pivot->auction_end_time); ?></td>
+        <td>
         @endif
+        <?php auctionTimer($auction->pivot->id, $auction->pivot->auction_end_time); ?></td>
             
         @endif
         </tr>

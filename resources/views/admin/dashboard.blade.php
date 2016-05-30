@@ -29,7 +29,7 @@
                 <div class="row-fluid">
                     <div class="span12">
                         <a href="#" class="btn-box small span4"><i class="icon-envelope"></i>
-                            <b>12</b>
+                            <b>{{$totals['TotalMovies']}}</b>
                             Movies </a>
                         <a href="#" class="btn-box small span4"><i class="icon-group"></i>
                             <b>{{$totals['LivePlayers']}}</b>
@@ -94,8 +94,31 @@
             </ul>
         </div>
     </div>
-    <!--/#btn-controls-->
     <div class="module">
+        <div class="module-head">
+            <h3>Movie Takings Needed</h3>
+        </div>
+        <div class="module-body">
+            @if(isset($totals['takings']))
+                @foreach($totals['takings'] as $takings_key=>$takings_dates)
+                <div style="width:90px; float: left; padding: 5px; margin: 5px;">
+                <table class="table-bordered">
+                    <tbody>
+                    
+                        <tr><td><strong>{{$movies[$takings_key]}}</strong></td></tr>
+                        @foreach($takings_dates as $date)
+                        <tr><td>&nbsp;&nbsp;<a href="{{Route('movie-add-takings', [$takings_key, $date])}}">{{date("d M Y", $date)}}</a></td></tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                </div>
+                @endforeach
+            @endif
+            <div class="clear"></div>
+        </div>
+    </div>    
+    <!--/#btn-controls-->
+    <!--div class="module">
         <div class="module-head">
             <h3>
                 Profit Chart</h3>
@@ -106,7 +129,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div-->
     <!--/.module-->
     <div class="module hide">
         <div class="module-head">

@@ -364,7 +364,7 @@ class MoviesController extends Controller {
 		return Redirect::route('movie.show', array($id))->with('message', 'Movie created.');
 	}
 
-	public function addTakings($id) {
+	public function addTakings($id, $date = null) {
 		$authUser = Auth::user();
 		if (!isset($authUser))
 			return redirect('/auth/login');
@@ -381,6 +381,7 @@ class MoviesController extends Controller {
 			->with('object', $movie)
 			->with('takings', $takings)
 			->with('countries', $countries)
+			->with('taking_date', $date)
 			->with('page_name', 'movie-takings')
 			->with('title', $title);
 	}
@@ -399,10 +400,10 @@ class MoviesController extends Controller {
 		$taking = MovieTaking::create( $input );
 
 		//need to run the update on the league roster
-		DB::update(DB::raw("UPDATE league_roster SET total_gross = ".$input['amount'].", value_for_money = ((".$input['amount']." / bid_amount) / 100000) WHERE movies_id = ".$input['movies_id']." AND takings_end_date > NOW()"));
+/*		DB::update(DB::raw("UPDATE league_roster SET total_gross = ".$input['amount'].", value_for_money = ((".$input['amount']." / bid_amount) / 100000) WHERE movies_id = ".$input['movies_id']." AND takings_end_date > NOW()"));*/
 
 		Flash::message('Movie takings added.');		
-		return Redirect::route('movie.show', array($id));
+		return Redirect::route('movie-show', array($id));
 	}
 
 	public function addMedia($id) {

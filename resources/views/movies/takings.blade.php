@@ -25,10 +25,10 @@
             @endforeach
             @endif
 
-            @if($takings->count() > 0)
+            @if($movie->takings->count() > 0)
             <h4>Takings</h4>
             <ul class="unstyled">
-            @foreach($takings as $taking)
+            @foreach($movie->takings as $taking)
                 <li>{{intval($taking->amount) / 1000000}}M {{$taking->country}} {{$taking->takings_at}}</li>
             @endforeach
             </ul>
@@ -54,7 +54,7 @@
                 <div class="control-group">
                     <label class="control-label" for="TakingTakingsAt">At Which Date?</label>
                     <div class="controls">
-                        {!! Form::text('takings_at', null, ['class'=>'span8', 'placeholder'=>'YYYY-MM-DD', 'id'=>'takings_at']) !!}
+                        {!! Form::text('takings_at', (isset($taking_date) && !is_null($taking_date) ? date("Y-m-d", $taking_date) : null), ['class'=>'span8', 'placeholder'=>'YYYY-MM-DD', 'id'=>'takings_at']) !!}
                     </div>
                 </div>
 
