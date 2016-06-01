@@ -605,12 +605,14 @@ class WelcomeController extends Controller {
 
 		$movies = Movie::where('release_at', '>', date('Y-m-d', strtotime("-4 weeks")))->
 			where('release_at', '<=', date('Y-m-d'))->get();
+		$highlights = Movie::where('opening_bid', '>', '10')->where('release_at', '>', date('Y-m-d', strtotime("-4 weeks")))->where('release_at', '<=', date('Y-m-d'))->get();
 
 		return view('newreleases')
 			->with('description', 'Here is a list of all movies have come out in the last 4 weeks.')
 			->with('movies', $movies)
 			->with('page_title', 'New releases from last 4 weeks')
 			->with('page_name', 'newreleases')
+			->with('highlights', $highlights)
 			->with('title', 'New Releases in last 4 weeks')
 			->with('authUser', $authUser);		
 	}
@@ -739,7 +741,7 @@ class WelcomeController extends Controller {
     	$input = Input::all();
     	$results = array();
     	if (!empty($input['search_text'])) {
-    		$title = 'Youe search for ('.$input['search_text'].') returned';
+    		$title = 'Your search for ('.$input['search_text'].') returned';
     		$search = '%'.$input['search_text'].'%';
     		$results['movies'] = Movie::where('name', 'like', $search)->where('enabled', '1')->limit(5)->get();
     		$results['leagues'] = League::where('name', 'like', $search)->where('enabled', '1')->limit(5)->get();

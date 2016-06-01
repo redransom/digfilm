@@ -1,12 +1,13 @@
 @extends('layouts.site')
 
 @section('content')
+@if(isset($highlights) && !empty($highlights))
 <h2><span>Highlights</span></h2>
 <div class="content-padding">
     <div class="release">
         <div class="gamelist">
             <div class="clearfix owl-carousel owl-theme" id="owl-movies">
-                @foreach($movies as $movie)
+                @foreach($highlights as $movie)
                 <?php $item = $movie->topTrailer(); ?>
                 @if(!is_null($item) && $item->type =='T' && str_contains($item->url, "youtu.be"))
                 <div class="item">
@@ -35,6 +36,7 @@
         </div>
     </div>
 </div>
+@endif
 <h2><span>{{$title}}</span></h2>
 <div class="content-padding">
 @include('partials.site-movies', ['movies'=>$movies, 'description'=>$description])

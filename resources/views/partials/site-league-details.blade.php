@@ -33,17 +33,15 @@
                         
                         @else
                         <!-- show rounds detail -->
+                        @if($league->current_round < $league->round_amount)
+                        <h3>Rounds: </h3>
+                        <p>Round No: {{$league->current_round}} of {{$league->round_amount}}</p>
+                        @else
+                        <h3>Final Round!</h3>
+                        @endif
+
                         <h3>Remaining Round Time: </h3>
                         <div class="round"><?php auctionTimer($league->id, $league->round_start_date, 'league'); ?></div>
-                        
-                        <div class="round">
-                        @if($league->current_round < $league->round_amount)
-                        <span>Round No: {{$league->current_round}} of {{$league->round_amount}}</span>
-                        @else
-                        <span>Final Round!</span>
-                        @endif
-                        </div>
-
                         @endif 
                         <!-- end rounds check -->
                         

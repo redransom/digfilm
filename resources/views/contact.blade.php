@@ -29,12 +29,9 @@
                     <p>
                         <label for="reason">Reason</label>
                         <select name="reason" id="reason">
-                            <option value="Gamplay">Gameplay & Rules</option>
+                            <option value="Gamplay">Gameplay &amp; Rules</option>
                             <option value="Problems">Technical Problems</option>
-                            <option value="Suggestions">Suggestions & Ideas</option>
-                            <option value="Investors">Investors</option>
-                            <option value="Advertisement">Advertisement</option>
-                            <option value="Account">Account Issues</option>
+                            <option value="Suggestions">Suggestions &amp; Ideas</option>
                         </select>
                     </p>
                     <p>
