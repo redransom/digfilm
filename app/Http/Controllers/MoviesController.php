@@ -153,6 +153,7 @@ class MoviesController extends Controller {
 			->with('types', $contributor_types)
 			->with('object', $movie)
 			->with('page_name', 'movie-show')
+			->with('types', ['F'=>'Front', 'L'=>'List', 'A'=>'Auction', 'K'=>'Knowledge'])
 			->with('title', $title);
 
 	}

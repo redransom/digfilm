@@ -4,8 +4,8 @@
 @include('partials.site-auction-timer')
 <div id="main" itemscope="" itemtype="http://data-vocabulary.org/Review">
     <div class="game-info-left">
-        @if($movie->firstImage())
-        <img itemprop="image" src="{{ asset($movie->firstImage()->path()) }}" class="game-poster" width="220px" height="220px" alt="" />
+        @if($movie->topImage('K'))
+        <img itemprop="image" src="{{ asset($movie->topImage('K')->path()) }}" class="game-poster" width="220px" alt="" />
         @else
         <img itemprop="image" src="{{ asset('images/TNBF_missing_poster.jpg') }}" class="game-poster" alt="" />
         @endif
@@ -127,9 +127,11 @@
                 @if($movie->images()->count() > 0)
                 <?php $imageCnt = 1; ?>
                 @foreach($movie->images() as $image)
+                @if($image->image_type != 'F')
                 <div class="one-fifth" style="padding-right: 10px">
                     <img src="{{asset($image->path())}}" alt="{{$image->name}}" />
                 </div>
+                @endif
                 @if($imageCnt++ > 6)
                     <?php break; ?>
                 @endif

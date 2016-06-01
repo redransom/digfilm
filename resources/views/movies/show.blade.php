@@ -73,10 +73,11 @@
                                 <h3>Media</h3>
                             </div>
                             <div class="module-body">
-
+        
                                 @if($movie->Media->count() > 0)
                                 <ul class="inline">
                                 @foreach($movie->Media as $item)
+                                
                                     <?php
                                     if ($item->type =='T' && str_contains($item->url, "youtu.be")) {
                                         $url = $item->url;
@@ -91,6 +92,7 @@
                                     <li>
                                     @if($item->type == 'I')
                                         <img src="{{$item->path()}}" alt="{{$item->name}}" width="100px"/>
+                                        <br/><strong>{{$types[$item->image_type]}} Image</strong>
                                     @else
                                         <iframe width="200" height="150" src="{{$base_url}}" frameborder="0" allowfullscreen></iframe>
                                     @endif

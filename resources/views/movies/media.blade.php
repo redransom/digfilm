@@ -52,13 +52,15 @@
                     <div class="control-group">
                         <label class="control-label" for="MediaType">Location</label>
                         <div class="controls">
-                            {!! Form::select('image_type', ['F'=>'Front', 'L'=>'List'], null, ['class'=>'span8']) !!}
+                            {!! Form::select('image_type', ['F'=>'Front', 'L'=>'List', 'A'=>'Auction', 'K'=>'Knowledge'], null, ['class'=>'span8']) !!}
                         </div>
                         <span class="help-inline">
                         <ul>
                             <li>Front images will be used on the front page - 644px by 364px.</li>
                             <li>Front trailers will be used on the front page and also on the movie knowledge page - 660px by 377px.</li>
                             <li>List images will be used on the front page as the first image that is shown in lists - 151px by 217px</li>
+                            <li>Auction images will be used on the auction page and are square - 55px by 55px.</li>
+                            <li>Knowledge images will be used on the Movie Knowledge page on the left hand side - 220px by 316px.</li>
                         </ul>
                         </span>
                     </div>

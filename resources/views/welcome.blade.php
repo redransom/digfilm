@@ -98,14 +98,24 @@
 <div class="content-padding">
 @if($openingBid->topMedia())
 <div class="promo-hero">
-    
+    <style>
+    .promo-left a {
+        color: #000000 !important;
+    }
+    </style>
     @if($openingBid->topMedia())
     <img src="{{asset($openingBid->topMedia()->file_name)}}" alt="{{$openingBid->topMedia()->name}}" />
     @endif
     <div class="promo-content">
-        @if($openingBid->topImage('L'))
+        @if($openingBid->topImage('L') || $openingBid->topImage('K'))
         <div class="promo-image">
-            <a href="{{URL('movie-knowledge', ['id'=>$openingBid->link()])}}"><img src="{{$openingBid->topImage('L')->path()}}" alt="{{$openingBid->topImage('L')->name}}" width="55%" /></a>
+            <a href="{{URL('movie-knowledge', ['id'=>$openingBid->link()])}}">
+            @if($openingBid->topImage('L'))
+            <img src="{{$openingBid->topImage('L')->path()}}" alt="{{$openingBid->topImage('L')->name}}" />
+            @else
+            <img src="{{$openingBid->topImage('K')->path()}}" alt="{{$openingBid->topImage('K')->name}}"/>
+            @endif
+            </a>
         </div>
         @endif
         <div class="promo-left">
