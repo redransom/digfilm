@@ -15,6 +15,18 @@
                     <h2><span>League Details</span></h2>
                     
                     <div class="panel-content">
+                        @if(!is_null($currentLeague->file_name))
+                        <style>
+                        .league_image {
+                           max-width: 200px;
+                           padding-bottom: 20px;
+                        }
+                        </style>
+                        <div class="league_image">
+                            <img src="{{asset($currentLeague->file_name)}}" />
+                        </div>
+                        @endif
+
 
                         <h3>League Type: </h3><p>{{$league->rule_set->name}}</p>
 

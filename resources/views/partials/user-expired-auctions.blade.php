@@ -26,8 +26,8 @@
     <?php $movieCnt = 1; ?>
     @foreach($auctions as $auction)
         <tr>
-        @if(!is_null($auction->firstImage()))
-        <td><img src='{{asset($auction->firstImage()->file_name)}}'/></td>
+        @if(!is_null($auction->topImage('A')))
+        <td><img src='{{asset($auction->topImage("A")->file_name)}}'/></td>
         @else
         <td><img src="{{asset('images/TNBF.jpg')}}"/></td>
         @endif

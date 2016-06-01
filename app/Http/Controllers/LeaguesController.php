@@ -1270,7 +1270,8 @@ class LeaguesController extends Controller {
                 }
 
                 //disable the league
-                League::where('id', $league->id)->update(['enabled'=>'0', 'auction_stage'=>'5', 'winners_id'=>$winner->id]);
+                if (!is_null($winner))
+                    League::where('id', $league->id)->update(['enabled'=>'0', 'auction_stage'=>'5', 'winners_id'=>$winner->id]);
             }   
         } else {
             echo "No leagues found for ending.";

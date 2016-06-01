@@ -7,21 +7,7 @@
     @if($currentLeague->description != '')
     <h4><em>{{$currentLeague->description}}</em></h4>
     @endif
-    @if(!is_null($currentLeague->file_name))
-    <style>
-    .league_image {
-        float: right;
-        width: 175px;
-        padding: 5px;
-        background-color: #fff;
-        border: 1px solid #ddd;
-    }
-    </style>
-    <div class="league_image">
-        <img src="{{asset($currentLeague->file_name)}}" width="150px" />
-    </div>
-    @endif
-
+   
     <h2>Available Auctions</h2>
     @if(is_null($currentLeague->auction_start_date))
     <p>The auction will start soon!</p>

@@ -26,16 +26,20 @@
             <div class="game-info-graph">
                 <div>
                     <span>Started</span>
-                    <strong itemprop="datePublished" content="{{$currentLeague->auction_start_date}}">{{date("l, jS F Y", strtotime($currentLeague->auction_start_date))}}</strong>
+                    <strong>{{date("l, jS F Y", strtotime($currentLeague->auction_start_date))}}</strong>
                     <span>Ends</span>
-                    <strong itemprop="datePublished" content="{{$currentLeague->end_date}}">{{date("l, jS F Y", strtotime($currentLeague->end_date))}}</strong>
-                </div>
+                    <strong>{{date("l, jS F Y", strtotime($currentLeague->end_date))}}</strong>
                 @if(isset($currentLeague->rule_set->name))
-                <div>
                     <span>Rules</span>
-                    <strong itemprop="applicationCategory"><a href="#">{{$currentLeague->rule_set->name}}</a></strong>
-                </div>
+                    <strong>{{$currentLeague->rule_set->name}}</strong>
+
                 @endif
+                    <span>League Pot Size</span>
+                    @if($currentLeague->players()->count() > 0)
+                    <strong>{{$currentLeague->players()->count() * 100}} USD</strong>
+                    @endif
+
+                </div>
             </div>
         </div>
     </div>
@@ -98,10 +102,6 @@
         <div class="clear-float"></div>
         <h2><span>Stats</span></h2>
 
-        <h3><span>League Pot Size</span></h3>
-        @if($currentLeague->players()->count() > 0)
-        <p><strong>{{$currentLeague->players()->count() * 100}} USD</strong></p>
-        @endif
 
 
         @if($currentLeague->auction_stage == 3)
