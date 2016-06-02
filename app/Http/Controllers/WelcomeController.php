@@ -59,22 +59,14 @@ class WelcomeController extends Controller {
         //randomly populate movies
         $next_film = Movie::where('release_at', '>', date("Y-m-d", $earliest_release_date))->first();
 
-/*        $available_movies = Movie::where('release_at', '>', date("Y-m-d", $earliest_release_date))
-            ->Where(function ($query) use ($max_bid) {
-                $query->where('opening_bid', '<', $max_bid)->orWhereNull('opening_bid');
-            })->lists('id');
-
-*/      //get front slider images
+        //get front slider images
 		$slider = SiteContent::where('type', 'F')->get();
 		$content = SiteContent::section('HOM');
 
 		if (isset($authUser)) {
 			$count_array['public'] = League::availableLeagues($authUser)->count();
 		} else 
-			$count_array['public'] = League::livePublicLeagues()->count(); /*where('type', 'U')->where('enabled', 1)
-	        	->Where(function ($query) {
-	        		$query->whereNull('auction_stage')->orWhere('auction_stage', '<', '4');
-	        	})->count();*/
+			$count_array['public'] = League::livePublicLeagues()->count(); 
 
 	    $count_array['newreleases'] = Movie::where('release_at', '>', date('Y-m-d', strtotime("-4 weeks")))->
 			where('release_at', '<=', date('Y-m-d'))->count();
@@ -418,6 +410,24 @@ class WelcomeController extends Controller {
 			->with('page_name', 'add-participants')
 			->with('object', $league)
 			->with('title', 'Choose who you want to play with');	
+	}
+
+	/**
+	 * League Made Page
+	 *
+	 * @return void
+	 */
+	public function leagueMade($id) {
+		$authUser = Auth::user();
+
+		$league = League::find($id);
+		
+		return view('league-made')
+			->with('league', $league)
+			->with('authUser', $authUser)
+			->with('page_name', 'league-made')
+			->with('object', $league)
+			->with('title', 'You have created your league');
 	}
 
 	public function getProfile($username) {

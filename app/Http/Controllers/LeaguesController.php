@@ -720,7 +720,7 @@ class LeaguesController extends Controller {
                     break;
             }
             Flash::success('Players have been added to the league');
-            return Redirect::route('manage', [$league_id]);
+            return Redirect::route('league-made', [$league_id]);
         }
         
         return Redirect::route('dashboard');
@@ -790,7 +790,7 @@ class LeaguesController extends Controller {
         }
 
         Flash::success('Players have been invited to the league');
-        return Redirect::route('manage', [$league->id]);
+        return Redirect::route('league-made', [$league->id]);
     }
 
     /**

@@ -328,3 +328,9 @@ Breadcrumbs::register('add-participants', function($breadcrumbs, $object)
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push('Add Participants to '.$object->name, route('select-participants'));
 });
+
+Breadcrumbs::register('league-made', function($breadcrumbs, $object)
+{
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('League created successfully', route('league-made'));
+});
