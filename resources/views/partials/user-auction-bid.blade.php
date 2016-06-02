@@ -3,17 +3,17 @@
     <h3>Place Bid</h3>
     <?php
         $min_bid = $rule->min_bid;
-        //$opening_bid = $auction->movie->opening_bid;
-        $opening_bid = $movie->opening_bid;
+        $opening_bid = $auction->opening_bid;
         $min_increment = (!is_null($rule->min_increment) && $rule->min_increment != 0) ? $rule->min_increment : 0.5;
         $max_increment = (!is_null($rule->max_increment) && $rule->max_increment != 0) ? $rule->max_increment : 1;
-        $bid_amount = $auction->bid_amount;
+        $bid_amount = $auction->pivot->bid_amount;
         $blind = ($rule->blind_bid == 'Y');
 
+        //echo "Bid: OB: $opening_bid MB: $min_bid BA: $bid_amount MI: $min_increment MC: $max_increment";
         if ($blind) {
             //if blind bid then there is no starting point due to previous bids
             $min_bid = $rule->min_bid;
-
+            
         } else {
 
             if ($bid_amount != 0 && $bid_amount > $rule->min_bid) {
@@ -34,9 +34,9 @@
             $max_bid = $leagueUser->balance;
     ?>
     <p>Your available balance is: <strong>{{number_format($leagueUser->balance, 2)}}</strong>.</p>
-    <p>Bid on <strong>{{$movie->name}}</strong>.</p>
+    <p>Bid on <strong>{{$auction->name}}</strong>.</p>
     <p>You may bid between <strong>{{number_format($min_bid, 2)}}USD</strong> and <strong>{{number_format($max_bid, 2)}}USD</strong>.</p>
-    {!! Form::open(array('route' => array('auctions.update', $movie->pivot->id), 'class'=>'form-horizontal row-fluid', 'method'=>'PUT')) !!}
+    {!! Form::open(array('route' => array('auctions.update', $auction->pivot->id), 'class'=>'form-horizontal row-fluid', 'method'=>'PUT')) !!}
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class="control-group">
           

@@ -10,7 +10,7 @@
     }
 
     table#expire img {
-        min-width: 75% !important;
+        max-width: 80px !important;
     }
 
     table#expire td {

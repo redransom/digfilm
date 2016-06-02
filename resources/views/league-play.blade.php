@@ -7,7 +7,7 @@
     @if($currentLeague->description != '')
     <h4><em>{{$currentLeague->description}}</em></h4>
     @endif
-   
+    
     <h2>Available Auctions</h2>
     @if(is_null($currentLeague->auction_start_date))
     <p>The auction will start soon!</p>

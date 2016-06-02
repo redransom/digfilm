@@ -11,7 +11,7 @@
     }
 
     .feature-table img {
-        min-width: 120% !important;
+        max-width: 80px !important;
     }
 
     .feature-table td {
@@ -21,13 +21,13 @@
 <table class="feature-table dark-gray">
     <thead>
         <tr><th width="15%">&nbsp;</th>
-        <th width="30%"><a href="{{Route('league-play', ['id' => $currentLeague->id, 'col'=>'name', 'order'=> (($order == 'asc') ? 'desc' : 'asc')])}}">Movie</a></th>
-        <th width="12%"><a href="{{Route('league-play', ['id' => $currentLeague->id, 'col'=>'release_at', 'order'=> (($order == 'asc') ? 'desc' : 'asc')])}}">Release Date</a></th>
-        <th width="15%">Opening<br/>Bid</th>
-        <th width="15%">Price /<br/>$ USD</th>
-        <th width="25%">Place Bid</th>
+        <th width="25%"><a href="{{Route('league-play', ['id' => $currentLeague->id, 'col'=>'name', 'order'=> (($order == 'asc') ? 'desc' : 'asc')])}}">Movie</a></th>
+        <th width="10%"><a href="{{Route('league-play', ['id' => $currentLeague->id, 'col'=>'release_at', 'order'=> (($order == 'asc') ? 'desc' : 'asc')])}}">Release Date</a></th>
+        <th width="12%">Opening<br/>Bid</th>
+        <th width="12%">Price<br/>$ USD</th>
+        <th width="31%">Place Bid</th>
         <th width="15%">Owner</th>
-        <th width="10%"><a href="{{Route('league-play', ['id' => $currentLeague->id, 'col'=>'auction_end_time', 'order'=> (($order == 'asc') ? 'desc' : 'asc')])}}">Time</a></th>
+        <th width="8%"><a href="{{Route('league-play', ['id' => $currentLeague->id, 'col'=>'auction_end_time', 'order'=> (($order == 'asc') ? 'desc' : 'asc')])}}">Time</a></th>
     </thead>
     <tbody>
     <?php $movieCnt = 1; ?>
@@ -41,11 +41,15 @@
         <td><a href="{{URL('movie-knowledge', [$auction->link()])}}">{{$auction->name}}</a></td>
         <td>{{date("j-M-y", strtotime($auction->release_at))}}</td>
 
+        <td>
         @if(is_null($auction->pivot->initial_bid))
-        <td></td>
+            @if($auction->opening_bid != 0)
+            {{$auction->opening_bid}}
+            @endif
         @else
-        <td>{{$auction->pivot->initial_bid}}</td>
+        {{$auction->pivot->initial_bid}}
         @endif
+        </td>
 
         <td>{{$auction->pivot->bid_amount}}</td>
 
@@ -53,10 +57,11 @@
             @if($auction->pivot->users_id == $authUser->id)
             <td class="bid--placed"><span>PLACED</span></td>
             @elseif ($leagueUser->balance > 0 && (is_null($auction->pivot->bid_amount) || $auction->pivot->bid_amount < $currentLeague->rule->max_bid) && ($leagueUser->balance > $auction->pivot->bid_amount))
-            <td id="bid_link{{$auction->pivot->id}}" class="public place--bid"><!--a href="{{URL('place-bid', [$auction->pivot->id])}}" class="popup1"--><a href="#poppup-open-bid_link{{$auction->pivot->id}}" class="popup league-btn">PLACE BID</a>
-            <div id="poppup-open-bid_link{{$auction->pivot->id}}" class="mfp-hide white-popup">   
-                 @include('partials.user-auction-bid', ['rule'=>$currentLeague->rule, 'movie'=>$auction])
-            </div>
+            <td id="bid_link{{$auction->pivot->id}}" class="public place--bid">
+                <a href="#poppup-open-bid_link{{$auction->pivot->id}}" class="popup league-btn">PLACE BID</a>
+                <div id="poppup-open-bid_link{{$auction->pivot->id}}" class="mfp-hide white-popup">   
+                     @include('partials.user-auction-bid', ['rule'=>$currentLeague->rule, 'auction'=>$auction, 'leagueUser'=>$leagueUser])
+                </div>
             </td>
             @elseif($leagueUser->balance > 0 && (!is_null($auction->pivot->bid_amount) || $auction->pivot->bid_amount >= $currentLeague->rule->max_bid))
             <td>MAX BID</td>

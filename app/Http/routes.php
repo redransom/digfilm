@@ -156,7 +156,7 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('user/{id}', ['as'=>'user', 'uses'=>'UsersController@show']);
         Route::get('user/{id}/edit', ['as'=>'user-edit', 'uses'=>'UsersController@edit']);
         Route::post('user/{id}/edit', ['as'=>'user-edit', 'uses'=>'UsersController@update']);
-        Route::get('user/{id}/disable', ['as'=>'user-disable', 'uses'=>'usersController@disable']);
+        Route::get('user/{id}/disable', ['as'=>'user-disable', 'uses'=>'UsersController@disable']);
         Route::get('user/{id}/enable', ['as'=>'user-enable', 'uses'=>'UsersController@enable']);
 
         /* all movies routes */

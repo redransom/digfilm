@@ -1207,7 +1207,7 @@ a.featured-select, #slider-info .padding-box ul li:before, .home-article.right u
 
 .league-item {
     width: 90%;
-    margin-bottom: 1em;
+    margin-bottom: 4px
 }
 .league-item:nth-child(odd) {
     margin-right: 1em;

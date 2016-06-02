@@ -49,9 +49,12 @@
                                             <td>{{date("d M Y", strtotime($user->created_at))}}</td>
                                             <td><a class="btn btn-mini btn-primary" href="{{URL('user/'.$user->id.'/edit')}}">Edit</a>
                                                 @if($user->enabled)
-                                                <a class="btn btn-mini btn-danger" href="{{URL('user/'.$user->id.'/disable')}}">Disable</a>
+                                                <a class="btn btn-mini btn-warning" href="{{URL('user/'.$user->id.'/disable')}}">Disable</a>
                                                 @else
                                                 <a class="btn btn-mini btn-info" href="{{URL('user/'.$user->id.'/enable')}}">Enable</a>
+                                                {!! Form::open(array('route' => array('users.destroy', $user->id), 'method' => 'delete', 'style'=>'display:inline')) !!}
+                                                    <button type="submit" class="btn btn-danger btn-mini">Delete</button>
+                                                {!! Form::close() !!}
                                                 @endif
                                             </td>
                                         </tr>
