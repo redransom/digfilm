@@ -93,16 +93,19 @@
 
 @if(isset($opening_bids))
 <!-- Opening Bids -->
-<?php $openingBid = $opening_bids[0]; ?>
+<?php 
+
+foreach ($opening_bids as $bid) {
+    if ($bid->topMedia()) {
+        $openingBid = $bid;
+        break;
+    }
+}
+  ?>
 <h2><span>Opening Bids</span></h2>
 <div class="content-padding">
 @if($openingBid->topMedia())
 <div class="promo-hero">
-    <style>
-    .promo-left a {
-        color: #000000 !important;
-    }
-    </style>
     @if($openingBid->topMedia())
     <img src="{{asset($openingBid->topMedia()->file_name)}}" alt="{{$openingBid->topMedia()->name}}" />
     @endif
@@ -119,11 +122,11 @@
         </div>
         @endif
         <div class="promo-left">
-            <h3><a href="{{URL('movie-knowledge', ['id'=>$openingBid->link()])}}">{{$openingBid->name}}</a></h3>
+            <h3>{{$openingBid->name}}</h3>
             <p>Opening Bid</p>
         </div>
         <div class="promo-right">
-            <p class="price">&pound;{{$openingBid->opening_bid}}</p>
+            <p class="price">&pound;{{number_format($openingBid->opening_bid, 0)}}</p>
         </div>
     </div>
 </div>

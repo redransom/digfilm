@@ -778,13 +778,18 @@ class LeaguesController extends Controller {
                         'invite_id'=>$invite_id];
 
                 //send invite email to new player
-                Mail::send('emails.invite', $data, function($message) use ($nonplayerEmail, $subject)
+                try
                 {
-                    $message->from('invite@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
-                    $message->subject($subject);
-                    $message->to($nonplayerEmail);
-                });
-
+                    Mail::send('emails.invite', $data, function($message) use ($nonplayerEmail, $subject) {
+                        $message->from('invite@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
+                        $message->subject($subject);
+                        $message->to($nonplayerEmail);
+                    });
+                }
+                catch (\Exception $e)
+                {
+                    dd($e->getMessage());
+                }
             }
 
         }

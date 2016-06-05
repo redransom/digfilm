@@ -42,6 +42,11 @@
     </div>
     <div class="clear"></div>
 
+    @if($rules->count() == 1)
+    <input type="hidden" name="rule_sets_id" value="{{$rules[0]->id}}" />
+
+    @else
+
     @foreach($rules as $rule)
     <!-- ************ - Small Package - ************** -->  
         <div class="small-package">
@@ -61,6 +66,8 @@
         </div><!--/ small-package-->
 
     @endforeach
+
+    @endif
     <div class="form-footer">
          <div class="divider--img"></div>
         <input type="submit" name="submit" class="submit-btn btn-small" id="submit" value="Next Step" />
