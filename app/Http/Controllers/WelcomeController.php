@@ -154,7 +154,7 @@ class WelcomeController extends Controller {
 				'subject'=>'Contact from website'];
 
 		Mail::send('emails.contact', $data, function($message) {
-            $message->to(env('CONTACT_EMAIL'), env('CONTACT_NAME'))
+            $message->to(getenv('CONTACT_EMAIL'), getenv('CONTACT_NAME'))
                 ->subject('Verify your email address');
         });
 		Flash::success('Thank you for your message - we will get in touch soon!');

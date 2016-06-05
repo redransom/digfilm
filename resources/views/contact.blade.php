@@ -15,15 +15,21 @@
                 @endforeach
             </p>
             @endif
+            <style>
+                select {
+                    height: 2.5em !important;
+                }
+            </style>
             <div class="the-form" style="margin-top:10px;">
+                <p>Please complete all fields.</p>
                 <form method="post" action="{{route('contact')}}" id="contactform" class="form-vertical">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <p>
-                        <label for="name"><span class="required">*</span>Your Name:</label>
+                        <label for="name">Your Name:</label>
                         <input type="text" name="name" id="name" />
                     </p>
                     <p>
-                        <label for="email"><span class="required">*</span>E-mail:</label>
+                        <label for="email">E-mail:</label>
                         <input type="text" name="email" id="email" />
                     </p>
                     <p>
