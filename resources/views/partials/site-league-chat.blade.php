@@ -31,6 +31,9 @@
                                 <input type="hidden" name="owners_id" value="{{$authUser->id}}" />
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <div class="respond-textarea">
+                                    <style>
+                                    *{direction:ltr!important!;}
+                                    </style>
                                     <div class="textarea-wrapper strike-wysiwyg-enable" rel="wys-current">
                                         <textarea name="message" rows="5"></textarea>
                                     </div>

@@ -861,6 +861,11 @@ h5.title a {
     border: 4px solid #fff;
 }
 
+.game-info-left img.game-poster {
+    max-height: 220px !important;
+    max-width: 220px !important;
+}
+
 .game-info-right .content-padding,.game-info-right .content-padding p{
     color: #fff;
 }
