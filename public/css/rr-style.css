@@ -486,9 +486,9 @@ h5.title a:hover {
     color: #fff;
 }
 
-.game-info-graph > div strong:hover {
+/*.game-info-graph > div strong:hover {
     color: #7c2c2c;
-}
+}*/
 
 #submit.submit-btn {
     background: #5d2121 ;
@@ -680,7 +680,8 @@ table.feature-table tbody td.bid--placed {
 }
 
 .panel h3 {
-   color: #353535 ; 
+   /*color: #353535 ; */
+   color: #575757 ; 
 }
 
 .panel strong, .panel dd, .panel-content h5 {

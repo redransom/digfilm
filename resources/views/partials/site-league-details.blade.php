@@ -76,7 +76,7 @@
 
                 @if($league->auction_stage < 3)
                 <div class="panel">
-                    <h2><span>Your details</span></h2>
+                    <h2><span>Balance &amp; Movies</span></h2>
                     
                     <div class="panel-content">
                         <p>In this league you have a balance of <strong>{{number_format($currentLeagueUser->balance, 2)}} USD</strong>.</p>

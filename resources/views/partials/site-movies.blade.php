@@ -8,6 +8,14 @@
     @endif
     <br/>
     <?php $movieCnt = 0; ?>
+
+    <style>
+        img.movie_image {
+            max-height: 217px;
+            max-width: 150px;
+        }
+
+    </style>
     @foreach($movies as $movie)
     @if((($movieCnt % 4) == 0) || $movieCnt == 0)
     <div class="row">
@@ -15,9 +23,9 @@
         <div class="one-quarter small--one-half">
             <a href="{{URL('movie-knowledge', ['id'=>$movie->link()])}}">
             @if($movie->topImage('L'))
-            <img src="{{asset($movie->topImage('L')->path())}}" alt="{{$movie->name}}" />
+            <img src="{{asset($movie->topImage('L')->path())}}" alt="{{$movie->name}}" class="movie_image"/>
             @else
-            <img src="{{asset('images/TNBF_missing_poster.jpg')}}" alt="{{$movie->name}}" />
+            <img src="{{asset('images/TNBF_missing_poster.jpg')}}" alt="{{$movie->name}}" class="movie_image" />
             @endif
             </a>
             <h3><a href="{{URL('movie-knowledge', ['id'=>$movie->link()])}}">{{$movie->name}}</a></h3>

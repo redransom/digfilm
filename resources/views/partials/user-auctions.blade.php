@@ -45,6 +45,8 @@
         @if(is_null($auction->pivot->initial_bid))
             @if($auction->opening_bid != 0)
             {{$auction->opening_bid}}
+            @else 
+            0.00
             @endif
         @else
         {{$auction->pivot->initial_bid}}

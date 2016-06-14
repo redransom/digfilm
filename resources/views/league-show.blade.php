@@ -10,35 +10,50 @@
         <img itemprop="image" src="{{asset('/images/TNBF.jpg')}}" class="game-poster" alt="" />
         @endif
         <div class="game-info-details">
-            <!--div class="game-info-buttons">
-                <a href="#" class="defbutton green"><i class="fa fa-bell"></i>Follow Film</a>
-                <a href="games-single-video-single.html" class="defbutton"><i class="fa fa-film"></i>View Trailer</a>
-            </div-->
             <div class="game-info-rating">
                 <h3>League Information</h3>
                 <hr />
-                <!--a href="post.html" class="defbutton"><i class="fa fa-file-text-o"></i>Read Review</a-->
             </div>
-            <!--div class="game-info-buttons">
-                <a href="games-single-shop.html" class="defbutton"><i class="fa fa-shopping-cart"></i>Buy game starting from <span class="pricetag">55 &euro;</span></a>
-                <a href="#" class="defbutton"><i class="fa fa-gamepad"></i>I have played</a>
-            </div-->
             <div class="game-info-graph">
                 <div>
                     <span>Started</span>
                     <strong>{{date("l, jS F Y", strtotime($currentLeague->auction_start_date))}}</strong>
+                    @if(!is_null($currentLeague->end_date))
                     <span>Ends</span>
                     <strong>{{date("l, jS F Y", strtotime($currentLeague->end_date))}}</strong>
-                @if(isset($currentLeague->rule_set->name))
-                    <span>Rules</span>
-                    <strong>{{$currentLeague->rule_set->name}}</strong>
-
-                @endif
+                    @endif
                     <span>League Pot Size</span>
                     @if($currentLeague->players()->count() > 0)
                     <strong>{{$currentLeague->players()->count() * 100}} USD</strong>
+                    @else
+                    <strong>0 USD</strong>
                     @endif
+                    @if(isset($currentLeague->rule_set->name))
+                    <h3>Rules</h3>
+                    <strong>{{$currentLeague->rule_set->name}}</strong>
 
+                    <span>Durations</span>
+                    <strong>Auction: {{$currentLeague->rule->auction_duration}} hours 
+                    @if($currentLeague->rule->round_duration != 0)
+                    <br/>Round: {{$currentLeague->rule->round_duration}} hours 
+                    @endif
+                    @if($currentLeague->rule->blind_bid != 'Y')
+                    <br/>Movies countdown: {{$currentLeague->rule->ind_film_countdown}} mins
+                    <br/>Timeout: {{$currentLeague->rule->auction_timeout}} mins
+                    </strong>
+                    <span>Bids</span>
+                    <strong>Min: {{$currentLeague->rule->min_bid}}USD Max: {{$currentLeague->rule->max_bid}}USD</strong>
+                    <span>Increment</span>
+                    <strong>Min: {{number_format($currentLeague->rule->min_increment, 2)}}USD Max: {{number_format($currentLeague->rule->max_increment, 2)}}USD</strong>
+                    @endif
+                    <span>Selection</span>
+                    <strong>Random: {{($currentLeague->rule->randomizer == "Y") ? "Yes" : "No"}} <br/>Auto-Select: {{($currentLeague->rule->auto_select == 'Y') ? "Yes" : "No"}} 
+                    @if(!is_null($currentLeague->rule->auction_movie_release))
+                    <br/>Grouped: {{$currentLeague->rule->auction_movie_release}}
+                    @endif</strong>
+                    <span>Misc</span>
+                    <strong>Movie Takings: {{intval($currentLeague->rule->movie_takings_duration)}} weeks</strong>
+                    @endif
                 </div>
             </div>
         </div>
@@ -61,7 +76,7 @@
 
         <h2><span name='info'>Description</span></h2>        
         <div class="content-padding">
-        {{$currentLeague->description}}
+        {!! $currentLeague->description !!}
         </div>
 
         <h2><span>Players</span></h2>
@@ -85,7 +100,7 @@
                         @endif
                         <span>{{$player->fullName()}}</span>
 
-                        </li>
+                    </li>
                     @endforeach
                 </ul>
                 <div class="clear-float"></div>
@@ -100,12 +115,9 @@
         @endif
 
         <div class="clear-float"></div>
-        <h2><span>Stats</span></h2>
-
-
-
         @if($currentLeague->auction_stage == 3)
 
+        <h2><span>Stats</span></h2>
         <h3>League Revenue</h3>
         <ul>
             <li>Total League Revenue: <strong>{{number_format($currentLeague->rosters()->sum('total_gross')/1000000, 2)}}m USD</strong></li>

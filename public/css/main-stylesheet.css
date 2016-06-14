@@ -8632,9 +8632,9 @@ a.defbutton {
 	margin-bottom: 3px;
 }
 
-.game-info-graph > div:hover span {
+/*.game-info-graph > div:hover span {
 	color: #aaa;
-}
+}*/
 
 .game-info-graph > div strong {
 	display: block;
@@ -8642,9 +8642,9 @@ a.defbutton {
 	color: #707070;
 }
 
-.game-info-graph > div:hover strong {
+/*.game-info-graph > div:hover strong {
 	color: #232323;
-}
+}*/
 
 
 .game-info-rating {

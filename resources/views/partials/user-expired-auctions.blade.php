@@ -19,7 +19,8 @@
 </style>
 <table class="feature-table dark-gray" id="expire">
     <thead>
-        <tr><th width="11%">&nbsp;</th><th width="30%">Movie</th><th width="12%">Release Date</th><th width="15%">Opening<br/>Bid</th><th width="15%">Final Price/<br/>$ USD</th><th width="15%">Owner</th></tr>
+        <tr><th width="11%">&nbsp;</th><th width="30%">Movie</th><th width="12%">Release Date</th>
+        <th width="15%">Opening<br/>Bid</th><th width="15%">Final Price/<br/>$ USD</th><th width="15%">Owner</th></tr>
     </thead>
     <tbody>
     
@@ -39,7 +40,12 @@
         @endif{{$auction->name}}</a></td>
         <td>{{date("j-M-y", strtotime($auction->release_at))}}</td>
         @if(is_null($auction->pivot->initial_bid))
-        <td></td>
+        <td>@if($auction->opening_bid != 0)
+            {{$auction->opening_bid}}
+            @else
+            0.00
+            @endif
+        </td>
         @else
         <td>{{$auction->pivot->initial_bid}}</td>
         @endif
