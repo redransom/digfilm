@@ -166,7 +166,7 @@
                         <div class="info-message">
                             <a href="#" class="close-info"><i class="fa fa-times"></i></a>
                             <p><strong>Information: </strong>
-                            {{ Session::get('flash_notification.message') }}</p>
+                            {!! Session::get('flash_notification.message') !!}</p>
                         </div><!--/ info-->
                         @endif
                         <!-- <div class="content-padding">

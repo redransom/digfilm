@@ -67,9 +67,6 @@
             </div>
             <ul>
                 <li class="active" style="background-color: #921913;"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;Information</li>
-                <!--li><a href="games-single-news.html"><i class="fa fa-comments"></i>&nbsp;&nbsp;News</a></li-->
-                <!--li><a href="games-single-video.html"><i class="fa fa-film"></i>&nbsp;&nbsp;Video (3)</a></li>
-                <li><a href="photo-gallery-single.html"><i class="fa fa-camera-retro"></i>&nbsp;&nbsp;Photos (18)</a></li-->
             </ul>
         <!-- END .game-menu -->
         </div>

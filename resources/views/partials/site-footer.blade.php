@@ -40,7 +40,7 @@
                     <div class="left">&copy; Copyright <?php echo date("Y"); ?> <strong>TheNextBigFilm</strong> designed by <strong>redransom.co.uk</strong></div>
                     <div class="right">
                         <ul>
-                            <li><a href="/">Homepage</a></li>
+                            <li><a href="/">Home</a></li>
                             <li><a href="/news">News</a></li>
                             <li><a href="/rules">Rules</a></li>
                             <li><a href="/about">About</a></li>

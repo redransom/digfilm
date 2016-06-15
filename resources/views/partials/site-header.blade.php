@@ -24,7 +24,9 @@
                                         <li><a href="/comingsoon">Coming Soon</a></li>
                                     </ul>
                                 </li>
+                                @if(!isset($authUser)))
                                 <li><a href="/auth/register"><span><i class="fa fa-user-plus"></i><strong>Sign Up</strong></span></a></li>
+                                @endif
                             </ul>
                         </nav>
                     </div>

@@ -2,13 +2,15 @@
 
 @section('content')
 <h2><span>Choose who you want to play!</span></h2>
-
 <div class="content-padding">
-    <p>You can select any players from your friends list or invite players to join.</p>
+<p>You can select any players from your friends list or invite players to join.</p>
+</div>
+
+@if($users->count()>0)
+<div class="content-padding">
     <div class="photo-blocks">
 
-        <h4>Choose Friends</h4>  
-        @if($users->count()>0)
+        <h3>Choose friends from the game</h3>  
         {!! Form::open(array('route' => 'choose-participants', 'class'=>'form-horizontal row-fluid', 'id'=>'contactform')) !!}
         <p>You can choose <strong>{{$league->rule->max_players - $league->players->count()}}</strong> more players.</p>
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -42,15 +44,40 @@
         </div>
 
         </form>
-        @else
-        <p>Sorry, you have no friends currently.</p>
-        @endif
+    </div>
+    <div align="center">
+        <style>
+        h2.background {
+            position: relative;
+            padding-top: 1em;
+            z-index: 1;
+            font-size: 2em;
+            
+            &:before {
+                border-top: 2px solid #dfdfdf !important;
+                content:"";
+                margin: 0 auto; /* this centers the line to the full width specified */
+                position: absolute; /* positioning must be absolute here, and relative positioning must be applied to the parent */
+                top: 50%; left: 0; right: 0; bottom: 0;
+                width: 95%;
+                z-index: -1;
+            }
 
+            span { 
+                /* to hide the lines from behind the text, you have to set the background color the same as the container */ 
+                background: #fff; 
+                padding: 0 15px; 
+            }
+        }
+
+        </style>
+        <h2 class="background"><span>OR</span></h2>
     </div>
 </div>
+@endif
 
 <div class="content-padding">
-    <h4>Invite Friend</h4>
+    <h3>Invite some friends from outside the game</h3>
     <p>Use this form if you have friends who are not playing the game currently and you'd like to invite them.</p>
     {!! Form::open(array('route' => 'league-invite', 'class'=>'form-vertical', 'id'=>'contactform')) !!}
     <div class="the-form league--form">

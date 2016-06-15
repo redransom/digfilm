@@ -738,11 +738,12 @@ class LeaguesController extends Controller {
 
         $input = Input::all();
         $league = League::find($input['leagues_id']);
+        $invite_message = "";
 
         if (!is_null($authUser->forenames)) {
             $ownerName = $authUser->forenames. "(".$authUser->name.")";
         } else
-            $ownerName .= $authUser->name;
+            $ownerName = $authUser->name;
 
         /* Take details and send it as an email invite */
         for($name_count=0; $name_count<count($input['name']); $name_count++) {
@@ -760,8 +761,13 @@ class LeaguesController extends Controller {
                 if (!isset($currentUser->id)) {
                     $invite->name = $nonplayerName;
                     $invite->email = $nonplayerEmail;
+
+                    $invite_message .= "New Player (".$invite->name.") has been invited to join the site.<br/>";
+
                 } else {
                     $invite->users_id = $currentUser->id;
+
+                    $invite_message .= "Current Player (".$currentUser->fullName().") has been invited to join the league.<br/>";
                 }
 
                 $invite->save();
@@ -794,7 +800,7 @@ class LeaguesController extends Controller {
 
         }
 
-        Flash::success('Players have been invited to the league');
+        Flash::success('Players have been invited to the league:<br/>'.$invite_message);
         return Redirect::route('league-made', [$league->id]);
     }
 
