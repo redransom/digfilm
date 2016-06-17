@@ -6,6 +6,7 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
+use app\Models\League;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
 
@@ -46,7 +47,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	}
 
 	public function startedLeagues() {
-		return $this->inLeagues()->where('auction_stage', '<', '2')->orWhereNull('auction_stage');
+		$inleagues = $this->inLeagues()->lists('league_id');
+		return League::whereIn('id', $inleagues)->where('auction_stage', '<', '2')->orWhereNull('auction_stage');
 	}
 
 	public function auctions() {

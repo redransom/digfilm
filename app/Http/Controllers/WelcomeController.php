@@ -567,10 +567,18 @@ class WelcomeController extends Controller {
 		if (!isset($authUser))
 			return redirect('/auth/login');
 
+		//need to make sure the player is enabeld for this league
 		$league = League::find($id);
+		$currentLeagueUser = LeagueUser::where('user_id', $authUser->id)->where('league_id', $league->id)->first();
+		
+		if (!$currentLeagueUser->enabled) {
+			Flash::success('You don\'t have permission to view this league!');
+			return redirect('dashboard');
+		}
+
 		$rankings = LeagueRoster::rankings($id);
 		
-		$currentLeagueUser = LeagueUser::where('user_id', $authUser->id)->where('league_id', $league->id)->first();
+		
 		return view('league-movie-roster')
 			->with('currentLeague', $league)
 			->with('page_name', 'roster')

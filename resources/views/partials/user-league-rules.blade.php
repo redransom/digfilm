@@ -1,4 +1,5 @@
-    <h2>Rules</h2>
+    <h2><span>Rules</span></h2>
+    <div class="content-padding">
         <table class="feature-table dark-gray">
             <tr>
                 <td>Players</td>
@@ -47,3 +48,4 @@
                 <td>Movie Takings: {{$rule->movie_takings_duration}} weeks</td>
             </tr>
         </table>
+    </div>

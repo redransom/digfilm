@@ -845,7 +845,7 @@ class LeaguesController extends Controller {
 
             }
 
-            return Redirect::route('league-show', [$league->id]);
+            return Redirect::route('dashboard');
         } else {
             //a new player - redirect to the registration page
             Flash::success('Thank you for accepting '.$league->owner->name.' invitation to join the '.$league->name.' league.');

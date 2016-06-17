@@ -1,4 +1,4 @@
-
+<div class="content-padding">
 @if($currentLeague->auctions()->where('ready_for_auction', 1)->count() > 0)
 <p>See a list of movies you can bid on:</p>
 <table class="feature-table dark-gray">
@@ -41,3 +41,4 @@
 @else
 <h3>There are no auctions left in this league.</h3>
 @endif
+</div>

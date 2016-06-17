@@ -159,6 +159,14 @@ class AuctionsController extends Controller {
             return redirect('/auth/login');
 
         $auction = Auction::find($id);
+
+        if (strtotime($auction->auction_end_time) < time()) {
+            //the auction has expired - return with a time gone message
+            Flash::message('We are sorry but the auction has finished for that movie.');
+            return Redirect::route('league-play', [$auction->leagues_id]);
+        }
+
+
         $rule = $auction->league->rule;
         $blind = ($rule->blind_bid == 'Y');
         $input = $request->all();
