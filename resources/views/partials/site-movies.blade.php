@@ -32,7 +32,7 @@
             @if(!is_null($movie->opening_bid))
             <p>Open Bid: <span class="highlight">&pound;{{$movie->opening_bid}}</span></p>
             @endif
-            <p>Release Date: <span class="highlight">{{date("M Y", strtotime($movie->release_at))}}</span></p>
+            <p>Released: <span class="highlight">{{date("j M Y", strtotime($movie->release_at))}}</span></p>
         </div>
 
     <?php $movieCnt++; ?>

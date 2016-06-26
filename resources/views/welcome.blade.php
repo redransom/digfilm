@@ -104,7 +104,7 @@ foreach ($opening_bids as $bid) {
   ?>
 <h2><span>Opening Bids</span></h2>
 <div class="content-padding">
-@if($openingBid->topMedia())
+@if(isset($openingBid) && !is_null($openingBid) && $openingBid->topMedia())
 <div class="promo-hero">
     @if($openingBid->topMedia())
     <img src="{{asset($openingBid->topMedia()->file_name)}}" alt="{{$openingBid->topMedia()->name}}" />
@@ -149,7 +149,7 @@ foreach ($opening_bids as $bid) {
 
     <h3><a href="{{URL('movie-knowledge', ['id'=>$movie_bid->link()])}}">{{$movie_bid->name}}</a></h3>
     <p>Open Bid: <span class="highlight">&pound;{{$movie_bid->opening_bid}}</span></p>
-    <p>Release Date: <span class="highlight">{{date("M Y", strtotime($movie_bid->release_at))}}</span></p>
+    <p>Released: <span class="highlight">{{date("j M Y", strtotime($movie_bid->release_at))}}</span></p>
 </div>
 @endfor
 </div><!--/ .content-container-->
@@ -182,7 +182,7 @@ foreach ($opening_bids as $bid) {
                         <h5 class="title"><a href="{{URL('movie-knowledge', ['id'=>$item->movie->slug])}}">
                         {{$item->movie->name}}</a></h5>
                         <div class="caption-info" style="font-size: 0.9em">
-                            <span class="description">Include at <span style="font-color: #F00">&pound;{{number_format($item->movie->opening_bid, 2)}}</span></span> | <span class="date">Release Date: <span style="font-color: #F00">{{date("M Y", strtotime($item->movie->release_at))}}</span></span>
+                            <span class="description">Include at <span style="font-color: #F00">&pound;{{number_format($item->movie->opening_bid, 2)}}</span></span> | <span class="date">Released: <span style="font-color: #F00">{{date("j M Y", strtotime($item->movie->release_at))}}</span></span>
                         </div>
                     </div><!--/ .caption-->                            
                     <div class="clear"></div>

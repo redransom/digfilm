@@ -43,7 +43,7 @@
                     @else
                     Front
                     @endif</td>
-                    <td class="center"><a href="{{URL('users/'.$content->owner->id)}}">{{$content->owner->name}}</a></td>
+                    <td class="center">{{$content->owner->name}}</td>
                     <td>
                     <a class="btn btn-mini btn-primary" href="{{URL('sitecontent/'.$content->id.'/edit')}}">Edit</a>
 

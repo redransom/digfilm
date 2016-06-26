@@ -2,6 +2,7 @@
 
 @section('content')
 <script src='//cdn.tinymce.com/4/tinymce.min.js'></script>
+@if($type == 'F')
 <script>
 tinymce.init({
   selector: '#summary',
@@ -13,6 +14,8 @@ tinymce.init({
   ]
 });
 </script>
+@endif
+@if($type != 'F')
 <script>
 tinymce.init({
   selector: '#body',
@@ -29,6 +32,7 @@ tinymce.init({
   ]
 });
 </script>
+@endif
 <div class="content">
 
     <div class="module">
@@ -83,7 +87,7 @@ tinymce.init({
                     <div class="control-group">
                         <label class="control-label" for="SiteContentSummary">Summary</label>
                         <div class="controls">
-                            {!! Form::textarea('summary', null, ['class'=>'span8', 'placeholder'=>'Brief description of content...', 'id'=>'summary']) !!}
+                            {!! Form::textarea('summary', null, ['class'=>'span8', 'placeholder'=>'Brief description of content...', 'id'=>'summary', 'maxlength'=>300]) !!}
                         </div>
                     </div>
                     @endif
@@ -92,7 +96,7 @@ tinymce.init({
                     <div class="control-group">
                         <label class="control-label" for="SiteContentBody">Body</label>
                         <div class="controls">
-                            {!! Form::textarea('body', null, ['class'=>'span8', 'placeholder'=>'WYSIWYG here...', 'id'=>'body']) !!}
+                            {!! Form::textarea('body', null, ['class'=>'span8', 'placeholder'=>'WYSIWYG here...', 'id'=>'body', 'maxlength'=>4000]) !!}
                         </div>
                     </div>
                     @else

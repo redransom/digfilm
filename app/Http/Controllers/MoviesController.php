@@ -483,6 +483,7 @@ class MoviesController extends Controller {
         } else 
             Flash::message('You don\'t have the permissions to complete this task.');
 
-        return redirect()->back();
+        //if we come from a search then we need to make sure we can redirect to index
+        return Redirect::route('movies.index');//return redirect()->back();
     }
 }

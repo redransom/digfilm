@@ -89,12 +89,6 @@
             <div class="game-overlay-info">
                 <h1 itemprop="itemreviewed">{{$movie->name}}</h1>
             </div>
-            <!--ul>
-                <li class="active" style="background-color: #921913;"><a href="#info"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;Information</a></li>
-                <li><a href="#stats"><i class="fa fa-comments"></i>&nbsp;&nbsp;Stats</a></li>
-                <li><a href="games-single-video.html"><i class="fa fa-film"></i>&nbsp;&nbsp;Video (3)</a></li>
-                <li><a href="photo-gallery-single.html"><i class="fa fa-camera-retro"></i>&nbsp;&nbsp;Photos (18)</a></li>
-            </ul-->
         <!-- END .game-menu -->
         </div>
 
@@ -121,7 +115,7 @@
             <h4>{{$movie->summary}}</h4>
         </div>
         <br/>
-        <h2><span>Media</span></h2>
+        <!--h2><span>Media</span></h2>
         <div class="content-padding">
             <div class="row">
                 @if($movie->images()->count() > 0)
@@ -141,7 +135,7 @@
                 <p>There is no media for this movie currently.</p>
                 @endif
             </div>
-        </div>
+        </div-->
 
          @if($movie->bids()->count() > 0 && isset($authUser))
             <h2><span>Stats</span></h2>

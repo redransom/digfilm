@@ -25,7 +25,7 @@
                     <div class="caption">
                         <h5 class="title"><a href="{{URL('movie-knowledge', $movie->link())}}">{{$movie->name}}</a></h5>
                         <div class="caption-info">
-                            <span class="date">{{date("l, jS F Y", strtotime($movie->release_at))}} | </span>
+                            <span class="date">{{date("l, jS F Y", strtotime($movie->release_at))}}</span>
                         </div>
                     </div><!--/ .caption-->                            
                     <div class="clear"></div>

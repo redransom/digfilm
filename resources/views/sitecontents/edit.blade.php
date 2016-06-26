@@ -2,6 +2,7 @@
 
 @section('content')
 <script src='//cdn.tinymce.com/4/tinymce.min.js'></script>
+@if($content->type == 'F')
 <script>
 tinymce.init({
   selector: '#summary',
@@ -13,6 +14,8 @@ tinymce.init({
   ]
 });
 </script>
+@endif
+@if($content->type != 'F')
 <script>
 tinymce.init({
   selector: '#body',
@@ -29,6 +32,7 @@ tinymce.init({
   ]
 });
 </script>
+@endif
 <div class="content">
 
     <div class="module">
@@ -74,7 +78,7 @@ tinymce.init({
                     <div class="control-group">
                         <label class="control-label" for="SiteContentSummary">Summary</label>
                         <div class="controls">
-                            {!! Form::textarea('summary', $content->summary, ['class'=>'span8', 'placeholder'=>'Brief description of content...', 'id'=>'summary']) !!}
+                            {!! Form::textarea('summary', $content->summary, ['class'=>'span8', 'placeholder'=>'Brief description of content...', 'id'=>'summary', 'maxlength'=>300, 'rows'=>5]) !!}
                         </div>
                     </div>
                     @endif
@@ -105,7 +109,7 @@ tinymce.init({
                     <div class="control-group">
                         <label class="control-label" for="SiteContentThumbnail">Thumbnail</label>
                         <div class="controls">
-                            @if(!is_null($content->thumbnail))
+                            @if(!is_null($content->thumbnail) && $content->thumbnail != '')
                             <img src="{{asset($content->thumbnail)}}" width="100px"/>
                             @endif
                             {!! Form::file('thumbnail', null, ['class'=>'span8']) !!}
