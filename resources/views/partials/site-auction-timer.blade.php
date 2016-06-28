@@ -13,6 +13,7 @@
         $(this).html(event.strftime('%M:%S'));
         <?php } ?>
         if(event.elapsed) {
+            alert('#{{$name}}_{{$auctionid}} has ended');
             $('#{{$name}}_{{$auctionid}}').val = "ENDED";
         }
       });
