@@ -199,7 +199,7 @@ class SiteContentsController extends Controller {
         $sitecontent->section = $input['section'];
         $sitecontent->title = $input['title'];
         $sitecontent->slug = str_slug($sitecontent->title, "-");
-        if (isset($input['meta_keywords'] && !empty($input['meta_keywords']))
+        if (isset($input['meta_keywords']) && !empty($input['meta_keywords']))
             $sitecontent->meta_keywords = $input['meta_keywords'];
 
         if (isset($input['meta_description']) && !empty($input['meta_description']))
