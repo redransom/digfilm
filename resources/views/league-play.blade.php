@@ -44,7 +44,7 @@
         $(this).html(event.strftime('%-M:%S'));
         <?php } ?>
         if(event.elapsed) {
-            $('#{{$name}}{{$auctionid}}').val = "ENDED";
+            $('#{{$name}}{{$auctionid}}').html("ENDED");
         }
       });
     </script>

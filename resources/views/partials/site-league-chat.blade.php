@@ -4,6 +4,25 @@
                     
                     <div class="panel-content">
                         @if($messages->count() > 0)
+                        <style>
+                            div.d-articles {
+                                max-height: 250px;
+                                clear: both;
+                                overflow-y: auto;    
+                            }
+                            .item-content p:last-of-type {
+                                padding-bottom: 0.5em !important;
+                            }
+                            
+                            div.item-header img {
+                                max-width: 54px;
+                            }
+
+                            div.d-articles div.item {
+                                padding-bottom: 0px !important;
+                                margin-bottom: 0px !important;
+                            }
+                        </style>
                         <div class="d-articles">
                             @foreach($messages as $message)
                             <div class="item">
@@ -12,12 +31,12 @@
                                     @if($message->owner->thumbnail != "")
                                     <img src="{{asset($message->owner->thumbnail)}}" alt="" />
                                     @else
-                                    <img src="{{asset('images/photos/image-95.jpg')}}" alt="" />
+                                    <img src="{{asset('images/TNBF.png')}}" alt="" />
                                     @endif
                                     </a>
                                 </div>
                                 <div class="item-content">
-                                    <h5>{{$message->owner->fullName()}} said {{date("d M Y h:iA", strtotime($message->created_at))}}</h5>
+                                    <h5>{{$message->owner->fullName()}} said {{date("d M Y g:iA", strtotime($message->created_at))}}</h5>
                                     <p>{!! $message->message !!}</p>
                                 </div>
                             </div>
@@ -34,7 +53,7 @@
                                     <style>
                                     *{direction:ltr!important!;}
                                     </style>
-                                    <div class="textarea-wrapper strike-wysiwyg-enable" rel="wys-current">
+                                    <div class="textarea-wrapper" rel="wys-current">
                                         <textarea name="message" rows="5"></textarea>
                                     </div>
                                 </div>

@@ -42,7 +42,7 @@
                         @if((is_null($league->rule->auction_movie_release) || $league->rule->auction_movie_release == 0))
                         <h3>Remaining Auction Time: </h3>
                         <div class="round"><?php auctionTimer($league->id, $league->auction_close_date, 'league'); ?></div>
-                        
+                        <p>&nbsp;</p>
                         @else
                         <!-- show rounds detail -->
                         @if($league->current_round < $league->round_amount)
@@ -54,6 +54,7 @@
 
                         <h3>Remaining Round Time: </h3>
                         <div class="round"><?php auctionTimer($league->id, $league->round_start_date, 'league'); ?></div>
+                        <p>&nbsp;</p>
                         @endif 
                         <!-- end rounds check -->
                         
@@ -70,7 +71,7 @@
                         <h3>League Closes: </h3>
                         <p>At: <strong>{{date("j M Y g:iA", strtotime($league->end_date))}}</strong></p>
                         @endif 
-                        <p>&nbsp;</p>
+                        
                     </div>
                 </div>
 
@@ -90,6 +91,7 @@
                         @endforeach
                         </dl>
                         @endif
+                        <p>&nbsp;</p>
                     </div>
                 </div>
                 
@@ -130,7 +132,7 @@
 
                 @endif
 
-                @include('partials.site-league-chat', ['messages'=>$league->messages()->orderBy('created_at', 'DESC')->limit(3)->get()])
+                @include('partials.site-league-chat', ['messages'=>$league->messages()->orderBy('created_at', 'DESC')->get()])
                 <!-- ************** - END League Details - ************** -->
 
 <?php

@@ -1050,23 +1050,21 @@ class LeaguesController extends Controller {
 
                 //TODO: Make this option as a rule maybe?
                 $earliest_release_date = strtotime("+1 week", strtotime($league->auction_close_date));
-                
+                $latest_release_date = strtotime("+3 months", strtotime($league->auction_close_date));
+
                 //randomly populate movies
-                if (is_null($max_bid))
+                if (is_null($max_bid) || $max_bid == '')
                     $max_bid = 100;
                 
                 $available_movies = Movie::where('release_at', '>', date("Y-m-d", $earliest_release_date))
                     ->Where(function ($query) use ($max_bid) {
                         $query->where('opening_bid', '<=', $max_bid)->orWhereNull('opening_bid');
-                    })->lists('id');
+                    })->where('release_at', '<', date("Y-m-d", $latest_release_date))->lists('id');
 
                 $available_movie_count = count($available_movies);
                 
                 //clear out movies if some already there
                 LeagueMovie::where('leagues_id', $league->id)->delete();
-/*  $queries = DB::getQueryLog();
-                print_r($queries);  */             
-
                 Log::info("Movie Check - Available: ".count($available_movies)." Min Required: ".$min_movies);
 
                 //if Movie amount is less than what's required - we need to get an amount that is allowable based on 

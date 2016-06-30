@@ -13,6 +13,7 @@
 
         .feature-table img {
             max-width: 80px !important;
+            max-height: 58px !important;
         }
 
         .feature-table td {

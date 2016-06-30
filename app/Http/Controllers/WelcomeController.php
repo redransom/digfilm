@@ -78,8 +78,10 @@ class WelcomeController extends Controller {
 		$count_array['player'] = User::where('enabled', '1')->whereIn('id', $player_role_ids)->count();
 
 	    $count_array['private'] = League::where('type', 'R')->where('enabled', 1)->count();
+	    $latest_release_date = strtotime("+3 months");
         $opening_bids = Movie::where('opening_bid_date', '<=', date("Y-m-d"))->whereNotNull('opening_bid_date')->
-        	where('opening_bid', '>', 0)->where('enabled', '1')->orderBy('updated_at', 'DESC')->limit(5)->get();
+        	where('opening_bid', '>', 0)->where('enabled', '1')->orderBy('updated_at', 'DESC')->
+        	where('release_at', '<', date("Y-m-d", $latest_release_date))->limit(5)->get();
 
         $recent_leagues = League::where('enabled', '1')->Where(function ($query) {
 	        		$query->whereNull('auction_stage')->orWhere('auction_stage', '<', '2');

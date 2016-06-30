@@ -17,6 +17,10 @@
 table {
     font-size: 0.9em;
 }
+.feature-table img {
+    max-width: 58px !important;
+    max-height: 58px !important;
+}
 </style>
 <div class="content-padding">
 <table class="feature-table dark-gray">
