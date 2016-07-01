@@ -88,6 +88,7 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('join-league/{id}', ['as'=>'join-league', 'uses'=>'LeaguesController@join']);
 
         Route::post('players/{id}/rules', ['as'=>'player-rules', 'uses'=>'LeaguesController@postPlayerRules']);
+        Route::get('config-rules/{id}', ['as'=>'config-rules', 'uses'=>'WelcomeController@configRules']);
 
         /* Admin routes */
 

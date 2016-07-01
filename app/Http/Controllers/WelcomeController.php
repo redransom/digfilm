@@ -415,6 +415,27 @@ class WelcomeController extends Controller {
 	}
 
 	/**
+	 * Add participants to league
+	 *
+	 * @return void
+	 */
+	public function configRules($id) {
+		$authUser = Auth::user();
+
+		$league = League::find($id);
+        $player_array = ['1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5', '6'=>'6', '7'=>'7', '8'=>'8', '9'=>'9', '10'=>'10'];
+        $movie_array = ['10'=>'10', '20'=>'20', '30'=>'30', '40'=>'40', '50'=>'50', '60'=>'60', '70'=>'70', '80'=>'80', '90'=>'90', '100'=>'100'];
+		return view('config-rules')
+            ->with('player_array', $player_array)
+            ->with('movie_array', $movie_array)
+			->with('league', $league)
+			->with('authUser', $authUser)
+			->with('page_name', 'config-rules')
+			->with('object', $league)
+			->with('title', 'Choose your rules');	
+	}
+
+	/**
 	 * League Made Page
 	 *
 	 * @return void

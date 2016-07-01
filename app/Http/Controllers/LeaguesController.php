@@ -213,7 +213,7 @@ class LeaguesController extends Controller {
             if (isset($leaguerule)) {
                 //check if the auto complete is chosen go to the choose participants
                 if ($leaguerule->auto_select == 'Y')
-                    return Redirect::route('select-participants', [$league->id]);
+                    return Redirect::route('config-rules', [$league->id]);
             }
             return Redirect::route('choose-movies', [$league->id]);
         }
@@ -497,6 +497,7 @@ class LeaguesController extends Controller {
      */
     public function postPlayerRules($id) {
         $input = Input::all();
+        $location = isset($input['location']) ? $input['location'] : "N";
 
         //update min players/movies and start date
         $league = League::find($id);
@@ -517,12 +518,17 @@ class LeaguesController extends Controller {
 
             $rule->save();
 
-            if($input['auction_start_date'] != '') 
+            if(isset($input['auction_start_date']) && $input['auction_start_date'] != '') 
                 $league->auction_start_date = $input['auction_start_date'];
             $league->save();
 
-            Flash::success('League rules have been updated.');
+            if ($location != 'R')
+                Flash::success('League rules have been updated.');
         }
+
+        //if we have come from the create league process go on to the add participants 
+        if ($location == 'R')
+            return Redirect::route('select-participants', [$league->id]);
 
         return redirect()->back();
     }
