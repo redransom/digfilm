@@ -22,6 +22,7 @@
                                 <dt>Due to Start</dt>
                                 @else
                                 <dt>Started</dt>
+                                <dd><a href="{{URL('league-auctions', ['id'=>$league->id])}}">Auctions being played</a></dd>
                                 @endif
                                 <dd>{{date("j M Y g:iA", strtotime($league->auction_start_date))}}</dd>
                                 @if(!is_null($league->auction_close_date))

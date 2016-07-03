@@ -55,6 +55,30 @@ class AuctionsController extends Controller {
     }
 
     /**
+     * Display a listing of the rule sets.
+     *
+     * @return Response
+     */
+    public function index_by_league($league_id = 0)
+    {
+        if ($league_id == 0)
+            return redirect('admin-dashboard');
+
+        $authUser = Auth::user();
+        if (!isset($authUser))
+            return redirect('/auth/login');
+
+        $league = League::find($league_id);
+ 
+        return View("auctions.index_by_league")
+            ->with('league', $league)
+            ->with('object', $league)
+            ->with('authUser', $authUser)
+            ->with('page_name', 'league-auctions')
+            ->with('title', 'League Auctions for '.$league->name);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return Response

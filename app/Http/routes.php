@@ -121,6 +121,7 @@ Route::group(['middleware'=>'auth'], function() {
         Entrust::routeNeedsRole('league/*', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('rulesets*', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('auctions', ['Admin'], Redirect::to('/'));
+        Entrust::routeNeedsRole('league-auctions', ['Admin'], Redirect::to('/'));
 
         Entrust::routeNeedsRole('league-disable', ['Admin'], Redirect::to('/'));
         Entrust::routeNeedsRole('league-enable', ['Admin'], Redirect::to('/'));
@@ -151,7 +152,7 @@ Route::group(['middleware'=>'auth'], function() {
         Route::get('league/{id}/removeplayer', ['as'=>'league-remove-player', 'uses'=>'LeaguesController@removePlayer']);
         Route::get('league/{id}/player', ['as'=>'league-add-player', 'uses'=>'LeaguesController@addPlayer']);
         Route::post('league/{id}/player', ['as'=>'add-player', 'uses'=>'LeaguesController@postPlayer']);
-
+        Route::get('league-auctions/{id}', ['as'=>'league-auctions', 'uses'=>'AuctionsController@index_by_league']);
         /* User Routes */
         Route::get('user', ['as'=>'user-create', 'uses'=>'UsersController@create']);
         Route::get('users/{type}', ['as'=>'users', 'uses'=>'UsersController@index']);
