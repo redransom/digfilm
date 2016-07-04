@@ -60,7 +60,7 @@ class WelcomeController extends Controller {
         $next_film = Movie::where('release_at', '>', date("Y-m-d", $earliest_release_date))->first();
 
         //get front slider images
-		$slider = SiteContent::where('type', 'F')->get();
+		$slider = SiteContent::where('type', 'F')->where('enabled', '1')->get();
 		$content = SiteContent::section('HOM');
 
 		if (isset($authUser)) {

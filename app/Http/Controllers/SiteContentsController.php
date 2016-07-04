@@ -199,6 +199,9 @@ class SiteContentsController extends Controller {
         $sitecontent->section = $input['section'];
         $sitecontent->title = $input['title'];
         $sitecontent->slug = str_slug($sitecontent->title, "-");
+        if(isset($input['link_url']) && !empty($input['link_url']))
+            $sitecontent->link_url = $input['link_url'];
+
         if (isset($input['meta_keywords']) && !empty($input['meta_keywords']))
             $sitecontent->meta_keywords = $input['meta_keywords'];
 
@@ -211,20 +214,19 @@ class SiteContentsController extends Controller {
         $sitecontent->body = $input['body'];
 
         if ($request->file('thumbnail') != "") {
-            $imageName = $sitecontent->id.'thumb_'.str_replace(' ', '_', strtolower(str_slug($input['title']))) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
+            $imageName = $sitecontent->id.'thumb_'.str_replace(' ', '_', strtolower(str_slug($input['title']))).str_random(5) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
             $request->file('thumbnail')->move(base_path() . '/public/images/sitecontents/', $imageName);
 
             $sitecontent->thumbnail = "/images/sitecontents/".$imageName;
-            $sitecontent->save();
         }
 
         if ($request->file('main_image') != "") {
-            $imageName = $sitecontent->id.'main_'.str_replace(' ', '_', strtolower(str_slug($input['title']))) . '.' . $request->file('main_image')->getClientOriginalExtension();
+            $imageName = $sitecontent->id.'main_'.str_replace(' ', '_', strtolower(str_slug($input['title']))).str_random(5) . '.' . $request->file('main_image')->getClientOriginalExtension();
             $request->file('main_image')->move(base_path() . '/public/images/sitecontents/', $imageName);
 
             $sitecontent->main_image = "/images/sitecontents/".$imageName;
-            $sitecontent->save();
         }
+        $sitecontent->save();
 
         Flash::message($sitecontent->title.' content has been updated!');
         $sitecontent->save();

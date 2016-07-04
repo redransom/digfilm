@@ -14,7 +14,11 @@
                                     </div>
                                     <div class="item-content">
                                         <h4><a href="{{URL('news-detail', $article->link())}}">{!! $article->title !!}</a></h4>
-                                       {!! str_limit($article->summary, 150) !!}
+                                        @if(!is_null($article->summary) && $article->summary !='')
+                                            {!! str_limit($article->summary, 150) !!}
+                                        @else
+                                        <p>&nbsp;</p>
+                                        @endif
                                     </div>
                                 </div>
                                 @endforeach
