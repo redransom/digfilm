@@ -40,6 +40,10 @@ class Movie extends Model {
         return $this->media->where('type', 'I')->where('image_type', $type)->first();
     }
 
+    public function reviews() {
+        return $this->hasMany("\App\Models\SiteContent", "movies_id", "id")->where('type', 'M');
+    }
+
     public function images() {
         return $this->media->where('type', 'I');
     }

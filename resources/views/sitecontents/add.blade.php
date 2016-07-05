@@ -2,7 +2,7 @@
 
 @section('content')
 <script src='//cdn.tinymce.com/4/tinymce.min.js'></script>
-@if($type == 'F')
+@if($type == 'F' || $type == 'M')
 <script>
 tinymce.init({
   selector: '#summary',
@@ -41,8 +41,10 @@ tinymce.init({
             <h3>Add News Content</h3>
             @elseif($type == 'C')
             <h3>Add Page Content</h3>
-            @else
+            @elseif($type == 'F')
             <h3>Add Front Slider</h3>
+            @elseif($type == 'M')
+            <h3>Add Movie Review</h3>
             @endif
         </div>
         <div class="module-body">
@@ -61,6 +63,13 @@ tinymce.init({
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="owners_id" value="{{ $authUser->id }}">
                     <input type="hidden" name="type" value="{{ $type }}">
+                    @if($type == 'M')
+                    <input type="hidden" name="movies_id" value="{{ $movie->id }}">
+                    @endif
+
+                    @if(!is_null($movie))
+                    <p>Adding a review for the movie <strong>{{$movie->name}}</strong>.</p>
+                    @endif
 
                     @if($type == 'C')
                     <div class="control-group">
@@ -83,7 +92,7 @@ tinymce.init({
                         </div>
                     </div>
 
-                    @if($type == 'N' || $type == 'F')
+                    @if($type == 'N' || $type == 'F' || $type == 'M')
                     <div class="control-group">
                         <label class="control-label" for="SiteContentSummary">Summary</label>
                         <div class="controls">

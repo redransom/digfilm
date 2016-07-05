@@ -181,7 +181,7 @@ Route::group(['middleware'=>'auth'], function() {
         /* all sitecontent routes */
 //        Route::get('sitecontent', ['as'=>'user-create', 'uses'=>'SiteContentsController@create']);
         Route::get('sitecontents/{type?}', ['as'=>'sitecontents', 'uses'=>'SiteContentsController@index']);
-        Route::get('sitecontent/create/{type}', ['as'=>'sitecontent-create', 'uses'=>'SiteContentsController@create']);
+        Route::get('sitecontent/create/{type}/{id?}', ['as'=>'sitecontent-create', 'uses'=>'SiteContentsController@create']);
         Route::post('sitecontent-update', ['as'=>'sitecontent-update', 'uses'=>'LeaguesController@update']);
         Route::get('sitecontent/{id}/disable', ['as'=>'content-disable', 'uses'=>'SiteContentsController@disable']);
         Route::get('sitecontent/{id}/enable', ['as'=>'content-enable', 'uses'=>'SiteContentsController@enable']);

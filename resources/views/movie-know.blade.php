@@ -115,6 +115,15 @@
             <h4>{{$movie->summary}}</h4>
         </div>
         <br/>
+        @if($movie->reviews->count() > 0)
+        @foreach($movie->reviews as $review)
+        <h2><span>{{$review->title}}</span></h2>
+        <div class="content-padding">
+        @include('partials.site-article', ['content'=>$review])
+        </div>
+
+        @endforeach
+        @endif
         <!--h2><span>Media</span></h2>
         <div class="content-padding">
             <div class="row">

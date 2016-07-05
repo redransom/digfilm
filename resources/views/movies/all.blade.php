@@ -68,6 +68,7 @@
                                             @endif
                                             <a class="btn btn-mini btn-danger" href="{{URL('movie-delete/'.$movie->id)}}">Delete</a>
                                             @endif
+                                            <a class="btn btn-mini btn-link" href="{{Route('sitecontent-create', ['M', $movie->id])}}">Review</a>
                                             </td>
                                         </tr>
                                         @endforeach

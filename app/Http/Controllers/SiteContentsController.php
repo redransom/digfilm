@@ -40,6 +40,8 @@ class SiteContentsController extends Controller {
                 $title = 'Page Content';
             elseif ($type == 'N')
                 $title = 'News/Blog Content';                
+            elseif ($type == 'M')
+                $title = 'Movie Review';
         }
         $sections = $this->get_sections();
 
@@ -56,13 +58,18 @@ class SiteContentsController extends Controller {
      *
      * @return Response
      */
-    public function create($type = 'C')
+    public function create($type = 'C', $movie_id = 0)
     {
         $authUser = Auth::user();
         if (!isset($authUser))
             return redirect('/auth/login');
 
         $sections = $new_sections = null;
+
+        $movie = null;
+        if ($movie_id != 0) {
+            $movie = Movie::find($movie_id);
+        }
         if ($type == 'C') {
             $sections = $this->get_sections();
 
@@ -77,10 +84,10 @@ class SiteContentsController extends Controller {
         return View("sitecontents.add")
             ->with('authUser', $authUser)
             ->with('type', $type)
+            ->with('movie', $movie)
             ->with('sections', $new_sections)
             ->with('page_name', 'sitecontent-add')
-            ->with('instructions', 'Add page content or news/blog articles.')
-            ->with('title', 'Add SiteContent');
+            ->with('title', 'Add Site Content');
     }
 
     private function get_sections() {
@@ -109,6 +116,10 @@ class SiteContentsController extends Controller {
         $sitecontent = SiteContent::create( $input );
         $sitecontent->slug = str_slug($sitecontent->title, "-");
 
+        if (isset($input['movies_id']))  {
+            $sitecontent->movies_id = $input['movies_id'];
+        }
+
         if ($request->file('thumbnail') != "") {
             $imageName = $sitecontent->id.'thumb_'.str_replace(' ', '_', strtolower(str_slug($input['title']))) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
             $request->file('thumbnail')->move(base_path() . '/public/images/sitecontents/', $imageName);
@@ -128,6 +139,10 @@ class SiteContentsController extends Controller {
         $sitecontent->save();
 
         Flash::message('Content created.');
+        if ($input['type'] == 'M') {
+            //redirect to movies show page
+            return Redirect::route('movies.show', [$input['movies_id']]);
+        }
         return Redirect::route('sitecontent.index');
 
     }

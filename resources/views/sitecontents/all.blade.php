@@ -11,6 +11,7 @@
             <a class="btn" href="{{URL('sitecontents/C')}}">Page</a>
             <a class="btn" href="{{URL('sitecontents/F')}}">Front</a>
             <a class="btn" href="{{URL('sitecontents/N')}}">News</a>
+            <a class="btn" href="{{URL('sitecontents/M')}}">Reviews</a>
         </div>
     </div>
     @if($sitecontents->count() > 0)
