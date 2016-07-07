@@ -223,7 +223,7 @@ class SiteContentsController extends Controller {
         if (isset($input['meta_description']) && !empty($input['meta_description']))
             $sitecontent->meta_description = $input['meta_description'];
         
-        if ($sitecontent->type == 'N' || $sitecontent->type == 'F')
+        if ($sitecontent->type == 'N' || $sitecontent->type == 'F' || $sitecontent->type == 'M')
             $sitecontent->summary = $input['summary'];
 
         $sitecontent->body = $input['body'];
@@ -242,9 +242,11 @@ class SiteContentsController extends Controller {
             $sitecontent->main_image = "/images/sitecontents/".$imageName;
         }
         $sitecontent->save();
-
         Flash::message($sitecontent->title.' content has been updated!');
         $sitecontent->save();
+
+        if ($sitecontent->type == 'M')
+            return Redirect::route('movie-show', $sitecontent->movies_id);
 
         return Redirect::route('sitecontent.index');
     }

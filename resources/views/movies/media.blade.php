@@ -56,7 +56,7 @@
                         </div>
                         <span class="help-inline">
                         <ul>
-                            <li>Front images will be used on the front page - 644px by 364px.</li>
+                            <li>Front images will be used on the front page - 644px by 400px.</li>
                             <li>Front trailers will be used on the front page and also on the movie knowledge page - 660px by 377px.</li>
                             <li>List images will be used on the front page as the first image that is shown in lists - 151px by 217px</li>
                             <li>Auction images will be used on the auction page and are square - 55px by 55px.</li>

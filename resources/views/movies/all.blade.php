@@ -26,8 +26,8 @@
                                         <tr>
                                             <th width="20%"><a href="{{URL('movies/'.$status.'/name/'.(($order == 'asc') ? 'desc' : 'asc'))}}">Name</a></th>
                                             <th width="10%"><a href="{{URL('movies/'.$status.'/opening_bid/'.(($order == 'asc') ? 'desc' : 'asc'))}}">Opening<br/>Bid</a></th>
-                                            <th width="13%"><a href="{{URL('movies/'.$status.'/release_at/'.(($order == 'asc') ? 'desc' : 'asc'))}}">Release Dt</a></th>
-                                            <th width="13%"><a href="{{URL('movies/'.$status.'/takings_close_date/'.(($order == 'asc') ? 'desc' : 'asc'))}}">Close Dt</a></th>
+                                            <th width="12%"><a href="{{URL('movies/'.$status.'/release_at/'.(($order == 'asc') ? 'desc' : 'asc'))}}">Release Dt</a></th>
+                                            <th width="12%"><a href="{{URL('movies/'.$status.'/takings_close_date/'.(($order == 'asc') ? 'desc' : 'asc'))}}">Close Dt</a></th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -68,7 +68,7 @@
                                             @endif
                                             <a class="btn btn-mini btn-danger" href="{{URL('movie-delete/'.$movie->id)}}">Delete</a>
                                             @endif
-                                            <a class="btn btn-mini btn-link" href="{{Route('sitecontent-create', ['M', $movie->id])}}">Review</a>
+                                            <a class="btn btn-mini btn-link" href="{{Route('sitecontent-create', ['M', $movie->id])}}">Add Review</a>
                                             </td>
                                         </tr>
                                         @endforeach

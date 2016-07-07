@@ -2,7 +2,7 @@
 
 @section('content')
 <script src='//cdn.tinymce.com/4/tinymce.min.js'></script>
-@if($content->type == 'F')
+@if($content->type == 'F' || $content->type == 'M')
 <script>
 tinymce.init({
   selector: '#summary',
@@ -73,8 +73,15 @@ tinymce.init({
                             <span class="help-inline">Minimum 3 Characters.</span>
                         </div>
                     </div>
+    
+                    <div class="control-group">
+                        <div class="controls">
+                        <h3>NOTE</h3>
+                        <span class="help-inline">Make sure you don't just copy content straight in from another site as the formatting can break the admin of the site.</span>
+                        </div>
+                    </div>
 
-                    @if($content->type == 'N' || $content->type == 'F')
+                    @if($content->type == 'N' || $content->type == 'F' || $content->type == 'M')
                     <div class="control-group">
                         <label class="control-label" for="SiteContentSummary">Summary</label>
                         <div class="controls">

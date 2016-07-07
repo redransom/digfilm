@@ -182,7 +182,7 @@ foreach ($opening_bids as $bid) {
                         <h5 class="title"><a href="{{URL('movie-knowledge', ['id'=>$item->movie->slug])}}">
                         {{$item->movie->name}}</a></h5>
                         <div class="caption-info" style="font-size: 0.9em">
-                            <span class="description">Include at <span style="font-color: #F00">&pound;{{number_format($item->movie->opening_bid, 2)}}</span></span> | <span class="date">Released: <span style="font-color: #F00">{{date("j M Y", strtotime($item->movie->release_at))}}</span></span>
+                            <span class="description">Opening Bid <span style="font-color: #F00">&pound;{{number_format($item->movie->opening_bid, 2)}}</span></span> | <span class="date">Released: <span style="font-color: #F00">{{date("j M Y", strtotime($item->movie->release_at))}}</span></span>
                         </div>
                     </div><!--/ .caption-->                            
                     <div class="clear"></div>

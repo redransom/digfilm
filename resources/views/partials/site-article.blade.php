@@ -6,8 +6,8 @@
         </div>
         @endif
         <div class="article-icons">
-            <a><i class="fa fa-fire"></i>{{$content->owner->forenames}}</a>
-            <a><i class="fa fa-calendar"></i>{{date("F d, Y", strtotime($content->created_at))}}</a>
+            <a><i class="fa fa-fire"></i>{{$content->owner->fullName()}}</a>
+            <a><i class="fa fa-calendar"></i>{{date("F j, Y", strtotime($content->created_at))}}</a>
             <!--a href="#" class="show-likes"><i class="fa fa-heart"></i>20 likes</a-->
         </div>
     
@@ -15,10 +15,10 @@
 
         <div class="article-content">
             @if(!is_null($content->summary))
-            {!! $content->summary !!}
-            <div class="breaking-line"></div>
+            <p>{!! $content->summary !!}</p>
+            <div class="clear-float do-the-split"></div>
             @endif
-            {!! $content->body !!}
+            <p>{!! $content->body !!}</p>
         </div>
     </div>
 @endif

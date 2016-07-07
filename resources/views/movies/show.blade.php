@@ -153,6 +153,23 @@
 
                         </div>
 
+                        <div class="module">
+                            <div class="module-head">
+                                <h3>Reviews</h3>
+                            </div>
+                            <div class="module-body">
+                                <ul class="inline">
+                            @foreach($movie->reviews as $review)
+                                <li><strong><a href="{{URL('sitecontent/'.$review->id.'/edit')}}">{{$review->title}}</a></strong><br/>
+                                <strong>Knowledge Link:</strong> /movie-knowledge/{{$movie->slug}}<br/>
+                                <strong>Review Link:</strong> /news-detail/{{$review->slug}}<br/>
+                                {{date("d M y", strtotime($review->created_at))}}</li>
+                            @endforeach
+                                </ul>
+                            </div>
+
+                        </div>
+
                         <ul class="inline">
                             <li><a class="btn" href="{{URL('movie/'.$movie->id.'/edit')}}">Edit Movie</a></li>
                             <li><a class="btn" href="{{route('movie.create')}}">Add Movie</a></li>
