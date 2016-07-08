@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'WelcomeController@index');
+Route::get('home', ['as'=>'home', 'uses'=>'WelcomeController@index']);
 Route::get('about', ['as'=>'about', 'uses'=>'WelcomeController@about']);
 Route::get('rules', ['as'=>'rules', 'uses'=>'WelcomeController@rules']);
 Route::get('terms', ['as'=>'terms', 'uses'=>'WelcomeController@terms']);
@@ -43,6 +44,7 @@ Route::get('auth/register', [
   'as' => 'register', 
   'uses' => 'Auth\AuthController@getRegister'
 ]);
+Route::get('auth/login', ['as'=>'login', 'uses'=>'Auth\AuthController@getLogin']);
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 Route::get('auth/reset', [
   'as' => 'reset', 

@@ -19,6 +19,12 @@
                                             @if(!is_null($user->description))
                                             {{$user->description}}
                                             @endif
+                                            <dl>
+                                                <dt>Email</dt>
+                                                <dd>{{$user->email}}</dd>
+                                                <dt>Balance</dt>
+                                                <dd>{{is_null($user->balance) ? "zero" : $user->balance." USD"}}</dd>
+                                            </dl>
                                         </p>
                                         <!--div class="profile-details muted">
                                             <a href="#" class="btn"><i class="icon-plus shaded"></i>Send Friend Request </a>
@@ -27,7 +33,7 @@
                                     </div>
                                 </div>
                                 <ul class="profile-tab nav nav-tabs">
-                                    <li class="active"><a href="#activity" data-toggle="tab">Feed</a></li>
+                                    <li class="active"><a href="#activity" data-toggle="tab">Leagues</a></li>
                                     <!--li><a href="#friends" data-toggle="tab">Friends</a></li>
                                     <li><a href="#leagues" data-toggle="tab">Leagues</a></li-->
                                 </ul>
@@ -35,19 +41,20 @@
                                     <div class="tab-pane fade active in" id="activity">
                                         <div class="stream-list">
                                             
+                                            @foreach($user->inLeagues as $league)
                                             <div class="media stream">
-                                                <a href="#" class="media-avatar medium pull-left">
-                                                    <img src="images/user.png">
+                                                <a href="{{Route('league', [$league->id])}}" title="League Details" class="media-avatar medium pull-left">
+                                                    @if ($league->hasImage())
+                                                    <img src="{{asset($league->file_name)}}">
+                                                    @else
+                                                    <img src="{{asset('images/TNBF.jpg')}}">
+                                                    @endif
                                                 </a>
                                                 <div class="media-body">
                                                     <div class="stream-headline">
-                                                        <h5 class="stream-author">
-                                                            John Donga <small>08 July, 2014</small>
-                                                        </h5>
+                                                        <h5 class="stream-author">{{$league->name}}<small>{{$league->end_date}}</small></h5>
                                                         <div class="stream-text">
-                                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                                            Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                                            unknown printer took a galley of type.
+                                                            {{$league->description}}
                                                         </div>
                                                         <div class="stream-attachment photo">
                                                             <div class="responsive-photo">
@@ -57,290 +64,16 @@
                                                     </div>
                                                     <!--/.stream-headline-->
                                                     <div class="stream-options">
-                                                        <a href="#" class="btn btn-small"><i class="icon-thumbs-up shaded"></i>Like </a>
-                                                        <a href="#" class="btn btn-small"><i class="icon-reply shaded"></i>Reply </a><a href="#"
-                                                            class="btn btn-small"><i class="icon-retweet shaded"></i>Repost </a>
+                                                        <a href="{{Route('league-remove-player', $league->id)}}" class="btn btn-small"><i class="icon-thumbs-up shaded"></i>Remove Player </a>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--/.media .stream-->
-                                            <div class="media stream">
-                                                <a href="#" class="media-avatar medium pull-left">
-                                                    <img src="images/user.png">
-                                                </a>
-                                                <div class="media-body">
-                                                    <div class="stream-headline">
-                                                        <h5 class="stream-author">
-                                                            John Donga <small>08 July, 2014</small>
-                                                        </h5>
-                                                        <div class="stream-text">
-                                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                                            Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                                            unknown printer took a galley of type.
-                                                        </div>
-                                                        <div class="stream-attachment video">
-                                                            <div class="responsive-video">
-                                                                <iframe src="//player.vimeo.com/video/20630217" width="560" height="315" frameborder="0"
-                                                                    webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                                                                <p>
-                                                                    <a href="http://vimeo.com/20630217">Google Car</a> from <a href="http://vimeo.com/user3524956">
-                                                                        Henk Rogers</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!--/.stream-headline-->
-                                                    <div class="stream-options">
-                                                        <a href="#" class="btn btn-small"><i class="icon-thumbs-up shaded"></i>Like </a>
-                                                        <a href="#" class="btn btn-small"><i class="icon-reply shaded"></i>Reply </a><a href="#"
-                                                            class="btn btn-small"><i class="icon-retweet shaded"></i>Repost </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--/.media .stream-->
-                                            <div class="media stream">
-                                                <a href="#" class="media-avatar medium pull-left">
-                                                    <img src="images/user.png">
-                                                </a>
-                                                <div class="media-body">
-                                                    <div class="stream-headline">
-                                                        <h5 class="stream-author">
-                                                            John Donga <small>08 July, 2014</small>
-                                                        </h5>
-                                                        <div class="stream-text">
-                                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                                            Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                                            unknown printer took a galley of type.
-                                                        </div>
-                                                    </div>
-                                                    <!--/.stream-headline-->
-                                                    <div class="stream-options">
-                                                        <a href="#" class="btn btn-small"><i class="icon-thumbs-up shaded"></i>Like </a>
-                                                        <a href="#" class="btn btn-small"><i class="icon-reply shaded"></i>Reply </a><a href="#"
-                                                            class="btn btn-small"><i class="icon-retweet shaded"></i>Repost </a>
-                                                    </div>
-                                                    <div class="stream-respond">
-                                                        <div class="media stream">
-                                                            <a href="#" class="media-avatar small pull-left">
-                                                                <img src="images/user.png">
-                                                            </a>
-                                                            <div class="media-body">
-                                                                <div class="stream-headline">
-                                                                    <h5 class="stream-author">
-                                                                        John Donga <small>10 July 14</small>
-                                                                    </h5>
-                                                                    <div class="stream-text">
-                                                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                                                    </div>
-                                                                </div>
-                                                                <!--/.stream-headline-->
-                                                            </div>
-                                                        </div>
-                                                        <!--/.media .stream-->
-                                                        <div class="media stream">
-                                                            <a href="#" class="media-avatar small pull-left">
-                                                                <img src="images/user.png">
-                                                            </a>
-                                                            <div class="media-body">
-                                                                <div class="stream-headline">
-                                                                    <h5 class="stream-author">
-                                                                        John Donga <small>12 July 14</small>
-                                                                    </h5>
-                                                                    <div class="stream-text">
-                                                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                                                        Ipsum is simply dummy text.
-                                                                    </div>
-                                                                </div>
-                                                                <!--/.stream-headline-->
-                                                            </div>
-                                                        </div>
-                                                        <!--/.media .stream-->
-                                                    </div>
-                                                    <!--/.stream-respond-->
-                                                </div>
-                                            </div>
-                                            <!--/.media .stream-->
-                                            <div class="media stream">
-                                                <a href="#" class="media-avatar medium pull-left">
-                                                    <img src="images/user.png">
-                                                </a>
-                                                <div class="media-body">
-                                                    <div class="stream-headline">
-                                                        <h5 class="stream-author">
-                                                            John Donga <small>08 July, 2014</small>
-                                                        </h5>
-                                                        <div class="stream-text">
-                                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                                            Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                                            unknown printer took a galley of type.
-                                                        </div>
-                                                    </div>
-                                                    <!--/.stream-headline-->
-                                                    <div class="stream-options">
-                                                        <a href="#" class="btn btn-small"><i class="icon-thumbs-up shaded"></i>Like </a>
-                                                        <a href="#" class="btn btn-small"><i class="icon-reply shaded"></i>Reply </a><a href="#"
-                                                            class="btn btn-small"><i class="icon-retweet shaded"></i>Repost </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--/.media .stream-->
-                                            <!--div class="media stream load-more">
-                                                <a href="#"><i class="icon-refresh shaded"></i>Load more... </a>
-                                            </div-->
+                                            @endforeach
+                                           
                                         </div>
                                         <!--/.stream-list-->
                                     </div>
-                                    <!--div class="tab-pane fade" id="friends">
-                                        <div class="module-option clearfix">
-                                            <form>
-                                            <div class="input-append pull-left">
-                                                <input type="text" class="span3" placeholder="Filter by name...">
-                                                <button type="submit" class="btn">
-                                                    <i class="icon-search"></i>
-                                                </button>
-                                            </div>
-                                            </form>
-                                            <div class="btn-group pull-right" data-toggle="buttons-radio">
-                                                <button type="button" class="btn">
-                                                    All</button>
-                                                <button type="button" class="btn">
-                                                    Male</button>
-                                                <button type="button" class="btn">
-                                                    Female</button>
-                                            </div>
-                                        </div>
-                                        <div class="module-body">
-                                            <div class="row-fluid">
-                                                <div class="span6">
-                                                    <div class="media user">
-                                                        <a class="media-avatar pull-left" href="#">
-                                                            <img src="images/user.png">
-                                                        </a>
-                                                        <div class="media-body">
-                                                            <h3 class="media-title">
-                                                                John Donga
-                                                            </h3>
-                                                            <p>
-                                                                <small class="muted">Pakistan</small></p>
-                                                            <div class="media-option btn-group shaded-icon">
-                                                                <button class="btn btn-small">
-                                                                    <i class="icon-envelope"></i>
-                                                                </button>
-                                                                <button class="btn btn-small">
-                                                                    <i class="icon-share-alt"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="span6">
-                                                    <div class="media user">
-                                                        <a class="media-avatar pull-left" href="#">
-                                                            <img src="images/user.png">
-                                                        </a>
-                                                        <div class="media-body">
-                                                            <h3 class="media-title">
-                                                                Donga John</h3>
-                                                            <p>
-                                                                <small class="muted">Pakistan</small></p>
-                                                            <div class="media-option btn-group shaded-icon">
-                                                                <button class="btn btn-small">
-                                                                    <i class="icon-envelope"></i>
-                                                                </button>
-                                                                <button class="btn btn-small">
-                                                                    <i class="icon-share-alt"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                           
-                                            <br />
-                                            <div class="pagination pagination-centered">
-                                                <ul>
-                                                    <li><a href="#"><i class="icon-double-angle-left"></i></a></li>
-                                                    <li><a href="#">1</a></li>
-                                                    <li><a href="#">2</a></li>
-                                                    <li><a href="#">3</a></li>
-                                                    <li><a href="#">4</a></li>
-                                                    <li><a href="#"><i class="icon-double-angle-right"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div-->
-                                    <!--div class="tab-pane fade" id="leagues">
-                                        <div class="module-option clearfix">
-                                            <form>
-                                            <div class="input-append pull-left">
-                                                <input type="text" class="span3" placeholder="Filter by name...">
-                                                <button type="submit" class="btn">
-                                                    <i class="icon-search"></i>
-                                                </button>
-                                            </div>
-                                            </form>
-                                            <div class="btn-group pull-right" data-toggle="buttons-radio">
-                                                <button type="button" class="btn">
-                                                    All</button>
-                                                <button type="button" class="btn">
-                                                    Male</button>
-                                                <button type="button" class="btn">
-                                                    Female</button>
-                                            </div>
-                                        </div>
-                                        <div class="module-body">
-                                            <div class="row-fluid">
-                                                <div class="span6">
-                                                    <div class="media user">
-                                                        <a class="media-avatar pull-left" href="#">
-                                                            <img src="images/user.png">
-                                                        </a>
-                                                        <div class="media-body">
-                                                            <h3 class="media-title">
-                                                                John Donga
-                                                            </h3>
-                                                            <p>
-                                                                <small class="muted">Pakistan</small></p>
-                                                            <div class="media-option btn-group shaded-icon">
-                                                                <button class="btn btn-small">
-                                                                    <i class="icon-envelope"></i>
-                                                                </button>
-                                                                <button class="btn btn-small">
-                                                                    <i class="icon-share-alt"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="span6">
-                                                    <div class="media user">
-                                                        <a class="media-avatar pull-left" href="#">
-                                                            <img src="images/user.png">
-                                                        </a>
-                                                        <div class="media-body">
-                                                            <h3 class="media-title">
-                                                                Donga John</h3>
-                                                            <p>
-                                                                <small class="muted">Pakistan</small></p>
-                                                            <div class="media-option btn-group shaded-icon">
-                                                                <button class="btn btn-small">
-                                                                    <i class="icon-envelope"></i>
-                                                                </button>
-                                                                <button class="btn btn-small">
-                                                                    <i class="icon-share-alt"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <br />
-                                            <div class="pagination pagination-centered">
-                                                @if(!empty($user->leagues))
-                                                <?php echo $user->leagues->render(); ?>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div-->
+                                    
                                 </div>
                             </div>
                             <!--/.module-body-->

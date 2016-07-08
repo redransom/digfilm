@@ -85,4 +85,8 @@ class League extends Model {
                     $query->whereNull('auction_stage')->orWhere('auction_stage', '<', '4');
                 })->get();
     }
+
+    public function hasImage() {
+        return (!is_null($this->file_name) && $this->file_name != "") ? true : false;
+    }
 }

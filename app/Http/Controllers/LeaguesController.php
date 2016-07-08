@@ -705,18 +705,20 @@ class LeaguesController extends Controller {
             Log::info('Adding players to league '.$league->id.' allowed number is: '.$allowed_player_number);
             $selected_cnt = 1;
             foreach ($input['users_id'] as $user_id) {
-                $lu = new LeagueUser();
+                /*$lu = new LeagueUser();
                 $lu->league_id = $league_id;
                 $lu->user_id = $user_id;
                 $lu->balance = 100; //TODO: Put this in the league rules
                 $lu->save();
-                unset($lu);//clear out to start afresh
+                unset($lu);*///clear out to start afresh
 
                 //do invite as well
                 $invite = new LeagueInvite();
                 $invite->leagues_id = $league_id;
                 $invite->users_id = $user_id;
                 $invite->save();
+                
+                $this->sendInvite($league_id, $invite->id);
                 unset($invite);
 
                 //we can only select a pre-determind amount of players currently
@@ -780,7 +782,9 @@ class LeaguesController extends Controller {
                 $invite_id = $invite->id;
                 unset($invite);
 
-                $subject = "You've been invited to join the ".$league->name." league!";
+                $this->sendInvite($league_id, $invite_id);
+
+                /*$subject = "You've been invited to join the ".$league->name." league!";
                 $data = ['inviteName' => $nonplayerName,
                         'inviteEmail' => $nonplayerEmail,
                         'user' => $authUser,
@@ -801,13 +805,53 @@ class LeaguesController extends Controller {
                 catch (\Exception $e)
                 {
                     dd($e->getMessage());
-                }
+                }*/
             }
 
         }
 
         Flash::success('Players have been invited to the league:<br/>'.$invite_message);
         return Redirect::route('league-made', [$league->id]);
+    }
+
+    private function sendInvite($league_id, $invite_id = 0) {
+        $authUser = Auth::user();
+
+        //get invite details
+        $invite = LeagueInvite::find($invite_id);
+        $league = $invite->league;
+
+        if (!is_null($invite->users_id)) {
+            $user = User::find($invite->users_id);
+            $playerName = $user->fullName();
+            $playerEmail = $user->email;
+        } else {
+            $playerName = $invite->name;
+            $playerEmail = $invite->email;
+        }
+
+        $subject = "You've been invited to join the ".$league->name." league!";
+        $data = ['inviteName' => $playerName,
+                'inviteEmail' => $playerEmail,
+                'user' => $authUser,
+                'ownerName' =>$league->owner->fullName(),
+                'league'=>$league,
+                'subject'=>$subject,
+                'invite_id'=>$invite_id];
+
+        //send invite email to new player
+        try
+        {
+            Mail::send('emails.invite', $data, function($message) use ($playerEmail, $subject) {
+                $message->from('invite@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
+                $message->subject($subject);
+                $message->to($playerEmail);
+            });
+        }
+        catch (\Exception $e)
+        {
+            dd($e->getMessage());
+        }
     }
 
     /**
@@ -825,44 +869,51 @@ class LeaguesController extends Controller {
             throw new InvalidInviteCodeException;
         }
 
-        $invite = LeagueInvite::find($inviteId);//whereInvite($confirmation_code)->first();
+        $invite = LeagueInvite::find($inviteId);
         $league = League::find($invite->leagues_id);
 
         //update invite to say it's been accepted
         $invite->status = 'A';
         $invite->save();
 
-        //TODO: Need to determine if league hasn't already started 
+        $authUser = Auth::user();
         //if this is the case we need to let them know its too late
+        if(!is_null($league->auction_stage) && $league->auction_stage < 1) {
+            if (!is_null($invite->users_id)) {
+                //this is already a player - add them to the league and direct them to it
 
-        if (!is_null($invite->users_id)) {
-            //this is already a player - add them to the league and direct them to it
+                Flash::success('Thank you for accepting '.$league->owner->name.' invitation to join the '.$league->name.' league.');
 
-            Flash::success('Thank you for accepting '.$league->owner->name.' invitation to join the '.$league->name.' league.');
+                //just make sure the player isn't already a player in the league
+                $player = LeagueUser::where('league_id', $league->id)->where('user_id', $invite->users_id)->first();
+                if (is_null($player)) {
+                    $lu = new LeagueUser();
+                    $lu->league_id = $league->id;
+                    $lu->user_id = $invite->users_id;
+                    $lu->balance = 100;
+                    $lu->save();
+                }
 
-            //just make sure the player isn't already a player in the league
-            $player = LeagueUser::where('league_id', $league->id)->where('user_id', $invite->users_id)->first();
-            if (is_null($player)) {
-                $lu = new LeagueUser();
-                $lu->league_id = $league->id;
-                $lu->user_id = $invite->users_id;
-                $lu->balance = 100;
-                $lu->save();
-
+                if(!is_null($authUser))
+                    return Redirect::route('dashboard');
+                else
+                    return Redirect::route('login');
+            } else {
+                //a new player - redirect to the registration page
+                Flash::success('Thank you for accepting '.$league->owner->name.' invitation to join the '.$league->name.' league. You will now need to register to take part in the league.');
+                return Redirect::route('register');
             }
-
-            return Redirect::route('dashboard');
         } else {
-            //a new player - redirect to the registration page
-            Flash::success('Thank you for accepting '.$league->owner->name.' invitation to join the '.$league->name.' league.');
-            return Redirect::route('register');
+            Flash::success('We are sorry but the league '.$league->name.' has already started.');
+            if (!is_null($invite->users_id) && !is_null($authUser))
+                return Redirect::route('dashboard');
+            return Redirect::route('home');
         }
     }
 
     /**
      * Player has declined invitation
      * Update the player invite to decline
-     * TODO: Add message for player to say this invite has failed
      *
      * @param  int  $id
      * @return Response
@@ -885,7 +936,7 @@ class LeaguesController extends Controller {
         } else {
             Flash::warning('We are sorry you have declined '.$league->owner->name.' invitation to join the '.$league->name.' league. You can still join the website if you want to?');            
         }
-        return Redirect::route('/');
+        return Redirect::route('home');
     }
 
     /**

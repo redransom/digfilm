@@ -3,7 +3,7 @@
 @section('content')
 <h2><span>Dashboard</span></h2>
 <div class="content-padding">
-    <p>Hi {{$authUser->forenames}}, Welcome to <strong>TheNextBigFilm</strong> today.</p1>
+    <p>Hi {{$authUser->forenames}}, Welcome to <strong>The Next Big Film</strong> today.</p1>
 </div>
 
 <h2><span>Leagues Participating in</span></h2>
@@ -156,7 +156,9 @@ table {
 @endif
 
 @if($authUser->inLeagues()->where('auction_stage', '<', '4')->count() == 0)
+<div class="content-padding">
 <p>You are not part of any leagues currently.</p>
+</div>
 @endif
 
 

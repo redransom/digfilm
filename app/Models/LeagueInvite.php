@@ -7,4 +7,9 @@ class LeagueInvite extends Model {
     //
     protected $table = 'league_invites';
     protected $fillable = array('leagues_id', 'users_id', 'name', 'email', 'status');
+
+    public function league() {
+        return $this->belongsTo("\App\Models\League", "leagues_id");
+    }
+
 }
