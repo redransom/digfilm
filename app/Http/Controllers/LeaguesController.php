@@ -782,7 +782,7 @@ class LeaguesController extends Controller {
                 $invite_id = $invite->id;
                 unset($invite);
 
-                $this->sendInvite($league_id, $invite_id);
+                $this->sendInvite($league->id, $invite_id);
 
                 /*$subject = "You've been invited to join the ".$league->name." league!";
                 $data = ['inviteName' => $nonplayerName,
@@ -878,7 +878,7 @@ class LeaguesController extends Controller {
 
         $authUser = Auth::user();
         //if this is the case we need to let them know its too late
-        if(!is_null($league->auction_stage) && $league->auction_stage < 1) {
+        if(is_null($league->auction_stage) || $league->auction_stage < 1) {
             if (!is_null($invite->users_id)) {
                 //this is already a player - add them to the league and direct them to it
 
