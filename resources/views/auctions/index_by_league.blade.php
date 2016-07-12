@@ -53,11 +53,13 @@
                                             @endif
                                             </td>
                                         </tr>
-                                        @if($auction->bids->count() > 0)
-                                        <tr><td colspan="8">
+                                        @if($auction->bids()->count() > 0)
+                                        <tr><td colspan="9">
                                             <ul>
                                             @foreach($auction->bids()->orderby('created_at', 'DESC')->get() as $bid)
-                                                <li>{{$bid->bid_amount}} @ {{date("j M Y g:i:sA", strtotime($bid->created_at))}} by {{get_player($players, $bid->users_id)}} Auction Id: {{$bid->auctions_id}}</li>
+                                                @if($auction->pivot->id == $bid->auctions_id)
+                                                <li>{{$bid->bid_amount}} @ {{date("j M Y g:i:sA", strtotime($bid->created_at))}} by {{get_player($players, $bid->users_id)}}</li>
+                                                @endif
                                             @endforeach
                                             </ul>
                                         </td></tr>

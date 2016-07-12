@@ -57,13 +57,17 @@
                             </li>
                             <li><a href="#">Support </a></li-->
                             <li class="nav-user dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                @if($authUser->thumbnail != '' && !is_null($authUser->thumbnail))
+                                <img src="{{asset($authUser->thumbnail)}}" class="nav-avatar" />
+                                @else
                                 <img src="{{asset('/admin/images/user.png')}}" class="nav-avatar" />
+                                @endif
                                 <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">Your Profile</a></li>
+                                    <!--li><a href="#">Your Profile</a></li>
                                     <li><a href="#">Edit Profile</a></li>
                                     <li><a href="#">Account Settings</a></li>
-                                    <li class="divider"></li>
+                                    <li class="divider"></li-->
                                     <li><a href="{{URL('/auth/logout')}}">Logout</a></li>
                                 </ul>
                             </li>

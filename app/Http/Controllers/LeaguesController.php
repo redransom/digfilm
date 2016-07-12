@@ -32,6 +32,7 @@ class LeaguesController extends Controller {
 
     /**
      * Display a listing of the resource.
+     * Status now allows Enabled/Disabled leagues view
      *
      * @return Response
      */
@@ -41,19 +42,26 @@ class LeaguesController extends Controller {
         if (!isset($authUser))
             return redirect('/auth/login');
 
-        //$leagues = League::all();
         $paginate = true;
 
-        if ($status == 100)
-            $leagues = League::orderBy('auction_stage', 'asc')->where('enabled', '1')->orderBy('created_at', $order)->paginate(10);
-        else {
-            if($status == 0)
-                $leagues = League::whereNull('auction_stage')->where('enabled', '1')->orderBy('created_at', $order)->get();
-            else
-                $leagues = League::where('auction_stage', ($status - 1))->where('enabled', '1')->orderBy('created_at', $order)->orderBy('created_at', 'desc')->get();
+        if (is_numeric($status)) {
+            if ($status == 100)
+                $leagues = League::orderBy('auction_stage', 'asc')->where('enabled', '1')->orderBy('created_at', $order)->paginate(10);
+            else {
+                if($status == 0)
+                    $leagues = League::whereNull('auction_stage')->where('enabled', '1')->orderBy('created_at', $order)->get();
+                else
+                    $leagues = League::where('auction_stage', ($status - 1))->where('enabled', '1')->orderBy('created_at', $order)->orderBy('created_at', 'desc')->get();
 
-            $paginate = false;
+                $paginate = false;
+            }
+        } else {
+            if ($status == 'enabled')
+                $leagues = League::orderBy('auction_stage', 'asc')->where('enabled', '1')->orderBy('created_at', $order)->paginate(10);
+            else
+                $leagues = League::orderBy('auction_stage', 'asc')->where('enabled', '0')->orderBy('created_at', $order)->paginate(10);
         }
+
 
         return View("leagues.all")
             ->with('leagues', $leagues)

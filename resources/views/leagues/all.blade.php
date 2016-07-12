@@ -6,6 +6,17 @@
         <div class="module-head">
             <h3>Leagues</h3>
         </div>
+
+        <div class="module-option clearfix">
+            <div class="input-append pull-left">
+                <a class="btn" href="{{URL('create-league')}}">Add League</a>
+            </div>
+            <div class="btn-group pull-right" data-toggle="buttons-radio">
+                <a class="btn" href="{{URL('leagues/enabled')}}">Enabled</a>
+                <a class="btn" href="{{URL('leagues/disabled')}}">Disabled</a>
+            </div>
+        </div>
+
         @if($leagues->count() > 0)
         <div class="module-body table">
             <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered table-striped  display" width="100%">
