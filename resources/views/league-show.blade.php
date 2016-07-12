@@ -16,7 +16,7 @@
             </div>
             <div class="game-info-graph">
                 <div>
-                    <span>Started</span>
+                    <span>Starts</span>
                     <strong>{{date("l, jS F Y", strtotime($currentLeague->auction_start_date))}}</strong>
                     @if(!is_null($currentLeague->end_date))
                     <span>Ends</span>

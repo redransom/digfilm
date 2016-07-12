@@ -770,50 +770,32 @@ class LeaguesController extends Controller {
 
             if ($nonplayerEmail != "") {
 
-                //do invite as well
-                $invite = new LeagueInvite();
-                $invite->leagues_id = $league->id;
+                //do this check to make sure you can't invite yourself as you are already added as the owner
+                if ($currentUser->id != $authuser->id) {
 
-                if (!isset($currentUser->id)) {
-                    $invite->name = $nonplayerName;
-                    $invite->email = $nonplayerEmail;
+                    //do invite as well
+                    $invite = new LeagueInvite();
+                    $invite->leagues_id = $league->id;
 
-                    $invite_message .= "New Player (".$invite->name.") has been invited to join the site.<br/>";
+                    if (!isset($currentUser->id)) {
+                        $invite->name = $nonplayerName;
+                        $invite->email = $nonplayerEmail;
 
-                } else {
-                    $invite->users_id = $currentUser->id;
+                        $invite_message .= "New Player (".$invite->name.") has been invited to join the site.<br/>";
 
-                    $invite_message .= "Current Player (".$currentUser->fullName().") has been invited to join the league.<br/>";
+                    } else {
+                        $invite->users_id = $currentUser->id;
+
+                        $invite_message .= "Current Player (".$currentUser->fullName().") has been invited to join the league.<br/>";
+                    }
+
+                    $invite->save();
+                    $invite_id = $invite->id;
+                    unset($invite);
+
+                    $this->sendInvite($league->id, $invite_id);
                 }
 
-                $invite->save();
-                $invite_id = $invite->id;
-                unset($invite);
-
-                $this->sendInvite($league->id, $invite_id);
-
-                /*$subject = "You've been invited to join the ".$league->name." league!";
-                $data = ['inviteName' => $nonplayerName,
-                        'inviteEmail' => $nonplayerEmail,
-                        'user' => $authUser,
-                        'ownerName' =>$ownerName,
-                        'league'=>$league,
-                        'subject'=>$subject,
-                        'invite_id'=>$invite_id];
-
-                //send invite email to new player
-                try
-                {
-                    Mail::send('emails.invite', $data, function($message) use ($nonplayerEmail, $subject) {
-                        $message->from('invite@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
-                        $message->subject($subject);
-                        $message->to($nonplayerEmail);
-                    });
-                }
-                catch (\Exception $e)
-                {
-                    dd($e->getMessage());
-                }*/
             }
 
         }

@@ -10,9 +10,15 @@
 						<p>You are currently in <strong>{{$authUser->leagues()->where('enabled', '1')->count()}}</strong> leagues.</p>
 						<h3>Won Leagues</h3>
 						<p>You have won <strong>{{$authUser->winTotal()}}</strong> leagues so far!</p>
-						@if(!is_null($authUser->thumbnail)) 
+						@if(!is_null($authUser->thumbnail) && $authUser->thumbnail != "") 
 						<h3>Profile Image</h3>
-						<p><img src="{{asset($authUser->thumbnail)}}" alt="Player Mugshot" width="135px" height="200px"/></p>
+                        <style>
+                        img.mugshot {
+                            max-width: 135px;
+                            max-height: 200px;
+                        }
+                        </style>
+						<p><img src="{{asset($authUser->thumbnail)}}" alt="Player Mugshot" class="mugshot"/></p>
 						@endif
                     </div>
 

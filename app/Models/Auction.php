@@ -17,6 +17,7 @@ class Auction extends Model {
     }
 
     public function bids() {
-        return $this->hasMany("\App\Models\AuctionBid", 'auctions_id', 'id');
+        $bids = $this->hasMany("\App\Models\AuctionBid", 'auctions_id', 'id');
+        return $bids;
     }
 }

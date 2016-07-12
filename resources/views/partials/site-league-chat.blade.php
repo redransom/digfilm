@@ -28,7 +28,7 @@
                             <div class="item">
                                 <div class="item-header">
                                     <a href="{{URL('profile', ['id'=>$message->owner->id])}}">
-                                    @if($message->owner->thumbnail != "")
+                                    @if(!is_null($message->owner->thumbnail) && $message->owner->thumbnail != "")
                                     <img src="{{asset($message->owner->thumbnail)}}" alt="" />
                                     @else
                                     <img src="{{asset('images/TNBF.png')}}" alt="" />

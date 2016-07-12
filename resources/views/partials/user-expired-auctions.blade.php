@@ -11,7 +11,8 @@
         }
 
         table#expire img {
-            max-width: 80px !important;
+            max-width: 58px !important;
+            max-height: 80px !important;
         }
 
         table#expire td {

@@ -56,8 +56,11 @@ class Movie extends Model {
         return $this->hasMany("\App\Models\MovieRating", 'movies_id', 'id');
     }
 
-    public function bids() {
-        return $this->hasMany("\App\Models\AuctionBid", 'movies_id', 'id');
+    public function bids($auction_id = 0) {
+        if ($auction_id == 0)
+            return $this->hasMany("\App\Models\AuctionBid", 'movies_id', 'id');
+        else
+            return $this->hasMany("\App\Models\AuctionBid", 'movies_id', 'id')->where('auctions_id', $auction_id);
     }
 
     public function topBid() {

@@ -43,7 +43,8 @@
                                             @if(strtotime($auction->pivot->updated_at) == strtotime($auction->pivot->created_at)) 
                                             <td>--</td>
                                             @else
-                                            <td>{{date("g:i:sA", strtotime($auction->updated_at))}}</td>
+                                            <td>
+                                            {{!is_null($auction->bids($auction->pivot->id)->max('created_at')) ? date("j M Y g:i:sA", strtotime($auction->bids($auction->pivot->id)->max('created_at'))) : "No Bid"}}</td>
                                             @endif
                                             <td>
                                             @if($auction->pivot->ready_for_auction == 1)
@@ -53,14 +54,15 @@
                                             @endif
                                             </td>
                                         </tr>
-                                        @if($auction->bids()->count() > 0)
+                                        @if($auction->bids($auction->pivot->id)->count() > 0)
                                         <tr><td colspan="9">
                                             <ul>
-                                            @foreach($auction->bids()->orderby('created_at', 'DESC')->get() as $bid)
-                                                @if($auction->pivot->id == $bid->auctions_id)
+                                            @foreach($auction->bids($auction->pivot->id)->orderby('created_at', 'DESC')->get() as $bid)
+                                                
                                                 <li>{{$bid->bid_amount}} @ {{date("j M Y g:i:sA", strtotime($bid->created_at))}} by {{get_player($players, $bid->users_id)}}</li>
-                                                @endif
+                                                
                                             @endforeach
+
                                             </ul>
                                         </td></tr>
                                         @endif
@@ -73,11 +75,11 @@
 <!--/.content-->
 <?php 
 function get_player($players, $id) {
-foreach ($players as $player_id => $player_label) {
-    if ($player_id == $id)
-        return $player_label;
+    foreach ($players as $player_id => $player_label) {
+        if ($player_id == $id)
+            return $player_label;
+    }
     return $id;
-}
 }
 ?>
 

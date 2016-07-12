@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 use app\Models\League;
+//use DB;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
 
@@ -48,7 +49,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
 	public function startedLeagues() {
 		$inleagues = $this->inLeagues()->lists('league_id');
-		return League::whereIn('id', $inleagues)->where('auction_stage', '<', '2')->orWhereNull('auction_stage');
+		/* NOTE: need to use grouped where clause here due to logic issues and/or */
+		$leagues = League::whereIn('id', $inleagues)->where(function($query) {
+			$query->where('auction_stage', '<', '2')->orWhereNull('auction_stage');
+		});
+		return $leagues;
 	}
 
 	public function auctions() {

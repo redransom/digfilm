@@ -12,8 +12,8 @@
         }
 
         .feature-table img {
-            max-width: 80px !important;
-            max-height: 58px !important;
+            max-width: 58px !important;
+            max-height: 80px !important;
         }
 
         .feature-table td {
@@ -62,7 +62,7 @@
                 <td class="bid--placed"><span>PLACED</span></td>
                 @elseif ($leagueUser->balance > 0 && (is_null($auction->pivot->bid_amount) || $auction->pivot->bid_amount < $currentLeague->rule->max_bid) && ($leagueUser->balance > $auction->pivot->bid_amount))
                 <td id="bid_link{{$auction->pivot->id}}" class="public place--bid">
-                    <a href="#poppup-open-bid_link{{$auction->pivot->id}}" class="popup league-btn">PLACE BID</a>
+                    <a href="#poppup-open-bid_link{{$auction->pivot->id}}" class="popup league-btn">BID</a>
                     <div id="poppup-open-bid_link{{$auction->pivot->id}}" class="mfp-hide white-popup">   
                         @include('partials.user-auction-bid', ['rule'=>$currentLeague->rule, 'auction'=>$auction, 'leagueUser'=>$leagueUser])
                     </div>
