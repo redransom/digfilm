@@ -308,7 +308,9 @@ class AuctionsController extends Controller {
                 $auction->ready_for_auction = 2;
                 $auction->save();
             }
-            return Redirect::route('auctions.index');
+
+            //
+            return Redirect::route('index_by_league', [$auction->leagues_id]);
         }
         Flash::message('You don\'t have the permissions to complete this task.');
         return Redirect::route('auctions.index');

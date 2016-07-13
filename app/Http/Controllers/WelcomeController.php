@@ -79,9 +79,17 @@ class WelcomeController extends Controller {
 
 	    $count_array['private'] = League::where('type', 'R')->where('enabled', 1)->count();
 	    $latest_release_date = strtotime("+3 months");
-        $opening_bids = Movie::where('opening_bid_date', '<=', date("Y-m-d"))->whereNotNull('opening_bid_date')->
+        $opening_bid_movies = Movie::where('opening_bid_date', '<=', date("Y-m-d"))->whereNotNull('opening_bid_date')->
         	where('opening_bid', '>', 0)->where('enabled', '1')->orderBy('updated_at', 'DESC')->
-        	where('release_at', '<', date("Y-m-d", $latest_release_date))->limit(5)->get();
+        	where('release_at', '<', date("Y-m-d", $latest_release_date))->limit(10)->get();
+
+        $openingBidMovie = null;
+        foreach ($opening_bid_movies as $movie) {
+        	if ($movie->topMedia()) {
+        		$openingBidMovie = $movie;
+        		break;
+        	}
+        }        
 
         $recent_leagues = League::where('enabled', '1')->Where(function ($query) {
 	        		$query->whereNull('auction_stage')->orWhere('auction_stage', '<', '2');
@@ -98,7 +106,8 @@ class WelcomeController extends Controller {
 			->with('next_film', $next_film)
 			->with('trailers', $trailers)
 			->with('frontpage', true)
-			->with('opening_bids', $opening_bids)
+			->with('opening_bids', $opening_bid_movies)
+			->with('openingBid', $openingBidMovie)
 			->with('authUser', $authUser)
 			->with('meta', $this->get_meta($content))
 			->with('title', (!is_null($content) ? $content->title : 'Welcome to TheNextBigFilm'));

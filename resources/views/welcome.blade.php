@@ -95,20 +95,18 @@
 <!-- Opening Bids -->
 <?php 
 
-foreach ($opening_bids as $bid) {
+/*foreach ($opening_bids as $bid) {
     if ($bid->topMedia()) {
         $openingBid = $bid;
         break;
     }
-}
+}*/
   ?>
 <h2><span>Opening Bids</span></h2>
 <div class="content-padding">
-@if(isset($openingBid) && !is_null($openingBid) && $openingBid->topMedia())
+@if(isset($openingBid) && !is_null($openingBid))
 <div class="promo-hero">
-    @if($openingBid->topMedia())
     <img src="{{asset($openingBid->topMedia()->file_name)}}" alt="{{$openingBid->topMedia()->name}}" />
-    @endif
     <div class="promo-content">
         @if($openingBid->topImage('L') || $openingBid->topImage('K'))
         <div class="promo-image">
