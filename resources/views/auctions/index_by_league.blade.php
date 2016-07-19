@@ -28,9 +28,8 @@
                                         $players = $league->players->lists('name', 'id');?>
                                         @foreach($league->auctions as $auction)
                                         <tr class="<?php echo (($auctionCnt++ % 2) == 0) ? "odd" : "even"; ?> user{{$auction->users_id}}">
-                                            <td>
-                                            <a href="{{URL('auctions', array('id'=>$auction->pivot->id))}}">{{$auction->pivot->id}}</a></td>
-                                            <td><a href="{{URL('auctions', array('id'=>$auction->pivot->id))}}">{{$auction->name}}</a></td>
+                                            <td>{{$auction->pivot->id}}</td>
+                                            <td><a href="{{URL('movie-show', array('id'=>$auction->id))}}">{{$auction->name}}</a></td>
                                             @if($auction->pivot->users_id != 0)
                                             <td>{{$players[$auction->pivot->users_id]}}</td>
                                             @else

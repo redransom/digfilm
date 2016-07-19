@@ -93,15 +93,6 @@
 
 @if(isset($opening_bids))
 <!-- Opening Bids -->
-<?php 
-
-/*foreach ($opening_bids as $bid) {
-    if ($bid->topMedia()) {
-        $openingBid = $bid;
-        break;
-    }
-}*/
-  ?>
 <h2><span>Opening Bids</span></h2>
 <div class="content-padding">
 @if(isset($openingBid) && !is_null($openingBid))
@@ -129,8 +120,10 @@
     </div>
 </div>
 @endif
-@for($movie_no=1; $movie_no < $opening_bids->count(); $movie_no++)
-<?php $movie_bid = $opening_bids[$movie_no]; ?>
+<?php $openingBidsCount = 0; ?>
+@foreach($opening_bids as $movie_bid)
+@if(!isset($openingBid) || $movie_bid->id != $openingBid->id)
+<?php $openingBidsCount++; ?>
 <div class="one-quarter small--one-half">
 
     <div class="home__table">
@@ -149,7 +142,9 @@
     <p>Open Bid: <span class="highlight">&pound;{{$movie_bid->opening_bid}}</span></p>
     <p>Released: <span class="highlight">{{date("j M Y", strtotime($movie_bid->release_at))}}</span></p>
 </div>
-@endfor
+@endif
+<?php if ($openingBidsCount == 4) break; ?>
+@endforeach
 </div><!--/ .content-container-->
 @endif
 
