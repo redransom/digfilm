@@ -81,7 +81,7 @@ class WelcomeController extends Controller {
 	    $latest_release_date = strtotime("+3 months");
 		$within_last_month = strtotime("-1 month");
         $opening_bid_movies = Movie::where('opening_bid_date', '<=', date("Y-m-d"))->whereNotNull('opening_bid_date')->
-        	where('opening_bid', '>', 0)->where('enabled', '1')->orderBy('release_at', 'ASC')->
+        	where('opening_bid', '>', 0)->where('enabled', '1')->orderBy('opening_bid', 'DESC')->orderBy('release_at', 'ASC')->
         	where('release_at', '<', date("Y-m-d", $latest_release_date))->
 			where('release_at', '>', date("Y-m-d", $within_last_month))->limit(10)->get();
 

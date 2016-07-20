@@ -18,8 +18,8 @@ use App\Models\RuleSet;
 use App\Models\Auction;
 use App\Models\LeagueRule;
 use Session;
-use Input;
-use Redirect;
+use Input
+;use Redirect;
 use App\Http\Requests\CreateLeagueRequest;
 use App\Http\Requests\UpdateLeagueRequest;
 use App\Http\Requests\AddPlayerToLeagueRequest;
@@ -143,7 +143,12 @@ class LeaguesController extends Controller {
 
         //add meta data
         $league->meta_keywords = strtolower($league->name).' rules '.strtolower($ruleset->name);
-        $league->meta_description = strtolower($league->description);
+        if ($league->description != "")
+            $league->meta_description = strtolower($league->description);
+        else {
+            $league->description = "You Be The Judge";
+            $league->meta_description = "you be the judge";
+        }
 
         //add rule set for future reference
         $league->rule_sets_id = $ruleset->id;
