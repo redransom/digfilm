@@ -216,7 +216,6 @@ class LeaguesController extends Controller {
             return redirect()->route('league', [$league->id]);
         } else {
             /* come by customer create league so go to select movies page */
-            //user comes from admin - get league owner and add as a league player
             $leagueuser = LeagueUser::create( ['user_id'=>$authUser->id, 'league_id'=>$league->id, 'balance'=>100] );
 
             //need to make sure the league is private for players (invite only)
@@ -1257,11 +1256,35 @@ class LeaguesController extends Controller {
     public function closeLeaguesWhereStartDatePassed() 
     {
         /*DB::connection()->enableQueryLog();*/
-        League::where('enabled', '1')->where('auction_start_date', '<', date("Y-m-d H:i"))
+        $leagues = League::where('enabled', '1')->where('auction_start_date', '<', date("Y-m-d H:i"))
             ->Where(function ($query) {
                 $query->where('auction_stage', 0)->orWhereNull('auction_stage');
-            })->update(['enabled'=>'0']);
+            })->get(); //update(['enabled'=>'0']);
 
+        foreach($leagues as $league_to_close) {
+            //need to disable each league and also disable the league users whilst sending out an email
+            League::where('id', $league_to_close->id)->update(['enabled'=>'0']);
+            
+            //disable league user
+            LeagueUser::where('league_id', $league_to_close->id)->update(['enabled'=>'0']);
+
+            //send email about closed league
+            $subject = "League ".$league_to_close->name." has been closed.";
+            foreach ($league_to_close->players as $player) {
+                $playerEmail = $player->email;
+                $data = ['playerName' => $player->fullName(),
+                        'leagueName' => $league_to_close->name,
+                        'subject' => $subject];
+
+                Mail::send('emails.league_disabled', $data, function($message) use ($playerEmail, $subject)
+                {
+                    $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
+                    $message->subject($subject);
+                    $message->to($playerEmail);
+                });
+
+            }
+        }
 
         //now delete those disabled that have been disabled over a day
         League::where('enabled', '0')->where('updated_at', '<', date("Y-m-d H:i", strtotime("-1 day")))->delete();
