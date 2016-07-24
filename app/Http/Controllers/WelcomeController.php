@@ -452,6 +452,12 @@ class WelcomeController extends Controller {
 		$authUser = Auth::user();
 
 		$league = League::find($id);
+
+        if ($league->rule->auto_select == 'Y' && $league->movies->count() == 0) {
+            //populate the movies based on the rules set above
+            $league->populateMovies();
+        }
+
 		
 		return view('league-made')
 			->with('league', $league)

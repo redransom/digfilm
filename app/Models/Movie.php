@@ -113,4 +113,14 @@ class Movie extends Model {
 
         return $daysInterval;
     }
+
+    public static function availableMovies($auction_close_date, $max_bid) {
+        $earliest_release_date = strtotime("+1 week", strtotime($auction_close_date));
+        $latest_release_date = strtotime("+3 months", strtotime($auction_close_date));
+
+        return Movie::where('release_at', '>', date("Y-m-d", $earliest_release_date))
+            ->Where(function ($query) use ($max_bid) {
+                $query->where('opening_bid', '<=', $max_bid)->orWhereNull('opening_bid');
+            })->where('release_at', '<', date("Y-m-d", $latest_release_date))->lists('id');
+    }
 }

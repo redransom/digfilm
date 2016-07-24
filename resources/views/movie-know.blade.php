@@ -85,10 +85,25 @@
     <div class="game-info-right">
 
         <!-- BEGIN .game-menu -->
+        <script>
+        function showDiv(divname) {
+            //must be able to find jQuery logic for hiding divs etc
+        }
+
+        </script>
+
         <div class="game-menu">
             <div class="game-overlay-info">
-                <h1 itemprop="itemreviewed">{{$movie->name}}</h1>
+                <h1 itemprop="itemreviewed">{{$movie->name}} ({{date("Y", strtotime($movie->release_at))}})</h1>
+                <span>{{$movie->summary}}</span>
             </div>
+
+            <ul>
+                <li class="active" style="background-color: #921913;"><a href="javascript:showDiv('information')"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;Information</a></li>
+                <li><a href="javascript:showDiv('reviews')"><i class="fa fa-comments"></i>&nbsp;&nbsp;Reviews</a></li>
+                <li><a href="javascript:showDiv('sstats')"><i class="fa fa-film"></i>&nbsp;&nbsp;Stas</a></li>
+            </ul>
+
         <!-- END .game-menu -->
         </div>
 
@@ -97,33 +112,37 @@
         {{$movie->summary}}
 
         </div-->
-        <div class="vid-contain">
-            @if(!is_null($movie->topTrailer()))
-            <?php                      
-                $base_url = "";              
-                //if ($item->type =='T' && str_contains(, "youtu.be")) {
-                    $url = $movie->topTrailer()->url;
 
-                    //only use youtube currently
-                    $path = parse_url($url, PHP_URL_PATH);
-                    $base_url = "http://www.youtube.com/embed".$path;
-                //}
-            ?>
-            <iframe width="100%" height="400" src="{{$base_url}}" frameborder="0" allowfullscreen></iframe>
+        <div id="information">
+            <div class="vid-contain">
+                @if(!is_null($movie->topTrailer()))
+                <?php                      
+                    $base_url = "";              
+                    //if ($item->type =='T' && str_contains(, "youtu.be")) {
+                        $url = $movie->topTrailer()->url;
+
+                        //only use youtube currently
+                        $path = parse_url($url, PHP_URL_PATH);
+                        $base_url = "http://www.youtube.com/embed".$path;
+                    //}
+                ?>
+                <iframe width="100%" height="400" src="{{$base_url}}" frameborder="0" allowfullscreen></iframe>
+                @endif
+                <br/>
+                <h4>{{$movie->summary}}</h4>
+            </div>
+        </div>
+        <div id="reviews">
+            @if($movie->reviews->count() > 0)
+            @foreach($movie->reviews as $review)
+            <h2><span>{{$review->title}}</span></h2>
+            <div class="content-padding">
+            @include('partials.site-article', ['content'=>$review])
+            </div>
+
+            @endforeach
             @endif
-            <br/>
-            <h4>{{$movie->summary}}</h4>
         </div>
-        <br/>
-        @if($movie->reviews->count() > 0)
-        @foreach($movie->reviews as $review)
-        <h2><span>{{$review->title}}</span></h2>
-        <div class="content-padding">
-        @include('partials.site-article', ['content'=>$review])
-        </div>
-
-        @endforeach
-        @endif
         <!--h2><span>Media</span></h2>
         <div class="content-padding">
             <div class="row">
@@ -145,8 +164,8 @@
                 @endif
             </div>
         </div-->
-
-         @if($movie->bids()->count() > 0 && isset($authUser))
+        <div id="stats">
+            @if($movie->bids()->count() > 0 && isset($authUser))
             <h2><span>Stats</span></h2>
             <div class="content-padding">
                 <script src="{{ asset('jscript/Chart.min.js') }}"></script>
@@ -276,6 +295,7 @@
                   
             </div>
             @endif
+        </div>
 
         <!-- END .content-padding -->
         </div>

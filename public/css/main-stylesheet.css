@@ -8560,7 +8560,7 @@ body::-webkit-scrollbar-corner {
 }
 
 .game-info-right .game-menu ul li a {
-	display: block;
+	/* display: block; */
 	color: #fff;
 	padding: 15px 20px;
 	font-size: 14px;
