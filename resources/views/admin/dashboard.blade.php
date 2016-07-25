@@ -35,7 +35,8 @@
                             <b>{{$totals['LivePlayers']}}</b>
                             Players</a>
                         <a href="#" class="btn-box small span4"><i class="icon-exchange"></i>
-                            <b>Expenses</b></a>
+                            <b>{{$totals['liveAuctionsTotal']}}</b>
+                            Live Auctions</a>
                     </div>
                 </div>
                 <div class="row-fluid">
@@ -45,7 +46,7 @@
                         <a href="#" class="btn-box small span4"><i class="icon-bullhorn"></i>
                             <b>{{$totals['MoviesOnRelease']}}</b>On Release</a>
                         <a href="#" class="btn-box small span4"><i class="icon-sort-down"></i>
-                            <b>Bounce Rate</b></a>
+                            <b>{{$totals['bidsTodayTotal']}}</b>Bids last 24 hours</a>
                     </div>
                 </div>
             </div>

@@ -457,7 +457,6 @@ class WelcomeController extends Controller {
             //populate the movies based on the rules set above
             $league->populateMovies();
         }
-
 		
 		return view('league-made')
 			->with('league', $league)

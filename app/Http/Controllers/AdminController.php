@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Models\Role;
 use App\Models\RoleUser;
 use App\Models\Auction;
+use App\Models\AuctionBid;
 use App\Models\League;
 use App\Models\LeagueInvite;
 use App\Models\LeagueUser;
@@ -52,6 +53,9 @@ class AdminController extends Controller {
         $totals['liveAuctionTotal'] = Auction::where('ready_for_auction', '1')->count();
         $totals['liveLeaguesTotal'] = League::where('auction_stage', '>', '0')->where('auction_stage', '<', '3')->count();
         $totals['liveRostersTotal'] = League::where('auction_stage', '>', '2')->where('auction_stage', '<', '5')->count();
+        $lastDay = strtotime("-1 day");
+        $totals['bidsTodayTotal'] = AuctionBid::where('created_at', '>', date("Y-m-d", $lastDay))->count();
+        $totals['liveAuctionsTotal'] = Auction::where('ready_for_auction', '<', '3')->count();
 
         //league types
         $rulesets = RuleSet::lists('name', 'id');
