@@ -214,7 +214,7 @@ class WelcomeController extends Controller {
 	public function leagues() {
 		$authUser = Auth::user();
 
-		if (!isset($authUser))
+		if (is_null($authUser))
 			//ensure auction stage is less than 2 as this means the league has ended
 			$leagues = League::livePublicLeagues(); 
 		else
@@ -235,7 +235,7 @@ class WelcomeController extends Controller {
 	 */
 	public function getLeaguePlay($id, $col="name", $order = "asc") {
 		$authUser = Auth::user();
-		if (!isset($authUser))
+		if (is_null($authUser))
 			return redirect('/auth/login');
 
 		$league = League::find($id);

@@ -5,9 +5,9 @@
 <div id="main" itemscope="" itemtype="http://data-vocabulary.org/Review">
     <div class="game-info-left">
         @if($movie->topImage('K'))
-        <img itemprop="image" src="{{ asset($movie->topImage('K')->path()) }}" class="game-poster" width="220px" alt="" />
+        <img itemprop="image" src="{{ asset($movie->topImage('K')->path()) }}" class="game-poster" width="220px" alt="{{$movie->topImage('K')->name}}" />
         @else
-        <img itemprop="image" src="{{ asset('images/TNBF_missing_poster.jpg') }}" class="game-poster" alt="" />
+        <img itemprop="image" src="{{ asset('images/TNBF_missing_poster.jpg') }}" class="game-poster" alt="{{$movie->name}}" />
         @endif
         <div class="game-info-details">
             <!--div class="game-info-buttons">
@@ -86,10 +86,21 @@
 
         <!-- BEGIN .game-menu -->
         <script>
-        function showDiv(divname) {
-            //must be able to find jQuery logic for hiding divs etc
-        }
+        $(function() {
+            $("#stats_link").click(function() {
+                $('#articles_box').removeClass('active').css('background-color', '#000000');
+                $('#stats_box').addClass('active').css('background-color', '#921913');
+                $('#stats').toggle();
+                $('#articles').toggle();
+            });
 
+            $("#articles_link").click(function() {
+                $('#stats_box').removeClass('active').css('background-color', '#000000');
+                $('#articles_box').addClass('active').css('background-color', '#921913');
+                $('#stats').toggle();
+                $('#articles').toggle();
+            });
+        });
         </script>
 
         <div class="game-menu">
@@ -99,23 +110,15 @@
             </div>
 
             <ul>
-                <li class="active" style="background-color: #921913;"><a href="javascript:showDiv('information')"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;Information</a></li>
-                <li><a href="javascript:showDiv('reviews')"><i class="fa fa-comments"></i>&nbsp;&nbsp;Reviews</a></li>
-                <li><a href="javascript:showDiv('sstats')"><i class="fa fa-film"></i>&nbsp;&nbsp;Stas</a></li>
+                <li class="active" style="background-color: #921913;" id="stats_box"><a href="#" id="stats_link"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;Film Stats</a></li>
+                <li id="articles_box"><a href="#" id="articles_link"><i class="fa fa-comments"></i>&nbsp;&nbsp;Articles</a></li>
             </ul>
 
         <!-- END .game-menu -->
         </div>
-
-        <!--h2><span name='info'>Synopsis</span></h2>        
-        <div class="content-padding">
-        {{$movie->summary}}
-
-        </div-->
-
-        <div id="information">
+        <div id="stats">
+            @if(!is_null($movie->topTrailer()))
             <div class="vid-contain">
-                @if(!is_null($movie->topTrailer()))
                 <?php                      
                     $base_url = "";              
                     //if ($item->type =='T' && str_contains(, "youtu.be")) {
@@ -127,44 +130,9 @@
                     //}
                 ?>
                 <iframe width="100%" height="400" src="{{$base_url}}" frameborder="0" allowfullscreen></iframe>
-                @endif
-                <br/>
-                <h4>{{$movie->summary}}</h4>
             </div>
-        </div>
-        <div id="reviews">
-            @if($movie->reviews->count() > 0)
-            @foreach($movie->reviews as $review)
-            <h2><span>{{$review->title}}</span></h2>
-            <div class="content-padding">
-            @include('partials.site-article', ['content'=>$review])
-            </div>
-
-            @endforeach
             @endif
-        </div>
-        <!--h2><span>Media</span></h2>
-        <div class="content-padding">
-            <div class="row">
-                @if($movie->images()->count() > 0)
-                <?php $imageCnt = 1; ?>
-                @foreach($movie->images() as $image)
-                @if($image->image_type != 'F')
-                <div class="one-fifth" style="padding-right: 10px">
-                    <img src="{{asset($image->path())}}" alt="{{$image->name}}" />
-                </div>
-                @endif
-                @if($imageCnt++ > 6)
-                    <?php break; ?>
-                @endif
-                @endforeach
 
-                @else
-                <p>There is no media for this movie currently.</p>
-                @endif
-            </div>
-        </div-->
-        <div id="stats">
             @if($movie->bids()->count() > 0 && isset($authUser))
             <h2><span>Stats</span></h2>
             <div class="content-padding">
@@ -296,6 +264,40 @@
             </div>
             @endif
         </div>
+        <!--h2><span>Media</span></h2>
+        <div class="content-padding">
+            <div class="row">
+                @if($movie->images()->count() > 0)
+                <?php $imageCnt = 1; ?>
+                @foreach($movie->images() as $image)
+                @if($image->image_type != 'F')
+                <div class="one-fifth" style="padding-right: 10px">
+                    <img src="{{asset($image->path())}}" alt="{{$image->name}}" />
+                </div>
+                @endif
+                @if($imageCnt++ > 6)
+                    <?php break; ?>
+                @endif
+                @endforeach
+
+                @else
+                <p>There is no media for this movie currently.</p>
+                @endif
+            </div>
+        </div-->
+
+        <div id="articles" style="display:none">
+            @if($movie->reviews->count() > 0)
+            @foreach($movie->reviews as $review)
+            <h2><span>{{$review->title}}</span></h2>
+            <div class="content-padding">
+            @include('partials.site-article', ['content'=>$review])
+            </div>
+
+            @endforeach
+            @endif
+        </div>
+
 
         <!-- END .content-padding -->
         </div>

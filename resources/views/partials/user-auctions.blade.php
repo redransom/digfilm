@@ -60,14 +60,14 @@
             @if($auction->pivot->ready_for_auction == 1 && strtotime($auction->pivot->auction_end_time) > time())
                 @if($auction->pivot->users_id == $authUser->id)
                 <td class="bid--placed"><span>PLACED</span></td>
-                @elseif ($leagueUser->balance > 0 && (is_null($auction->pivot->bid_amount) || $auction->pivot->bid_amount < $currentLeague->rule->max_bid) && ($leagueUser->balance > $auction->pivot->bid_amount))
+                @elseif (!is_null($leagueUser) && ($leagueUser->balance > 0 && (is_null($auction->pivot->bid_amount) || $auction->pivot->bid_amount < $currentLeague->rule->max_bid) && ($leagueUser->balance > $auction->pivot->bid_amount)))
                 <td id="bid_link{{$auction->pivot->id}}" class="public place--bid">
                     <a href="#poppup-open-bid_link{{$auction->pivot->id}}" class="popup league-btn">BID</a>
                     <div id="poppup-open-bid_link{{$auction->pivot->id}}" class="mfp-hide white-popup">   
                         @include('partials.user-auction-bid', ['rule'=>$currentLeague->rule, 'auction'=>$auction, 'leagueUser'=>$leagueUser])
                     </div>
                 </td>
-                @elseif($leagueUser->balance > 0 && (!is_null($auction->pivot->bid_amount) || $auction->pivot->bid_amount >= $currentLeague->rule->max_bid))
+                @elseif(!is_null($leagueUser) && ($leagueUser->balance > 0 && (!is_null($auction->pivot->bid_amount) || $auction->pivot->bid_amount >= $currentLeague->rule->max_bid)))
                 <td>MAX BID</td>
                 @else
                 <td>NO MONEY</td>

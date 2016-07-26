@@ -223,3 +223,4 @@ Route::get('close-league-auctions/NJWKIKWqlVjHfPNyI3cJ', ['as'=>'close-league-au
 Route::get('close-bad-leagues/H8BFC2Wp87DBA2b683uM', ['as'=>'close-bad-leagues', 'uses'=>'LeaguesController@closeLeaguesWhereStartDatePassed']);
 Route::get('end-leagues/55su3532IWH0968114eG', ['as'=>'end-leagues', 'uses'=>'LeaguesController@endLeagueWithWinners']);
 Route::get('disable-movies/8977H5F6hbBg28A047Wg', ['as'=>'disable-old-movies', 'uses'=>'MoviesController@disableOldMovies']);
+Route::get('remove-leagues-rosters/8x671A8ip2Q240QRNc2S', ['as'=>'remove-leagues-rosters', 'uses'=>'LeaguesController@closeLeaguesWithoutRosters']);

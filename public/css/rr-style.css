@@ -871,7 +871,7 @@ h5.title a {
 }
 
 .game-info-left img.game-poster {
-    max-height: 220px !important;
+    /* max-height: 220px !important; */
     max-width: 220px !important;
 }
 

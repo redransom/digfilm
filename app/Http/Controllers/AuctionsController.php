@@ -392,12 +392,8 @@ class AuctionsController extends Controller {
         Auction::where('ready_for_auction', '2')->where('bid_count', '>', '0')->update(['ready_for_auction'=>4]);
     }
 
-
     /**
      * Set leagues to final stage when all auctions are complete
-     *
-     * @param  int  $id
-     * @return Response
      */
     public function completeLeagues() 
     {    
