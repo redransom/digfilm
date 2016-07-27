@@ -352,7 +352,7 @@ class AuctionsController extends Controller {
         //$currentTime = date("Y-m-d H:i:s"); 
         //Log::info("Current Time to clear out: ".$currentTime);
         $affected = Auction::where('ready_for_auction', '1')->where('auction_end_time', '<', $currentTime)->update(['ready_for_auction'=>'2']);
-        Log::info("Auction End Time ".$currentTime. " Cleared: ".$affected.' auctions');
+        //Log::info("Auction End Time ".$currentTime. " Cleared: ".$affected.' auctions');
     }
 
     /**
@@ -366,7 +366,7 @@ class AuctionsController extends Controller {
         //$currentTime = date("Y-m-d H:i:s");
         //Log::info("Current Time to clear time out: ".$currentTime);
         $affected = Auction::where('ready_for_auction', '1')->where('timeout_date', '<', $currentTime)->update(['ready_for_auction'=>'2']);
-        Log::info("Auction Time Out ".$currentTime." Cleared: ".$affected.' auctions');
+        //Log::info("Auction Time Out ".$currentTime." Cleared: ".$affected.' auctions');
     }
 
 /*    private function getLeagueRule($rules, $league_id) {

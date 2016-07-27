@@ -36,6 +36,7 @@
 
         <div class="form--item">
             <label>Thumbnail:</label>
+            <p>The movie size will need to have a maximum width of 200px. This image will be reduced to fit on the auction dashboard as well as the leagues list.</p>
             {!! Form::file('file_name', null, ['class'=>'span8', 'placeholder'=>'Enter filename...']) !!}
        </div>
 

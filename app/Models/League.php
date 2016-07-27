@@ -182,4 +182,28 @@ class League extends Model {
         $this->save();
         return $chosen_movies;
     }
+
+    /***
+     *
+     * canJoin - is used to determine if the current user (or not) can join the league - keep the logic in the model rather than the view
+     * Status return:
+     * -1 = Not Logged In 
+     * 0 = No Full
+     * 1 = Yes 
+     * 2 = Started
+     */
+    public function canJoin($user = null) {
+        if (!is_null($user)) {
+            if (time() < strtotime($this->auction_start_date)) {
+                if(count($this->players) == $this->rule->max_players) {
+                    return 0;
+                } else {
+                    return 1;
+                }
+            } elseif(time() >= strtotime($this->auction_start_date)) {
+                return 2;
+            } 
+        }
+        return -1; //not logged in
+    }
 }

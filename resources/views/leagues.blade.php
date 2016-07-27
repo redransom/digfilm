@@ -32,13 +32,12 @@
                 <div class="row">
                     <span class="title">Closes:</span><p>{{date("jS M Y", strtotime($league->auction_start_date))}} <br/>at {{date("g:iA", strtotime($league->auction_start_date))}}</p>
                 </div>
-                @if(!is_null($authUser) && time() < strtotime($league->auction_start_date))
-                @if(count($league->players) == $league->rule->max_players)
+                <?php $canJoin = $league->canJoin($authUser); ?>
+                @if($canJoin == 0)
                 Full
-                @else
+                @elseif($canJoin == 1)
                 <a class="btn" href="{{URL('join-league/'.$league->id)}}">Join</a>
-                @endif
-                @elseif(!is_null($authUser) && time() >= strtotime($league->auction_start_date))
+                @elseif($canJoin == 2)
                 <a class="btn" title="This league has started!">Started</a>
                 @else
                 <a class="btn" title="You need to be logged in to join a league">Login</a>

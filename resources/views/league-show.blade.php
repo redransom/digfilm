@@ -10,10 +10,16 @@
         <img itemprop="image" src="{{asset('/images/TNBF.jpg')}}" class="game-poster" alt="" />
         @endif
         <div class="game-info-details">
+            @if($currentLeague->canJoin($authUser->id) == 1)
+            <div class="game-info-buttons">
+                <a href="{{Route('join-league', [$currentLeague->id])}}" class="defbutton red"><i class="fa fa-bell"></i>Join League</a>
+            </div>
+            @endif
             <div class="game-info-rating">
                 <h3>League Information</h3>
                 <hr />
             </div>
+
             <div class="game-info-graph">
                 <div>
                     <span>Starts</span>

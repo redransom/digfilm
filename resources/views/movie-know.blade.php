@@ -10,10 +10,6 @@
         <img itemprop="image" src="{{ asset('images/TNBF_missing_poster.jpg') }}" class="game-poster" alt="{{$movie->name}}" />
         @endif
         <div class="game-info-details">
-            <!--div class="game-info-buttons">
-                <a href="#" class="defbutton green"><i class="fa fa-bell"></i>Follow Film</a>
-                <a href="games-single-video-single.html" class="defbutton"><i class="fa fa-film"></i>View Trailer</a>
-            </div-->
             <div class="game-info-rating">
                 <h3>TheNextBigFilm Review</h3>
                 <hr />

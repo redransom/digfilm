@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider {
 		 * 2) Top 3 most recent released movies.
 		 * 3) Top 3 auctioned movies
 		*/
-		$new_movies = Movie::where('created_at', '>', date("Y-m-d", strtotime("-1 month")))
+		/* $new_movies = Movie::where('created_at', '>', date("Y-m-d", strtotime("-1 month")))
 			->orderBy('created_at', 'DESC')->limit(3)->get();
 
 		$released_movies = Movie::where('release_at', '>', date("Y-m-d", strtotime("-1 month")))
@@ -37,7 +37,7 @@ class AppServiceProvider extends ServiceProvider {
 				->orderBy('auction_count', 'DESC')
 				->lists('movies_id');
 
-		$top_auctions = Movie::whereIn('id', $auctions)->get();
+		$top_auctions = Movie::whereIn('id', $auctions)->get();*/
 
 		//top 3 news articles
 		$news_articles = SiteContent::articles();
@@ -49,11 +49,11 @@ class AppServiceProvider extends ServiceProvider {
 
 		$data = ['genres_list'=> $genres,
 				'news_articles' => $news_articles,
-				'new_movies'=> $new_movies,
 				'contact_footer' => $contact_footer,
 				'contact_rhs' => $contact_rhs,
+				/*'new_movies'=> $new_movies,
 				'released_movies'=> $released_movies,
-				'top_auctions'=> $top_auctions];
+				'top_auctions'=> $top_auctions*/];
 
 		view()->share($data);
 

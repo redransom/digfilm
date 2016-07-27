@@ -1229,6 +1229,8 @@ a.featured-select, #slider-info .padding-box ul li:before, .home-article.right u
 
 .league-item img {
     width: 40%;
+    max-height: 217px !important;
+    max-width: 151px !important;
     float: left;
     margin-right: 5%;
 }
