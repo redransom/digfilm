@@ -18,8 +18,8 @@ use App\Models\RuleSet;
 use App\Models\Auction;
 use App\Models\LeagueRule;
 use Session;
-use Input
-;use Redirect;
+use Input;
+use Redirect;
 use App\Http\Requests\CreateLeagueRequest;
 use App\Http\Requests\UpdateLeagueRequest;
 use App\Http\Requests\AddPlayerToLeagueRequest;
@@ -777,8 +777,10 @@ class LeaguesController extends Controller {
             if ($nonplayerEmail != "") {
 
                 //do this check to make sure you can't invite yourself as you are already added as the owner
-                if ((!is_null($authUser) && $currentUser->id != $authUser->id) || is_null($authUser)) {
-
+//                if ((!is_null($authUser) && $currentUser->id != $authUser->id) || is_null($authUser)) {
+                if (is_null($currentUser) || 
+                        is_null($authUser) || 
+                        (!is_null($authUser) && !is_null($currentUser) && $currentUser->id != $authUser->id)) {
                     //do invite as well
                     $invite = new LeagueInvite();
                     $invite->leagues_id = $league->id;

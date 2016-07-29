@@ -98,12 +98,14 @@ $(function() {
                         <label class="control-label" for="LeagueFilename">Thumbnail</label>
                         <div class="controls">
                             {!! Form::file('file_name', null, ['class'=>'span8', 'placeholder'=>'Enter filename...']) !!}
+                            <span class="help-inline">This size does vary.</span>
                             <span class="help-inline">Thumbnail for the league.</span>
                         </div>
                     </div>
 
                     <div class="control-group">
                         <div class="controls">
+
                             <button type="submit" class="btn btn-primary pull-right">Add League</button>
                         </div>
                     </div>
