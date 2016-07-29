@@ -94,6 +94,13 @@ class League extends Model {
         return (!is_null($this->file_name) && $this->file_name != "") ? true : false;
     }
 
+    public function leagueImage() {
+        if(!is_null($this->file_name))
+            return asset($currentLeague->file_name);
+        else
+            return asset('/images/TNBF.jpg');        
+    }
+
     public function populateMovies() {
         $rules = $this->rule;
 

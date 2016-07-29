@@ -777,7 +777,7 @@ class LeaguesController extends Controller {
             if ($nonplayerEmail != "") {
 
                 //do this check to make sure you can't invite yourself as you are already added as the owner
-                if ((!is_null($authUser) && $currentUser->id != $authuser->id) || is_null($authUser)) {
+                if ((!is_null($authUser) && $currentUser->id != $authUser->id) || is_null($authUser)) {
 
                     //do invite as well
                     $invite = new LeagueInvite();

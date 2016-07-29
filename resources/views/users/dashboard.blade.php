@@ -19,7 +19,7 @@ table {
 }
 .feature-table img {
     max-width: 58px !important;
-    max-height: 58px !important;
+    max-height: 80px !important;
 }
 </style>
 <div class="content-padding">
@@ -163,7 +163,7 @@ table {
 
 
 
-@if($authUser->leagues->where('auction_stage', '<', '2')->count() > 0)
+@if($authUser->leagues->count() > 0)
 <h2><span>Leagues Owned</span></h2>
 <div class="content-padding">
 <p>Here are the leagues you own:</p>
@@ -180,15 +180,9 @@ table {
         </tr>
     </thead>
     <tbody>
-        @foreach($authUser->leagues->where('auction_stage', '<','2') as $league)
+        @foreach($authUser->leagues as $league)
         <tr>
-            <td>
-            @if($league->file_name != "")
-                <img src="{{asset($league->file_name)}}" alt="{{$league->name}}" width="100px"/>
-            @else
-                <img src="{{asset('images/TNBF.jpg')}}" alt="{{$league->name}}" width="100px"/>
-            @endif
-            </td>
+            <td><img src="{{asset($league->leagueImage())}}" alt="{{$league->name}}" width="100px"/></td>
             <td>{{$league->name}}</td>
             <td>{{count($league->players)}}</td>
             @if(!is_null($league->auction_start_date))
