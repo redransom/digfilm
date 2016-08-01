@@ -198,10 +198,13 @@ class League extends Model {
      * 0 = No Full
      * 1 = Yes 
      * 2 = Started
+     * 3 = Already
      */
     public function canJoin($user = null) {
         if (!is_null($user)) {
-            if (time() < strtotime($this->auction_start_date)) {
+            if ($user->id == $this->users_id) {
+                return 3;
+            } elseif (time() < strtotime($this->auction_start_date)) {
                 if(count($this->players) == $this->rule->max_players) {
                     return 0;
                 } else {

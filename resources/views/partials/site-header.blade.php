@@ -13,10 +13,11 @@
                                 <li><a href="/"><span><i class="fa fa-home"></i><strong>Home</strong></span></a></li>
                                 <li><a href="/rules"><span><i class="fa fa-calendar-o"></i><strong>Rules</strong></span></a></li>
                                 <li><a href="/all-leagues"><span><i class="fa fa-th-list"></i><strong>Leagues</strong></span></a>
+                                    @if(isset($authUser) && !is_null($authUser))
                                     <ul class="sub-menu">
-                                        <li><a href="{{URL('/all-leagues')}}">All Leagues</a></li>
-                                        <!--li><a href="{{URL('/create')}}">Create League</a></li-->
+                                        <li><a href="{{URL('/create')}}">Create League</a></li>
                                     </ul>
+                                    @endif
                                 </li>
                                 <li><a href="/all-movies"><span><i class="fa fa-film"></i><strong>Movies</strong></span></a>
                                     <ul class="sub-menu">
