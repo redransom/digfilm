@@ -48,6 +48,8 @@
 
     @else
 
+    <h3>Available Rules</h3>
+    <p>Please choose a rule set to use for your league. For further information please review the rules <a href="rules">section</a>.</p>
     @foreach($rules as $rule)
     <!-- ************ - Small Package - ************** -->  
         <div class="small-package">
