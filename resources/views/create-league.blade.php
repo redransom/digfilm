@@ -35,9 +35,9 @@
        </div>
 
         <div class="form--item">
-            <label>Thumbnail:</label>
-            <p>The movie size will need to have a maximum width of 200px. This image will be reduced to fit on the auction dashboard as well as the leagues list.</p>
+            <label>League Profile Pic:</label>
             {!! Form::file('file_name', null, ['class'=>'span8', 'placeholder'=>'Enter filename...']) !!}
+            <p style="float: right; clear: both; padding-top: 5px; width: 62% !important;">The movie size will need to have a maximum width of 200px. This image will be reduced to fit on the auction dashboard as well as the leagues list.</p>
        </div>
 
     </div>
@@ -62,7 +62,11 @@
                 </p>
             </div><!--/ content-price-->
             <div class="foot-price">
-                <input type="radio" name="rule_sets_id" value="{{$rule->id}}"/>
+                <input type="radio" name="rule_sets_id" value="{{$rule->id}}" 
+                @if($default_rule == $rule->id)
+                checked="checked"
+                @endif
+                />
             </div><!--/ foot-price-->
         </div><!--/ small-package-->
 

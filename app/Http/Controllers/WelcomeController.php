@@ -365,9 +365,12 @@ class WelcomeController extends Controller {
 		$authUser = Auth::user();
 		$rules = RuleSet::where('admin_only', 'N')->get();
 
+		$default_rule = $rules[0]->id;
+
 		return view('create-league')
 			->with('rules', $rules)
 			->with('page_name', 'league-create')
+			->with('default_rule', $default_rule)
 			->with('authUser', $authUser)
 			->with('title', 'Create League');	
 	}
