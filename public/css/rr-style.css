@@ -608,7 +608,8 @@ table.feature-table tbody td.bid--placed {
 
 #sidebar .panel > h2 span, #main h2 span, #main h3 span {
   background: #1a1a1a;
-  padding: .5em;
+  margin: .5em auto;
+  text-align: center;
 }
 
 #main-box{
