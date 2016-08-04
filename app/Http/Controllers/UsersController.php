@@ -349,7 +349,7 @@ class UsersController extends Controller {
 			->with('use_graph', true)
 			->with('authUser', $authUser)
 			->with('page_name', 'dashboard')
-			->with('title', 'Welcome to your dashboard');
+			->with('title', 'Welcome to your leagues');
 	}
 
 	/**

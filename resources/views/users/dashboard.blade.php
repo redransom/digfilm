@@ -1,7 +1,7 @@
 @extends('layouts.site')
 
 @section('content')
-<h2><span>Dashboard</span></h2>
+<h2><span>My Leagues</span></h2>
 <div class="content-padding">
     <p>Hi {{$authUser->forenames}}, Welcome to <strong>The Next Big Film</strong> today.</p1>
 </div>

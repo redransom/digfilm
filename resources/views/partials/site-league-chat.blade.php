@@ -22,6 +22,10 @@
                                 padding-bottom: 0px !important;
                                 margin-bottom: 0px !important;
                             }
+
+                            div.reply-textarea {
+                                padding-top: 1em;
+                            }
                         </style>
                         <div class="d-articles">
                             @foreach($messages as $message)

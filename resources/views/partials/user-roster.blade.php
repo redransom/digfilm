@@ -11,7 +11,7 @@
     </style>
 <table class="feature-table dark-gray">
     <thead>
-        <tr><th width="15%">&nbsp;</th><th width="40%">Movie</th><th width="15%">Date</th><th width="15%">Amount Bid</th><th width="15%">Total Gross</th><th width="15%">Value For Money</th></tr>
+        <tr><th width="15%">&nbsp;</th><th width="40%">Movie</th><th width="15%">Release<br/>Date</th><th width="15%">Amount Bid</th><th width="15%">Total Gross</th><th width="15%">Value For Money</th></tr>
     </thead>
     <tbody>
     <?php

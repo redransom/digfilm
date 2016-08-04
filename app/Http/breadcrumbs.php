@@ -194,7 +194,7 @@ Breadcrumbs::register('home', function($breadcrumbs)
 Breadcrumbs::register('dashboard', function($breadcrumbs)
 {
     $breadcrumbs->parent('home');
-    $breadcrumbs->push('Your Dashboard', route('dashboard'));
+    $breadcrumbs->push('My Leagues', route('dashboard'));
 });
 
 Breadcrumbs::register('about', function($breadcrumbs)
