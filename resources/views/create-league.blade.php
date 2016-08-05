@@ -36,8 +36,11 @@
 
         <div class="form--item">
             <label>League Profile Pic:</label>
-            {!! Form::file('file_name', null, ['class'=>'span8', 'placeholder'=>'Enter filename...']) !!}
-            <p style="float: right; clear: both; padding-top: 5px; width: 62% !important;">The movie size will need to have a maximum width of 200px. This image will be reduced to fit on the auction dashboard as well as the leagues list.</p>
+            <style>
+                input.leagueProfile {padding-right:25px !important}
+            </style>
+            {!! Form::file('file_name', ['class'=>'leagueProfile']) !!}
+            <p style="float: right; clear: both; padding-top: 5px; width: 62% !important; margin-right: 10px"><strong>NOTE</strong> League Profile image has max width of 220px.</p>
        </div>
 
     </div>
@@ -50,6 +53,7 @@
 
     <h3>Available Rules</h3>
     <p>Please choose a rule set to use for your league. For further information please review the rules <a href="rules">section</a>.</p>
+    <div  style="float: right; clear: both; padding-top: 5px; width: 64% !important;">
     @foreach($rules as $rule)
     <!-- ************ - Small Package - ************** -->  
         <div class="small-package">
@@ -73,7 +77,7 @@
         </div><!--/ small-package-->
 
     @endforeach
-
+    </div>
     @endif
     <div class="form-footer">
          <div class="divider--img"></div>

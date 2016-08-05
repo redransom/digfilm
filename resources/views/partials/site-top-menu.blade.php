@@ -3,6 +3,7 @@
                         <li><a href="/dashboard"><span>Hi {{$authUser->forenames}}</span></a>
                             <ul class="sub-menu">
                                 <li><a href="/dashboard">My Leagues</a></li>
+                                <li><a href="/create">Create League</a></li>
                                 <li><a href="/edit-profile">Profile</a></li>
                                 <li><a href="{{URL('auth/logout')}}">Logout</a></li>
                             </ul>

@@ -41,6 +41,7 @@
                                 <li><a class="collapsed" data-toggle="collapse" href="#toggleLeagues"><i class="menu-icon icon-th">
                                 </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right"></i>Leagues </a>
                                     <ul id="toggleLeagues" class="collapse unstyled">
+                                        <li><a href="{{URL('create-league')}}"><i class="icon-th"></i> Add New</a></li>
                                         <li><a href="{{URL('leagues')}}"><i class="icon-th"></i> All List</a></li>
                                         <li><a href="{{URL('leagues/0')}}"><i class="icon-th"></i> Not Ready</a></li>
                                         <li><a href="{{URL('leagues/1')}}"><i class="icon-th"></i> Start Set</a></li>
@@ -48,7 +49,6 @@
                                         <li><a href="{{URL('leagues/3')}}"><i class="icon-th"></i> Auctions Live</a></li>
                                         <li><a href="{{URL('leagues/4')}}"><i class="icon-th"></i> Roster</a></li>
                                         <li><a href="{{URL('leagues/6')}}"><i class="icon-th"></i> Completed</a></li>
-                                        <li><a href="{{URL('create-league')}}"><i class="icon-th"></i> Add New</a></li>
                                     </ul>
                                 </li>
 

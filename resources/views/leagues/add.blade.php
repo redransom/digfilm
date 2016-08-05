@@ -98,7 +98,7 @@ $(function() {
                         <label class="control-label" for="LeagueFilename">Thumbnail</label>
                         <div class="controls">
                             {!! Form::file('file_name', null, ['class'=>'span8', 'placeholder'=>'Enter filename...']) !!}
-                            <span class="help-inline">This size does vary.</span>
+                            <span class="help-inline">The max size is (width) 115px by (height) 166px it will be reduced to 58px by 80px.</span>
                             <span class="help-inline">Thumbnail for the league.</span>
                         </div>
                     </div>

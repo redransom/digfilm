@@ -50,8 +50,10 @@ class LeaguesController extends Controller {
             else {
                 if($status == 0)
                     $leagues = League::whereNull('auction_stage')->where('enabled', '1')->orderBy('created_at', $order)->get();
-                else
+                elseif ($status < 6)
                     $leagues = League::where('auction_stage', ($status - 1))->where('enabled', '1')->orderBy('created_at', $order)->orderBy('created_at', 'desc')->get();
+                else
+                    $leagues = League::where('auction_stage', ($status - 1))->orderBy('created_at', $order)->orderBy('created_at', 'desc')->get();
 
                 $paginate = false;
             }
@@ -893,13 +895,13 @@ class LeaguesController extends Controller {
                 }
 
                 //we send an email out
-                $user = User::find($lu->user_id);
+                $user = User::find($invite->users_id);
                 $subject = 'Welcome to the '.$league->name.' league!';
                 $data = ['playerName' => $user->fullName(), 
                         'leagueName' => $league->name,
                         'subject' => $subject];
 
-                if ($league->movies-count() > 0)
+                if (!is_null($league->movies) && $league->movies->count() > 0)
                     $data['leagueMovies'] = $league->movies()->orderBy('name', 'ASC')->get();
                 
                 $playerEmail = $user->email;

@@ -37,7 +37,7 @@
                                           <tr>
                                              <td style="font-family: Helvetica, arial, sans-serif; font-size: 13px; color: #333333; text-align:left;line-height: 24px;">
                                                 Hi <strong>{{$playerName}}</strong>!<br/>
-                                                You have joined the league <strong>{{$leagueName</strong>
+                                                You have joined the league <strong>{{$leagueName}}</strong>
                                                 <br/>
 
                                                 @if(isset($leagueMovies))

@@ -37,15 +37,7 @@ table {
         @foreach($authUser->inLeagues()->where('auction_stage', '2')->orderBy('auction_close_date', 'asc')->get() as $league)
         <?php $link = ($league->auction_stage < 3) ? URL('league-play/'.$league->id) : URL('roster/'.$league->id); ?>
         <tr>
-            <td>
-            <a href="{{$link}}">
-            @if($league->file_name != "")
-                <img src="{{asset($league->file_name)}}" alt="{{$league->name}}" width="100px"/>
-            @else
-                <img src="{{asset('images/TNBF.jpg')}}" alt="{{$league->name}}" width="100px"/>
-            @endif
-            </a>
-            </td>
+            <td><a href="{{$link}}"><img src="{{asset($league->leagueImage())}}" alt="{{$league->name}}"/></a></td>
             <td><a class="btn btn-mini btn-danger" href="{{URL('league-play/'.$league->id)}}">{{$league->name}}</a></td>
             <td>{{count($league->players)}}</td>
             @if(!is_null($league->rule_set))

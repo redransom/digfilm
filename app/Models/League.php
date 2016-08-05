@@ -96,9 +96,9 @@ class League extends Model {
 
     public function leagueImage() {
         if(!is_null($this->file_name))
-            return asset($currentLeague->file_name);
+            return asset($this->file_name);
         else
-            return asset('/images/TNBF.jpg');        
+            return asset('/images/TNBF_league_image.jpg');        
     }
 
     public function populateMovies() {

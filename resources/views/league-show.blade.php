@@ -4,11 +4,7 @@
 
 <div id="main" itemscope="" itemtype="http://data-vocabulary.org/Review">
     <div class="game-info-left">
-        @if(!is_null($currentLeague->file_name))
-        <img itemprop="image" src="{{asset($currentLeague->file_name)}}" class="game-poster" alt="" />
-        @else
-        <img itemprop="image" src="{{asset('/images/TNBF.jpg')}}" class="game-poster" alt="" />
-        @endif
+        <img itemprop="image" src="{{asset($currentLeague->leagueImage())}}" class="game-poster" alt="" />
         <div class="game-info-details">
             @if($currentLeague->canJoin($authUser) == 1)
             <div class="game-info-buttons">

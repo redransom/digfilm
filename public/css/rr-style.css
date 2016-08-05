@@ -257,9 +257,9 @@ table.feature-table thead tr {
     .small-package {
         position:relative;
         float:left;
-        margin-right:10px;
+        margin-right:5px;
         margin-bottom: 40px;
-        width:138px;
+        width:128px;
         -webkit-border-radius:6px;
         -moz-border-radius:6px;
         border-radius:6px;
@@ -872,8 +872,8 @@ h5.title a {
 }
 
 .game-info-left img.game-poster {
-    /* max-height: 220px !important; */
-    max-width: 220px !important;
+    max-height: 316px !important;
+    max-width: 212px !important;
 }
 
 .game-info-right .content-padding,.game-info-right .content-padding p{

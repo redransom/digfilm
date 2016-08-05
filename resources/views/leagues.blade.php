@@ -5,21 +5,18 @@
 <div class="content-padding">
 
 @if(isset($leagues) && $leagues->count() > 0)
-
+    <style>
+        img.leagueimage {
+            max-width: 115px !important;
+            max-height: 166px !important; 
+        }
+    </style>
     @foreach($leagues as $league)
     <div class="one-half small--one-whole">
         <div class="league-container league-item">
-            <a href="{{Route('league-show', ['id'=>$league->id])}}">
-            @if(!is_null($league->file_name))
-            <img src="{{asset($league->file_name)}}" alt="{{$league->name}}">
-            @else
-            <img src="{{asset('/images/TNBF_missing_poster.jpg')}}" alt="{{$league->name}}">
-            @endif
-            </a>
+            <a href="{{Route('league-show', ['id'=>$league->id])}}"><img src="{{asset($league->leagueImage())}}" alt="{{$league->name}}" class="leagueimage"></a>
             <div class="league-info">
-                <div class="row">
-                    <span class="title">Name:</span><p>{{$league->name}}</p>
-                </div>
+                <div class="row"><span class="title">Name:</span><p>{{$league->name}}</p></div>
                 <div class="row">
                 @if(count($league->players) == $league->rule->max_players)
                     <span class="title">Players:</span><p>Full</p>
