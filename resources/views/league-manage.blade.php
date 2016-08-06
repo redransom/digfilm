@@ -76,6 +76,7 @@
     @if($league->players->count() < $league->rule->max_players && $league->auction_stage == 0)
     <div class="form-footer">
         <div class="divider--img"></div>
+        <br/>
         <a href="{{URL('select-participants', array('id'=>$league->id))}}" class="submit-btn btn-small">Add more players</a></li>
     </div>
     @endif

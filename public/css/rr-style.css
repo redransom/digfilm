@@ -490,7 +490,7 @@ h5.title a:hover {
     color: #7c2c2c;
 }*/
 
-#submit.submit-btn {
+#submit.submit-btn, .form-footer .submit-btn {
     background: #5d2121 ;
     width: 86%;
     text-transform: uppercase;
@@ -499,10 +499,13 @@ h5.title a:hover {
     font-family: 'Open Sans', sans-serif;
 }
 
-#submit.submit-btn:hover {
+#submit.submit-btn:hover, .form-footer .submit-btn:hover {
     background: #7c2c2c;
 }
 
+.form-footer a.submit-btn:hover {
+    color: #fff !important;
+}
 
 .defbutton .pricetag {
     background: #5d1d1e;

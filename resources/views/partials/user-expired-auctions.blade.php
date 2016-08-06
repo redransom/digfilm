@@ -16,7 +16,7 @@
         }
 
         table#expire td {
-            font-size: 0.8em;
+            font-size: 0.9em;
         }
     </style>
     <table class="feature-table dark-gray" id="expire">
@@ -32,7 +32,7 @@
             @if(!is_null($auction->topImage('A')))
             <td><img src='{{asset($auction->topImage("A")->file_name)}}'/></td>
             @else
-            <td><img src="{{asset('images/TNBF.jpg')}}"/></td>
+            <td><img src="{{asset('images/TNBF_league_image.jpg')}}"/></td>
             @endif
             <td>
             @if(is_null($auction->slug) || $auction->slug == '')

@@ -70,15 +70,7 @@ table {
         @foreach($authUser->inLeagues()->where('auction_stage', '3')->orderBy('name', 'asc')->get() as $league)
         <?php $link = ($league->auction_stage < 3) ? URL('league-show/'.$league->id) : URL('roster/'.$league->id); ?>
         <tr>
-            <td>
-            <a href="{{$link}}">
-            @if($league->file_name != "")
-                <img src="{{asset($league->file_name)}}" alt="{{$league->name}}" width="100px"/>
-            @else
-                <img src="{{asset('images/TNBF.jpg')}}" alt="{{$league->name}}" width="100px"/>
-            @endif
-            </a>
-            </td>
+            <td><a href="{{$link}}"><img src="{{asset($league->leagueImage())}}" alt="{{$league->name}}"/></a></td>
             <td><a class="btn btn-mini btn-danger" href="{{URL('roster/'.$league->id)}}">{{$league->name}}</a></td>
             <td>{{count($league->players)}}</td>
             @if(!is_null($league->rule_set))
@@ -119,15 +111,7 @@ table {
         @foreach($authUser->startedLeagues()->orderBy('name', 'asc')->get() as $league)
         <?php $link = ($league->auction_stage < 3) ? URL('league-show/'.$league->id) : URL('roster/'.$league->id); ?>
         <tr>
-            <td>
-            <a href="{{$link}}">
-            @if($league->file_name != "")
-                <img src="{{asset($league->file_name)}}" alt="{{$league->name}}" width="100px"/>
-            @else
-                <img src="{{asset('images/TNBF.jpg')}}" alt="{{$league->name}}" width="100px"/>
-            @endif
-            </a>
-            </td>
+            <td><a href="{{$link}}"><img src="{{asset($league->leagueImage())}}" alt="{{$league->name}}"/></a></td>
             <td><a class="btn btn-mini btn-danger" href="{{$link}}">{{$league->name}}</a></td>
             <td>{{count($league->players)}}</td>
             @if(!is_null($league->auction_start_date))
@@ -174,7 +158,7 @@ table {
     <tbody>
         @foreach($authUser->leagues as $league)
         <tr>
-            <td><img src="{{asset($league->leagueImage())}}" alt="{{$league->name}}" width="100px"/></td>
+            <td><img src="{{asset($league->leagueImage())}}" alt="{{$league->name}}"/></td>
             <td>{{$league->name}}</td>
             <td>{{count($league->players)}}</td>
             @if(!is_null($league->auction_start_date))

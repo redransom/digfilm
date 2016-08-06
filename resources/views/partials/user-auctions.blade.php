@@ -17,7 +17,7 @@
         }
 
         .feature-table td {
-            font-size: 0.8em;
+            font-size: 0.9em;
         }
     </style>
     <table class="feature-table dark-gray">
@@ -38,7 +38,7 @@
             @if(!is_null($auction->firstImage()))
             <td><img src='{{asset($auction->firstImage()->file_name)}}'/></td>
             @else
-            <td><img src="{{asset('images/TNBF.jpg')}}"/></td>
+            <td><img src="{{asset('images/TNBF_league_image.jpg')}}"/></td>
             @endif
             <td><a href="{{URL('movie-knowledge', [$auction->link()])}}">{{$auction->name}}</a></td>
             <td>{{date("j-M-y", strtotime($auction->release_at))}}</td>

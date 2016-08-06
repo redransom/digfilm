@@ -1131,7 +1131,7 @@ class LeaguesController extends Controller {
                 if($movies_count > 0)
                     $league->auction_stage = 1;
 
-                $subject = "League ".$league->name." auctions will start at: ".date("d M y j:iA", strtotime($league->auction_start_date));
+                $subject = "League ".$league->name." auctions will start at: ".date("j M y g:iA", strtotime($league->auction_start_date));
                 foreach($league->players as $player) {
 
                     $data = ['playerName' => $player->fullName(), 
