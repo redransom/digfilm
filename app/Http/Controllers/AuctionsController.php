@@ -404,7 +404,8 @@ class AuctionsController extends Controller {
             $league->auction_stage = 3;
             $league->save();
 
-            $this->setRoster($league->id);
+            LeagueRoster::populate($league->id);
+            //$this->setRoster($league->id);
 
             //clear out any players who didn't take part in this league
             $this->disableNonplayingUsers($league->id);
@@ -428,7 +429,8 @@ class AuctionsController extends Controller {
                     $league->save();
 
                     //copy all rosters across
-                    $this->setRoster($league->id);
+                    LeagueRoster::populate($league->id);
+                    //$this->setRoster($league->id);
                 }
             }
         }

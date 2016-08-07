@@ -839,6 +839,8 @@ class LeaguesController extends Controller {
                 'subject'=>$subject,
                 'invite_id'=>$invite_id];
 
+        Log::info('Send invite to '.$playerName.' for '.$league->name.' league');
+
         //send invite email to new player
         try
         {

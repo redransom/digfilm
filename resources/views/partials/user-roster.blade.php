@@ -27,7 +27,7 @@
         @if(!is_null($roster_line->movie->firstImage()))
         <td><img src='{{asset($roster_line->movie->firstImage()->file_name)}}'/></td>
         @else
-        <td><img src="{{asset('images/TNBF.jpg')}}"/></td>
+        <td><img src="{{asset('images/TNBF_league_image.jpg')}}"/></td>
         @endif
         <td>
         @if(is_null($roster_line->movie->slug) || $roster_line->movie->slug == '')
