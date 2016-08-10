@@ -9,28 +9,20 @@
                     color: #BF1C29;
                 }
                 </style>
- 
-                <!-- ************** - Categories - ************** -->   
+
+                @if($league->auction_stage == 2) 
                 <div class="panel panel-first">
-                    <h2><span>League Details</span></h2>
+                    <h2><span>Count Down</span></h2>
                     
                     <div class="panel-content">
-                        <h3>League Type: </h3><p>{{$league->rule_set->name}}</p>
-
-                        @if($league->auction_stage >= 2 && $league->auction_stage < 5)
-                        <h3>Auction Started: </h3><p>{{date("jS M Y g:iA", strtotime($league->auction_start_date))}}</p>
-                        <h3>Auction Close: </h3><p>{{date("jS M Y g:iA", strtotime($league->auction_close_date))}}</p>
-                        @endif
-
-                        <!-- First check -->
-                        @if($league->auction_stage == 2) 
-
+ 
                         <!-- is this for rounds? -->
                         @if((is_null($league->rule->auction_movie_release) || $league->rule->auction_movie_release == 0))
                         <h3>Remaining Auction Time: </h3>
                         <div class="round"><?php auctionTimer($league->id, $league->auction_close_date, 'league'); ?></div>
                         <p>&nbsp;</p>
                         @else
+
                         <!-- show rounds detail -->
                         @if($league->current_round < $league->round_amount)
                         <h3>Rounds: </h3>
@@ -44,23 +36,34 @@
                         <p>&nbsp;</p>
                         @endif 
                         <!-- end rounds check -->
-                        
+                    </div>
+                </div>
+                @endif 
+
+                @include('partials.site-league-chat', ['messages'=>$league->messages()->orderBy('created_at', 'DESC')->get()])
+
+                <div class="panel panel-first">
+                    <h2><span>League Details</span></h2>
+                    
+                    <div class="panel-content">
+                        <h3>League Type: </h3><p>{{$league->rule_set->name}}</p>
+
+                        @if($league->auction_stage >= 2 && $league->auction_stage < 3)
+                        <h3>Auction Started: </h3><p>{{date("jS M Y g:iA", strtotime($league->auction_start_date))}}</p>
+                        <h3>Auction Closes: </h3><p>{{date("jS M Y g:iA", strtotime($league->auction_close_date))}}</p>
+
                         @elseif($league->auction_stage < 2)
 
                         <h3>Auction is due to start</h3>
                         <p>At: <strong>{{date("jS M Y g:iA", strtotime($league->auction_start_date))}}</strong></p>
                         
-                        <!-- end first check -->
-
-                        <div class="clear"></div>
-
                         @elseif($league->auction_stage == 3)
                         <h3>League Closes: </h3>
                         <p>At: <strong>{{date("j M Y g:iA", strtotime($league->end_date))}}</strong></p>
-                        @endif 
-                        
+                        @endif                    
                     </div>
                 </div>
+                
 
                 @if($league->auction_stage < 3)
                 <div class="panel">
@@ -119,7 +122,6 @@
 
                 @endif
 
-                @include('partials.site-league-chat', ['messages'=>$league->messages()->orderBy('created_at', 'DESC')->get()])
                 <!-- ************** - END League Details - ************** -->
 
 <?php

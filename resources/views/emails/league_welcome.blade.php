@@ -52,9 +52,11 @@
                                                    </li>
                                                 @endforeach
                                                 </ol>
-                                                @endif
                                                 <br/>
-                                                Depending on the league rules, they will be released all at the same time or in groups.
+                                                <p>Depending on the league rules, they will be released all at the same time or in groups.</p>
+                                                @else
+                                                <p>The movies will be added soon and you will receive an email confirming this.</p>
+                                                @endif
                                              </td>
                                           </tr>
                                           <!-- End of content -->

@@ -21,9 +21,9 @@
                 @if(count($league->players) == $league->rule->max_players)
                     <span class="title">Players:</span><p>Full</p>
                 @elseif(count($league->players) < $league->rule->min_players)
-                    <span class="title">Players:</span><p>Need {{($league->rule->min_players - count($league->players))}} more players!</p>
+                    <span class="title">Players:</span><p>Requires {{($league->rule->min_players - count($league->players))}} more players!</p>
                 @else
-                    <span class="title">Players:</span><p>Can take more!</p>
+                    <span class="title">Players:</span><p>Can take {{($league->rule->max_players - count($league->players))}} more!</p>
                 @endif
                 </div>
                 <div class="row">

@@ -574,6 +574,8 @@ class LeaguesController extends Controller {
                 $leagueUser->balance = 100;
                 $leagueUser->save();
 
+                $this->sendWelcomeEmail($authUser->id, $league);
+
                 Flash::success('You have successfully managed to join the '.$league->name.' league!');
                 //return redirect()->route('league-show', [$id]);
                 return redirect()->back();
@@ -897,7 +899,8 @@ class LeaguesController extends Controller {
                 }
 
                 //we send an email out
-                $user = User::find($invite->users_id);
+                $this->sendWelcomeEmail($invite->users_id, $league);
+/*                $user = User::find($invite->users_id);
                 $subject = 'Welcome to the '.$league->name.' league!';
                 $data = ['playerName' => $user->fullName(), 
                         'leagueName' => $league->name,
@@ -912,7 +915,7 @@ class LeaguesController extends Controller {
                     $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
                     $message->to($playerEmail);
                     $message->subject($subject);
-                });           
+                });*/     
 
                 if(!is_null($authUser))
                     return Redirect::route('dashboard');
@@ -929,6 +932,25 @@ class LeaguesController extends Controller {
                 return Redirect::route('dashboard');
             return Redirect::route('home');
         }
+    }
+
+    private function sendWelcomeEmail($user_id, &$league) {
+        $user = User::find($user_id);
+        $subject = 'Welcome to the '.$league->name.' league!';
+        $data = ['playerName' => $user->fullName(), 
+                'leagueName' => $league->name,
+                'subject' => $subject];
+
+        if (!is_null($league->movies) && $league->movies->count() > 0)
+            $data['leagueMovies'] = $league->movies()->orderBy('name', 'ASC')->get();
+        
+        $playerEmail = $user->email;
+        Mail::send('emails.league_welcome', $data, function($message) use ($playerEmail, $subject)
+        {
+            $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
+            $message->to($playerEmail);
+            $message->subject($subject);
+        });    
     }
 
     /**

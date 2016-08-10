@@ -80,9 +80,9 @@ table {
             @endif
             @if(!is_null($league->end_date))
             @if(date("H:i", strtotime($league->end_date)) != '00:00')
-            <td>{{date("jS M Y H:i", strtotime($league->end_date))}}</td>
+            <td>{{date("jS M Y g:iA", strtotime($league->end_date))}}</td>
             @else
-            <td>{{date("jS M Y", strtotime($league->end_date))}}</td>
+            <td>{{date("jS M Y g:iA", strtotime($league->end_date))}}</td>
             @endif
             @else
             <td></td>
@@ -150,7 +150,7 @@ table {
             <th width="10%"></th>
             <th width="30%">Name</th> 
             <th width="10%">Players</th>
-            <th width="17%">Started</th>
+            <th width="17%">Starts</th>
             <th width="17%">Ends</th>
             <th></th>
         </tr>
@@ -162,12 +162,12 @@ table {
             <td>{{$league->name}}</td>
             <td>{{count($league->players)}}</td>
             @if(!is_null($league->auction_start_date))
-            <td>{{date("jS M Y", strtotime($league->auction_start_date))}}</td>
+            <td>{{date("jS M Y g:iA", strtotime($league->auction_start_date))}}</td>
             @else
             <td>&nbsp;</td>
             @endif
             @if(!is_null($league->auction_close_date))
-            <td>{{date("jS M Y", strtotime($league->auction_close_date))}}</td>
+            <td>{{date("jS M Y g:iA", strtotime($league->auction_close_date))}}</td>
             @else
             <td>--</td>
             @endif

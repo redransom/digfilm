@@ -772,14 +772,16 @@ class WelcomeController extends Controller {
             return redirect('/');
         }
 
-        $player_array = ['1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5', '6'=>'6', '7'=>'7', '8'=>'8', '9'=>'9', '10'=>'10'];
+        $league = League::find($id);
+		$ruleset = RuleSet::where('name', 'Strategic')->first();
+
+		if ($league->rule_sets_id == $ruleset->id)
+        	$player_array = ['1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5', '6'=>'6', '7'=>'7', '8'=>'8', '9'=>'9', '10'=>'10', '11'=>'11', '12'=>'12', '13'=>'13', '14'=>'14', '15'=>'15'];
+		else
+			$player_array = ['1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5', '6'=>'6', '7'=>'7', '8'=>'8', '9'=>'9', '10'=>'10'];
         $movie_array = ['10'=>'10', '20'=>'20', '30'=>'30', '40'=>'40', '50'=>'50', '60'=>'60', '70'=>'70', '80'=>'80', '90'=>'90', '100'=>'100'];
         $authUser = Auth::user();
-        $league = League::find($id);
-/*
-        $movies = $league->movies;
-        $rule = $league->rule;
-*/
+
         return view('league-manage')
             ->with('league', $league)
             ->with('player_array', $player_array)
