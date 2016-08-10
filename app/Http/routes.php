@@ -224,3 +224,30 @@ Route::get('close-bad-leagues/H8BFC2Wp87DBA2b683uM', ['as'=>'close-bad-leagues',
 Route::get('end-leagues/55su3532IWH0968114eG', ['as'=>'end-leagues', 'uses'=>'LeaguesController@endLeagueWithWinners']);
 Route::get('disable-movies/8977H5F6hbBg28A047Wg', ['as'=>'disable-old-movies', 'uses'=>'MoviesController@disableOldMovies']);
 Route::get('remove-leagues-rosters/8x671A8ip2Q240QRNc2S', ['as'=>'remove-leagues-rosters', 'uses'=>'LeaguesController@closeLeaguesWithoutRosters']);
+
+
+/* Site map */
+Route::get('sitemap', function(){
+
+    // create new sitemap object
+    $sitemap = App::make("sitemap");
+
+    // add items to the sitemap (url, date, priority, freq)
+    $sitemap->add(URL::to('about'), '2012-08-26T12:30:00+02:00', '0.5', 'year');
+    $sitemap->add(URL::to('rules'), '2012-08-26T12:30:00+02:00', '0.5', 'year');
+    $sitemap->add(URL::to('terms'), '2012-08-26T12:30:00+02:00', '0.5', 'year');
+    $sitemap->add(URL::to('privacy'), '2012-08-26T12:30:00+02:00', '0.5', 'year');
+    $sitemap->add(URL::to('contact'), '2012-08-26T12:30:00+02:00', '0.5', 'year');
+
+    // get all movies
+    $movies = DB::table('movies')->where('enabled', '1')->orderBy('created_at', 'desc')->get();
+
+    // add every post to the sitemap
+    foreach ($movies as $movie)
+    {
+        $sitemap->add(URL::to('movie-knowledge').'/'.$movie->slug, $movie->updated_at, '0.6', 'month');
+    }
+
+    return $sitemap->render('xml');
+
+});

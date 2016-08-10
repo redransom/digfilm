@@ -12,7 +12,8 @@
 		"kartik-v/bootstrap-star-rating": "@dev",
 		"doctrine/dbal": "2.5.1",
 		"guzzlehttp/guzzle": "~5.3|~6.0",
-		"zizaco/entrust": "1.4.1"
+		"zizaco/entrust": "1.4.1",
+		"roumen/sitemap": "^2.6"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",

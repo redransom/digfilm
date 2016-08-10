@@ -147,7 +147,8 @@ return [
     	'Zizaco\Entrust\EntrustServiceProvider',
     	'Collective\Html\HtmlServiceProvider',
 		'DaveJamesMiller\Breadcrumbs\ServiceProvider',
-		'Laracasts\Flash\FlashServiceProvider'
+		'Laracasts\Flash\FlashServiceProvider',
+		'Roumen\Sitemap\SitemapServiceProvider'
 	],
 
 	/*
