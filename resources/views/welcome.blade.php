@@ -3,6 +3,7 @@
 @section('content')
 
 @if (!is_null($content))
+<h2><span>{{$content->title}}</span></h2>
 <div class="content-padding">{!! $content->body !!}</div>
 @endif
 
@@ -74,6 +75,7 @@
         </div><!-- end league-left-inner -->
 
         <div class="league-right-inner league-js small--one-whole">
+            <h3>Public Leagues</h3>
             @if($recent_leagues->count() > 0)
             @foreach($recent_leagues as $recent)
            <div class="table-row {{(($recent->type == 'U') ? 'public' : 'private')}}">
