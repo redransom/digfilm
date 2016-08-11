@@ -98,7 +98,7 @@ class WelcomeController extends Controller {
 
         $recent_leagues = League::where('enabled', '1')->Where(function ($query) {
 	        		$query->whereNull('auction_stage')->orWhere('auction_stage', '<', '2');
-	        	})->orderBy('created_at', 'DESC')->limit(10)->get();
+	        	})->where('type', 'U')->orderBy('created_at', 'DESC')->limit(10)->get();
 
         //new trailers
         $trailers = MovieMedia::where('type', 'T')->orderBy('created_at', 'DESC')->limit(5)->get();
@@ -613,14 +613,13 @@ class WelcomeController extends Controller {
 		$league = League::find($id);
 		$currentLeagueUser = LeagueUser::where('user_id', $authUser->id)->where('league_id', $league->id)->first();
 		
-		if (!$currentLeagueUser->enabled) {
+		if ($currentLeagueUser->enabled == 0) {
 			Flash::success('You don\'t have permission to view this league!');
 			return redirect('dashboard');
 		}
 
 		$rankings = LeagueRoster::rankings($id);
-		
-		
+				
 		return view('league-movie-roster')
 			->with('currentLeague', $league)
 			->with('page_name', 'roster')

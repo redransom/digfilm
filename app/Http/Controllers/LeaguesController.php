@@ -333,18 +333,22 @@ class LeaguesController extends Controller {
         //var_dump($league);
         $league->save();
 
-        if (isset($input['rule_set']) && is_null($league->rule)) {
-            //just find out there isn't already a rule defined for this league
-            $rules = $league->rule;
-            //only look for a rule set if there isn't already rules in place
-            if (is_null($rules)) {
-                $ruleset = RuleSet::find($input['rule_set']);    
-            }
-        }
+        //check the rule set has been provided
+        if (isset($input['rule_sets_id'])) {
+            $ruleset = RuleSet::find($input['rule_sets_id']);
+        } 
 
         if (isset($ruleset) && is_numeric($ruleset->id)) {
             //copy rule details into the rule for the league
-            $leaguerule = new LeagueRule();
+            //allow current rule set to be replaced if required
+            if (!is_null($league->rule)) {
+                $leaguerule = $league->rule;
+            } else {
+                $leaguerule = new LeagueRule();
+                //add league id
+                $leaguerule->leagues_id = $league->id;
+            }
+    
             $leaguerule->min_players = $ruleset->min_players;
             $leaguerule->max_players = $ruleset->max_players;
             $leaguerule->min_movies = $ruleset->min_movies;
@@ -366,11 +370,9 @@ class LeaguesController extends Controller {
             $leaguerule->min_increment = $ruleset->min_increment;
             $leaguerule->max_increment = $ruleset->max_increment;
             $leaguerule->movie_takings_duration = $ruleset->movie_takings_duration;
-
-            //add league id
-            $leaguerule->leagues_id = $league->id;
             $leaguerule->save();
         }
+
         Flash::message('League has been updated');
         return redirect()->back();
     }
@@ -555,7 +557,7 @@ class LeaguesController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function join($id) {
+    public function join($id, $route=0) {
         $authUser = Auth::user();
         if (!isset($authUser))
             return redirect('/auth/login');
@@ -577,13 +579,14 @@ class LeaguesController extends Controller {
                 $this->sendWelcomeEmail($authUser->id, $league);
 
                 Flash::success('You have successfully managed to join the '.$league->name.' league!');
-                //return redirect()->route('league-show', [$id]);
-                return redirect()->back();
             }
-        }
+        } else
+            Flash::warning('You have not been able to join the '.$league->name.' league!');
 
-        Flash::warning('You have not been able to join the '.$league->name.' league!');
-        return redirect()->back();
+        if ($route == 0)
+            return redirect()->back();
+        else 
+            return redirect()->route('dashboard');
     }
 
     public function addMovie($id) {
@@ -900,22 +903,6 @@ class LeaguesController extends Controller {
 
                 //we send an email out
                 $this->sendWelcomeEmail($invite->users_id, $league);
-/*                $user = User::find($invite->users_id);
-                $subject = 'Welcome to the '.$league->name.' league!';
-                $data = ['playerName' => $user->fullName(), 
-                        'leagueName' => $league->name,
-                        'subject' => $subject];
-
-                if (!is_null($league->movies) && $league->movies->count() > 0)
-                    $data['leagueMovies'] = $league->movies()->orderBy('name', 'ASC')->get();
-                
-                $playerEmail = $user->email;
-                Mail::send('emails.league_welcome', $data, function($message) use ($playerEmail, $subject)
-                {
-                    $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
-                    $message->to($playerEmail);
-                    $message->subject($subject);
-                });*/     
 
                 if(!is_null($authUser))
                     return Redirect::route('dashboard');
@@ -1276,7 +1263,7 @@ class LeaguesController extends Controller {
             foreach ($leagues as $league) {
                 $placings = LeagueRoster::rankings($league->id)->orderBy('total_gross', 'DESC')->get();
 
-                echo "Reviewing ".$league->name." league<br/>";
+                //echo "Reviewing ".$league->name." league<br/>";
                 //work out total balance won
                 $winnerChosen = false;
                 $winner = null;
@@ -1291,7 +1278,7 @@ class LeaguesController extends Controller {
                         $winner = User::find($placing->users_id);
                         $newPlayerBalance = (is_null($winner->balance) ? 0 : $winner->balance) + $leagueValue;
 
-                        echo "Winner chosen as <strong>".$winner->fullName()."</strong> to win ".$newPlayerBalance."<br/>";
+                        Log::info("Winner chosen as <strong>".$winner->fullName()."</strong> to win ".$newPlayerBalance);
 
                         //we should have the top placing user
                         $data = ['winnerName' => $winner->fullName(),

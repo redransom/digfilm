@@ -409,6 +409,13 @@ class AuctionsController extends Controller {
 
             //clear out any players who didn't take part in this league
             $this->disableNonplayingUsers($league->id);
+
+            //check if there is more than one player left - if there is only one then they are the winner
+            $remaining_players = LeagueUser::where('league_id',$league->id)->where('enabled', '1')->get();
+            if ($remaining_players->count() == 1){
+                //we need to end this now!!
+                //this needs to come from League Model
+            }
         }
     
         //look for leagues where the auction_stage = 2 and have got past the above

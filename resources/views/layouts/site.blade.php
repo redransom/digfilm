@@ -168,12 +168,8 @@
                             <p><strong>Information: </strong>
                             {!! Session::get('flash_notification.message') !!}</p>
                         </div><!--/ info-->
+                        <br/>
                         @endif
-                        <!-- <div class="content-padding">
-                            <a href="podcasts-single.html" class="top-alert-message">
-                                <span><span class="pod-live">Custom message</span>An event is happening tonight 20:00! Be Prepared!</span>
-                            </a>
-                        </div> -->
 
                         @yield('content')
 

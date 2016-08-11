@@ -8,7 +8,7 @@
         <div class="game-info-details">
             @if($currentLeague->canJoin($authUser) == 1)
             <div class="game-info-buttons">
-                <a href="{{Route('join-league', [$currentLeague->id])}}" class="defbutton red"><i class="fa fa-bell"></i>Join League</a>
+                <a href="{{Route('join-league', [$currentLeague->id, '1'])}}" class="defbutton green"><i class="fa fa-bell"></i>Join League</a>
             </div>
             @endif
             <div class="game-info-rating">
@@ -19,10 +19,10 @@
             <div class="game-info-graph">
                 <div>
                     <span>Starts</span>
-                    <strong>{{date("l, jS F Y", strtotime($currentLeague->auction_start_date))}}</strong>
+                    <strong>{{date("l, jS F Y g:iA", strtotime($currentLeague->auction_start_date))}}</strong>
                     @if(!is_null($currentLeague->end_date))
                     <span>Ends</span>
-                    <strong>{{date("l, jS F Y", strtotime($currentLeague->end_date))}}</strong>
+                    <strong>{{date("l, jS F Y g:iA", strtotime($currentLeague->end_date))}}</strong>
                     @endif
                     <span>League Pot Size</span>
                     @if($currentLeague->players()->count() > 0)
@@ -31,7 +31,9 @@
                     <strong>0 USD</strong>
                     @endif
                     @if(isset($currentLeague->rule_set->name))
+                    <br/>
                     <h3>Rules</h3>
+                    <span>Type</span>
                     <strong>{{$currentLeague->rule_set->name}}</strong>
 
                     <span>Durations</span>

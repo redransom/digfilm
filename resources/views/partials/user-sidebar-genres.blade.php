@@ -6,14 +6,15 @@
 
                         <select class="selectdropdown">
                             @if(isset($genres_list))
-                                @foreach($genres_list as $genre)
-                                <option value="{{URL('movie-genre', [$genre->link()])}}" selected>{{$genre->name}} ({{$genre->movie_count()}})</option>
+                                @foreach($genres_list as $listgenre)
+                                <option value="{{URL('movie-genre', [$listgenre->link()])}}" 
+                                @if(isset($genre) && $listgenre->id == $genre->id) 
+                                selected
+                                @endif
+                                >{{$listgenre->name}} ({{$listgenre->movie_count()}})</option>
                                 @endforeach
                             @endif
                         </select>
-
-                        
-                        
                     </div>
                 <!-- END .panel -->
                 </div>

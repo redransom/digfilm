@@ -87,7 +87,7 @@ Route::group(['middleware'=>'auth'], function() {
 
         Route::post('league-invite', ['as'=>'league-invite', 'uses'=>'LeaguesController@postInvitePlayer']);
         Route::get('place-bid/{id}', ['as'=>'place-auction-bid', 'uses'=>'AuctionsController@placeBid']);
-        Route::get('join-league/{id}', ['as'=>'join-league', 'uses'=>'LeaguesController@join']);
+        Route::get('join-league/{id}/{route?}', ['as'=>'join-league', 'uses'=>'LeaguesController@join']);
 
         Route::post('players/{id}/rules', ['as'=>'player-rules', 'uses'=>'LeaguesController@postPlayerRules']);
         Route::get('config-rules/{id}', ['as'=>'config-rules', 'uses'=>'WelcomeController@configRules']);
@@ -233,11 +233,13 @@ Route::get('sitemap', function(){
     $sitemap = App::make("sitemap");
 
     // add items to the sitemap (url, date, priority, freq)
-    $sitemap->add(URL::to('about'), '2012-08-26T12:30:00+02:00', '0.5', 'year');
-    $sitemap->add(URL::to('rules'), '2012-08-26T12:30:00+02:00', '0.5', 'year');
-    $sitemap->add(URL::to('terms'), '2012-08-26T12:30:00+02:00', '0.5', 'year');
-    $sitemap->add(URL::to('privacy'), '2012-08-26T12:30:00+02:00', '0.5', 'year');
-    $sitemap->add(URL::to('contact'), '2012-08-26T12:30:00+02:00', '0.5', 'year');
+    $sm_date = date("c");
+    $sitemap->add(URL::to('home'), $sm_date, '0.5', 'daily');
+    $sitemap->add(URL::to('about'), $sm_date, '0.5', 'year');
+    $sitemap->add(URL::to('rules'), $sm_date, '0.5', 'year');
+    $sitemap->add(URL::to('terms'), $sm_date, '0.5', 'year');
+    $sitemap->add(URL::to('privacy'), $sm_date, '0.5', 'year');
+    $sitemap->add(URL::to('contact'), $sm_date, '0.5', 'year');
 
     // get all movies
     $movies = DB::table('movies')->where('enabled', '1')->orderBy('created_at', 'desc')->get();
@@ -245,8 +247,41 @@ Route::get('sitemap', function(){
     // add every post to the sitemap
     foreach ($movies as $movie)
     {
-        $sitemap->add(URL::to('movie-knowledge').'/'.$movie->slug, $movie->updated_at, '0.6', 'month');
+        //need a formula to work out best value for priority at some point
+        $sitemap->add(URL::to('movie-knowledge').'/'.$movie->slug, $movie->release_at, '0.6', 'month');
     }
+
+    // get all public leagues
+    $leagues = DB::table('leagues')->where('enabled', '1')->where('type', 'U')->orderBy('end_date', 'ASC')->get();
+
+    // add every post to the sitemap
+    foreach ($leagues as $league)
+    {
+        //need a formula to work out best value for priority at some point
+        $sitemap->add(URL::to('league-show').'/'.$league->id, $league->end_date, '0.4', 'month');
+    }
+
+    //genres
+    $genres = DB::table('genres')->orderBy('name', 'ASC')->get();
+
+    // add every post to the sitemap
+    foreach ($genres as $genre)
+    {
+        //need a formula to work out best value for priority at some point
+        $sitemap->add(URL::to('movie-genre').'/'.$genre->slug, $sm_date, '0.4', 'week');
+    }
+
+    //news articles
+    $news = DB::table('site_content')->where('enabled', '1')->where('type', 'N')->orderBy('created_at', 'ASC')->get();
+
+    // add every post to the sitemap
+    foreach ($news as $article)
+    {
+        //need a formula to work out best value for priority at some point
+        $sitemap->add(URL::to('news-detail').'/'.$article->slug, $article->updated_at, '0.4', 'year');
+    }
+    
+
 
     return $sitemap->render('xml');
 

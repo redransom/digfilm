@@ -78,10 +78,19 @@
             @foreach($recent_leagues as $recent)
            <div class="table-row {{(($recent->type == 'U') ? 'public' : 'private')}}">
                 <div class="league-left">
-                    {{$recent->name}}
+                    <a href="{{Route('league-show', ['id'=>$recent->id])}}">{{$recent->name}}</a>
                 </div>
                 <div class="league-right">
-                   <a href="{{URL('league-show', ['id'=>$recent->id])}}" class="league-btn">{{(($recent->type == 'U') ? 'Public' : 'Private')}}</a>
+                    <?php $canJoin = $recent->canJoin($authUser); ?>
+                    @if($canJoin == 0)
+                    Full
+                    @elseif($canJoin == 1)
+                    <a class="league-btn" href="{{URL('join-league/'.$recent->id)}}">Join</a>
+                    @elseif($canJoin == 2)
+                    <a class="league-btn" title="This league has started!">Started</a>
+                    @else
+                    <a class="league-btn" title="You need to be logged in to join a league">Login</a>                    
+                    @endif
                 </div>
            </div>
            @endforeach
