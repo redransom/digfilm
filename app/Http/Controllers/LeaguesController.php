@@ -1267,18 +1267,18 @@ class LeaguesController extends Controller {
                 //work out total balance won
                 $winnerChosen = false;
                 $winner = null;
-                $playerCount = $league->players()->count();
-                //TODO: Move this to league balance
-                $leagueValue = $playerCount * 100;
+                $leagueValue = $league->value();
                 $newPlayerBalance = 0;
 
                 foreach ($placings as $placing) {
                     if (!$winnerChosen) {
                         //winners details
-                        $winner = User::find($placing->users_id);
+                        $league->setWinner($placing->users_id);
+
+                        /*$winner = User::find($placing->users_id);
                         $newPlayerBalance = (is_null($winner->balance) ? 0 : $winner->balance) + $leagueValue;
 
-                        Log::info("Winner chosen as <strong>".$winner->fullName()."</strong> to win ".$newPlayerBalance);
+                        Log::info("Winner chosen as ".$winner->fullName()." to win ".$newPlayerBalance);
 
                         //we should have the top placing user
                         $data = ['winnerName' => $winner->fullName(),
@@ -1296,7 +1296,7 @@ class LeaguesController extends Controller {
                         });
                     
                         //lets update the winners balance
-                        User::where('id', $winner->id)->update(['balance'=>$newPlayerBalance]);
+                        User::where('id', $winner->id)->update(['balance'=>$newPlayerBalance]);*/
 
                         $winnerChosen = true;
                     } else {
@@ -1319,7 +1319,8 @@ class LeaguesController extends Controller {
 
                 //disable the league
                 if (!is_null($winner))
-                    League::where('id', $league->id)->update(['enabled'=>'0', 'auction_stage'=>'5', 'winners_id'=>$winner->id]);
+                    $league->setWinner($winner->id);
+                    //League::where('id', $league->id)->update(['enabled'=>'0', 'auction_stage'=>'5', 'winners_id'=>$winner->id]);
             }   
         } else {
             echo "No leagues found for ending.";

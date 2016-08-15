@@ -81,7 +81,7 @@
                                 <li><a class="collapsed" data-toggle="collapse" href="#toggleTasks"><i class="menu-icon icon-group">
                                 </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right"></i>Automated Tasks</a>
                                     <ul id="toggleTasks" class="collapse unstyled">
-                                        <li><a href="{{route('league-auctions')}}" target="_blank"><i class="icon-group"></i> 1) Set Auction Start Dates</a></li>
+                                        <li><a href="{{route('start-auctions')}}" target="_blank"><i class="icon-group"></i> 1) Set Auction Start Dates</a></li>
                                         <li><a href="{{route('notify-auctions')}}" target="_blank"><i class="icon-group"></i> 2) Load Auction Movies</a></li>
                                         <li><a href="{{route('phase1-auctions')}}" target="_blank"><i class="icon-group"></i> 3) Run Auctions</a></li>
                                         <li><a href="{{route('load-movies')}}" target="_blank"><i class="icon-group"></i> 4) Load Next Movies</a></li>

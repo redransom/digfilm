@@ -212,7 +212,7 @@ Route::group(['middleware'=>'auth'], function() {
 });
 
 /* cron jobs */
-Route::get('start-auctions/5Htzx6V6nud998R353kz', ['as'=>'league-auctions', 'uses'=>'LeaguesController@startAuctions']);
+Route::get('start-auctions/5Htzx6V6nud998R353kz', ['as'=>'start-auctions', 'uses'=>'LeaguesController@startAuctions']);
 Route::get('notify-auctions/63zdE1TnIWUQ444PHPNa', ['as'=>'notify-auctions', 'uses'=>'LeaguesController@preparePlayersForAuctions']);
 Route::get('phase1-run-auctions/bf2Kc6hOuU7CO948h60s', ['as'=>'phase1-auctions', 'uses'=>'AuctionsController@executeAuctions']);
 Route::get('phase2-run-auctions/RBbgCtpSeTsKzM0UgoCg', ['as'=>'load-movies', 'uses'=>'AuctionsController@loadNextMovies']);

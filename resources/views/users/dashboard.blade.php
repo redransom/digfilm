@@ -3,11 +3,7 @@
 @section('content')
 <h2><span>My Leagues</span></h2>
 <div class="content-padding">
-    <p>Hi {{$authUser->forenames}}, Welcome to <strong>The Next Big Film</strong> today.</p1>
-</div>
-
-<h2><span>Leagues Participating in</span></h2>
-<div class="content-padding">
+    <p>Hi {{$authUser->forenames}}, Welcome to <strong>The Next Big Film</strong> today.</p>
     <p>Here are the leagues you are in:</p>
 </div>
 

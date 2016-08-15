@@ -4,8 +4,10 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\LeagueUser;
 use DB;
 use Log;
+use Mail;
 use App\Models\Movie;
 use App\Models\LeagueMovie;
+use App\Models\User;
 
 class League extends Model {
 
@@ -215,5 +217,44 @@ class League extends Model {
             } 
         }
         return -1; //not logged in
+    }
+
+    public function value() {
+        $playerCount = $this->players()->count();
+        $leagueValue = $playerCount * 100;
+        return $leagueValue;
+    }
+
+    public function notifyWinner($winners_id) {
+        $winner = User::find($winners_id);
+        $leagueValue = $this->value();
+        $newPlayerBalance = (is_null($winner->balance) ? 0 : $winner->balance) + $leagueValue;
+
+        Log::info("Winner chosen as ".$winner->fullName()." to win ".$newPlayerBalance);
+
+        //we should have the top placing user
+        $data = ['winnerName' => $winner->fullName(),
+                'leagueName' => $this->name,
+                'leagueValue' => $leagueValue,
+                'playerBalance' => $newPlayerBalance,
+                'subject' => 'You have won the league!'];
+
+        $winnerEmail = $winner->email;
+        Mail::send('emails.league_winner', $data, function($message) use ($winnerEmail)
+        {
+            $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
+            $message->subject('You have won the league!');
+            $message->to($winnerEmail);
+        });
+    
+        //lets update the winners balance
+        User::where('id', $winner->id)->update(['balance'=>$newPlayerBalance]);
+
+        //update the league with the winner 
+        $this->setWinner($winners_id);
+    }
+
+    public function setWinner($winner_id) {
+        League::where('id', $this->id)->update(['enabled'=>'0', 'auction_stage'=>'5', 'winners_id'=>$winner_id]);
     }
 }

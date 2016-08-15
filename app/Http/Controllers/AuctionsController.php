@@ -310,7 +310,7 @@ class AuctionsController extends Controller {
             }
 
             //
-            return Redirect::route('index_by_league', [$auction->leagues_id]);
+            return Redirect::route('league-auctions', [$auction->leagues_id]);
         }
         Flash::message('You don\'t have the permissions to complete this task.');
         return Redirect::route('auctions.index');
@@ -378,7 +378,7 @@ class AuctionsController extends Controller {
 
     /**
      * Set auction codes to 3 when the auction is closed and the auction has not been bidded on
-     * Set auctuon code to 4 when the auction is closed and the auction has been bidded on 
+     * Set auction code to 4 when the auction is closed and the auction has been bidded on 
      *
      * @param  int  $id
      * @return Response
@@ -401,21 +401,7 @@ class AuctionsController extends Controller {
         $currentTime = date("Y-m-d H:i:s"); 
         $leagues = League::where('auction_stage', 2)->where('auction_close_date', '<', $currentTime)->get();
         foreach($leagues as $league) {
-            $league->auction_stage = 3;
-            $league->save();
-
-            LeagueRoster::populate($league->id);
-            //$this->setRoster($league->id);
-
-            //clear out any players who didn't take part in this league
-            $this->disableNonplayingUsers($league->id);
-
-            //check if there is more than one player left - if there is only one then they are the winner
-            $remaining_players = LeagueUser::where('league_id',$league->id)->where('enabled', '1')->get();
-            if ($remaining_players->count() == 1){
-                //we need to end this now!!
-                //this needs to come from League Model
-            }
+            $this->decideLeagueSituationAfterAuctionCompletes($league);
         }
     
         //look for leagues where the auction_stage = 2 and have got past the above
@@ -431,17 +417,51 @@ class AuctionsController extends Controller {
                 $auction_count = $league->auctions()->where('ready_for_auction', '<', '2')->count();
 
                 if ($auction_count == 0) {
+                    $this->decideLeagueSituationAfterAuctionCompletes($league);
+
                     //stage = 3 / auctions are over
-                    $league->auction_stage = 3;
+                    /*$league->auction_stage = 3;
                     $league->save();
 
                     //copy all rosters across
-                    LeagueRoster::populate($league->id);
-                    //$this->setRoster($league->id);
+                    //clear out any players who didn't take part in this league
+                    $this->disableNonplayingUsers($league->id);
+
+                    LeagueRoster::populate($league->id);*/
                 }
             }
         }
     }
+
+    /**
+     * Decide what to do with a league after auctions have finished
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    private function decideLeagueSituationAfterAuctionCompletes(&$league) {
+        $league->auction_stage = 3;
+        $league->save();
+
+        //check if there is more than one player left - if there is only one then they are the winner
+        $remaining_players = Auction::where('leagues_id', $league->id)->whereNotNull('users_id')->groupBy('users_id')->lists('users_id');
+
+        var_dump($remaining_players);
+        //$remaining_players = LeagueUser::where('league_id', $league->id)->where('enabled', '1')->get();
+        if (count($remaining_players) == 1){
+            //we need to end this now!!
+            //this needs to come from League Model
+            $player = $remaining_players[0];
+            print_r($player);
+            $league->notifyWinner($player);
+        } else {
+            //only create the roster if there are players still taking part
+            LeagueRoster::populate($league->id);
+
+            //clear out any players who didn't take part in this league
+            $this->disableNonplayingUsers($league->id);
+        }
+    } 
 
     /**
      * Populate the rosters for a league

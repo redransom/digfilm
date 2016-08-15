@@ -18,7 +18,7 @@
             </a>
             @endif
             @if(isset($totals['liveLeaguesTotal']))
-            <a href="{{URL('leagues/2')}}" class="btn-box big span4"><i class="icon-user"></i><b>{{$totals['liveLeaguesTotal']}}</b>
+            <a href="{{URL('leagues/2')}}" class="btn-box big span4"><i class="icon-th"></i><b>{{$totals['liveLeaguesTotal']}}</b>
                 <p class="text-muted">
                     Live Leagues</p>
             </a>
