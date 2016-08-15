@@ -811,7 +811,7 @@ h5.title a {
     background: #fff;
 }
 
-.league-container .league-left-inner h3 {
+.league-container .league-left-inner h3, .league-container .league-right-inner h3 {
     color: #fff;
     text-transform: none;
     font-weight: normal;

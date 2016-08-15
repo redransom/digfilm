@@ -369,13 +369,6 @@ class AuctionsController extends Controller {
         //Log::info("Auction Time Out ".$currentTime." Cleared: ".$affected.' auctions');
     }
 
-/*    private function getLeagueRule($rules, $league_id) {
-        foreach ($rules as $rule) {
-            if ($rule->league_id == $league_id)
-                return $rule;
-        }
-    }*/
-
     /**
      * Set auction codes to 3 when the auction is closed and the auction has not been bidded on
      * Set auction code to 4 when the auction is closed and the auction has been bidded on 
@@ -418,16 +411,6 @@ class AuctionsController extends Controller {
 
                 if ($auction_count == 0) {
                     $this->decideLeagueSituationAfterAuctionCompletes($league);
-
-                    //stage = 3 / auctions are over
-                    /*$league->auction_stage = 3;
-                    $league->save();
-
-                    //copy all rosters across
-                    //clear out any players who didn't take part in this league
-                    $this->disableNonplayingUsers($league->id);
-
-                    LeagueRoster::populate($league->id);*/
                 }
             }
         }
@@ -446,13 +429,11 @@ class AuctionsController extends Controller {
         //check if there is more than one player left - if there is only one then they are the winner
         $remaining_players = Auction::where('leagues_id', $league->id)->whereNotNull('users_id')->groupBy('users_id')->lists('users_id');
 
-        var_dump($remaining_players);
         //$remaining_players = LeagueUser::where('league_id', $league->id)->where('enabled', '1')->get();
         if (count($remaining_players) == 1){
             //we need to end this now!!
             //this needs to come from League Model
             $player = $remaining_players[0];
-            print_r($player);
             $league->notifyWinner($player);
         } else {
             //only create the roster if there are players still taking part
@@ -462,46 +443,6 @@ class AuctionsController extends Controller {
             $this->disableNonplayingUsers($league->id);
         }
     } 
-
-    /**
-     * Populate the rosters for a league
-     * TODO: Move this into the LeagueRoster model
-     *
-     * @param  int  $league_id
-     * @return Response
-     */
-    private function setRoster($league_id) 
-    {   
-        $created_at = date("Y-m-d H:i:s");
-
-        $league = League::find($league_id);
-
-        if ($league->rule->blind_bid == 'N') {
-            DB::insert(DB::raw("INSERT INTO league_roster
-    (leagues_id, users_id, movies_id, bid_amount, takings_end_date, created_at)
-    SELECT A.leagues_id, users_id, movies_id, bid_amount, DATE_ADD(M.release_at, INTERVAL LR.movie_takings_duration WEEK), '".$created_at."' 
-    FROM auctions A INNER JOIN league_rules LR ON A.leagues_id = LR.leagues_id
-    INNER JOIN movies M ON A.movies_id = M.id
-    WHERE A.leagues_id = '".$league_id."' AND bid_count > 0"));
-
-        } else {
-            $sql = "INSERT INTO league_roster
-    (leagues_id, users_id, movies_id, bid_amount, takings_end_date, created_at)
-    SELECT A.leagues_id, ab.users_id, A.movies_id, A.bid_amount, DATE_ADD(M.release_at, INTERVAL LR.movie_takings_duration WEEK), '".$created_at."' 
-    FROM auctions A 
-        INNER JOIN league_rules LR ON A.leagues_id = LR.leagues_id
-        INNER JOIN movies M ON A.movies_id = M.id 
-        INNER JOIN auction_bids ab ON A.id = ab.auctions_id 
-        INNER JOIN (SELECT min(ab.created_at) as created_at, ab.movies_id, ab.bid_amount FROM auction_bids ab 
-                INNER JOIN auctions a ON ab.auctions_id = a.id and a.bid_amount = ab.bid_amount
-                WHERE a.leagues_id = ".$league_id." GROUP BY movies_id, bid_amount) ab2
-                ON ab.created_at = ab2.created_at and ab.movies_id = ab2.movies_id and ab.bid_amount = ab2.bid_amount
-        WHERE A.leagues_id = '".$league_id."'";
-
-            DB::insert(DB::raw($sql));
-
-        }
-    }
 
     /**
      * Disable all players who didn't take part in an auction
