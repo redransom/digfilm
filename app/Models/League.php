@@ -220,8 +220,16 @@ class League extends Model {
     }
 
     public function value() {
-        $playerCount = $this->players()->count();
-        $leagueValue = $playerCount * 100;
+        if ($this->type == 'U') {
+            //public league owner does not take part in the game
+            $playerCount = $this->players()->count() - 1;
+            if ($playerCount == 0) 
+                $playerCount = 1; //Needs to be a minimum of 1
+        } else {
+            //private league everyone is involved
+            $playerCount = $this->players()->count();
+        }
+        $leagueValue = $playerCount * 100; //TODO: remove this into a rule for the league rule set or a league field
         return $leagueValue;
     }
 

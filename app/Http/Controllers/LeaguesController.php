@@ -212,13 +212,15 @@ class LeaguesController extends Controller {
 
         if ($direction == "A") {
             //user comes from admin - get league owner and add as a league player
-            $leagueuser = LeagueUser::create( ['user_id'=>$league->users_id, 'league_id'=>$league->id, 'balance'=>100] );
+            /*if ($league->type != 'U')
+                $leagueuser = LeagueUser::create( ['user_id'=>$league->users_id, 'league_id'=>$league->id, 'balance'=>100] );*/
 
             Flash::message('League created.');
             return redirect()->route('league', [$league->id]);
         } else {
             /* come by customer create league so go to select movies page */
-            $leagueuser = LeagueUser::create( ['user_id'=>$authUser->id, 'league_id'=>$league->id, 'balance'=>100] );
+            /*if ($league->type != 'U')
+                $leagueuser = LeagueUser::create( ['user_id'=>$authUser->id, 'league_id'=>$league->id, 'balance'=>100] );*/
 
             //need to make sure the league is private for players (invite only)
             $league->type = 'R';

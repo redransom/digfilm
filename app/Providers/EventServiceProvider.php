@@ -5,6 +5,8 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 
 use App\Models\MovieTaking;
 use App\Observers\MovieTakingObserver;
+use App\Models\League;
+use App\Observers\LeagueObserver;
 
 class EventServiceProvider extends ServiceProvider {
 
@@ -31,6 +33,7 @@ class EventServiceProvider extends ServiceProvider {
 
 		//
 		MovieTaking::observe(new MovieTakingObserver());
+		League::observe(new LeagueObserver());
 	}
 
 }
