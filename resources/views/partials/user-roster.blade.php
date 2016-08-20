@@ -3,6 +3,8 @@
         .feature-table img {
             max-width: 58px !important;
             max-height: 80px !important;
+            min-width: 58px !important;
+            min-height: 80px !important;
         }
 
         .feature-table td {
@@ -11,7 +13,7 @@
     </style>
 <table class="feature-table dark-gray">
     <thead>
-        <tr><th width="15%">&nbsp;</th><th width="40%">Movie</th><th width="15%">Release<br/>Date</th><th width="15%">Amount Bid</th><th width="15%">Total Gross</th><th width="15%">Value For Money</th></tr>
+        <tr><th width="12%">&nbsp;</th><th width="40%">Movie</th><th width="15%">Release<br/>Date</th><th width="15%">Amount Bid</th><th width="15%">Total Gross</th><th width="15%">Value For Money</th></tr>
     </thead>
     <tbody>
     <?php
@@ -25,9 +27,9 @@
         ?>
         <tr>
         @if(!is_null($roster_line->movie->firstImage()))
-        <td><img src='{{asset($roster_line->movie->firstImage()->file_name)}}'/></td>
+        <td align="center"><img src='{{asset($roster_line->movie->firstImage()->file_name)}}'/></td>
         @else
-        <td><img src="{{asset('images/TNBF_league_image.jpg')}}"/></td>
+        <td align="center"><img src="{{asset('images/TNBF_league_image.jpg')}}"/></td>
         @endif
         <td>
         @if(is_null($roster_line->movie->slug) || $roster_line->movie->slug == '')

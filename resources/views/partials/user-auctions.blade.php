@@ -14,6 +14,8 @@
         .feature-table img {
             max-width: 58px !important;
             max-height: 80px !important;
+            min-width: 58px !important;
+            min-height: 80px !important;
         }
 
         .feature-table td {
@@ -22,7 +24,7 @@
     </style>
     <table class="feature-table dark-gray">
         <thead>
-            <tr><th width="15%">&nbsp;</th>
+            <tr><th width="12%">&nbsp;</th>
             <th width="25%"><a href="{{Route('league-play', ['id' => $currentLeague->id, 'col'=>'name', 'order'=> (($order == 'asc') ? 'desc' : 'asc')])}}">Movie</a></th>
             <th width="10%"><a href="{{Route('league-play', ['id' => $currentLeague->id, 'col'=>'release_at', 'order'=> (($order == 'asc') ? 'desc' : 'asc')])}}">Release Date</a></th>
             <th width="12%">Opening<br/>Bid</th>
@@ -36,9 +38,9 @@
         @foreach($currentLeague->auctions()->where('ready_for_auction', 1)->orderBy($col, $order)->get() as $auction)
             <tr>
             @if(!is_null($auction->firstImage()))
-            <td><img src='{{asset($auction->firstImage()->file_name)}}'/></td>
+            <td align="center"><img src='{{asset($auction->firstImage()->file_name)}}'/></td>
             @else
-            <td><img src="{{asset('images/TNBF_league_image.jpg')}}"/></td>
+            <td align="center"><img src="{{asset('images/TNBF_league_image.jpg')}}"/></td>
             @endif
             <td><a href="{{URL('movie-knowledge', [$auction->link()])}}">{{$auction->name}}</a></td>
             <td>{{date("j-M-y", strtotime($auction->release_at))}}</td>

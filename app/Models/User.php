@@ -40,7 +40,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	}
 
 	public function leagues() {
-		return $this->hasMany("\App\Models\League", "users_id")->where('leagues.enabled', '1')->where(function($query) {
+		return $this->hasMany("\App\Models\League", "users_id")->where('leagues.enabled', '1')->where('leagues.type', 'R')->where(function($query) {
 			$query->where('auction_stage', '<', '2')->orWhereNull('auction_stage');
 		});
 	}

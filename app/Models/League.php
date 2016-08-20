@@ -119,11 +119,6 @@ class League extends Model {
         if (is_null($max_bid) || $max_bid == '')
             $max_bid = 100;
         
-/*        $available_movies = Movie::where('release_at', '>', date("Y-m-d", $earliest_release_date))
-            ->Where(function ($query) use ($max_bid) {
-                $query->where('opening_bid', '<=', $max_bid)->orWhereNull('opening_bid');
-            })->where('release_at', '<', date("Y-m-d", $latest_release_date))->lists('id');
-*/
         $available_movies = Movie::availableMovies($this->auction_close_date, $max_bid);
         $available_movie_count = count($available_movies);
         
@@ -220,15 +215,7 @@ class League extends Model {
     }
 
     public function value() {
-        if ($this->type == 'U') {
-            //public league owner does not take part in the game
-            $playerCount = $this->players()->count() - 1;
-            if ($playerCount == 0) 
-                $playerCount = 1; //Needs to be a minimum of 1
-        } else {
-            //private league everyone is involved
-            $playerCount = $this->players()->count();
-        }
+        $playerCount = $this->players()->count();
         $leagueValue = $playerCount * 100; //TODO: remove this into a rule for the league rule set or a league field
         return $leagueValue;
     }

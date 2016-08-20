@@ -16,14 +16,18 @@ table {
 .feature-table img {
     max-width: 58px !important;
     max-height: 80px !important;
+    min-width: 58px !important;
+    min-height: 80px !important;
 }
 </style>
 <div class="content-padding">
+<p>These are the leagues which have auctions running currently.</p>
 <table class="feature-table dark-gray">
     <thead>
         <tr> 
-            <th width="10%"></th>
-            <th width="30%">Name</th> 
+            <th width="12%"></th>
+            <th width="30%">Name</th>
+            <th width="10%">Value</th> 
             <th width="10%">Players</th>
             <th width="18%">Rules</th> 
             <th width="23%">Ends</th>
@@ -33,8 +37,9 @@ table {
         @foreach($authUser->inLeagues()->where('auction_stage', '2')->orderBy('auction_close_date', 'asc')->get() as $league)
         <?php $link = ($league->auction_stage < 3) ? URL('league-play/'.$league->id) : URL('roster/'.$league->id); ?>
         <tr>
-            <td><a href="{{$link}}"><img src="{{asset($league->leagueImage())}}" alt="{{$league->name}}"/></a></td>
+            <td align="center"><a href="{{$link}}"><img src="{{asset($league->leagueImage())}}" alt="{{$league->name}}"/></a></td>
             <td><a class="btn btn-mini btn-danger" href="{{URL('league-play/'.$league->id)}}">{{$league->name}}</a></td>
+            <td>{{$league->value()}}USD</td>
             <td>{{count($league->players)}}</td>
             @if(!is_null($league->rule_set))
             <td>{{$league->rule_set->name}}</td>
@@ -52,11 +57,13 @@ table {
 @if($authUser->inLeagues()->where('auction_stage', '3')->count() > 0)
 <h2><span>Live Leagues</span></h2>
 <div class="content-padding">
+<p>These are the leagues which have got to roster stage and the auctions have completed.</p>
 <table class="feature-table dark-gray">
     <thead>
         <tr> 
-            <th width="10%"></th>
-            <th width="30%">Name</th> 
+            <th width="12%"></th>
+            <th width="30%">Name</th>
+            <th width="10%">Value</th> 
             <th width="10%">Players</th>
             <th width="18%">Rules</th>
             <th width="23%">League Ends</th>
@@ -66,8 +73,9 @@ table {
         @foreach($authUser->inLeagues()->where('auction_stage', '3')->orderBy('name', 'asc')->get() as $league)
         <?php $link = ($league->auction_stage < 3) ? URL('league-show/'.$league->id) : URL('roster/'.$league->id); ?>
         <tr>
-            <td><a href="{{$link}}"><img src="{{asset($league->leagueImage())}}" alt="{{$league->name}}"/></a></td>
+            <td align="center"><a href="{{$link}}"><img src="{{asset($league->leagueImage())}}" alt="{{$league->name}}"/></a></td>
             <td><a class="btn btn-mini btn-danger" href="{{URL('roster/'.$league->id)}}">{{$league->name}}</a></td>
+            <td>{{$league->value()}}USD</td>
             <td>{{count($league->players)}}</td>
             @if(!is_null($league->rule_set))
             <td>{{$league->rule_set->name}}</td>
@@ -93,11 +101,13 @@ table {
 @if($authUser->startedLeagues()->count() > 0)
 <h2><span>Leagues due to start</span></h2>
 <div class="content-padding">
+<p>These are the leagues which are due to start their auctions shortly.</p>
 <table class="feature-table dark-gray">
     <thead>
         <tr> 
-            <th width="10%"></th>
+            <th width="12%"></th>
             <th width="30%">Name</th> 
+            <th width="10%">Value</th> 
             <th width="10%">Players</th>
             <th width="18%">Starts</th>
             <th width="18%">Ends</th>
@@ -107,8 +117,9 @@ table {
         @foreach($authUser->startedLeagues()->orderBy('name', 'asc')->get() as $league)
         <?php $link = ($league->auction_stage < 3) ? URL('league-show/'.$league->id) : URL('roster/'.$league->id); ?>
         <tr>
-            <td><a href="{{$link}}"><img src="{{asset($league->leagueImage())}}" alt="{{$league->name}}"/></a></td>
+            <td align="center"><a href="{{$link}}"><img src="{{asset($league->leagueImage())}}" alt="{{$league->name}}"/></a></td>
             <td><a class="btn btn-mini btn-danger" href="{{$link}}">{{$league->name}}</a></td>
+            <td>{{$league->value()}}USD</td>
             <td>{{count($league->players)}}</td>
             @if(!is_null($league->auction_start_date))
             <td>{{date("jS M Y g:iA", strtotime($league->auction_start_date))}}</td>
@@ -143,8 +154,9 @@ table {
 <table class="feature-table dark-gray">
     <thead>
         <tr> 
-            <th width="10%"></th>
+            <th width="12%"></th>
             <th width="30%">Name</th> 
+            <th width="10%">Value</th> 
             <th width="10%">Players</th>
             <th width="17%">Starts</th>
             <th width="17%">Ends</th>
@@ -154,8 +166,9 @@ table {
     <tbody>
         @foreach($authUser->leagues as $league)
         <tr>
-            <td><img src="{{asset($league->leagueImage())}}" alt="{{$league->name}}"/></td>
+            <td align="center"><img src="{{asset($league->leagueImage())}}" alt="{{$league->name}}"/></td>
             <td>{{$league->name}}</td>
+            <td>{{$league->value()}}USD</td>
             <td>{{count($league->players)}}</td>
             @if(!is_null($league->auction_start_date))
             <td>{{date("jS M Y g:iA", strtotime($league->auction_start_date))}}</td>
