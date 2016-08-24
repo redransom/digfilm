@@ -16,7 +16,7 @@
             <div class="league-table">
                  <!-- <div class="table-row"></div>-->
                 <div class="league-left">
-                    <p>Public League</p>
+                    <p>Public Leagues</p>
                 </div>
                 <div class="league-right">
                     <p>{{$count_array['public']}}</p>

@@ -33,6 +33,9 @@
             <p>Open Bid: <span class="highlight">&pound;{{$movie->opening_bid}}</span></p>
             @endif
             <p>Released: <span class="highlight">{{date("j M Y", strtotime($movie->release_at))}}</span></p>
+            @if(isset($showTakings) && $movie->takings()->count()>0)
+            <p>Revenue: <span class="highlight">{{$movie->takings()->max('amount')/1000000}}M USD</span></p>
+            @endif
         </div>
 
     <?php $movieCnt++; ?>

@@ -1,7 +1,7 @@
 @extends('layouts.site')
 
 @section('content')
-@if(isset($highlights) && !empty($highlights))
+@if(isset($highlights) && !empty($highlights) && $highlights->count() > 0)
 <h2><span>Highlights</span></h2>
 <div class="content-padding">
     <div class="release">

@@ -85,6 +85,25 @@ class Movie extends Model {
         return $lowestBid[0]->min_bid;
     }
 
+    public function noOfBidsByMonth() {
+        $sql = "SELECT MONTHNAME(created_at) AS month_nm, COUNT(*) AS no_of_bids FROM `auction_bids` ";
+        $sql .= " WHERE movies_id = '".$this->id."' GROUP BY MONTHNAME(created_at) ORDER BY created_at";
+        return DB::select(DB::raw($sql));
+    }
+
+    public function bidValueByDay($month) {
+        $sql = "SELECT bid_amount, COUNT(bid_amount) as no_of_bids FROM `auction_bids` WHERE `movies_id` = '".$this->id;
+        $sql .= "' AND created_at >= '".$month."' GROUP BY bid_amount ORDER BY bid_amount";
+        return DB::select(DB::raw($sql));
+    }
+
+    public function noOfBidsByDayInMonth($month) {
+        $sql = "SELECT COUNT(movies_id) AS no_of_bids, DAYOFMONTH(created_at) AS day_no FROM `auction_bids` ";
+        $sql .= "WHERE `movies_id` = '".$this->id."' AND created_at >= '".$month."' GROUP BY DAYOFMONTH(created_at), ";
+        $sql .= "DAY(created_at) ORDER BY DAY(created_at)";
+        return DB::select(DB::raw($sql));
+    }
+
     /*
      * daysInterval between the dates in this movie
      * RA = release_at

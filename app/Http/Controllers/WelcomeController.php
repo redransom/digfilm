@@ -519,13 +519,8 @@ class WelcomeController extends Controller {
 		if (isset($authUser->id)) {
 			//get movie stats
 			//list of all bids in last 30 days
-			//TODO: Move all of this to the model
 			$last_month = date("Y-m-d", strtotime("-1 year"));
-			$sql = "SELECT COUNT(movies_id) AS no_of_bids, DAYOFMONTH(created_at) AS day_no FROM `auction_bids` ";
-			$sql .= "WHERE `movies_id` = '".$movie->id."' AND created_at >= '".$last_month."' GROUP BY DAYOFMONTH(created_at), ";
-			$sql .= "DAY(created_at) ORDER BY DAY(created_at)";
-
-			$no_of_bids_data = DB::select(DB::raw($sql));
+			$no_of_bids_data = $movie->noOfBidsByDayInMonth($last_month);
 
 			for($i=1; $i<31; $i++)
 				$days[] = $i;
@@ -546,15 +541,10 @@ class WelcomeController extends Controller {
 			}
 
 			//no of bids in time on this movie
-			//TOOD: Move this to Movie function
-			$sql = "SELECT MONTHNAME(created_at) AS month_nm, COUNT(*) AS no_of_bids FROM `auction_bids` ";
-			$sql .= " WHERE movies_id = '".$movie->id."' GROUP BY MONTHNAME(created_at) ORDER BY created_at";
-			$bid_history = DB::select(DB::raw($sql));
+			$bid_history = $movie->noOfBidsByMonth();
 
 			//list of bid value in last 30 days
-			$sql = "SELECT bid_amount, COUNT(bid_amount) as no_of_bids FROM `auction_bids` WHERE `movies_id` = '".$movie->id;
-			$sql .= "' AND created_at >= '".$last_month."' GROUP BY bid_amount ORDER BY bid_amount";
-			$last_30_data = DB::select(DB::raw($sql));
+			$last_30_data = $movie->bidValueByDay($last_month);
 
 			foreach($last_30_data as $bid) {
 				$bid_groups['amount'][] = $bid->bid_amount;
@@ -642,7 +632,10 @@ class WelcomeController extends Controller {
 
 		//highlights
 		//ten most popular movies
-		$highlights = Movie::where('opening_bid', '>', '10')->get();
+		//work out films that have trailers first
+		$movies_with_trailers = MovieMedia::where('type', 'T')->lists('id');
+
+		$highlights = Movie::where('opening_bid', '>', '10')->whereIn('id', $movies_with_trailers)->get();
 
 		return view('all-movies')
 			->with('page_name', 'all-movies')
@@ -684,14 +677,14 @@ class WelcomeController extends Controller {
 	public function comingsoon() {
 		$authUser = Auth::user();
 
-		$movies = Movie::where('release_at', '<', date('Y-m-d', strtotime("+4 weeks")))
-			->where('release_at', '>', date('Y-m-d'))->get();
+		$movies = Movie::where('release_at', '<', date('Y-m-d', strtotime("+3 months")))
+			->where('release_at', '>', date('Y-m-d', strtotime("+1 week")))->get();
 
 		return view('comingsoon')
 			->with('movies', $movies)
 			->with('page_title', 'Coming up in next 4 weeks')
 			->with('page_name', 'comingsoon')
-			->with('description', 'Here is a list of all movies that are coming out in the next 4 weeks.')
+			->with('description', 'Here is a list of all movies that can be currently picked for your league.')
 			->with('title', 'Coming Soon')
 			->with('authUser', $authUser);		
 	}
