@@ -244,9 +244,12 @@ class WelcomeController extends Controller {
 		$league = League::find($id);
 
 		//dont show leagues that have been disabled.
-		if ($league->enabled == 0) {
+		if ($league->enabled == 0 && is_null($league->winners_id)) {
 			Flash::message('League '.$league->name.' has been closed unexpectedly - we are sorry for any inconvienence.');
 			return redirect('dashboard');
+		} elseif ($league->enabled == 0 && !is_null($league->winners_id)) {
+			//the league has been won - redirect to it 
+			return redirect()->route('league-win', [$league->id]);
 		}
 
 		if ($league->auction_stage == '3') {
@@ -807,6 +810,34 @@ class WelcomeController extends Controller {
         	->with('results', $results)
             ->with('page_name', 'search-results')
            	->with('authUser', $authUser)
+			->with('title', $title);  
+    }
+
+	/**
+     * League won page - show if the logged in user won and what they won.
+     *
+     * @return Response
+     */
+    public function leagueWin($id) 
+    {
+    	$authUser = Auth::user();
+		if (!isset($authUser))
+			return redirect('/auth/login');		
+
+		$league = League::find($id);
+		
+		$title = "League Won by ".$league->winner->name;
+		$currentLeagueUser = LeagueUser::where('user_id', $authUser->id)->where('league_id', $league->id)->first();
+		$rankings = array();
+		$rankings = LeagueRoster::rankings($league->id);
+
+        return view('league-win')
+        	->with('currentLeague', $league)
+			->with('currentLeagueUser', $currentLeagueUser)
+           	->with('authUser', $authUser)
+			->with('rankings', $rankings)
+			->with('padding', true)
+			->with('fullwidth', true)
 			->with('title', $title);  
     }
 }

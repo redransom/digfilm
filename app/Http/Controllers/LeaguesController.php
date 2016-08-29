@@ -1284,7 +1284,7 @@ class LeaguesController extends Controller {
 
                         //we should have the top placing user
                         $data = ['winnerName' => $winner->fullName(),
-                                'leagueName' => $league->name,
+                     'leagueName' => $league->name,
                                 'leagueValue' => $leagueValue,
                                 'playerBalance' => $newPlayerBalance,
                                 'subject' => 'You have won the league!'];

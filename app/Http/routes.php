@@ -38,6 +38,7 @@ Route::get('genres', 'WelcomeController@genres');
 Route::get('newreleases', ['as'=>'newreleases', 'uses'=>'WelcomeController@newreleases']);
 Route::get('comingsoon', ['as'=>'comingsoon', 'uses'=>'WelcomeController@comingsoon']);
 Route::get('league-show/{id}', ['as'=>'league-show', 'uses'=>'WelcomeController@getLeague']);
+Route::get('league-win/{id}', ['as'=>'league-win', 'uses'=>'WelcomeController@leagueWin']);
 
 // Registration routes...
 Route::get('auth/register', [

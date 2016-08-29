@@ -1,7 +1,7 @@
 @extends('layouts.site')
 
 @section('content')
-
+@include('partials.site-auction-timer')
 <div id="main" itemscope="" itemtype="http://data-vocabulary.org/Review">
     <div class="game-info-left">
         <img itemprop="image" src="{{asset($currentLeague->leagueImage())}}" class="game-poster" alt="" />
@@ -20,13 +20,16 @@
                 <div>
                     <span>Starts</span>
                     <strong>{{date("l, jS F Y g:iA", strtotime($currentLeague->auction_start_date))}}</strong>
+                    <span>Countdown:</span>
+                    <strong><?php auctionTimer($league->id, $league->auction_start_date); ?></strong>
+                
                     @if(!is_null($currentLeague->end_date))
                     <span>Ends</span>
                     <strong>{{date("l, jS F Y g:iA", strtotime($currentLeague->end_date))}}</strong>
                     @endif
                     <span>League Pot Size</span>
                     @if($currentLeague->players()->count() > 0)
-                    <strong>{{$currentLeague->players()->count() * 100}} USD</strong>
+                    <strong>{{$currentLeague->value()}} USD</strong>
                     @else
                     <strong>0 USD</strong>
                     @endif
