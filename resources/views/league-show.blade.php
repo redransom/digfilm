@@ -18,11 +18,15 @@
 
             <div class="game-info-graph">
                 <div>
+                    @if(strtotime($currentLeague->auction_start_date) > time())
                     <span>Starts</span>
                     <strong>{{date("l, jS F Y g:iA", strtotime($currentLeague->auction_start_date))}}</strong>
                     <span>Countdown:</span>
-                    <strong><?php auctionTimer($league->id, $league->auction_start_date); ?></strong>
-                
+                    <strong><?php auctionTimer($currentLeague->id, $currentLeague->auction_start_date); ?></strong>
+                    @else
+                    <span>Started</span>
+                    <strong>{{date("l, jS F Y g:iA", strtotime($currentLeague->auction_start_date))}}</strong>
+                    @endif
                     @if(!is_null($currentLeague->end_date))
                     <span>Ends</span>
                     <strong>{{date("l, jS F Y g:iA", strtotime($currentLeague->end_date))}}</strong>
