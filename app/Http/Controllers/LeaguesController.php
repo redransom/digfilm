@@ -728,21 +728,17 @@ class LeaguesController extends Controller {
             Log::info('Adding players to league '.$league->id.' allowed number is: '.$allowed_player_number);
             $selected_cnt = 1;
             foreach ($input['users_id'] as $user_id) {
-                /*$lu = new LeagueUser();
-                $lu->league_id = $league_id;
-                $lu->user_id = $user_id;
-                $lu->balance = 100; //TODO: Put this in the league rules
-                $lu->save();
-                unset($lu);*///clear out to start afresh
-
                 //do invite as well
-                $invite = new LeagueInvite();
-                $invite->leagues_id = $league_id;
-                $invite->users_id = $user_id;
-                $invite->save();
-                
-                $this->sendInvite($league_id, $invite->id);
-                unset($invite);
+                //need to check that the invite hasn't already happened
+                if (LeagueInvite::where('leagues_id', $league_id)->where('users_id', $user_id)->where('status', 'I')->count() == 0) {
+                    $invite = new LeagueInvite();
+                    $invite->leagues_id = $league_id;
+                    $invite->users_id = $user_id;
+                    $invite->save();
+                    
+                    $this->sendInvite($league_id, $invite->id);
+                    unset($invite);
+                }
 
                 //we can only select a pre-determind amount of players currently
                 $selected_cnt++;
@@ -790,6 +786,7 @@ class LeaguesController extends Controller {
                 if (is_null($currentUser) || 
                         is_null($authUser) || 
                         (!is_null($authUser) && !is_null($currentUser) && $currentUser->id != $authUser->id)) {
+
                     //do invite as well
                     $invite = new LeagueInvite();
                     $invite->leagues_id = $league->id;
@@ -806,11 +803,15 @@ class LeaguesController extends Controller {
                         $invite_message .= "Current Player (".$currentUser->fullName().") has been invited to join the league.<br/>";
                     }
 
-                    $invite->save();
-                    $invite_id = $invite->id;
-                    unset($invite);
+                    $current_invited = (!is_null($invite->users_id) && LeagueInvite::where('leagues_id', $invite->leagues_id)->where('users_id', $invite->users_id)->where('status', 'I')->count() > 0);
+                    $new_invited = (is_null($invite->users_id) && LeagueInvite::where('leagues_id', $invite->leagues_id)->where('email', $invite->email)->where('status', 'I')->count() > 0);
+                    if ($current_invited === FALSE && $new_invited === FALSE) {
+                        $invite->save();
+                        $invite_id = $invite->id;
+                        unset($invite);
 
-                    $this->sendInvite($league->id, $invite_id);
+                        $this->sendInvite($league->id, $invite_id);
+                    }
                 }
 
             }

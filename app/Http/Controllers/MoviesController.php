@@ -121,8 +121,9 @@ class MoviesController extends Controller {
 
 		if(isset($input['ratings'])) {
 			foreach($input['ratings'] as $rating_id) {
-				$rating = new MovieRating(['movies_id'=>$movie->id, 'ratings_id'=>$rating_id]);
-				$rating->save();
+				$r = MovieRating::create(['movies_id'=>$movie->id, 'ratings_id'=>$rating_id]);
+				/*$rating = new MovieRating(['movies_id'=>$movie->id, 'ratings_id'=>$rating_id]);
+				$rating->save();&/
 			}
 		}
 
@@ -232,8 +233,9 @@ class MoviesController extends Controller {
 			MovieRating::where('movies_id', $id)->delete();
 
 			foreach($input['ratings'] as $rating_id) {
-				$rating = new MovieRating(['movies_id'=>$id, 'ratings_id'=>$rating_id]);
-				$rating->save();
+				$r = MovieRating::create(['movies_id'=>$id, 'ratings_id'=>$rating_id]);
+				/*$rating = new MovieRating(['movies_id'=>$id, 'ratings_id'=>$rating_id]);
+				$rating->save();*/
 			}
 
 		}

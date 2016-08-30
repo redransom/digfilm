@@ -569,28 +569,34 @@ class AuctionsController extends Controller {
 
     } //end loadNextMovies
 
+    /**
+     * Add Auction function to set auction details
+     * Moved from new() for testing purposes - may move to model to improve
+     *
+     * @param  int  $id
+     * @return Response
+     */
     private function addAuction($league, $movie, $rule) {
         $auction = new Auction();
         $auction->leagues_id = $league->id;
-        if(is_numeric($movie))
-            $auction->movies_id = $movie;
-        else
-            $auction->movies_id = $movie->id;
+        $movie_id = is_numeric($movie) ? $movie : $movie->id;   
 
-        //$start_date = $league->auction_start_date;
         //based on the auction start date we need to work out the auction start time and end time
         $auction_start_time = date("Y-m-d H:i:s", time());
         $auction_end_time = date("Y-m-d H:i:s", time() + ($rule->ind_film_countdown * 60));
-        $auction->auction_start_time = $auction_start_time;
-        $auction->auction_end_time = $auction_end_time;
+        /*$auction->auction_start_time = $auction_start_time;
+        $auction->auction_end_time = $auction_end_time;*/
         //save us having to go back to the rules table for this
+        $data = ['leagues_id'=>$league->id, 'movies_id'=>$movie_id, 'auction_start_time'=>$auction_start_time, 'auction_end_time'=>$auction_end_time, 'ready_for_auction'=>'1'];
         if ($rule->auction_timeout != 0) {
-            $auction->timeout = $rule->auction_timeout;
-            $auction->timeout_date = date("Y-m-d H:i:s", strtotime('+'.intval($auction->timeout).' minutes', strtotime($auction->auction_end_time)));
-        }
+            $data['timeout'] = $rule->auction_timeout;
+            $data['timeout_date'] = date("Y-m-d H:i:s", strtotime('+'.intval($auction->timeout).' minutes', strtotime($auction->auction_end_time)));
+        } 
 
-        $auction->ready_for_auction = 1;
-        $auction->save();
+        //$auction->ready_for_auction = 1;
+
+        $auction = Auction::create($data);
+        //$auction->save();
 
         Log::info("Add Auction: ".(!is_numeric($movie)? $movie->name : $movie)." to ".$league->name." from ".$auction->auction_start_time." to ".$auction->auction_end_time);
         unset($auction);
