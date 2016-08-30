@@ -167,14 +167,15 @@ class League extends Model {
 
         //we have the available movies lets add them to the league
         foreach ($chosen_movies as $movie_id) {
-            $league_movie = new LeagueMovie();
+            $lm = LeagueMovie::create(['leagues_id'=>$this->id, 'movies_id'=>$movie_id]);
+            /*$league_movie = new LeagueMovie();
             $league_movie->leagues_id = $this->id;
             $league_movie->movies_id = $movie_id;
-            $league_movie->save();
+            $league_movie->save();*/
 
             //Log::info("Movie - ".$movie_id." added to ".$league->name);
 
-            unset($league_movie);
+            //unset($league_movie);
         }
 
         //can work out league end date now we have the list of movies
