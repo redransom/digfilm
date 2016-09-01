@@ -659,7 +659,7 @@ class WelcomeController extends Controller {
 		$authUser = Auth::user();
 
 		$movies = Movie::where('release_at', '>', date('Y-m-d', strtotime("-4 weeks")))->
-			where('release_at', '<=', date('Y-m-d'))->get();
+			where('release_at', '<=', date('Y-m-d'))->paginate(12);
 		$highlights = Movie::where('opening_bid', '>', '10')->where('release_at', '>', date('Y-m-d', strtotime("-4 weeks")))->where('release_at', '<=', date('Y-m-d'))->get();
 
 		return view('newreleases')
@@ -681,7 +681,7 @@ class WelcomeController extends Controller {
 		$authUser = Auth::user();
 
 		$movies = Movie::where('release_at', '<', date('Y-m-d', strtotime("+3 months")))
-			->where('release_at', '>', date('Y-m-d', strtotime("+1 week")))->get();
+			->where('release_at', '>', date('Y-m-d', strtotime("+1 week")))->paginate(12);
 
 		return view('comingsoon')
 			->with('movies', $movies)

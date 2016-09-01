@@ -41,4 +41,5 @@
 <div class="content-padding">
 @include('partials.site-movies', ['movies'=>$movies, 'description'=>$description])
 </div>
+@include('pagination.default', ['paginator' => $movies])
 @endsection
