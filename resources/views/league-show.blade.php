@@ -118,11 +118,13 @@
         </div>
 
         <div id="info">
+            @if(!is_null($currentLeague->description))
             <h2><span name='info'>Description</span></h2>        
             <div class="content-padding">
             {!! $currentLeague->description !!}
             </div>
-
+            @endif
+            
             <h2><span>Players</span></h2>
             <p>
             The following <strong>{{$currentLeague->players()->count()}}</strong> players are in the league:
