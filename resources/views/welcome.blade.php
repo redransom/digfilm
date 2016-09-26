@@ -8,7 +8,7 @@
 @endif
 
 <!-- Whats going on -->
-<h2><span>Whats Going On?</span></h2>
+<h2><span>Current Leagues</span></h2>
 <div class="content-padding">
     <div class="league-container clearfix">
         <div class="league-left-inner league-js small--one-whole">
@@ -106,6 +106,7 @@
 <!-- Opening Bids -->
 <h2><span>Opening Bids</span></h2>
 <div class="content-padding">
+    <p>Our opening bids are calculated using an algorithm that takes into account factors typical of a successful film, for example, the number of high-profile actors or directors, production budget, the popularity of prequels, etc. </p>
 @if(isset($openingBid) && !is_null($openingBid))
 <div class="promo-hero">
     <img src="{{asset($openingBid->topMedia()->file_name)}}" alt="{{$openingBid->topMedia()->name}}" />
@@ -160,7 +161,7 @@
 @endif
 
 @if(isset($trailers))
-<h2><span>New Trailers</span></h2>
+<h2><span>Latest Trailers</span></h2>
 <div class="content-padding">
        
     <div class="release">

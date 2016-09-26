@@ -1,7 +1,7 @@
  
                 <!-- BEGIN .panel -->
                 <div class="panel">
-                    <h2><span>Movie Genres</span></h2>
+                    <h2><span>Our movie database</span></h2>
                     <div class="panel-content">
 
                         <select class="selectdropdown">

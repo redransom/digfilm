@@ -7,6 +7,6 @@
 @include('partials.site-article', ['content'=>$content])
 </div>
 @else
-<h2><span>Rules of the game</span></h2>
+<h2><span>How to play</span></h2>
 @endif
 @endsection

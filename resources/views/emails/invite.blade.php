@@ -36,7 +36,8 @@
                                           <!-- content -->
                                           <tr>
                                              <td style="font-family: Helvetica, arial, sans-serif; font-size: 13px; color: #333333; text-align:left;line-height: 24px;">
-                                               Your friend <strong>{{$ownerName}}</strong> has invited you to the <strong>{{$league->name}}</strong> league.<br/>
+                                             <strong>{{$ownerName}}</strong> has invited you to join <strong>{{$league->name}}</strong> which is due to start *time/date*.  Your account will be credited with 100 virtual pounds as soon as you choose to accept. <br/>
+                                               Below are all the films available to purchase in your auction, these are selected from all films released in the UK from 7 days to 3 months after your auction begins. Depending on the type of league, these will be released all at once or periodically over several days. We recommend you check out the trailers and various articles of films that catch your eye before playing so you can go into the auction with a winning strategy. 
                                                <br/>
                                                If you want to join in - please follow this link: <em>{{URL::to('accept-invite/'.$invite_id)}}</em> or if you want to decline use
                                                this link <em>{{URL::to('decline-invite/'.$invite_id)}}</em>.

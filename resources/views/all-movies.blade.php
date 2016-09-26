@@ -51,7 +51,7 @@
 </div>
 @endif
 
-<h2><span>All Movies</span></h2>
+<h2><span>Our movie database</span></h2>
 <div class="content-padding">
 @include('partials.site-movies', ['movies'=>$movies, 'description'=>'All the movies in TheNextBigFilm database'])
 </div>

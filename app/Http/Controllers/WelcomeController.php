@@ -645,7 +645,7 @@ class WelcomeController extends Controller {
 			->with('highlights', $highlights)
 			->with('page_title', 'The Next Big Film Database')
 			->with('movies', $movies)
-			->with('title', 'All Our Movies')
+			->with('title', 'Our movie database')
 			->with('authUser', $authUser);		
 	}
 

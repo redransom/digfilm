@@ -1,6 +1,6 @@
                     <!-- BEGIN .panel -->
                     <div class="panel">
-                        <h2>Recent News</h2>
+                        <h2>News</h2>
                         <!--div class="top-right"><a href="#">View all</a></div-->
                         <div class="panel-content">
                             @if(isset($news_articles))
