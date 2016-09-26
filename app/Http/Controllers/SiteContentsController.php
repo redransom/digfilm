@@ -141,7 +141,7 @@ class SiteContentsController extends Controller {
         Flash::message('Content created.');
         if ($input['type'] == 'M') {
             //redirect to movies show page
-            return Redirect::route('movies.show', [$input['movies_id']]);
+            return Redirect::route('movie-show', [$input['movies_id']]);
         }
         return Redirect::route('sitecontent.index');
 

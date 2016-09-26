@@ -123,7 +123,7 @@ class MoviesController extends Controller {
 			foreach($input['ratings'] as $rating_id) {
 				$r = MovieRating::create(['movies_id'=>$movie->id, 'ratings_id'=>$rating_id]);
 				/*$rating = new MovieRating(['movies_id'=>$movie->id, 'ratings_id'=>$rating_id]);
-				$rating->save();&/
+				$rating->save();*/
 			}
 		}
 

@@ -163,9 +163,12 @@
                                 <li><strong><a href="{{URL('sitecontent/'.$review->id.'/edit')}}">{{$review->title}}</a></strong><br/>
                                 <strong>Knowledge Link:</strong> /movie-knowledge/{{$movie->slug}}<br/>
                                 <strong>Review Link:</strong> /news-detail/{{$review->slug}}<br/>
-                                {{date("d M y", strtotime($review->created_at))}}</li>
+                                {{date("d M y", strtotime($review->created_at))}}
+                                <a href="{{URL('sitecontent/'.$review->id.'/disable')}}">x</a>
+                                </li>
                             @endforeach
                                 </ul>
+                                <a class="btn btn-mini btn-link" href="{{Route('sitecontent-create', ['M', $movie->id])}}">Add Review</a>
                             </div>
 
                         </div>
