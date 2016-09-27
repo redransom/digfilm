@@ -76,6 +76,7 @@
 
         <div class="league-right-inner league-js small--one-whole">
             <h3>Public Leagues</h3>
+
             @if($recent_leagues->count() > 0)
             @foreach($recent_leagues as $recent)
            <div class="table-row {{(($recent->type == 'U') ? 'public' : 'private')}}">
@@ -96,6 +97,9 @@
                 </div>
            </div>
            @endforeach
+           @else
+            <div class="league-table" style="border-bottom: 0">
+            </div>
            @endif
         </div>
     </div>
