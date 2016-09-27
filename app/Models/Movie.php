@@ -41,7 +41,7 @@ class Movie extends Model {
     }
 
     public function reviews() {
-        return $this->hasMany("\App\Models\SiteContent", "movies_id", "id")->where('type', 'M');
+        return $this->hasMany("\App\Models\SiteContent", "movies_id", "id")->where('type', 'M')->where('enabled', '1');
     }
 
     public function images() {
