@@ -716,20 +716,23 @@ class AuctionsController extends Controller {
             //now send email to players to tell them the auction is live
              //need to pass in the league details for the owner
             foreach ($league->players as $player) {
-                $subject = 'League '.$league->name.' has started!';
-                $data = ['playerName' => $player->fullName(),
-                        'leagueName' => $league->name,
-                        'leagueId' => $league->id,
-                        'subject' => $subject];
 
-                $playerEmail = $player->email;
-                Mail::send('emails.auction_started', $data, function($message) use ($playerEmail, $subject)
-                {
-                    $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
-                    $message->subject($subject);
-                    $message->to($playerEmail);
-                });
+                if (($league->type == 'U' && $player->id != $league->users_id) || ($league->type == 'R')) {
 
+                    $subject = 'League '.$league->name.' has started!';
+                    $data = ['playerName' => $player->fullName(),
+                            'leagueName' => $league->name,
+                            'leagueId' => $league->id,
+                            'subject' => $subject];
+
+                    $playerEmail = $player->email;
+                    Mail::send('emails.auction_started', $data, function($message) use ($playerEmail, $subject)
+                    {
+                        $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
+                        $message->subject($subject);
+                        $message->to($playerEmail);
+                    });
+                } //close league email check
             }            
         }
 

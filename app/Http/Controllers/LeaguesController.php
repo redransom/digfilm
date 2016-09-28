@@ -1146,20 +1146,23 @@ class LeaguesController extends Controller {
                     $league->auction_stage = 1;
 
                 $subject = "League ".$league->name." auctions will start at: ".date("j M y g:iA", strtotime($league->auction_start_date));
+                
                 foreach($league->players as $player) {
 
-                    $data = ['playerName' => $player->fullName(), 
-                            'leagueName' => $league->name,
-                            'subject' => $subject,
-                            'leagueMovies' =>$league->movies()->orderBy('name', 'ASC')->get()];
+                    if (($league->type == 'U' && $player->id != $league->users_id) || ($league->type == 'R')) {
+                        $data = ['playerName' => $player->fullName(), 
+                                'leagueName' => $league->name,
+                                'subject' => $subject,
+                                'leagueMovies' =>$league->movies()->orderBy('name', 'ASC')->get()];
 
-                    $playerEmail = $player->email;
+                        $playerEmail = $player->email;
 
-                    Mail::send('emails.league_ready', $data, function($message) use ($playerEmail, $subject) {
-                        $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
-                        $message->subject($subject);
-                        $message->to($playerEmail);
-                    });
+                        Mail::send('emails.league_ready', $data, function($message) use ($playerEmail, $subject) {
+                            $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
+                            $message->subject($subject);
+                            $message->to($playerEmail);
+                        });
+                    }
                 }
 
                 //movies have been populated - set the auction stage to 1
