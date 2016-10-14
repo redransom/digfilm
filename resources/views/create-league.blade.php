@@ -40,7 +40,7 @@
                 input.leagueProfile {padding-right:25px !important}
             </style>
             {!! Form::file('file_name', ['class'=>'leagueProfile']) !!}
-            <p style="float: right; clear: both; padding-top: 5px; width: 62% !important; margin-right: 10px"><strong>NOTE</strong> League Profile image has max width of 220px.</p>
+            <p style="float: right; clear: both; padding-top: 5px; width: 62% !important; margin-right: 10px"><strong>NOTE</strong> Best image size 115px (width) by 166px (height).</p>
        </div>
 
     </div>

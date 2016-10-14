@@ -55,6 +55,7 @@
                 <p>
                     <label for="UserThumbnail">Photo</label>
                     {!! Form::file('thumbnail', null) !!}
+                    <p>Best image size 115px (width) by 166px (height)</p>
                 </p>
                 <p>
                     <button type="submit" id="submit1" class="button medium dark">Save Profile</button>
@@ -71,7 +72,7 @@
         </div>
         @endif
         @if(!is_null($user->thumbnail))
-            <img src="{{asset($user->thumbnail)}}" width="100px"/>
+            <img src="{{asset($user->thumbnail)}}" width="115px" height="166px"/>
         @endif
         <p>&nbsp;</p>
     </div>

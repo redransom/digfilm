@@ -1244,7 +1244,8 @@ class LeaguesController extends Controller {
         }
 
         //now delete those disabled that have been disabled over a day
-        League::where('enabled', '0')->where('updated_at', '<', date("Y-m-d H:i", strtotime("-1 day")))->delete();
+        //NOTE: Removed this as it was destroying all data in site for auctions and bids - stick to disabled instead 
+        //League::where('enabled', '0')->where('updated_at', '<', date("Y-m-d H:i", strtotime("-1 day")))->delete();
     /*    $queries = DB::getQueryLog();
         print_r($queries);    */
     }

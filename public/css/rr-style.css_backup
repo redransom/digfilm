@@ -789,27 +789,13 @@ a {
 }
 
 a:hover {
-    color: #ca2f27 !important;
+    color: #BF1C29 !important;
 }
 #main h2 .pagination-item.current {
     color: #fff !important;
     text-decoration: underline;
     font-size: 16px;
 }
-
-/*------------
-    Film
-------------*/
-.filmStats {color: white;}
-
-.filmStats:hover {color: #2b2020 !important;}
-
-.removeBack {}
-.removeBack:hover {background:none !important;}
-
-.cb-enable:hover {color: black !important;}
-
-.cb-policy:hover {color: red !important;}
 
 h5.title a {
     color: #fff;

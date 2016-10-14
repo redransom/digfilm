@@ -59,8 +59,11 @@ class WelcomeController extends Controller {
         //randomly populate movies
         $next_film = Movie::where('release_at', '>', date("Y-m-d", $earliest_release_date))->first();
 
-        //get front slider images
-		$slider = SiteContent::where('type', 'F')->where('enabled', '1')->orderBy('created_at', 'DESC')->get();
+        //get front slider images / needs to get the first one as the next big film slider and then any others
+		$firstslider = SiteContent::where('type', 'F')->where('enabled', '1')->where('title', 'The Next Big Film!')->get();
+		$backslider = SiteContent::where('type', 'F')->where('enabled', '1')->where('title', '<>', 'The Next Big Film!')->orderBy('created_at', 'DESC')->limit(3)->get();
+		$slider = $firstslider->merge($backslider);
+		
 		$content = SiteContent::section('HOM');
 
 		if (isset($authUser)) {

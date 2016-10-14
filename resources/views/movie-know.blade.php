@@ -86,6 +86,8 @@
             $("#stats_link").click(function() {
                 $('#articles_box').removeClass('active').css('background-color', '#000000');
                 $('#stats_box').addClass('active').css('background-color', '#921913');
+                $('#stats_link').addClass('filmStats');
+                $('#articles_link').removeClass('filmStats');
                 $('#stats').toggle();
                 $('#articles').toggle();
             });
@@ -93,6 +95,8 @@
             $("#articles_link").click(function() {
                 $('#stats_box').removeClass('active').css('background-color', '#000000');
                 $('#articles_box').addClass('active').css('background-color', '#921913');
+                $('#articles_link').addClass('filmStats');
+                $('#stats_link').removeClass('filmStats');
                 $('#stats').toggle();
                 $('#articles').toggle();
             });
@@ -106,8 +110,8 @@
             </div>
 
             <ul>
-                <li class="active" style="background-color: #921913;" id="stats_box"><a href="#" id="stats_link"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;Film Stats</a></li>
-                <li id="articles_box"><a href="#" id="articles_link"><i class="fa fa-comments"></i>&nbsp;&nbsp;Articles</a></li>
+                <li class="active" style="background-color: #921913;" id="stats_box"><a class="filmStats" href="#" id="stats_link"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;Film Stats</a></li>
+                <li style="background-color: #1c1c1c" id="articles_box"><a href="#" id="articles_link"><i class="fa fa-comments"></i>&nbsp;&nbsp;Articles</a></li>
             </ul>
 
         <!-- END .game-menu -->
