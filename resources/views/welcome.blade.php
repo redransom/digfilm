@@ -76,10 +76,12 @@
 
         <div class="league-right-inner league-js small--one-whole">
             <h3>Public Leagues</h3>
+            <hr>
 
             @if($recent_leagues->count() > 0)
             @foreach($recent_leagues as $recent)
-           <div class="table-row {{(($recent->type == 'U') ? 'public' : 'private')}}">
+            
+           <div class="table-row public">
                 <div class="league-left">
                     <a href="{{Route('league-show', ['id'=>$recent->id])}}">{{$recent->name}}</a>
                 </div>

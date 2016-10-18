@@ -688,7 +688,7 @@ class WelcomeController extends Controller {
 
 		return view('comingsoon')
 			->with('movies', $movies)
-			->with('page_title', 'Coming up in next 4 weeks')
+			->with('page_title', 'Movies you can choose for your league')
 			->with('page_name', 'comingsoon')
 			->with('description', 'Here is a list of all movies that can be currently picked for your league.')
 			->with('title', 'Coming Soon')

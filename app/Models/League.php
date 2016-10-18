@@ -203,6 +203,9 @@ class League extends Model {
      */
     public function canJoin($user = null) {
         if (!is_null($user)) {
+            //logic needs to change here as we need to check the league users table
+            if ($this->players->where('id', $user->id)->count()> 0)
+                return 3;
             if ($user->id == $this->users_id) {
                 return 3;
             } elseif (time() < strtotime($this->auction_start_date)) {

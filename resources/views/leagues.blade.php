@@ -7,6 +7,8 @@
 @if(isset($leagues) && $leagues->count() > 0)
     <style>
         img.leagueimage {
+            min-width: 115px !important;
+            min-height: 166px !important; 
             max-width: 115px !important;
             max-height: 166px !important; 
         }
