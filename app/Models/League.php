@@ -64,7 +64,7 @@ class League extends Model {
         $leagueUsers = LeagueUser::where('user_id', $user_id)->lists('league_id');
 
         $leagues = League::where('users_id', '!=', $user_id)->
-                where('enabled', '1')
+                where('type', 'U')->where('enabled', '1')
                 ->Where(function ($query) {
                     $query->whereNull('auction_stage')->orWhere('auction_stage', '<', '4');
                 })->whereNotIn('id', $leagueUsers)->get();
@@ -168,25 +168,11 @@ class League extends Model {
         //we have the available movies lets add them to the league
         foreach ($chosen_movies as $movie_id) {
             $lm = LeagueMovie::create(['leagues_id'=>$this->id, 'movies_id'=>$movie_id]);
-            /*$league_movie = new LeagueMovie();
-            $league_movie->leagues_id = $this->id;
-            $league_movie->movies_id = $movie_id;
-            $league_movie->save();*/
-
-            //Log::info("Movie - ".$movie_id." added to ".$league->name);
-
-            //unset($league_movie);
         }
 
         //can work out league end date now we have the list of movies
         $maxDate = Movie::whereIn('id', $chosen_movies)->max('release_at');
         $this->end_date = $maxDate;
-
-        //only set this if there are movies added to the league
-        //movies have been populated - set the auction stage to 1
-        /*if (count($chosen_movies) > 0)
-            $this->auction_stage = 1;*/
-
         $this->save();
         return $chosen_movies;
     }

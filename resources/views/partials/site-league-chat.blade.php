@@ -16,6 +16,7 @@
                             
                             div.item-header img {
                                 max-width: 54px;
+                                max-height: 54px;
                             }
 
                             div.d-articles div.item {
@@ -33,9 +34,9 @@
                                 <div class="item-header">
                                     <a href="{{URL('profile', ['id'=>$message->owner->id])}}">
                                     @if(!is_null($message->owner->thumbnail) && $message->owner->thumbnail != "")
-                                    <img src="{{asset($message->owner->thumbnail)}}" alt="" />
+                                    <img src="{{asset($message->owner->thumbnail)}}" alt="{{$message->owner->name}}" />
                                     @else
-                                    <img src="{{asset('images/TNBF.png')}}" alt="" />
+                                    <img src="{{asset('images/TNBF.jpg')}}" alt="{{$message->owner->name}}" />
                                     @endif
                                     </a>
                                 </div>

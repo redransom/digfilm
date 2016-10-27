@@ -16,7 +16,7 @@
     @foreach($leagues as $league)
     <div class="one-half small--one-whole">
         <div class="league-container league-item">
-            <a href="{{Route('league-show', ['id'=>$league->id])}}"><img src="{{asset($league->leagueImage())}}" alt="{{$league->name}}" class="leagueimage"></a>
+            <a href="{{Route('league-shredransow', ['id'=>$league->id])}}"><img src="{{asset($league->leagueImage())}}" alt="{{$league->name}}" class="leagueimage"></a>
             <div class="league-info">
                 <div class="row"><span class="title">Name:</span><p>{{$league->name}}</p></div>
                 <div class="row">

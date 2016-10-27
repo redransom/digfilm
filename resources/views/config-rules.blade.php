@@ -17,9 +17,8 @@
             }
         </style>
 
-        <h3>Configuration</h3>
+        <h3>Step 3 of 4:</h3>
         <p>Use this form to change how many players / movies can be involved in the league and when the league should start.</p>
-        <p><strong>NOTE:</strong> These options are removed once the league is under way.</p>          
         <div class="manage">
             <label>Number of players:</label><br/>
             {!! Form::select('min_players', $player_array, $league->rule->min_players, ['class'=>'span2']) !!} to 
@@ -31,6 +30,7 @@
             {!! Form::select('min_movies', $movie_array, $league->rule->min_movies, ['class'=>'span2']) !!} to 
             {!! Form::select('max_movies', $movie_array, $league->rule->max_movies, ['class'=>'span2']) !!}<br/>
         </div>
+        <p><strong>Note that once the auction is underway you will not be able to edit these options.</strong></p>          
         
         <div class="form-footer">
             <div class="divider--img"></div>

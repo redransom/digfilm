@@ -141,7 +141,7 @@
                 <div width="100%" style="display: clear">
                     <div style="float:left; width: 150px">
                     <h3>Number of Bids in last month</h3>
-                    <p>Use this graph to see how popular the movie is and has been in the last 30 days</p>
+                    <p>Number of bids placed on this film in the last 30 days.</p>
                     @if(isset($bid_history) && !empty($bid_history))
                     <h4>Bids History</h4>
                     <ul>
@@ -162,8 +162,8 @@
                 <div class="sep"></div>
                 <div style="width:600px; float: left; clear:both; padding-top: 10px">
                     <div style="float:left; width: 150px">
-                    <h3>Bid amounts in last month</h3>
-                    <p>This graph shows what the values that were bid on the film over the last month.</p>
+                    <h3>Average purchase value:</h3>
+                    <p>Average purchase value of this film in the last 30 days.</p>
                     </div>
                     <canvas id="lcLast30" width="400" height="200" style="float:left; padding-left: 50px; display:block"></canvas>
                 </div>

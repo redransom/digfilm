@@ -1,14 +1,15 @@
 @extends('layouts.site')
 
 @section('content')
-<h2><span>Create Your League</span></h2>
+<h2><span>Create League</span></h2>
 
 <div class="content-padding">
-    <p>Use the below form to enter the name of the league you wish to create and select the movies to be auctioned for.</p>
+    <p>To create a private league, please follow the steps below. Alternatively, you can join one of our public leagues.</p>
     @if(isset($authUser))
     <div class="the-form league--form">
     {!! Form::open(array('route' => 'league-store', 'class'=>'form-vertical', 'id'=>'contactform', 'files'=>true)) !!}
         <div class="divider--img"></div>
+        <h3>Step 1 of 4: </h3>
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <input type="hidden" name="source" value="P">
         <input type="hidden" name="users_id" value="{{$authUser->id}}">
@@ -51,8 +52,8 @@
 
     @else
 
-    <h3>Available Rules</h3>
-    <p>Please choose a rule set to use for your league. For further information please review the rules <a href="rules">section</a>.</p>
+    <h3>Step 2 of 4:</h3>
+    <p>Choose an auction type for your league, if you’re unsure or just can’t decide, check our <a href="rules">rules</a>.</p>
     <div  style="float: right; clear: both; padding-top: 5px; width: 64% !important;">
     @foreach($rules as $rule)
     <!-- ************ - Small Package - ************** -->  

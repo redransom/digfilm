@@ -76,7 +76,6 @@
 
         <div class="league-right-inner league-js small--one-whole">
             <h3>Public Leagues</h3>
-            <hr>
 
             @if($recent_leagues->count() > 0)
             @foreach($recent_leagues as $recent)

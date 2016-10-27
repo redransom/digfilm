@@ -3,7 +3,7 @@
 @section('content')
 <section class="entry sbr clearfix">
     <div class="title-caption-large">
-        <h3>Choose league rules</h3>
+        <h3>Step 3 of 4:</h3>
     </div>
 
     <!-- ************ - Package - ************** -->    

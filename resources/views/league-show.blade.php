@@ -39,7 +39,7 @@
                     @endif
                     @if(isset($currentLeague->rule_set->name))
                     <br/>
-                    <h3>Rules</h3>
+                    <h3 class="rules3">Rules</h3>
                     <span>Type</span>
                     <strong>{{$currentLeague->rule_set->name}}</strong>
 
@@ -87,6 +87,10 @@
                 $('#stats_box').removeClass('active').css('background-color', '#000000');
                 $('#info_box').addClass('active').css('background-color', '#921913');
                 $('#movies_box').removeClass('active').css('background-color', '#000000');
+                $('#info_link').addClass('filmStats');
+                $('#movies_link').addClass('removeBack');
+                $('#info_link').removeClass('removeBack');
+                $('#movies_link').removeClass('filmStats');
                 $('#stats').toggle(false);
                 $('#info').toggle(true);
                 $('#movies').toggle(false);
@@ -95,7 +99,11 @@
             $("#movies_link").click(function() {
                 $('#info_box').removeClass('active').css('background-color', '#000000');
                 $('#movies_box').addClass('active').css('background-color', '#921913');
-                $('#stats_box').removeClass('active').css('background-color', '#000000');
+                $('#info_box').removeClass('active').css('background-color', '#000000');
+                $('#movies_link').addClass('filmStats');
+                $('#info_link').addClass('removeBack');
+                $('#movies_link').removeClass('removeBack');
+                $('#info_link').removeClass('filmStats');
                 $('#stats').toggle(false);
                 $('#info').toggle(false);
                 $('#movies').toggle(true);
@@ -108,8 +116,8 @@
                 <h1 itemprop="itemreviewed">{{$currentLeague->name}}</h1>
             </div>
             <ul>
-                <li class="active" style="background-color: #921913;" id="info_box"><a href="#" id="info_link"><i class="fa fa-comments"></i>&nbsp;&nbsp;Information</a></li>
-                <li id="movies_box"><a href="#" id="movies_link"><i class="fa fa-comments"></i>&nbsp;&nbsp;Movies</a></li>
+                <li class="active" style="background-color: #921913;" id="info_box"><a class="filmStats" href="#" id="info_link"><i class="fa fa-comments"></i>&nbsp;&nbsp;Information</a></li>
+                <li id="movies_box"><a class="removeBack" href="#" id="movies_link"><i class="fa fa-comments"></i>&nbsp;&nbsp;Movies</a></li>
                 @if($currentLeague->auction_stage == 3)
                 <li id="stats_box"><a href="#" id="stats_link"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;League Stats</a></li>
                 @endif

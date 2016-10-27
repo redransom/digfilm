@@ -10,7 +10,7 @@
 <div class="content-padding">
     <div class="photo-blocks">
 
-        <h3>Choose friends from the game</h3>  
+        <h3>Add existing friends</h3>  
         {!! Form::open(array('route' => 'choose-participants', 'class'=>'form-horizontal row-fluid', 'id'=>'contactform')) !!}
         <p>You can choose <strong>{{$league->rule->max_players - $league->players->count()}}</strong> more players.</p>
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -77,7 +77,7 @@
 @endif
 
 <div class="content-padding">
-    <h3>Invite some friends from outside the game</h3>
+    <h3>Invite friends who are not yet members of TNBF.</h3>
     <p>Use this form if you have friends who are not playing the game currently and you'd like to invite them.</p>
     {!! Form::open(array('route' => 'league-invite', 'class'=>'form-vertical', 'id'=>'contactform')) !!}
     <div class="the-form league--form">

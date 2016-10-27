@@ -3,15 +3,16 @@
 @section('content')
 <h2><span>My Leagues</span></h2>
 <div class="content-padding">
-    <p>Hi {{$authUser->forenames}}, Welcome to <strong>The Next Big Film</strong> today.</p>
+    <p>Hi {{$authUser->forenames}}, on your dashboard below you can see how you are doing in active leagues, 
+    how you have done in previous leagues, the leagues you own and the leagues waiting to go to auction.</p>
     <p>Here are the leagues you are in:</p>
 </div>
 
 @if($authUser->inLeagues()->where('auction_stage', '2')->count() > 0)
 <h2><span>Live Auctions</span></h2>
 <style>
-table {
-    font-size: 0.9em;
+table th {
+    font-size: 0.8em !important;
 }
 .feature-table img {
     max-width: 58px !important;
@@ -26,11 +27,11 @@ table {
     <thead>
         <tr> 
             <th width="12%"></th>
-            <th width="30%">Name</th>
-            <th width="10%">Value</th> 
+            <th width="30%">League Name</th>
+            <th width="10%">Pot Size</th> 
             <th width="10%">Players</th>
-            <th width="18%">Rules</th> 
-            <th width="23%">Ends</th>
+            <th width="18%">Auction Type</th> 
+            <th width="23%">End Date</th>
         </tr>
     </thead>
     <tbody>
@@ -55,18 +56,18 @@ table {
 @endif
 
 @if($authUser->inLeagues()->where('auction_stage', '3')->count() > 0)
-<h2><span>Live Leagues</span></h2>
+<h2><span>Active Leagues</span></h2>
 <div class="content-padding">
-<p>These are the leagues which have got to roster stage and the auctions have completed.</p>
+<p>Once the auction for a league has finished, your roster will appear here. You will be to check how you’re doing and how other players in your league are doing.</p>
 <table class="feature-table dark-gray">
     <thead>
         <tr> 
             <th width="12%"></th>
-            <th width="30%">Name</th>
-            <th width="10%">Value</th> 
+            <th width="30%">League Name</th>
+            <th width="10%">Pot Size</th> 
             <th width="10%">Players</th>
-            <th width="18%">Rules</th>
-            <th width="23%">League Ends</th>
+            <th width="18%">Auction Type</th>
+            <th width="23%">End Date</th>
         </tr>
     </thead>
     <tbody>
@@ -106,11 +107,11 @@ table {
     <thead>
         <tr> 
             <th width="12%"></th>
-            <th width="30%">Name</th> 
-            <th width="10%">Value</th> 
+            <th width="30%">League Name</th> 
+            <th width="10%">Pot Size</th> 
             <th width="10%">Players</th>
-            <th width="18%">Starts</th>
-            <th width="18%">Ends</th>
+            <th width="18%">Start Date</th>
+            <th width="18%">End Date</th>
         </tr>
     </thead>
     <tbody>
@@ -155,11 +156,11 @@ table {
     <thead>
         <tr> 
             <th width="12%"></th>
-            <th width="30%">Name</th> 
-            <th width="10%">Value</th> 
+            <th width="30%">League Name</th> 
+            <th width="10%">Pot Size</th> 
             <th width="10%">Players</th>
-            <th width="17%">Starts</th>
-            <th width="17%">Ends</th>
+            <th width="17%">Start Date</th>
+            <th width="17%">End Date</th>
             <th></th>
         </tr>
     </thead>

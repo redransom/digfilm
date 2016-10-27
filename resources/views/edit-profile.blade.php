@@ -24,7 +24,7 @@
                 <p>
                     <label for="UserUsername">Username</label>
                     {!! Form::text('name', $user->name, ['readonly'=>true]) !!}
-                    <p>This username is now un-changeable - if you have a problem with this - please get in touch via the contact page.</p>
+                    <p>Note you can no longer change your username, please get in touch with us via the contact page if this is an issue.</p>
                 </p>
                 <p>
                     <label for="UserForenames">Firstname(s)</label>
@@ -36,15 +36,9 @@
                 </p>
 
                 <p>
-                    <label for="UserSurname">Interests/Summary</label>
-                    {!! Form::textarea('description', $user->description, ['placeholder'=>'Description here...']) !!}
-                    <p>Please give a basic synopysis.</p>
-                </p>
-
-                <p>
                     <label for="UserEmail">Email</label>
                     {!! Form::text('email', $user->email, ['placeholder'=>'Email here...']) !!}
-                    <p>Provide a correct email account.</p>
+                    <p>This is how we will contact you so please make sure this is correct and up to date. </p>
                 </p>
 
                 <p>
@@ -64,17 +58,6 @@
             </div>
         </div>
     </div>
-    <div class="right">
-        @if(!is_null($content))
-        <h2><span>{{$content->title}}</span></h2>
-        <div class="content-padding">
-        {!! $content->body !!}
-        </div>
-        @endif
-        @if(!is_null($user->thumbnail))
-            <img src="{{asset($user->thumbnail)}}" width="115px" height="166px"/>
-        @endif
-        <p>&nbsp;</p>
-    </div>
+    
 
 @endsection
