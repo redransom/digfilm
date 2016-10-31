@@ -61,6 +61,7 @@ class League extends Model {
      * @var array
      */
     public static function availableLeagues($user_id) {
+        //DB::connection()->enableQueryLog();
         $leagueUsers = LeagueUser::where('user_id', $user_id)->lists('league_id');
 
         $leagues = League::where('users_id', '!=', $user_id)->
@@ -68,7 +69,9 @@ class League extends Model {
                 ->Where(function ($query) {
                     $query->whereNull('auction_stage')->orWhere('auction_stage', '<', '4');
                 })->whereNotIn('id', $leagueUsers)->get();
+                //$queries = DB::getQueryLog();
 
+        //print_r($queries);
         return $leagues;
     }
 
@@ -88,11 +91,11 @@ class League extends Model {
         return $stage;
     }
 
-    public static function livePublicLeagues() {
+    public static function livePublicLeagues($limit=0) {
         return League::where('type', 'U')->where('enabled', 1)
                 ->Where(function ($query) {
                     $query->whereNull('auction_stage')->orWhere('auction_stage', '<', '4');
-                })->get();
+                })->limit($limit)->get();
     }
 
     public function hasImage() {
@@ -190,9 +193,8 @@ class League extends Model {
     public function canJoin($user = null) {
         if (!is_null($user)) {
             //logic needs to change here as we need to check the league users table
-            if ($this->players->where('id', $user->id)->count()> 0)
-                return 3;
-            if ($user->id == $this->users_id) {
+            //make sure the logged in user is not already a player and is also not the owner of the league
+            if (($this->players->where('id', $user->id)->count()> 0) || ($user->id == $this->users_id)) {
                 return 3;
             } elseif (time() < strtotime($this->auction_start_date)) {
                 if(count($this->players) == $this->rule->max_players) {

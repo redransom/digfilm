@@ -36,10 +36,12 @@
                                           <!-- content -->
                                           <tr>
                                              <td style="font-family: Helvetica, arial, sans-serif; font-size: 13px; color: #333333; text-align:left;line-height: 24px;">
-                                                Hi <strong>{{$playerName}}</strong>!<br/>
+                                                Hi <strong>{{$playerName}}</strong>,<br/>
                                                 You have joined the league <strong>{{$leagueName}}</strong>
                                                 <br/>
-
+                                                <p>Below are all the films available to purchase in your auction, these are selected from all films released in the UK from 7 days to 3 months after your auction begins. 
+                                                Depending on the type of league, these will be released all at once or periodically over several days. </p>
+                                                <p>We recommend you check out the trailers and various articles of films that catch your eye before playing so you can go into the auction with a winning strategy. </p>
                                                 @if(isset($leagueMovies))
                                                 <h3>Available Movies</h3>
                                                 <ol>
@@ -57,6 +59,8 @@
                                                 @else
                                                 <p>The movies will be added soon and you will receive an email confirming this.</p>
                                                 @endif
+                                                <p>We wish you the best of luck!</p>
+                                                <p><strong>The Next Big Film</strong></p>
                                              </td>
                                           </tr>
                                           <!-- End of content -->

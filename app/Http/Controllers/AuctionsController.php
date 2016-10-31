@@ -582,21 +582,26 @@ class AuctionsController extends Controller {
         $movie_id = is_numeric($movie) ? $movie : $movie->id;   
 
         //based on the auction start date we need to work out the auction start time and end time
-        $auction_start_time = date("Y-m-d H:i:s", time());
-        $auction_end_time = date("Y-m-d H:i:s", time() + ($rule->ind_film_countdown * 60));
-        /*$auction->auction_start_time = $auction_start_time;
-        $auction->auction_end_time = $auction_end_time;*/
+        /*$auction_start_time = date("Y-m-d H:i:s", time());
+        $auction_end_time = date("Y-m-d H:i:s", time() + ($rule->ind_film_countdown * 60));*/
+        //replaced logic to take the auction start date
+        //also needed to consider the start date of the round
+        if (is_null($league->round_start_date))
+            $auction_start_time = $league->auction_start_date;
+        else {
+            //each round has a start date set for the current round
+            $auction_start_time = $league->round_start_date;
+        }            
+
+        $auction_end_time = date("Y-m-d H:i:s", strtotime($auction_start_time) + ($rule->ind_film_countdown * 60));
+
         //save us having to go back to the rules table for this
         $data = ['leagues_id'=>$league->id, 'movies_id'=>$movie_id, 'auction_start_time'=>$auction_start_time, 'auction_end_time'=>$auction_end_time, 'ready_for_auction'=>'1'];
         if ($rule->auction_timeout != 0) {
             $data['timeout'] = $rule->auction_timeout;
             $data['timeout_date'] = date("Y-m-d H:i:s", strtotime('+'.intval($auction->timeout).' minutes', strtotime($auction->auction_end_time)));
         } 
-
-        //$auction->ready_for_auction = 1;
-
         $auction = Auction::create($data);
-        //$auction->save();
 
         Log::info("Add Auction: ".(!is_numeric($movie)? $movie->name : $movie)." to ".$league->name." from ".$auction->auction_start_time." to ".$auction->auction_end_time);
         unset($auction);

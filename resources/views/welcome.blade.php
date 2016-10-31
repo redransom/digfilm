@@ -62,7 +62,11 @@
 
             <div class="league-btn-container">
                 <div class="one-third">
+                    @if(isset($authUser->id))
+                   <a href="{{URL('/dashboard')}}" class="info-btn">Home</a>
+                   @else
                    <a href="{{URL('/auth/login')}}" class="info-btn">Login</a>
+                   @endif
                 </div>
                 <div class="one-third">
                     <a href="{{URL('/rules')}}" class="info-btn">Rules</a>
@@ -76,8 +80,10 @@
 
         <div class="league-right-inner league-js small--one-whole">
             <h3>Public Leagues</h3>
-
+            <p class="border"></p>
+            
             @if($recent_leagues->count() > 0)
+            <?php $leagueCount = 1; ?>
             @foreach($recent_leagues as $recent)
             
            <div class="table-row public">
@@ -97,6 +103,8 @@
                     @endif
                 </div>
            </div>
+
+           <?php if ($leagueCount++ == 7) break; ?>
            @endforeach
            @else
             <div class="league-table" style="border-bottom: 0">

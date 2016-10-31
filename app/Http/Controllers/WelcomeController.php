@@ -66,10 +66,12 @@ class WelcomeController extends Controller {
 		
 		$content = SiteContent::section('HOM');
 
-		if (isset($authUser)) {
-			$count_array['public'] = League::availableLeagues($authUser)->count();
-		} else 
-			$count_array['public'] = League::livePublicLeagues()->count(); 
+		if (isset($authUser))
+			$recent_leagues = League::availableLeagues($authUser->id);
+		else
+			$recent_leagues = League::livePublicLeagues();
+		
+		$count_array['public'] = $recent_leagues->count(); 
 
 	    $count_array['newreleases'] = Movie::where('release_at', '>', date('Y-m-d', strtotime("-4 weeks")))->
 			where('release_at', '<=', date('Y-m-d'))->count();
@@ -99,10 +101,10 @@ class WelcomeController extends Controller {
         	}
         }        
 
-        $recent_leagues = League::where('enabled', '1')->Where(function ($query) {
+        /*$recent_leagues = League::where('enabled', '1')->Where(function ($query) {
 	        		$query->whereNull('auction_stage')->orWhere('auction_stage', '<', '2');
 	        	})->where('type', 'U')->orderBy('created_at', 'DESC')->limit(10)->get();
-
+*/
         //new trailers
         $trailers = MovieMedia::where('type', 'T')->orderBy('created_at', 'DESC')->limit(5)->get();
 

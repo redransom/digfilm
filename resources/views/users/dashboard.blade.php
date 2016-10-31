@@ -7,9 +7,6 @@
     how you have done in previous leagues, the leagues you own and the leagues waiting to go to auction.</p>
     <p>Here are the leagues you are in:</p>
 </div>
-
-@if($authUser->inLeagues()->where('auction_stage', '2')->count() > 0)
-<h2><span>Live Auctions</span></h2>
 <style>
 table th {
     font-size: 0.8em !important;
@@ -21,6 +18,9 @@ table th {
     min-height: 80px !important;
 }
 </style>
+@if($authUser->inLeagues()->where('auction_stage', '2')->count() > 0)
+<h2><span>Live Auctions</span></h2>
+
 <div class="content-padding">
 <p>These are the leagues which have auctions running currently.</p>
 <table class="feature-table dark-gray">
