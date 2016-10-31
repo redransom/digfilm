@@ -217,31 +217,36 @@ class League extends Model {
 
     public function notifyWinner($winners_id) {
         $winner = User::find($winners_id);
-        $leagueValue = $this->value();
-        $newPlayerBalance = (is_null($winner->balance) ? 0 : $winner->balance) + $leagueValue;
 
-        Log::info("Winner chosen as ".$winner->fullName()." to win ".$newPlayerBalance);
+        if (isset($winner->id)) {
+            $leagueValue = $this->value();
+            $newPlayerBalance = (is_null($winner->balance) ? 0 : $winner->balance) + $leagueValue;
 
-        //we should have the top placing user
-        $data = ['winnerName' => $winner->fullName(),
-                'leagueName' => $this->name,
-                'leagueValue' => $leagueValue,
-                'playerBalance' => $newPlayerBalance,
-                'subject' => 'You have won the league!'];
+            Log::info("Winner chosen as ".$winner->fullName()." to win ".$newPlayerBalance);
 
-        $winnerEmail = $winner->email;
-        Mail::send('emails.league_winner', $data, function($message) use ($winnerEmail)
-        {
-            $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
-            $message->subject('You have won the league!');
-            $message->to($winnerEmail);
-        });
-    
-        //lets update the winners balance
-        User::where('id', $winner->id)->update(['balance'=>$newPlayerBalance]);
+            //we should have the top placing user
+            $data = ['winnerName' => $winner->fullName(),
+                    'leagueName' => $this->name,
+                    'leagueValue' => $leagueValue,
+                    'playerBalance' => $newPlayerBalance,
+                    'subject' => 'You have won the league!'];
 
-        //update the league with the winner 
-        $this->setWinner($winners_id);
+            $winnerEmail = $winner->email;
+            Mail::send('emails.league_winner', $data, function($message) use ($winnerEmail)
+            {
+                $message->from('leagues@thenextbigfilm.com', 'TheNextBigFilm Entertainment');
+                $message->subject('You have won the league!');
+                $message->to($winnerEmail);
+            });
+        
+            //lets update the winners balance
+            User::where('id', $winner->id)->update(['balance'=>$newPlayerBalance]);
+
+            //update the league with the winner 
+            $this->setWinner($winners_id);
+            
+        } else 
+            Log::info('Error notifying winner ('.$winners_id.') from league id ('.$this->id.')');
     }
 
     public function setWinner($winner_id) {
