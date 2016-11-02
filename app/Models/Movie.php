@@ -104,6 +104,13 @@ class Movie extends Model {
         return DB::select(DB::raw($sql));
     }
 
+    public function averageBidAmountFromLast30Days() {
+        $sql = "SELECT AVG(bid_amount) AS bid_amount, DAY(created_at) AS day_of_month, MONTH(created_at) AS month_no ";
+        $sql .= "FROM auction_bids WHERE created_at > DATE_ADD(created_at, INTERVAL -1 month) AND `movies_id` = '".$this->id."'";
+        $sql .= "GROUP BY DAY(created_at), MONTH(created_at) ORDER BY MONTH(created_at), DAY(created_at)";
+        return DB::select(DB::raw($sql));
+    }
+
     /*
      * daysInterval between the dates in this movie
      * RA = release_at

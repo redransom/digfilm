@@ -516,13 +516,16 @@ class WelcomeController extends Controller {
 			$movie = Movie::where('slug', $id)->first();
 		}
 
-		$no_of_bids = array();
+		$data = ['authUser'=>$authUser, 'fullwidth'=>true, 'padding'=>true, 'movie'=>$movie,
+		'title'=>'The movie knowledge for '.$movie->name];
+
+		/*$no_of_bids = array();
 		$last_30 = array();
 		$days = array();
 		$bid_groups = array();
 
 		$legend1 = null;
-		$bid_history = null;
+		$bid_history = null;*/
 
 		if (isset($authUser->id)) {
 			//get movie stats
@@ -547,9 +550,10 @@ class WelcomeController extends Controller {
 				if (!$added)
 					$no_of_bids[$day_no] = 0;
 			}
+			$data['no_of_bids'] = $no_of_bids;
 
 			//no of bids in time on this movie
-			$bid_history = $movie->noOfBidsByMonth();
+			$data['bid_history'] = $movie->noOfBidsByMonth();
 
 			//list of bid value in last 30 days
 			$last_30_data = $movie->bidValueByDay($last_month);
@@ -558,26 +562,46 @@ class WelcomeController extends Controller {
 				$bid_groups['amount'][] = $bid->bid_amount;
 				$bid_groups['totals'][] = $bid->no_of_bids;
 			}
+			$data['bid_groups'] = $bid_groups;
 
-			$legend1 = "<ul class='".strtolower($movie->name)."-legend'>";
-			$legend1 .= "<li><span style='background-color:#ddd'></span>No Of Bids</li>";
-			$legend1 .= "</ul>";
+			$data['legend1'] = "<ul class='".strtolower($movie->name)."-legend'>";
+			$data['legend1'] .= "<li><span style='background-color:#ddd'></span>No Of Bids</li>";
+			$data['legend1'] .= "</ul>";
 
+			//movie auction bid average
+			$avgs = $movie->averageBidAmountFromLast30Days();
+			$avgdays = array();
+			for($i=1; $i<31; $i++) {
+				/*foreach ($avgs as $avgDay) {
+					if (!isset($avgdays[$i]) || $avgdays[$i] != 0) {
+						if ($avgDay->day_of_month == $i)
+							$avgdays[$i] = intval($avgDay->bid_amount);
+						else
+							$avgdays[$i] = 0;
+
+					}
+
+				}*/
+
+				$avgdays[$i] = $this->getBidAmountFromDayOfMonth($i, $avgs);
+			}
+
+			$data['avgs'] = $avgdays;
+
+			$data['days'] = $days;
+			$data['last_30'] = array();
 		}
 
-		return view('movie-know')
-			->with('authUser', $authUser)
-			->with('fullwidth', true)
-			->with('padding', true)
-			->with('legend1', $legend1)
-			->with('bid_history', $bid_history)
-			->with('no_of_bids', $no_of_bids)
-			->with('bid_groups', $bid_groups)
-			->with('days', $days)
-			->with('last_30', $last_30)
-			->with('movie', $movie)
-			->with('title', 'The movie knowledge for '.$movie->name);	
+		return view('movie-know')->with($data);
+	}
 
+	//TODO: Move this to appropriate place
+	private function getBidAmountFromDayOfMonth($dayOfMonth, $avgs) {
+		foreach ($avgs as $avg) {
+			if ($avg->day_of_month == $dayOfMonth)
+				return intval($avg->bid_amount);
+		}
+		return 0;
 	}
 
 	public function movieGenre($id) {

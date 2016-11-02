@@ -157,7 +157,7 @@
                     </ul>
                     @endif
                     </div>
-                    <canvas id="lcNoOfBids" width="400" height="200" style="float:left; padding-left: 50px; display:block"></canvas>
+                    <canvas id="lcNoOfBids" width="400" height="200" style="float:right; display:block"></canvas>
                 </div>
                 <div class="sep"></div>
                 <div style="width:600px; float: left; clear:both; padding-top: 10px">
@@ -165,126 +165,22 @@
                     <h3>Average purchase value:</h3>
                     <p>Average purchase value of this film in the last 30 days.</p>
                     </div>
-                    <canvas id="lcLast30" width="400" height="200" style="float:left; padding-left: 50px; display:block"></canvas>
+                    <canvas id="avg30" width="400" height="200" style="float:right; display:block"></canvas>
                 </div>
 
                 <script type="text/javascript">
-                    var options = {
-
-                            ///Boolean - Whether grid lines are shown across the chart
-                            scaleShowGridLines : true,
-
-                            //String - Colour of the grid lines
-                            scaleGridLineColor : "rgba(35,25,125,.05)",
-
-                            //Number - Width of the grid lines
-                            scaleGridLineWidth : 1,
-
-                            //Boolean - Whether to show horizontal lines (except X axis)
-                            scaleShowHorizontalLines: true,
-
-                            //Boolean - Whether to show vertical lines (except Y axis)
-                            scaleShowVerticalLines: true,
-
-                            //Boolean - Whether the line is curved between points
-                            bezierCurve : false,
-
-                            //Number - Tension of the bezier curve between points
-                            bezierCurveTension : 0.4,
-
-                            //Boolean - Whether to show a dot for each point
-                            pointDot : false,
-
-                            //Number - Radius of each point dot in pixels
-                            pointDotRadius : 4,
-
-                            //Number - Pixel width of point dot stroke
-                            pointDotStrokeWidth : 1,
-
-                            //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-                            pointHitDetectionRadius : 20,
-
-                            //Boolean - Whether to show a stroke for datasets
-                            datasetStroke : true,
-
-                            //Number - Pixel width of dataset stroke
-                            datasetStrokeWidth : 2,
-
-                            //Boolean - Whether to fill the dataset with a colour
-                            datasetFill : true,
-
-                            //String - A legend template
-                            legendTemplate : "{!! $legend1 !!}"
-
-                        };
                     @if(isset($no_of_bids))
-                    var ctx2 = document.getElementById("lcNoOfBids").getContext("2d"),
-                        data2 = {
-                            labels: [{{join($days, ",")}}],
-                            datasets: [
-                                {
-                                    label: "No Of Bids",
-                                    fillColor: "rgba(93, 29, 30,0.2)",
-                                    strokeColor: "rgba(220,220,220,1)",
-                                    pointColor: "rgba(220,220,220,1)",
-                                    pointStrokeColor: "#fff",
-                                    pointHighlightFill: "#fff",
-                                    pointHighlightStroke: "rgba(220,220,220,1)",
-
-                                    data: [{{join($no_of_bids, ",")}}]
-                                }
-                            ]
-                        };
-
-                    var noOfBids = new Chart(ctx2).Line(data2, options);
+                    <?php createGraph("lcNoOfBids", $days, "No Of Bids", $no_of_bids, "noOfBids", 2); ?>
                     @endif
-                    @if(isset($bid_groups['totals']))
-                    var ctx3 = document.getElementById("lcLast30").getContext("2d"),
-                        data3 = {
-                            labels: [{{join($bid_groups['amount'], ",")}}],
-                            datasets: [
-                                {
-                                    label: "Last 30 bids",
-                                    fillColor: "rgba(93, 29, 30,0.2)",
-                                    strokeColor: "rgba(220,220,220,1)",
-                                    pointColor: "rgba(220,220,220,1)",
-                                    pointStrokeColor: "#fff",
-                                    pointHighlightFill: "#fff",
-                                    pointHighlightStroke: "rgba(220,220,220,1)",
-
-                                    data: [{{join($bid_groups['totals'], ",")}}]
-                                }
-                            ]
-                        };
-
-                    var last30Bids = new Chart(ctx3).Bar(data3, options);
+        
+                    @if(isset($avgs))
+                    <?php createGraph("avg30", $days, "Last 30 days", $avgs, "avg30", 4); ?>
                     @endif
                 </script>
                   
             </div>
             @endif
         </div>
-        <!--h2><span>Media</span></h2>
-        <div class="content-padding">
-            <div class="row">
-                @if($movie->images()->count() > 0)
-                <?php $imageCnt = 1; ?>
-                @foreach($movie->images() as $image)
-                @if($image->image_type != 'F')
-                <div class="one-fifth" style="padding-right: 10px">
-                    <img src="{{asset($image->path())}}" alt="{{$image->name}}" />
-                </div>
-                @endif
-                @if($imageCnt++ > 6)
-                    <?php break; ?>
-                @endif
-                @endforeach
-
-                @else
-                <p>There is no media for this movie currently.</p>
-                @endif
-            </div>
-        </div-->
 
         <div id="articles" style="display:none">
             @if($movie->reviews->count() > 0)
@@ -307,5 +203,35 @@
     <div class="clear-float"></div>
     
 </div>
+<?php 
+function createGraph($elementId, $labels, $title, $data, $varName, $uniqueId, $type="line") {
+    $labels_string = join($labels, ",");
+    $data_string = join($data, ",");
+?>
+    var ctx{{$uniqueId}} = $("#{{$elementId}}");
+    var {{$varName}} = new Chart(ctx{{$uniqueId}}, {
+        type: '{{$type}}',
+        data: {
+            labels: [{{$labels_string}}],
+            datasets: [{
+                label: '{{$title}}',
+                data: [{{$data_string}}],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+
+<?php 
+}
+?>
 
 @endsection
