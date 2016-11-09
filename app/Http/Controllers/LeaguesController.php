@@ -581,7 +581,8 @@ class LeaguesController extends Controller {
                 $this->sendWelcomeEmail($authUser->id, $league);
 
                 Flash::success('You have successfully managed to join the '.$league->name.' league!');
-            }
+            } else 
+                Flash::warning('You are already in the '.$league->name.' league!');
         } else
             Flash::warning('You have not been able to join the '.$league->name.' league!');
 

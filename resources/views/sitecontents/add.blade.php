@@ -142,7 +142,7 @@ tinymce.init({
                         <div class="controls">
                             {!! Form::file('main_image', null, ['class'=>'span8']) !!}
                             @if($type == 'F')
-                            <span class="help-inline">The size of this image needs to be 1207px by 440px or else it will be squashed.</span>
+                            <span class="help-inline">The size of this image needs to be 1000px by 440px or else it will be squashed.</span>
                             @else
                             <span class="help-inline">The size of this image needs to be 644px by 300px.</span>
                             @endif

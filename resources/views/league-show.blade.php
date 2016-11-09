@@ -20,7 +20,7 @@
                 <div>
                     @if(strtotime($currentLeague->auction_start_date) > time())
                     <span>Starts</span>
-                    <strong>{{date("l, jS F Y g:iA", strtotime($currentLeague->auction_start_date))}}</strong>
+                    <strong>{{date("l, jS M Y g:iA", strtotime($currentLeague->auction_start_date))}}</strong>
                     <span>Countdown:</span>
                     <strong><?php auctionTimer($currentLeague->id, $currentLeague->auction_start_date); ?></strong>
                     @else

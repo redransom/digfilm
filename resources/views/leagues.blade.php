@@ -39,12 +39,14 @@
                 @elseif($canJoin == 2)
                 <a class="btn" title="This league has started!">Started</a>
                 @else
-                <a class="btn" title="You need to be logged in to join a league">Login</a>
+                <a class="btn" title="You need to be logged in to join a league" href="{{URL('join-league/'.$league->id)}}">Login</a>
                 @endif
             </div>
         </div>
     </div>
     @endforeach
+@else
+<p>There are no leagues available at present.</p>
 @endif
 </div>
 @endsection

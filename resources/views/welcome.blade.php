@@ -108,6 +108,7 @@
            @endforeach
            @else
             <div class="league-table" style="border-bottom: 0">
+            <p>There are no public leagues available at this time.</p>
             </div>
            @endif
         </div>
@@ -139,7 +140,7 @@
             <h3>{{$openingBid->name}}</h3>
             <p>Opening Bid</p>
         </div>
-        <div class="promo-right">
+        <div class="promo-right promo-extra">
             <p class="price">&pound;{{number_format($openingBid->opening_bid, 0)}}</p>
         </div>
     </div>

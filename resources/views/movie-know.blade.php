@@ -19,12 +19,7 @@
                     <div class="rating-stars-inner" style="width: 90%;"></div>
                 </div>
                 @endif
-                <!--a href="post.html" class="defbutton"><i class="fa fa-file-text-o"></i>Read Review</a-->
             </div>
-            <!--div class="game-info-buttons">
-                <a href="games-single-shop.html" class="defbutton"><i class="fa fa-shopping-cart"></i>Buy game starting from <span class="pricetag">55 &euro;</span></a>
-                <a href="#" class="defbutton"><i class="fa fa-gamepad"></i>I have played</a>
-            </div-->
             <div class="game-info-graph">
                 <div>
                     <span>Release Date:</span>
@@ -111,7 +106,7 @@
 
             <ul>
                 <li class="active" style="background-color: #921913;" id="stats_box"><a class="filmStats" href="#" id="stats_link"><i class="fa fa-file-text-o"></i>&nbsp;&nbsp;Film Stats</a></li>
-                <li style="background-color: #1c1c1c" id="articles_box"><a href="#" id="articles_link"><i class="fa fa-comments"></i>&nbsp;&nbsp;Articles</a></li>
+                <li style="background-color: #1c1c1c" class="removeBack" id="articles_box"><a href="#" id="articles_link"><i class="fa fa-comments"></i>&nbsp;&nbsp;Articles</a></li>
             </ul>
 
         <!-- END .game-menu -->
@@ -157,24 +152,24 @@
                     </ul>
                     @endif
                     </div>
-                    <canvas id="lcNoOfBids" width="400" height="200" style="float:right; display:block"></canvas>
+                    <canvas id="lcNoOfBids" width="500px" height="339px" style="float: right; display: block;"></canvas>
                 </div>
                 <div class="sep"></div>
-                <div style="width:600px; float: left; clear:both; padding-top: 10px">
+                <div style="width:679px; float: left; clear:both; padding-top: 10px">
                     <div style="float:left; width: 150px">
                     <h3>Average purchase value:</h3>
                     <p>Average purchase value of this film in the last 30 days.</p>
                     </div>
-                    <canvas id="avg30" width="400" height="200" style="float:right; display:block"></canvas>
+                    <canvas id="avg30" width="500" height="200" style="float:right; display:block"></canvas>
                 </div>
 
                 <script type="text/javascript">
                     @if(isset($no_of_bids))
-                    <?php createGraph("lcNoOfBids", $days, "No Of Bids", $no_of_bids, "noOfBids", 2); ?>
+                    <?php createGraph("lcNoOfBids", $days, "No Of Bids", $no_of_bids, "noOfBids", 2, "Last 30 Days", "Number of Bids"); ?>
                     @endif
         
                     @if(isset($avgs))
-                    <?php createGraph("avg30", $days, "Last 30 days", $avgs, "avg30", 4); ?>
+                    <?php createGraph("avg30", $days, "Last 30 days", $avgs, "avg30", 4, "Last 30 Days", "Average Value"); ?>
                     @endif
                 </script>
                   
@@ -204,7 +199,7 @@
     
 </div>
 <?php 
-function createGraph($elementId, $labels, $title, $data, $varName, $uniqueId, $type="line") {
+function createGraph($elementId, $labels, $title, $data, $varName, $uniqueId, $xAxesLabel, $yAxesLabel, $type="line") {
     $labels_string = join($labels, ",");
     $data_string = join($data, ",");
 ?>
@@ -216,14 +211,39 @@ function createGraph($elementId, $labels, $title, $data, $varName, $uniqueId, $t
             datasets: [{
                 label: '{{$title}}',
                 data: [{{$data_string}}],
-                borderWidth: 1
+                borderWidth: 1,
+                borderColor: 'rgba(255, 255, 255, 1)',
+                backgroundColor: 'rgba(134, 23, 23, 1)'
             }]
         },
         options: {
+            responsive: false,
             scales: {
-                yAxes: [{
+                xAxes: [{
                     ticks: {
-                        beginAtZero:true
+                        maxTicksLimit:7
+                    },
+                    position: "bottom",
+                    scaleLabel: {
+                        display: true,
+                        labelString: "{{$xAxesLabel}}",
+                    }, 
+                }],
+                yAxes: [{
+                position: "left",
+                    scaleLabel: {
+                        display: true,
+                        labelString: "{{$yAxesLabel}}",
+                    },                    
+                    ticks: {
+                        beginAtZero:true,
+                        userCallback: function(label, index, labels) {
+                            // when the floored value is the same as the value we have a whole number
+                            if (Math.floor(label) === label) {
+                                return label;
+                            }
+
+                        },
                     }
                 }]
             }

@@ -861,11 +861,13 @@ h5.title a {
 }
 
 .promo-content {
-    position: absolute;
+	position: absolute;
     right: 5%;
     top: 5%;
     background: #fff;
     padding: 1em;
+    height: 76%;
+    width: 24%;
 }
 
 .promo-content img {
@@ -900,6 +902,8 @@ h5.title a {
 .game-info-left img.game-poster {
     max-height: 316px !important;
     max-width: 212px !important;
+    min-height: 316px !important;
+    min-width: 212px !important;
 }
 
 .game-info-right .content-padding,.game-info-right .content-padding p{
@@ -1160,6 +1164,17 @@ i, #submit {
 .promo-left, .promo-right {
     float: left;
     padding-top: 1em;
+    width: 100%;
+}
+
+.promo-extra {
+	padding: 0;
+    display: inline-block;
+    float: right;
+    width: 60%;
+    height: 14%;
+    position: relative;
+    bottom: 2.7em;
 }
 
 .one-quarter {

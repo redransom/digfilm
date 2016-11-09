@@ -5,9 +5,9 @@
                     
                     <div class="panel-content">
 						<h3>Current Balance</h3>
-						<p>You have <strong>{{number_format($authUser->balance, 2)}} USD</strong> currently.</p>
+						<p>You have <strong>{{number_format($authUser->balance)}} USD</strong> currently.</p>
 						<h3>On-going leagues</h3>
-						<p>You are currently in <strong>{{$authUser->leagues()->where('enabled', '1')->count()}}</strong> leagues.</p>
+						<p>You are currently in <strong>{{$authUser->inLeagues()->count()}}</strong> leagues.</p>
 						<h3>Leagues won</h3>
 						<p>You have won <strong>{{$authUser->winTotal()}}</strong> leagues so far!</p>
 						@if(!is_null($authUser->thumbnail) && $authUser->thumbnail != "") 

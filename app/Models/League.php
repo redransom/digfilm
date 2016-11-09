@@ -67,7 +67,7 @@ class League extends Model {
         $leagues = League::where('users_id', '!=', $user_id)->
                 where('type', 'U')->where('enabled', '1')
                 ->Where(function ($query) {
-                    $query->whereNull('auction_stage')->orWhere('auction_stage', '<', '4');
+                    $query->whereNull('auction_stage')->orWhere('auction_stage', '<', '2');
                 })->whereNotIn('id', $leagueUsers)->get();
                 //$queries = DB::getQueryLog();
 
@@ -94,7 +94,7 @@ class League extends Model {
     public static function livePublicLeagues($limit=0) {
         return League::where('type', 'U')->where('enabled', 1)
                 ->Where(function ($query) {
-                    $query->whereNull('auction_stage')->orWhere('auction_stage', '<', '4');
+                    $query->whereNull('auction_stage')->orWhere('auction_stage', '<', '2');
                 })->limit($limit)->get();
     }
 

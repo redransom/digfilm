@@ -558,11 +558,13 @@ class WelcomeController extends Controller {
 			//list of bid value in last 30 days
 			$last_30_data = $movie->bidValueByDay($last_month);
 
+
 			foreach($last_30_data as $bid) {
 				$bid_groups['amount'][] = $bid->bid_amount;
 				$bid_groups['totals'][] = $bid->no_of_bids;
 			}
-			$data['bid_groups'] = $bid_groups;
+			if (isset($bid_groups))
+				$data['bid_groups'] = $bid_groups;
 
 			$data['legend1'] = "<ul class='".strtolower($movie->name)."-legend'>";
 			$data['legend1'] .= "<li><span style='background-color:#ddd'></span>No Of Bids</li>";
