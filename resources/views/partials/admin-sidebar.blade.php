@@ -26,7 +26,7 @@
                                 </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right"></i>Movies </a>
                                     <ul id="toggleMovies" class="collapse unstyled">
                                         <li><a href="{{URL('movies')}}"><i class="icon-film"></i>List</a></li>
-                                        <li><a href="{{URL('movies/create')}}"><i class="icon-film"></i>Add New</a></li>
+                                        <li><a href="{{URL('movie-create')}}"><i class="icon-film"></i>Add New</a></li>
                                     </ul>
                                 </li>
 

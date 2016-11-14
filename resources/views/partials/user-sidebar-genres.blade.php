@@ -3,7 +3,7 @@
                 <div class="panel">
                     <h2><span>Our movie database</span></h2>
                     <div class="panel-content">
-
+                    <label for="selectdropdown" style="display:none"></label>
                         <select class="selectdropdown">
                             @if(isset($genres_list))
                                 @foreach($genres_list as $listgenre)

@@ -7,7 +7,7 @@
                         <!-- <nav id="menu" class="main-menu width-fluid"> -->
                         <nav id="menu" class="main-menu">
                             <div class="blur-before"></div>
-                            <a href="/" class="header-logo left"><img src="{{asset('images/BFlogo.png')}}" class="logo" /></a>
+                            <a href="/" class="header-logo left"><img src="{{asset('images/BFlogo.png')}}" class="logo" alt="TheNextBigFilm Logo" /></a>
                             <a href="#dat-menu" class="datmenu-prompt"><i class="fa fa-bars"></i>Show menu</a>
                             <ul class="load-responsive right" rel="Main menu">
                                 <li><a href="/"><span><i class="fa fa-home"></i><strong>Home</strong></span></a></li>

@@ -45,7 +45,7 @@
             </tr>
             <tr>
                 <td>Misc</td>
-                <td>Movie Takings: {{$rule->movie_takings_duration}} weeks</td>
+                <td>Movie Takings: {{number_format($rule->movie_takings_duration)}} weeks</td>
             </tr>
         </table>
     </div>

@@ -123,15 +123,15 @@
     <p>Our opening bids are calculated using an algorithm that takes into account factors typical of a successful film, for example, the number of high-profile actors or directors, production budget, the popularity of prequels, etc. </p>
 @if(isset($openingBid) && !is_null($openingBid))
 <div class="promo-hero">
-    <img src="{{asset($openingBid->topMedia()->file_name)}}" alt="{{$openingBid->topMedia()->name}}" />
+    <img src="{{asset($openingBid->topMedia()->file_name)}}" alt="{{$openingBid->topMedia()->movie->name}}" />
     <div class="promo-content">
         @if($openingBid->topImage('L') || $openingBid->topImage('K'))
         <div class="promo-image">
             <a href="{{URL('movie-knowledge', ['id'=>$openingBid->link()])}}">
             @if($openingBid->topImage('L'))
-            <img src="{{$openingBid->topImage('L')->path()}}" alt="{{$openingBid->topImage('L')->name}}" />
+            <img src="{{$openingBid->topImage('L')->path()}}" alt="{{$openingBid->topImage('L')->movie->name}}" />
             @else
-            <img src="{{$openingBid->topImage('K')->path()}}" alt="{{$openingBid->topImage('K')->name}}"/>
+            <img src="{{$openingBid->topImage('K')->path()}}" alt="{{$openingBid->topImage('K')->movie->name}}"/>
             @endif
             </a>
         </div>
