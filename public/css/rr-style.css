@@ -118,7 +118,9 @@ table.feature-table thead tr {
 
     table.feature-table.light-orange thead tr th.rightR { border-right: 1px solid #de6e38;}
     table.feature-table.light-orange thead tr th.rightL { border-left: 1px solid #de6e38;}
-    
+    /*--------------------------------*/
+    .canvas-width {width: 528px;}
+
     /*--------------------------------*/
     /*  PRICING TABLES                */
     /*--------------------------------*/
@@ -592,6 +594,8 @@ ul li {
 
 table.feature-table tbody td.bid--placed {
     color: #00A14B;
+    text-align: center;
+    padding-top: 2.5em;
 }
 
 .bid-btn {
@@ -604,7 +608,16 @@ table.feature-table tbody td.bid--placed {
     margin-top: 1em;
     border-radius: .3em;
 }
-
+.bidButton {
+    background-color: green;
+    margin: auto;
+    padding: 2px;
+    border-radius: 7px;
+    border-top: 2px solid #04ab04;
+    border-bottom: 2px solid #04ab04;
+    border-left: 1px solid #0bb30b;
+    border-right: 1px solid #0bb30b;
+}
 .white-popup p:first-of-type{
     padding: 1.5em 0;
 }
@@ -1392,6 +1405,9 @@ table.feature-table tbody td.place--bid {
 
 .place--bid .league-btn {
     width: 100%;
+    position: relative;
+    left: 30%;
+    top: 2.5em;
 }
 
 table.feature-table tbody td {
