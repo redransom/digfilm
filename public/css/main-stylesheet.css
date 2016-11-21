@@ -622,6 +622,10 @@ a.featured-select img {
 	-moz-transition: opacity 0.2s;
 	-webkit-transition: opacity 0.2s;
 	-o-transition: opacity 0.2s;
+	width: 75px;
+	height: 45px;
+	max-width: 75px !important;
+	max-height: 45px !important;
 }
 
 a.featured-select.this-active img {
