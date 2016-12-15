@@ -593,7 +593,13 @@ class AuctionsController extends Controller {
             $auction_start_time = $league->round_start_date;
         }            
 
-        $auction_end_time = date("Y-m-d H:i:s", strtotime($auction_start_time) + ($rule->ind_film_countdown * 60));
+        if ($rule->blind_bid != 'Y') {
+            $auction_end_time = date("Y-m-d H:i:s", strtotime($auction_start_time) + ($rule->ind_film_countdown * 60));
+        } else  {
+            //need to use the auction duration for blind as the auction item will continue for the entire time
+            //auction duration is in hours / ind film countdown is in mins usually so we need to multiply by 3600 to get the number of minutes (60 secs * 60 mins)
+            $auction_end_time = date("Y-m-d H:i:s", strtotime($auction_start_time) + ($rule->auction_duration * 3600));
+        }
 
         //save us having to go back to the rules table for this
         $data = ['leagues_id'=>$league->id, 'movies_id'=>$movie_id, 'auction_start_time'=>$auction_start_time, 'auction_end_time'=>$auction_end_time, 'ready_for_auction'=>'1'];
