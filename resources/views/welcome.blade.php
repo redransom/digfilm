@@ -189,7 +189,7 @@
 
                         //only use youtube currently
                         $path = parse_url($url, PHP_URL_PATH);
-                        $base_url = "http://www.youtube.com/embed".$path;
+                        $base_url = "https://www.youtube.com/embed".$path;
                     }
                 ?>
                 <div class="item">

@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div id="main" itemscope="" itemtype="http://data-vocabulary.org/Review">
+<div id="main">
     <div class="game-info-left">
         <img itemprop="image" src="{{asset($currentLeague->leagueImage())}}" class="game-poster" alt="" />
         <div class="game-info-details">

@@ -33,6 +33,9 @@
                     </div>
 
                     @if(isset($slider))
+                    <style>
+                        #featured-img-2, #featured-img-1 {background-size: cover;}
+                    </style>
                     <div id="slider">
                         <div id="slider-info">
                             <div class="padding-box">

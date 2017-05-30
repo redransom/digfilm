@@ -11,10 +11,9 @@
 
     <style>
         img.movie_image {
-            max-height: 217px;
-            max-width: 150px;
+            height: 217px;
+            width: 150px;
         }
-
     </style>
     @foreach($movies as $movie)
     @if((($movieCnt % 4) == 0) || $movieCnt == 0)

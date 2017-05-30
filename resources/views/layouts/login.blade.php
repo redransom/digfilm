@@ -8,7 +8,7 @@
         <link type="text/css" href="{{ asset('/admin/bootstrap/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
         <link type="text/css" href="{{ asset('/admin/css/theme.css') }}" rel="stylesheet">
         <link type="text/css" href="{{ asset('/admin/images/icons/css/font-awesome.css') }}" rel="stylesheet">
-        <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600'
+        <link type="text/css" href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600'
             rel='stylesheet'>
 </head>
 <body>

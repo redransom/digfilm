@@ -1523,6 +1523,10 @@ table.feature-table tbody td {
     }  
 }
 
+#featured-img-1 {
+    background-size: contain !important;
+}
+
 
 
 /* Phone */

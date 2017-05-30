@@ -2,7 +2,7 @@
 
 @section('content')
 @include('partials.site-auction-timer')
-<div id="main" itemscope="" itemtype="http://data-vocabulary.org/Review">
+<div id="main">
     <div class="game-info-left">
         @if($movie->topImage('K'))
         <img itemprop="image" src="{{ asset($movie->topImage('K')->path()) }}" class="game-poster" width="220px" alt="{{$movie->topImage('K')->name}}" />
@@ -121,7 +121,7 @@
 
                         //only use youtube currently
                         $path = parse_url($url, PHP_URL_PATH);
-                        $base_url = "http://www.youtube.com/embed".$path;
+                        $base_url = "https://www.youtube.com/embed".$path;
                     //}
                 ?>
                 <iframe width="100%" height="400" src="{{$base_url}}" frameborder="0" allowfullscreen></iframe>

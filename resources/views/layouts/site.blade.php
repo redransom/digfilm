@@ -13,7 +13,7 @@
         <meta property="og:type" content="TheNextBigFilm" />
         <meta property="og:title" content="TheNextBigFilm Movies | {{$title}}" />
         <meta property="og:image" content="" />
-        <meta property="og:url" content="http://www.thenextbigfilm.com" />
+        <meta property="og:url" content="https://www.thenextbigfilm.com" />
         <meta property="og:site_name" content="TheNextBigFilm | Homepage" />
         <link rel="shortcut icon" type="image/png" href="{{ asset('images/favicon.png') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('/css/reset.css') }}" media="screen" />
@@ -24,7 +24,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('/css/plugins.css')}}" media="screen" />
         <link rel="stylesheet" type="text/css" href="{{ asset('/css/rr-style.css') }}" media="screen" />
         <link rel="stylesheet" type="text/css" href="{{ asset('/css/jquery.cookiebar.css') }}" media="screen" />
-        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Oswald:300,400,700|Source+Sans+Pro:300,400,600,700&amp;subset=latin,latin-ext" />
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Oswald:300,400,700|Source+Sans+Pro:300,400,600,700&amp;subset=latin,latin-ext" />
         <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.1/jquery-ui-timepicker-addon.min.css">
 

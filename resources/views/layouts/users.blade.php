@@ -11,7 +11,7 @@
         <meta property="og:title" content="TheNextBigFilm Movies | Homepage" />
         <meta property="og:image" content="" />
         <meta property="og:description" content="" />
-        <meta property="og:url" content="http://www.thenextbigfilm.com" />
+        <meta property="og:url" content="https://www.thenextbigfilm.com" />
         <meta property="og:site_name" content="TheNextBigFilm | Homepage" />
         <link rel="shortcut icon" type="image/png" href="images/favicon.png" />
         <link rel="stylesheet" type="text/css" href="{{ asset('/css/reset.css') }}" media="screen" />
@@ -19,7 +19,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('/css/dat-menu.css') }}" media="screen" />
         <link rel="stylesheet" type="text/css" href="{{ asset('/css/main-stylesheet.css') }}" media="screen" />
         <link rel="stylesheet" type="text/css" href="{{ asset('/css/responsive.css') }}" media="screen" />
-        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Oswald:300,400,700|Source+Sans+Pro:300,400,600,700&amp;subset=latin,latin-ext" />
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Oswald:300,400,700|Source+Sans+Pro:300,400,600,700&amp;subset=latin,latin-ext" />
         <!--[if lt IE 9 ]>
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
